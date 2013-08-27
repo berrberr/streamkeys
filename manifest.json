@@ -1,7 +1,8 @@
 {
   "name": "Grooveshark Hotkeys",
-  "description": "",
-  "version": "1.0",
+  "description": "Global hotkeys for grooveshark",
+  "version": "0.1",
+  "manifest_version": 2,
   "content_scripts": [
     {
       "matches": [
@@ -22,9 +23,27 @@
     "http://*/*",
     "https://*/*"
   ],
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html",
-    "default_title": "Grooveshark Proxy Extension"
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "default": "Alt+Q",
+        "mac": "Command+Shift+Q"
+      },
+      "description": "Pauses/Plays current song."
+    },
+    "next-song": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Skips to next song."
+    },
+    "previous-song": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Command+Shift+A"
+      },
+      "description": "Skips to previous song."
+    }
   }
 }
