@@ -3,26 +3,10 @@
   "description": "Global hotkeys for grooveshark",
   "version": "0.1",
   "manifest_version": 2,
-  "content_scripts": [
-    {
-      "matches": [
-        "http://grooveshark.com/*"
-      ],
-      "js": [
-        "GroovesharkProxy.js",
-        "content.js"
-      ],
-      "run_at": "document_idle",
-      "patterns": [
-        "http://*/*",
-        "https://*/*"
-      ]
-    }
-  ],
-  "permissions": [
-    "http://*/*",
-    "https://*/*"
-  ],
+  "background": {
+    "scripts": ["content.js"],
+    "persistent": false
+  },
   "commands": {
     "play-pause": {
       "suggested_key": {
