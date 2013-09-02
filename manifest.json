@@ -7,9 +7,14 @@
     "scripts": ["background.js"],
     "persistent": false
   },
+  "content_scripts": [{
+    "js": ["contentscript.js"],
+    "matches": ["*://*.grooveshark.com/*"]
+  }],
   "permissions": [
     "tabs"
   ],
+  "web_accessible_resources": ["gs_methods.js"],
   "commands": {
     "play-pause": {
       "suggested_key": {
