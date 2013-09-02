@@ -1,12 +1,15 @@
 {
+  "manifest_version": 2,
   "name": "Grooveshark Hotkeys",
   "description": "Global hotkeys for grooveshark",
-  "version": "0.1",
-  "manifest_version": 2,
+  "version": "0.2",
   "background": {
-    "scripts": ["content.js"],
+    "scripts": ["background.js"],
     "persistent": false
   },
+  "permissions": [
+    "tabs"
+  ],
   "commands": {
     "play-pause": {
       "suggested_key": {
