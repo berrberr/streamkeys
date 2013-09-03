@@ -9,7 +9,7 @@
   },
   "content_scripts": [{
     "js": ["contentscript.js"],
-    "matches": ["*://*.grooveshark.com/*"]
+    "matches": ["http://*.grooveshark.com/*"]
   }],
   "permissions": [
     "tabs"

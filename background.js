@@ -6,9 +6,23 @@
   console.log("Status", status);
 })
  */
+ var gs_obj = {
+  name : "gs",
+  data : 1234,
+  setName_ : function(str){ this.name = str; }
+ };
+
+ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.internalVariable) {
+    //var internal_object = JSON.parse(request.internalVariable);
+    gs_obj.setName_(request.internalVariable);
+    alert(gs_obj.name);
+  }
+ });
+
 chrome.commands.onCommand.addListener(function(command) {
   if (command == 'play-pause') {
-    //alert("test");
+
     chrome.tabs.query({}, function(tabs) {
       for (var i = 0; i < tabs.length; i++) {
         console.log(tabs[i].url);
