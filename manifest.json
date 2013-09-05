@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "Grooveshark Hotkeys",
+  "description": "Global hotkeys for grooveshark",
+  "version": "0.2",
+    "background": {
+    "scripts": [
+      "background/bgCommunicator.js",
+      "background/background.js"
+    ]
+  },
+  "content_scripts": [{
+    "matches": [ "<all_urls>" ],
+    "js": [
+      "contentscript/csCommunicator.js",
+      "contentscript/contentscript.js"
+    ]
+  }],
+  "permissions": [
+    "tabs"
+  ],
+  "web_accessible_resources": ["gs_methods.js"],
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "default": "Alt+Q",
+        "mac": "Command+Shift+Q"
+      },
+      "description": "Pauses/Plays current song."
+    },
+    "next-song": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Skips to next song."
+    },
+    "previous-song": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Command+Shift+A"
+      },
+      "description": "Skips to previous song."
+    }
+  }
+}
