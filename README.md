@@ -1,4 +1,4 @@
-## H2 Grooveshark player link ids, text
+## Grooveshark player link ids, text
 
 * a id="play-pause" <Play>
 * a id="play-prev" <Previous Song>

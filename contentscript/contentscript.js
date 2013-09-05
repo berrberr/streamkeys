@@ -3,9 +3,8 @@
 communicator.on('play-pause', function(obj) {
   //document.getElementById("d1").innerHTML += "pressed!";
   console.log("play-pause pressed");
-  if(typeof window.Grooveshark != 'undefined') {
-    alert(window.Grooveshark.getCurrentSongStatus().status);
-  }
+  $("#play-pause").click();
+  console.log("click sent");
 });
 
 communicator.on('iconClicked', function(obj) {
