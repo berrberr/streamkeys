@@ -3,13 +3,18 @@
   "name": "Grooveshark Hotkeys",
   "description": "Global hotkeys for grooveshark",
   "version": "0.2",
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "background": {
+    "scripts": [
+      "background/bgCommunicator.js",
+      "background/background.js"
+    ]
   },
   "content_scripts": [{
-    "js": ["contentscript.js"],
-    "matches": ["http://*.grooveshark.com/*"]
+    "matches": [ "<all_urls>" ],
+    "js": [
+      "contentscript/csCommunicator.js",
+      "contentscript/contentscript.js"
+    ]
   }],
   "permissions": [
     "tabs"
