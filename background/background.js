@@ -2,13 +2,10 @@
 
 
 chrome.commands.onCommand.addListener(function(command) {
-  if (command == 'play-pause') {
-    communicator.notify('play-pause', { data: 'foo' });
-    // chrome.tabs.query({}, function(tabs) {
-    //   for (var i = 0; i < tabs.length; i++) {
-    //     console.log(tabs[i].url);
-    //   }
-    //   alert("done");
-    // });
-  }
+  if (command == "play-pause")
+    communicator.notify("play-pause", { data: "foo" });
+  if (command == "play-next") 
+    communicator.notify("play-next", null);
+  if (command == "play-prev")
+    communicator.notify("play-prev", null);
 });

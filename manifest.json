@@ -12,15 +12,13 @@
   "content_scripts": [{
     "matches": [ "<all_urls>" ],
     "js": [
-      "lib/jquery-1.10.2.min.js",
+      "lib/jquery-1.10.2.js",
       "contentscript/csCommunicator.js",
       "contentscript/contentscript.js"
     ]
   }],
-  "permissions": [
-    "tabs"
-  ],
-  "web_accessible_resources": ["gs_methods.js", "lib/jquery-1.10.2.min.js"],
+  "web_accessible_resources": ["lib/jquery-1.10.2.js"],
+  "permissions": ["tabs", "<all_urls>"],
   "commands": {
     "play-pause": {
       "suggested_key": {

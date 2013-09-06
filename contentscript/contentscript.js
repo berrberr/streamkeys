@@ -1,11 +1,15 @@
 // this script relies on csCommunicator.js
 
+function click(elementId) {
+  $(elementId)[0].click();
+};
+
 communicator.on('play-pause', function(obj) {
-  //document.getElementById("d1").innerHTML += "pressed!";
   console.log("play-pause pressed");
-  $("#play-pause").click();
+  click("#play-pause");
   console.log("click sent");
 });
+
 
 communicator.on('iconClicked', function(obj) {
   console.log('Icon was clicked. Received following data:', obj);
