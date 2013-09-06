@@ -9,5 +9,5 @@
 ## Grooveshark useful info
 
 * div id="now-playing-metadata"
-** a class="now-playing-link song" <- song name
-** a class="now-playing-link artist" <- artist name
+  * a class="now-playing-link song" <- song name
+  * a class="now-playing-link artist" <- artist name
