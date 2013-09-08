@@ -22,24 +22,27 @@
   "commands": {
     "play-pause": {
       "suggested_key": {
-        "default": "Alt+Q",
-        "mac": "Command+Shift+Q"
+        "default": "Alt+Q"
       },
       "description": "Pauses/Plays current song."
     },
-    "next-song": {
+    "play-next": {
       "suggested_key": {
-        "default": "Alt+S",
-        "mac": "Command+Shift+S"
+        "default": "Alt+S"
       },
       "description": "Skips to next song."
     },
-    "previous-song": {
+    "play-prev": {
       "suggested_key": {
-        "default": "Alt+A",
-        "mac": "Command+Shift+A"
+        "default": "Alt+A"
       },
       "description": "Skips to previous song."
+    },
+    "mute": {
+      "suggested_key": {
+        "default": "Alt+M"
+      },
+      "description": "Toggles volume mute."
     }
   }
 }
