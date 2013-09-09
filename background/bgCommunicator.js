@@ -1,6 +1,4 @@
 // Manages the connections to all tabs.
-// Note: a tab is registered when the "matches" rule applies to a given url scheme (defined in manifest.json).
-
 var communicator = (function() {
   // all registered tabs
   var channelTabs = [];

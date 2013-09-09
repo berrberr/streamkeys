@@ -11,3 +11,7 @@
 * div id="now-playing-metadata"
   * a class="now-playing-link song" <- song name
   * a class="now-playing-link artist" <- artist name
+
+* form id="lightbox-login-form" method="post" action="https://grooveshark.com/empty.html"
+  * input type="text" id="login-username" name="username"
+  * input type="password" id="login-password" name="password"

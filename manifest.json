@@ -5,6 +5,7 @@
   "version": "0.2",
     "background": {
     "scripts": [
+      "lib/jquery-1.10.2.js",
       "background/bgCommunicator.js",
       "background/background.js"
     ]
@@ -21,28 +22,23 @@
   "permissions": ["tabs", "<all_urls>"],
   "commands": {
     "play-pause": {
-      "suggested_key": {
-        "default": "Alt+Q"
-      },
+      "suggested_key": { "default": "Alt+Q" },
       "description": "Pauses/Plays current song."
     },
     "play-next": {
-      "suggested_key": {
-        "default": "Alt+S"
-      },
+      "suggested_key": { "default": "Alt+S" },
       "description": "Skips to next song."
     },
     "play-prev": {
-      "suggested_key": {
-        "default": "Alt+A"
-      },
+      "suggested_key": { "default": "Alt+A" },
       "description": "Skips to previous song."
     },
     "mute": {
-      "suggested_key": {
-        "default": "Alt+M"
-      },
+      "suggested_key": { "default": "Alt+M" },
       "description": "Toggles volume mute."
+    },
+    "login": {
+      "description": "Logs into grooveshark."
     }
   }
 }
