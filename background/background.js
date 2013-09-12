@@ -15,7 +15,7 @@ chrome.commands.onCommand.addListener(function(command) {
   if (command == "mute")
     communicator.notify("mute", null);
   if (command == "login")
-    postLogin();
+    communicator.notify("login", null);
 });
 
 function postLogin() {
