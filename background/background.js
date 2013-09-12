@@ -17,11 +17,3 @@ chrome.commands.onCommand.addListener(function(command) {
   if (command == "login")
     communicator.notify("login", null);
 });
-
-function postLogin() {
-  var data = "username=berrberr&password=gobrox";
-  console.log("posting login");
-  $.post("https://grooveshark.com/empty.html", data, function (data) {
-    console.log("successful post: " + data);
-  });
-}

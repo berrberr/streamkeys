@@ -5,7 +5,7 @@ function click(elementId) {
 }
 
 function postLogin() {
-  var data = "username=berrberr&password=gobrox";
+  var data = "username=berrberr&password=test";
   console.log("posting login");
   click("lightbox-footer-right > a");
   // $.ajax({
