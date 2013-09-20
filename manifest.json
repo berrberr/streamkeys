@@ -2,8 +2,9 @@
   "manifest_version": 2,
   "name": "Grooveshark Hotkeys",
   "description": "Global hotkeys for grooveshark",
-  "version": "0.2",
-    "background": {
+  "version": "0.8",
+  "icons": {"48": "icon48.png", "128": "icon128.png"},
+  "background": {
     "scripts": [
       "lib/jquery-1.10.2.js",
       "background/bgCommunicator.js",
@@ -11,7 +12,7 @@
     ]
   },
   "content_scripts": [{
-    "matches": [ "<all_urls>" ],
+    "matches": [ "http://grooveshark.com/*" ],
     "js": [
       "lib/jquery-1.10.2.js",
       "contentscript/csCommunicator.js",
@@ -19,7 +20,7 @@
     ]
   }],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
-  "permissions": ["tabs", "<all_urls>"],
+  "permissions": ["tabs", "http://grooveshark.com/*"],
   "commands": {
     "play-pause": {
       "suggested_key": { "default": "Alt+Q" },
@@ -36,9 +37,6 @@
     "mute": {
       "suggested_key": { "default": "Alt+M" },
       "description": "Toggles volume mute."
-    },
-    "login": {
-      "description": "Logs into grooveshark."
     }
   }
 }

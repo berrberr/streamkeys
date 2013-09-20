@@ -1,9 +1,3 @@
-chrome.commands.getAll(function (coms) {
-  for(var i = 0; i < coms.length; i++) {
-    console.log(coms[i]);
-  }
-});
-
 chrome.commands.onCommand.addListener(function(command) {
   console.log("command: " + command);
   if (command == "play-pause")
