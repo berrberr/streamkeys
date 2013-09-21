@@ -12,7 +12,7 @@
     ]
   },
   "content_scripts": [{
-    "matches": [ "http://grooveshark.com/*" ],
+    "matches": [ "<all_urls>" ],
     "js": [
       "lib/jquery-1.10.2.js",
       "contentscript/csCommunicator.js",
@@ -20,7 +20,7 @@
     ]
   }],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
-  "permissions": ["tabs", "http://grooveshark.com/*"],
+  "permissions": ["tabs", "<all_urls>"],
   "commands": {
     "play-pause": {
       "suggested_key": { "default": "Alt+Q" },

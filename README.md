@@ -21,6 +21,8 @@ The basic background/content script interaction can be easily extended into othe
   * a class="now-playing-link song" <- song name
   * a class="now-playing-link artist" <- artist name
 
+* <a class="btn btn-large submit btn-primary" data-translate-text="LB_INTERACTION_TIME_HERE">Resume playback</a> Resume playback button
+
 * form id="lightbox-login-form" method="post" action="https://grooveshark.com/empty.html"
   * input type="text" id="login-username" name="username"
   * input type="password" id="login-password" name="password"

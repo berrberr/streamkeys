@@ -8,6 +8,10 @@ chrome.commands.onCommand.addListener(function(command) {
     communicator.notify("play-prev", null);
   if (command == "mute")
     communicator.notify("mute", null);
-  if (command == "login")
-    communicator.notify("login", null);
+});
+
+communicator.on("play", function(){
+  msg = "test"; 
+  console.log("tst");
+  communicator.notify("play-pause", null);
 });
