@@ -7,7 +7,6 @@
   "background": {
     "scripts": [
       "lib/jquery-1.10.2.js",
-      "background/bgCommunicator.js",
       "background/background.js"
     ]
   },
@@ -15,7 +14,6 @@
     "matches": [ "<all_urls>" ],
     "js": [
       "lib/jquery-1.10.2.js",
-      "contentscript/csCommunicator.js",
       "contentscript/contentscript.js"
     ]
   }],
