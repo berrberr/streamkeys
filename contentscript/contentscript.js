@@ -1,11 +1,15 @@
 // this script relies on csCommunicator.js
-var modifiers = {alt: false, ctrl: false};
+function reset_modifiers() { this.alt = false; this.ctrl = false; }
+
+var modifiers = {alt: false, ctrl: false, reset: function(){this.alt = false;this.ctrl = false;}};
 var hotkeys = {play: 66, next: 86, alt: 18, ctrl: 17};
+
 document.documentElement.addEventListener("keydown", function(k) {
   console.log(k.keyCode);
   if(k.keyCode == hotkeys.alt) modifiers.alt = true;
   if(k.keyCode == hotkeys.ctrl) modifiers.ctrl = true;
   if(modifiers.alt || modifiers.ctrl) {
+    modifiers.reset;
     if(k.keyCode == hotkeys.play) {
       communicator.request("play", function(res) {
         console.log("CS: " + res);
