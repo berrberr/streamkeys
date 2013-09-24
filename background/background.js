@@ -13,21 +13,23 @@ var url_patterns = {grooveshark: "*://*.grooveshark.com/*"};
 var gs_tab = {id: null};
 
 function get_gs_tab() {
-  chrome.tabs.query({url: url_patterns.grooveshark}, function(tabs) {
+  return chrome.tabs.query({url: url_patterns.grooveshark}, function(tabs) {
     console.log("get_gs_tab: " + tabs[0].id);
     if(tabs.length > 0) {
       console.log("HIT" + tabs[0].id + " " + tabs.length);
-      gs_tab.id = tabs[0].id;
+      return tabs[0].id;
+    } else {
+      return false;
     }
   });
 }
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  if(gs_tab.id == null) {
-    get_gs_tab();
-  }
-  chrome.tabs.sendMessage(137, request.action);
-  console.log(request);
+  var tabid = get_gs_tab();
+  if(tabid) {
+  chrome.tabs.sendMessage(tabid, request.action);
+  console.log("BG request:" + request.action + " SEND TO: " + gs_tab.id);
+} else {console.log("nogstab");}
 });
 // communicator.on("play", function(){
 //   msg = "test"; 
