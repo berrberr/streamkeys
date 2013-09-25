@@ -1,24 +1,76 @@
 <html>
-<head><title>My Test Extension Options</title></head>
+<head>
+  <title>Grooveshark Hotkeys Extension Options</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
 
 <body>
 
-<input type="text" id="play-pause" value="ALT+Q"><button id="reset-play-pause">Reset</button><br>
-<input type="text" id="play-next" value="ALT+S"><br>
-<input type="text" id="play-prev" value="ALT+A"><br>
-<input type="text" id="mute" value="ALT+M"><br>
-
-Favorite Color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
-
-<br>
-<div id="status"></div>
-<button id="save">Save</button>
+<div class="container" style="margin-left: 10px;">
+  <h2>Grooveshark Hotkey Extension Options</h2>
+  <div class="form-horizontal">
+  <fieldset class="fieldset">
+    <legend>Hotkeys</legend>
+    <div class="form-group">
+      <label for="hotkey-play-pause" class="col-lg-2 control-label">Toggle Play/Pause</label>
+      <div class="col-lg-10">
+        <div class="col-lg-3">
+          <input type="text" class="form-control" id="hotkey-play-pause">
+        </div>
+        <div class="col-lg-2">
+          <button class="btn btn-danger btn-sm reset-btn" id="reset-play-pause" value="hotkey-play-pause">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="hotkey-play-next" class="col-lg-2 control-label">Play Next</label>
+      <div class="col-lg-10">
+        <div class="col-lg-3">
+          <input type="text" class="form-control" id="hotkey-play-next">
+        </div>
+        <div class="col-lg-2">
+          <button class="btn btn-danger btn-sm reset-btn" id="reset-play-next" value="hotkey-play-next">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="hotkey-play-prev" class="col-lg-2 control-label">Play Previous</label>
+      <div class="col-lg-10">
+        <div class="col-lg-3">
+          <input type="text" class="form-control" id="hotkey-play-prev">
+        </div>
+        <div class="col-lg-2">
+          <button class="btn btn-danger btn-sm reset-btn" id="reset-play-prev" value="hotkey-play-prev">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="hotkey-mute" class="col-lg-2 control-label">Toggle Mute</label>
+      <div class="col-lg-10">
+        <div class="col-lg-3">
+          <input type="text" class="form-control" id="hotkey-mute">
+        </div>
+        <div class="col-lg-2">
+          <button class="btn btn-danger btn-sm reset-btn" id="reset-mute" value="hotkey-mute">Reset</button>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="fieldset">
+    <legend>Options</legend>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="hotkey-mk-enabled"><b>Enable Media Keys</b>
+      </label>
+    </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox"><b>Use for GS</b>
+      </label>
+    </div>
+  </fieldset>
+  </div>
+</div>
 </body>
 
 <script src="lib/jquery-1.10.2.js"></script>
