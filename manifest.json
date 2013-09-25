@@ -2,8 +2,9 @@
   "manifest_version": 2,
   "name": "Grooveshark Hotkeys",
   "description": "Global hotkeys for grooveshark",
-  "version": "0.8",
+  "version": "0.9",
   "icons": {"48": "icon48.png", "128": "icon128.png"},
+  "options_page": "options.html",
   "background": {
     "scripts": [
       "lib/jquery-1.10.2.js",
@@ -18,7 +19,7 @@
     ]
   }],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
-  "permissions": ["tabs", "<all_urls>"],
+  "permissions": ["tabs", "<all_urls>", "storage"],
   "commands": {
     "play-pause": {
       "suggested_key": { "default": "Alt+Q" },
