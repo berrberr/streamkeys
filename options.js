@@ -41,6 +41,7 @@ function restore_options() {
       if(p == "hotkey-play-next") $("#hotkey-play-next").val(pretty_print(obj[p]));
       if(p == "hotkey-play-prev") $("#hotkey-play-prev").val(pretty_print(obj[p]));
       if(p == "hotkey-mute") $("#hotkey-mute").val(pretty_print(obj[p]));
+      if(p == "hotkey-mk-enabled") {if(obj[p]) $("#hotkey-mk-enabled").prop("checked", true)};
       
       console.log(p + "-" + JSON.stringify(obj[p]));
     }
@@ -71,8 +72,8 @@ $(function() {
     capturing_id = $(this).attr("value");
     capturing = true;
   });
-  $("#reset-play-pause").click(function() {
-    capturing_id = "hotkey-play-pause";
-    capturing = true;
+  $("#hotkey-mk-enabled").change(function() {
+    chrome.storage.local.set({"hotkey-mk-enabled": $("#hotkey-mk-enabled").is(":checked")});
+    chrome_storage();
   });
 });
