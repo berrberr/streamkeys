@@ -65,5 +65,8 @@ $(function() {
   });
   $("#btn-save").click(function() {
     chrome.extension.sendMessage({action: "update_keys"});
+    chrome.tabs.getCurrent(function(tab) { //close this tab
+      chrome.tabs.remove(tab.id, function() { });
+    });
   });
 });
