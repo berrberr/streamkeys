@@ -6,19 +6,6 @@ var _arr = function() {
 
   return obj;
 };
-// Saves options to localStorage.
-function save_options() {
-  var select = document.getElementById("color");
-  var color = select.children[select.selectedIndex].value;
-  localStorage["favorite_color"] = color;
-
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
-}
 
 function chrome_storage() {
   chrome.storage.local.get(function(obj){console.log("stuff: " + JSON.stringify(obj));});
@@ -41,7 +28,7 @@ function restore_options() {
       if(p == "hotkey-play-next") $("#hotkey-play-next").val(pretty_print(obj[p]));
       if(p == "hotkey-play-prev") $("#hotkey-play-prev").val(pretty_print(obj[p]));
       if(p == "hotkey-mute") $("#hotkey-mute").val(pretty_print(obj[p]));
-      if(p == "hotkey-mk-enabled") {if(obj[p]) $("#hotkey-mk-enabled").prop("checked", true)};
+      if(p == "hotkey-mk-enabled") {if(obj[p]) $("#hotkey-mk-enabled").prop("checked", true);}
       
       console.log(p + "-" + JSON.stringify(obj[p]));
     }
@@ -75,5 +62,8 @@ $(function() {
   $("#hotkey-mk-enabled").change(function() {
     chrome.storage.local.set({"hotkey-mk-enabled": $("#hotkey-mk-enabled").is(":checked")});
     chrome_storage();
+  });
+  $("#btn-save").click(function() {
+    chrome.extension.sendMessage({action: "update_keys"});
   });
 });

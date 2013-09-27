@@ -19,23 +19,6 @@
     ]
   }],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
-  "permissions": ["tabs", "<all_urls>", "storage"],
-  "commands": {
-    "play-pause": {
-      "suggested_key": { "default": "Alt+Q" },
-      "description": "Pauses/Plays current song."
-    },
-    "play-next": {
-      "suggested_key": { "default": "Alt+S" },
-      "description": "Skips to next song."
-    },
-    "play-prev": {
-      "suggested_key": { "default": "Alt+A" },
-      "description": "Skips to previous song."
-    },
-    "mute": {
-      "suggested_key": { "default": "Alt+M" },
-      "description": "Toggles volume mute."
-    }
+  "permissions": ["tabs", "<all_urls>", "storage"]
   }
 }
