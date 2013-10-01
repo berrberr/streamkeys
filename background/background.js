@@ -24,7 +24,7 @@ var Keys = function() {
   this.mk_codes = {mk_play: 179, mk_prev: 177, mk_next: 176, mk_mute: 173};
   this.mk_enabled = false;
   this.grooveshark_enabled = true;
-  this.bandcamp_enabled = false;
+  this.bandcamp_enabled = true;
   this.load = function() {load_settings(this);};
 };
 

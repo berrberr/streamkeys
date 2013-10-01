@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Grooveshark Hotkeys With Media Keys",
-  "description": "Global hotkeys for grooveshark",
-  "version": "0.9",
+  "name": "Grooveshark/Bandcamp Hotkeys With Media Keys",
+  "description": "Global hotkeys for grooveshark and bandcamp",
+  "version": "0.9.5",
   "icons": {"48": "icon48.png", "128": "icon128.png"},
   "options_page": "options.html",
   "background": {
