@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Grooveshark Hotkeys",
+  "name": "Grooveshark Hotkeys With Media Keys",
   "description": "Global hotkeys for grooveshark",
   "version": "0.9",
   "icons": {"48": "icon48.png", "128": "icon128.png"},
@@ -20,5 +20,4 @@
   }],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
   "permissions": ["tabs", "<all_urls>", "storage"]
-  }
 }

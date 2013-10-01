@@ -29,13 +29,14 @@ function restore_options() {
       if(p == "hotkey-play-prev") $("#hotkey-play-prev").val(pretty_print(obj[p]));
       if(p == "hotkey-mute") $("#hotkey-mute").val(pretty_print(obj[p]));
       if(p == "hotkey-mk-enabled") {if(obj[p]) $("#hotkey-mk-enabled").prop("checked", true);}
-      
+      if(p == "hotkey-grooveshark-enabled") {if(obj[p]) $("#hotkey-grooveshark-enabled").prop("checked", true);}
+      if(p == "hotkey-bandcamp-enabled") {if(obj[p]) $("#hotkey-bandcamp-enabled").prop("checked", true);}
       console.log(p + "-" + JSON.stringify(obj[p]));
     }
   });
 }
-
 document.addEventListener('DOMContentLoaded', restore_options);
+
 $(function() {
   var capturing = false; //are we capturing the next keypress to save as a hotkey?
   var capturing_id = null; //the id of the textbox we are capturing for
@@ -61,6 +62,14 @@ $(function() {
   });
   $("#hotkey-mk-enabled").change(function() {
     chrome.storage.local.set({"hotkey-mk-enabled": $("#hotkey-mk-enabled").is(":checked")});
+    chrome_storage();
+  });
+  $("#hotkey-grooveshark-enabled").change(function() {
+    chrome.storage.local.set({"hotkey-grooveshark-enabled": $("#hotkey-grooveshark-enabled").is(":checked")});
+    chrome_storage();
+  });
+  $("#hotkey-bandcamp-enabled").change(function() {
+    chrome.storage.local.set({"hotkey-bandcamp-enabled": $("#hotkey-bandcamp-enabled").is(":checked")});
     chrome_storage();
   });
   $("#btn-save").click(function() {

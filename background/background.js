@@ -6,6 +6,8 @@ function load_settings(hotkey_obj) {
       if(p == "hotkey-play-prev") hotkey_obj.codes.prev = obj[p];
       if(p == "hotkey-mute") hotkey_obj.codes.mute = obj[p];
       if(p == "hotkey-mk-enabled") hotkey_obj.mk_enabled = obj[p];
+      if(p == "hotkey-grooveshark-enabled") hotkey_obj.grooveshark_enabled = obj[p];
+      if(p == "hotkey-bandcamp-enabled") hotkey_obj.bandcamp_enabled = obj[p];
     }
   });
 }
@@ -21,11 +23,13 @@ var Keys = function() {
   };
   this.mk_codes = {mk_play: 179, mk_prev: 177, mk_next: 176, mk_mute: 173};
   this.mk_enabled = false;
+  this.grooveshark_enabled = true;
+  this.bandcamp_enabled = false;
   this.load = function() {load_settings(this);};
 };
 
 var hotkey_actions = {"play-pause": true, "play-next": true, "play-prev": true, "mute": true};
-var url_patterns = {grooveshark: "*://*.grooveshark.com/*"};
+var url_patterns = {grooveshark: "*://*.grooveshark.com/*", bandcamp: "*://*.bandcamp.com/*"};
 var hotkeys = new Keys();
 hotkeys.load();
 console.log(JSON.stringify(hotkeys));
@@ -44,11 +48,21 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     });
   }
   else if(request.action in hotkey_actions) {
-    chrome.tabs.query({url: url_patterns.grooveshark}, function(tabs) {
-      if(tabs.length > 0) {
-        console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
-        chrome.tabs.sendMessage(tabs[0].id, request.action);
-      }
-    });
+    if(hotkeys.grooveshark_enabled) {
+      chrome.tabs.query({url: url_patterns.grooveshark}, function(tabs) {
+        if(tabs.length > 0) {
+          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
+          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "grooveshark"});
+        }
+      });
+    }
+    if(hotkeys.bandcamp_enabled) {
+      chrome.tabs.query({url: url_patterns.bandcamp}, function(tabs) {
+        if(tabs.length > 0) {
+          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
+          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "bandcamp"});
+        }
+      });
+    }
   }
 });
