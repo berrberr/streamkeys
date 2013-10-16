@@ -54,7 +54,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if(hotkeys.grooveshark_enabled) {
       chrome.tabs.query({url: url_patterns.grooveshark}, function(tabs) {
         if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
+          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
           chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "grooveshark"});
         }
       });
@@ -62,7 +62,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if(hotkeys.bandcamp_enabled) {
       chrome.tabs.query({url: url_patterns.bandcamp}, function(tabs) {
         if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
+          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
           chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "bandcamp"});
         }
       });
@@ -70,7 +70,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if(hotkeys.rdio_enabled) {
       chrome.tabs.query({url: url_patterns.rdio}, function(tabs) {
         if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
+          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
           chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "rdio"});
         }
       });
