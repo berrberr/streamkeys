@@ -1,17 +1,3 @@
-function load_settings(hotkey_obj) {
-  chrome.storage.local.get(function(obj) {
-    for(var p in obj) {
-      if(p == "hotkey-play-pause") hotkey_obj.codes.play = obj[p];
-      if(p == "hotkey-play-next") hotkey_obj.codes.next = obj[p];
-      if(p == "hotkey-play-prev") hotkey_obj.codes.prev = obj[p];
-      if(p == "hotkey-mute") hotkey_obj.codes.mute = obj[p];
-      if(p == "hotkey-mk-enabled") hotkey_obj.mk_enabled = obj[p];
-      if(p == "hotkey-grooveshark-enabled") hotkey_obj.grooveshark_enabled = obj[p];
-      if(p == "hotkey-bandcamp-enabled") hotkey_obj.bandcamp_enabled = obj[p];
-    }
-  });
-}
-
 // Class for storing keycodes and helper functions
 var Keys = function() {
   this.codes =
@@ -25,14 +11,32 @@ var Keys = function() {
   this.mk_enabled = false;
   this.grooveshark_enabled = true;
   this.bandcamp_enabled = true;
-  this.load = function() {load_settings(this);};
+  this.rdio_enabled = true;
 };
 
+//***
+//Load setting from chrome extension storage into the Keys object
+//***
+Keys.prototype.Load = function() {
+  var _keys = this;
+  chrome.storage.local.get(function(obj) {
+    for(var p in obj) {
+      if(p == "hotkey-play-pause") _keys.codes["play"] = obj[p];
+      if(p == "hotkey-play-next") _keys.codes["next"] = obj[p];
+      if(p == "hotkey-play-prev") _keys.codes["prev"] = obj[p];
+      if(p == "hotkey-mute") _keys.codes["mute"] = obj[p];
+      if(p == "hotkey-mk-enabled") _keys.mk_enabled = obj[p];
+      if(p == "hotkey-grooveshark-enabled") _keys.grooveshark_enabled = obj[p];
+      if(p == "hotkey-bandcamp-enabled") _keys.bandcamp_enabled = obj[p];
+      if(p == "hotkey-rdio-enabled") _keys.rdio_enabled = obj[p];
+    }
+  });
+}
+
 var hotkey_actions = {"play-pause": true, "play-next": true, "play-prev": true, "mute": true};
-var url_patterns = {grooveshark: "*://*.grooveshark.com/*", bandcamp: "*://*.bandcamp.com/*"};
+var url_patterns = {grooveshark: "*://*.grooveshark.com/*", bandcamp: "*://*.bandcamp.com/*", rdio: "*://*.rdio.com/*"};
 var hotkeys = new Keys();
-hotkeys.load();
-console.log(JSON.stringify(hotkeys));
+hotkeys.Load();
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.action == "get_keys") {
@@ -40,7 +44,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   }
   if(request.action == "update_keys") {
     hotkeys.load();
-    console.log("upkeys " + hotkeys);
     chrome.tabs.query({}, function(tabs) {
       for(var i = 0; i < tabs.length; i++) {
         chrome.tabs.sendMessage(tabs[i].id, {action: "update_keys", data: JSON.stringify(hotkeys)});
@@ -61,6 +64,14 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         if(tabs.length > 0) {
           console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
           chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "bandcamp"});
+        }
+      });
+    }
+    if(hotkeys.rdio_enabled) {
+      chrome.tabs.query({url: url_patterns.rdio}, function(tabs) {
+        if(tabs.length > 0) {
+          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].id);
+          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "rdio"});
         }
       });
     }

@@ -20,7 +20,44 @@ function pretty_print(obj) {
   return (output + String.fromCharCode(obj.key));
 }
 
-// Restores form to saved value from chrome storage
+//***
+//Store default settings
+//***
+var Defaults = function() {
+  this.codes =
+  {
+    play: {key: 81, modifier_alt: true, modifier_ctrl: false, modifier_shift: false},
+    prev: {key: 65, modifier_alt: true, modifier_ctrl: false, modifier_shift: false},
+    next: {key: 83, modifier_alt: true, modifier_ctrl: false, modifier_shift: false},
+    mute: {key: 77, modifier_alt: true, modifier_ctrl: false, modifier_shift: false}
+  };
+  this.mk_codes = {mk_play: 179, mk_prev: 177, mk_next: 176, mk_mute: 173};
+  this.mk_enabled = false;
+  this.grooveshark_enabled = true;
+  this.bandcamp_enabled = true;
+  this.rdio_enabled = true;
+};
+
+//***
+//Load the default settings if settings are not already in storage (ie. first run)
+//***
+function load_defaults(d) {
+  chrome.storage.local.get(function(obj){
+    if(!obj.hasOwnProperty("hotkey-play-pause")) {chrome.storage.local.set({"hotkey-play-pause": d.codes.play});}
+    if(!obj.hasOwnProperty("hotkey-play-next")) {chrome.storage.local.set({"hotkey-play-next": d.codes.next});}
+    if(!obj.hasOwnProperty("hotkey-play-prev")) {chrome.storage.local.set({"hotkey-play-prev": d.codes.prev});}
+    if(!obj.hasOwnProperty("hotkey-mute")) {chrome.storage.local.set({"hotkey-mute": d.codes.mute});}
+    if(!obj.hasOwnProperty("hotkey-mk-enabled")) {chrome.storage.local.set({"hotkey-mk-enabled": d.mk_enabled});}
+    if(!obj.hasOwnProperty("hotkey-grooveshark-enabled")) {chrome.storage.local.set({"hotkey-grooveshark-enabled": d.grooveshark_enabled});}
+    if(!obj.hasOwnProperty("hotkey-bandcamp-enabled")) {chrome.storage.local.set({"hotkey-bandcamp-enabled": d.bandcamp_enabled});}
+    if(!obj.hasOwnProperty("hotkey-rdio-enabled")) {chrome.storage.local.set({"hotkey-rdio-enabled": d.rdio_enabled});}
+    restore_options();
+  });
+}
+
+//***
+//Restores form to saved value from chrome storage
+//***
 function restore_options() {
   chrome.storage.local.get(function(obj){
     for(var p in obj) {
@@ -31,11 +68,16 @@ function restore_options() {
       if(p == "hotkey-mk-enabled") {if(obj[p]) $("#hotkey-mk-enabled").prop("checked", true);}
       if(p == "hotkey-grooveshark-enabled") {if(obj[p]) $("#hotkey-grooveshark-enabled").prop("checked", true);}
       if(p == "hotkey-bandcamp-enabled") {if(obj[p]) $("#hotkey-bandcamp-enabled").prop("checked", true);}
+      if(p == "hotkey-rdio-enabled") {if(obj[p]) $("#hotkey-rdio-enabled").prop("checked", true);}
       console.log(p + "-" + JSON.stringify(obj[p]));
     }
   });
 }
-document.addEventListener('DOMContentLoaded', restore_options);
+
+document.addEventListener('DOMContentLoaded', function() {
+  var default_settings = new Defaults();
+  load_defaults(default_settings);
+});
 
 $(function() {
   var capturing = false; //are we capturing the next keypress to save as a hotkey?
@@ -70,6 +112,10 @@ $(function() {
   });
   $("#hotkey-bandcamp-enabled").change(function() {
     chrome.storage.local.set({"hotkey-bandcamp-enabled": $("#hotkey-bandcamp-enabled").is(":checked")});
+    chrome_storage();
+  });
+  $("#hotkey-rdio-enabled").change(function() {
+    chrome.storage.local.set({"hotkey-rdio-enabled": $("#hotkey-rdio-enabled").is(":checked")});
     chrome_storage();
   });
   $("#btn-save").click(function() {

@@ -1,13 +1,13 @@
 <html>
 <head>
-  <title>Grooveshark Hotkeys Extension Options</title>
+  <title>Music Player Hotkeys Extension Options</title>
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 
 <body>
 
 <div class="container" style="margin-left: 10px;">
-  <h2>Grooveshark Hotkey Extension Options</h2>
+  <h2>Music Player Hotkeys Extension Options</h2>
   <div class="form-horizontal">
   <fieldset class="fieldset">
     <legend>Hotkeys</legend>
@@ -68,6 +68,11 @@
         <input type="checkbox" id="hotkey-bandcamp-enabled"><b>Enable For Bandcamp</b>
       </label>
     </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="hotkey-rdio-enabled"><b>Enable For Rdio</b>
+      </label>
+    </div>
 
   </fieldset>
   <fieldset class="fieldset">
@@ -78,7 +83,12 @@
       </label>
     </div>
   </fieldset>
-  <button class="btn btn-success btn-md" id="btn-save">Save</button>
+  <div style="margin-bottom: 15px;"><button class="btn btn-success btn-md" id="btn-save">Save</button><p style="margin-top:5px;"><em>Note: You will have to refresh your media player tab for these changes to work.</em></p></div>
+  <fieldset class="fieldset">
+    <legend>Misc Info</legend>
+    <p>Visit the <a href="https://chrome.google.com/webstore/detail/groovesharkbandcamp-hotke/ekpipjofdicppbepocohdlgenahaneen" target="blank">official extension page</a> to check for updates and leave feedback.</p>
+    <p><a href="mailto:minilogo@gmail.com">Email me: minilogo@gmail.com</a> for questions/feature requests/etc.</p>
+  </fieldset>
   </div>
 </div>
 </body>
