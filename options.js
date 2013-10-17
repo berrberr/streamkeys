@@ -36,6 +36,7 @@ var Defaults = function() {
   this.grooveshark_enabled = true;
   this.bandcamp_enabled = true;
   this.rdio_enabled = true;
+  this.spotify_enabled = true;
 };
 
 //***
@@ -51,6 +52,7 @@ function load_defaults(d) {
     if(!obj.hasOwnProperty("hotkey-grooveshark-enabled")) {chrome.storage.local.set({"hotkey-grooveshark-enabled": d.grooveshark_enabled});}
     if(!obj.hasOwnProperty("hotkey-bandcamp-enabled")) {chrome.storage.local.set({"hotkey-bandcamp-enabled": d.bandcamp_enabled});}
     if(!obj.hasOwnProperty("hotkey-rdio-enabled")) {chrome.storage.local.set({"hotkey-rdio-enabled": d.rdio_enabled});}
+    if(!obj.hasOwnProperty("hotkey-spotify-enabled")) {chrome.storage.local.set({"hotkey-spotify-enabled": d.spotify_enabled});}
     restore_options();
   });
 }
@@ -69,6 +71,7 @@ function restore_options() {
       if(p == "hotkey-grooveshark-enabled") {if(obj[p]) $("#hotkey-grooveshark-enabled").prop("checked", true);}
       if(p == "hotkey-bandcamp-enabled") {if(obj[p]) $("#hotkey-bandcamp-enabled").prop("checked", true);}
       if(p == "hotkey-rdio-enabled") {if(obj[p]) $("#hotkey-rdio-enabled").prop("checked", true);}
+      if(p == "hotkey-spotify-enabled") {if(obj[p]) $("#hotkey-spotify-enabled").prop("checked", true);}
       console.log(p + "-" + JSON.stringify(obj[p]));
     }
   });
@@ -104,19 +107,18 @@ $(function() {
   });
   $("#hotkey-mk-enabled").change(function() {
     chrome.storage.local.set({"hotkey-mk-enabled": $("#hotkey-mk-enabled").is(":checked")});
-    chrome_storage();
   });
   $("#hotkey-grooveshark-enabled").change(function() {
     chrome.storage.local.set({"hotkey-grooveshark-enabled": $("#hotkey-grooveshark-enabled").is(":checked")});
-    chrome_storage();
   });
   $("#hotkey-bandcamp-enabled").change(function() {
     chrome.storage.local.set({"hotkey-bandcamp-enabled": $("#hotkey-bandcamp-enabled").is(":checked")});
-    chrome_storage();
   });
   $("#hotkey-rdio-enabled").change(function() {
     chrome.storage.local.set({"hotkey-rdio-enabled": $("#hotkey-rdio-enabled").is(":checked")});
-    chrome_storage();
+  });
+  $("#hotkey-spotify-enabled").change(function() {
+    chrome.storage.local.set({"hotkey-spotify-enabled": $("#hotkey-spotify-enabled").is(":checked")});
   });
   $("#btn-save").click(function() {
     chrome.extension.sendMessage({action: "update_keys"});
