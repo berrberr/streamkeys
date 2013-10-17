@@ -1,3 +1,7 @@
+String.prototype.URL_check = function() {
+  return new RegExp("^(http|https)*(:\/\/)*(.*\.)*(" + this + "|www." + this +")+\.com");
+}
+
 //Class for storing keycodes and helper functions
 var Keys = function() {
   this.codes =
@@ -75,6 +79,13 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   else if(request.action in hotkey_actions) {
     chrome.tabs.query({}, function(tabs) {
       for(var i = 0; i < tabs.length; i++) {
+        for(sn in url_patterns) {
+          var snregex = sn.URL_check();
+          if(snregex.test(tabs[i].url)) {
+            console.log("MATCH: " + tabs[i].title + " URL: " + tabs[i].url);
+            
+          }
+        }
       }
     });
 
