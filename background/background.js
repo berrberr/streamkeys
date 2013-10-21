@@ -1,6 +1,10 @@
-String.prototype.URL_check = function() {
-  return new RegExp("^(http|https)*(:\/\/)*(.*\.)*(" + this + "|www." + this +")+\.com");
-}
+//***
+//Returns a regex that matches where the string is in a url's (domain) name
+//***
+String.prototype.URL_check = (function() {
+  "use strict";
+  return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + this + "|www." + this +")+\\.com"));
+});
 
 //Class for storing keycodes and helper functions
 var Keys = function() {
@@ -12,7 +16,7 @@ var Keys = function() {
     mute: {key: 77, modifier_alt: true, modifier_ctrl: false, modifier_shift: false}
   };
   this.mk_codes = {mk_play: 179, mk_prev: 177, mk_next: 176, mk_mute: 173};
-  this.mk_enabled = false;
+  this.mk_enabled = true;
   this.sites =
   {
     bandcamp: true,
@@ -21,11 +25,6 @@ var Keys = function() {
     rdio: true,
     spotify: true
   };
-  this.grooveshark_enabled = true;
-  this.bandcamp_enabled = true;
-  this.rdio_enabled = true;
-  this.spotify_enabled = true;
-  this.pandora_enabled = true;
 };
 
 //***
@@ -40,19 +39,58 @@ Keys.prototype.Load = (function() {
       if(p == "hotkey-play-prev") _keys.codes["prev"] = obj[p];
       if(p == "hotkey-mute") _keys.codes["mute"] = obj[p];
       if(p == "hotkey-mk-enabled") _keys.mk_enabled = obj[p];
-      if(p == "hotkey-grooveshark-enabled") _keys.grooveshark_enabled = obj[p];
-      if(p == "hotkey-bandcamp-enabled") _keys.bandcamp_enabled = obj[p];
-      if(p == "hotkey-rdio-enabled") _keys.rdio_enabled = obj[p];
-      if(p == "hotkey-spotify-enabled") _keys.spotify_enabled = obj[p];
-      if(p == "hotkey-pandora-enabled") _keys.pandora_enabled = obj[p];
+      if(p == "hotkey-grooveshark-enabled") _keys.sites.grooveshark = obj[p];
+      if(p == "hotkey-bandcamp-enabled") _keys.sites.bandcamp= obj[p];
+      if(p == "hotkey-rdio-enabled") _keys.sites.rdio = obj[p];
+      if(p == "hotkey-spotify-enabled") _keys.sites.spotify = obj[p];
+      if(p == "hotkey-pandora-enabled") _keys.sites.pandora = obj[p];
     }
   });
 });
 
-var hotkey_actions = {"play-pause": true, "play-next": true, "play-prev": true, "mute": true};
+var URL_cache = function()
+{
+  this.site = {
+    bandcamp: null,
+    grooveshark: null,
+    pandora: null,
+    rdio: null,
+    spotify: null
+  };
+};
+
+//***
+//Set a site's tab id to null when it's tab is closed
+//***
+URL_cache.prototype.remove_by_id = function(id) {
+  for(var name in this.site) {
+    if(this.site[name] == id) this.site[name] = null;
+  }
+};
+
+//***
+//Returns a list of sites to find tabID's for
+//***
+URL_cache.prototype.get_sites_to_find = (function() {
+  var tabs_to_find = [];
+  for(var name in this.site) {
+    if(this.site[name] === null) {
+      tabs_to_find.push(name);
+    }
+  }
+  return tabs_to_find;
+});
+
+var hotkey_actions = {"play_pause": true, "play_next": true, "play_prev": true, "mute": true};
 var url_patterns = {grooveshark: "*://*.grooveshark.com/*", bandcamp: "*://*.bandcamp.com/*", rdio: "*://*.rdio.com/*", spotify: "*://*.spotify.com/*", pandora: "*://*.pandora.com/*"};
+var cache = new URL_cache();
 var hotkeys = new Keys();
 hotkeys.Load();
+
+//***
+//When a tab is closed remove it from the cache
+//***
+chrome.tabs.onRemoved.addListener(function (tabID, removeInfo) {cache.remove_by_id(tabID);});
 
 //***
 //Searches tabs array for the first matching domain of site_name and sends the requested action to that tab
@@ -61,6 +99,18 @@ function query_tabs(tabs, site_name, request_action) {
   if(tabs.length > 0) {
     console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
     chrome.tabs.sendMessage(tabs[0].id, {action: request_action, site: site_name});
+  }
+}
+
+//***
+//Send an action request to the music player's tab
+//**
+function send(cache, action) {
+  for(var name in cache.site) {
+    if(hotkeys.sites[name] && cache.site[name] !== null) { //If the site we are sending to is enabled in the settings, and the tab we are sending to exists
+      console.log("BG request:" + action + " SEND TO: " + cache.site[name]);
+      chrome.tabs.sendMessage(cache.site[name], {"action": action, site: name});
+    }
   }
 }
 
@@ -76,58 +126,21 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
       }
     });
   }
+  //This is a request for a hotkey action
   else if(request.action in hotkey_actions) {
+    var tabs_to_find = cache.get_sites_to_find();
+    var action = request.action;
     chrome.tabs.query({}, function(tabs) {
       for(var i = 0; i < tabs.length; i++) {
-        for(sn in url_patterns) {
-          var snregex = sn.URL_check();
-          if(snregex.test(tabs[i].url)) {
-            console.log("MATCH: " + tabs[i].title + " URL: " + tabs[i].url);
-            
+        for(var j = 0; j < tabs_to_find.length; j++) {
+          if(tabs_to_find[j].URL_check().test(tabs[i].url)){
+            cache.site[tabs_to_find[j]] = tabs[i].id;
+            tabs_to_find.splice(j, 1);
           }
         }
       }
+      console.log("URL CACHE: " + JSON.stringify(cache));
+      send(cache, action);
     });
-
-    if(hotkeys.grooveshark_enabled) {
-      chrome.tabs.query({url: url_patterns.grooveshark}, function(tabs) {
-        if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
-          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "grooveshark"});
-        }
-      });
-    }
-    if(hotkeys.bandcamp_enabled) {
-      chrome.tabs.query({url: url_patterns.bandcamp}, function(tabs) {
-        if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
-          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "bandcamp"});
-        }
-      });
-    }
-    if(hotkeys.rdio_enabled) {
-      chrome.tabs.query({url: url_patterns.rdio}, function(tabs) {
-        if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
-          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "rdio"});
-        }
-      });
-    }
-    if(hotkeys.spotify_enabled) {
-      chrome.tabs.query({url: url_patterns.spotify}, function(tabs) {
-        if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
-          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "spotify"});
-        }
-      });
-    }
-    if(hotkeys.pandora_enabled) {
-      chrome.tabs.query({url: url_patterns.pandora}, function(tabs) {
-        if(tabs.length > 0) {
-          console.log("BG request:" + request.action + " SEND TO: " + tabs[0].title);
-          chrome.tabs.sendMessage(tabs[0].id, {action: request.action, site: "pandora"});
-        }
-      });
-    }
   }
 });
