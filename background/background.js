@@ -19,11 +19,16 @@ var Keys = function() {
   this.mk_enabled = true;
   this.sites =
   {
-    bandcamp: true,
-    grooveshark: true,
-    pandora: true,
-    rdio: true,
-    spotify: true
+    "8tracks": true,
+    "bandcamp": true,
+    "deezer": true,
+    "grooveshark": true,
+    "hypem": true,
+    "myspace": true,
+    "pandora": true,
+    "rdio": true,
+    "spotify": true,
+    "soundcloud": true
   };
 };
 
@@ -38,24 +43,30 @@ Keys.prototype.Load = (function() {
       if(p == "hotkey-play-next") _keys.codes["next"] = obj[p];
       if(p == "hotkey-play-prev") _keys.codes["prev"] = obj[p];
       if(p == "hotkey-mute") _keys.codes["mute"] = obj[p];
-      if(p == "hotkey-mk-enabled") _keys.mk_enabled = obj[p];
-      if(p == "hotkey-grooveshark-enabled") _keys.sites.grooveshark = obj[p];
-      if(p == "hotkey-bandcamp-enabled") _keys.sites.bandcamp= obj[p];
-      if(p == "hotkey-rdio-enabled") _keys.sites.rdio = obj[p];
-      if(p == "hotkey-spotify-enabled") _keys.sites.spotify = obj[p];
-      if(p == "hotkey-pandora-enabled") _keys.sites.pandora = obj[p];
+      if(p == "hotkey-mk-on") _keys.mk_enabled = obj[p];
+      if(p.slice(-7) == "enabled" && p.slice(0, 6) == "hotkey") {
+        var name = p.substr(7, (p.length - 15));
+        console.log("NAME: " + name);
+        _keys.sites[name] = obj[p];
+      }
     }
+    console.log("HOTKEYS: " + JSON.stringify(hotkeys));
   });
 });
 
 var URL_cache = function()
 {
   this.site = {
-    bandcamp: null,
-    grooveshark: null,
-    pandora: null,
-    rdio: null,
-    spotify: null
+    "8tracks": null,
+    "bandcamp": null,
+    "deezer": null,
+    "grooveshark": null,
+    "hypem": null,
+    "myspace": null,
+    "pandora": null,
+    "rdio": null,
+    "spotify": null,
+    "soundcloud": null
   };
 };
 
@@ -82,7 +93,6 @@ URL_cache.prototype.get_sites_to_find = (function() {
 });
 
 var hotkey_actions = {"play_pause": true, "play_next": true, "play_prev": true, "mute": true};
-var url_patterns = {grooveshark: "*://*.grooveshark.com/*", bandcamp: "*://*.bandcamp.com/*", rdio: "*://*.rdio.com/*", spotify: "*://*.spotify.com/*", pandora: "*://*.pandora.com/*"};
 var cache = new URL_cache();
 var hotkeys = new Keys();
 hotkeys.Load();
@@ -119,7 +129,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     sendResponse(JSON.stringify(hotkeys));
   }
   if(request.action == "update_keys") {
-    hotkeys.load();
+    this.hotkeys.Load();
     chrome.tabs.query({}, function(tabs) {
       for(var i = 0; i < tabs.length; i++) {
         chrome.tabs.sendMessage(tabs[i].id, {action: "update_keys", data: JSON.stringify(hotkeys)});

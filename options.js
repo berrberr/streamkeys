@@ -35,11 +35,16 @@ var Defaults = function() {
   this.mk_enabled = true;
   this.sites =
   {
+    "8track": true,
     bandcamp: true,
+    deezer: true,
     grooveshark: true,
+    hypem: true,
+    myspace: true,
     pandora: true,
     rdio: true,
-    spotify: true
+    spotify: true,
+    soundcloud: true
   };
 };
 
@@ -52,12 +57,17 @@ function load_defaults(d) {
     if(!obj.hasOwnProperty("hotkey-play-next")) {chrome.storage.local.set({"hotkey-play-next": d.codes.next});}
     if(!obj.hasOwnProperty("hotkey-play-prev")) {chrome.storage.local.set({"hotkey-play-prev": d.codes.prev});}
     if(!obj.hasOwnProperty("hotkey-mute")) {chrome.storage.local.set({"hotkey-mute": d.codes.mute});}
-    if(!obj.hasOwnProperty("hotkey-mk-enabled")) {chrome.storage.local.set({"hotkey-mk-enabled": d.mk_enabled});}
+    if(!obj.hasOwnProperty("hotkey-mk-on")) {chrome.storage.local.set({"hotkey-mk-on": d.mk_enabled});}
     if(!obj.hasOwnProperty("hotkey-grooveshark-enabled")) {chrome.storage.local.set({"hotkey-grooveshark-enabled": d.sites.grooveshark});}
     if(!obj.hasOwnProperty("hotkey-bandcamp-enabled")) {chrome.storage.local.set({"hotkey-bandcamp-enabled": d.sites.bandcamp});}
     if(!obj.hasOwnProperty("hotkey-rdio-enabled")) {chrome.storage.local.set({"hotkey-rdio-enabled": d.sites.rdio});}
     if(!obj.hasOwnProperty("hotkey-spotify-enabled")) {chrome.storage.local.set({"hotkey-spotify-enabled": d.sites.spotify});}
     if(!obj.hasOwnProperty("hotkey-pandora-enabled")) {chrome.storage.local.set({"hotkey-pandora-enabled": d.sites.pandora});}
+    if(!obj.hasOwnProperty("hotkey-myspace-enabled")) {chrome.storage.local.set({"hotkey-myspace-enabled": d.sites.myspace});}
+    if(!obj.hasOwnProperty("hotkey-hypem-enabled")) {chrome.storage.local.set({"hotkey-hypem-enabled": d.sites.hypem});}
+    if(!obj.hasOwnProperty("hotkey-soundcloud-enabled")) {chrome.storage.local.set({"hotkey-soundcloud-enabled": d.sites.soundcloud});}
+    if(!obj.hasOwnProperty("hotkey-deezer-enabled")) {chrome.storage.local.set({"hotkey-deezer-enabled": d.sites.deezer});}
+    if(!obj.hasOwnProperty("hotkey-8track-enabled")) {chrome.storage.local.set({"hotkey-8track-enabled": d.sites["8track"]});}
     restore_options();
   });
 }
@@ -72,15 +82,15 @@ function restore_options() {
       if(p == "hotkey-play-next") $("#hotkey-play-next").val(pretty_print(obj[p]));
       if(p == "hotkey-play-prev") $("#hotkey-play-prev").val(pretty_print(obj[p]));
       if(p == "hotkey-mute") $("#hotkey-mute").val(pretty_print(obj[p]));
-      if(p == "hotkey-mk-enabled") {if(obj[p]) $("#hotkey-mk-enabled").prop("checked", true);}
-      if(p == "hotkey-grooveshark-enabled") {if(obj[p]) $("#hotkey-grooveshark-enabled").prop("checked", true);}
-      if(p == "hotkey-bandcamp-enabled") {if(obj[p]) $("#hotkey-bandcamp-enabled").prop("checked", true);}
-      if(p == "hotkey-rdio-enabled") {if(obj[p]) $("#hotkey-rdio-enabled").prop("checked", true);}
-      if(p == "hotkey-spotify-enabled") {if(obj[p]) $("#hotkey-spotify-enabled").prop("checked", true);}
-      if(p == "hotkey-pandora-enabled") {if(obj[p]) $("#hotkey-pandora-enabled").prop("checked", true);}
-      console.log(p + "-" + JSON.stringify(obj[p]));
+      if(p == "hotkey-mk-on") {if(obj[p]) $("#hotkey-mk-on").prop("checked", true);}
+      //Restore multiple site enabled options
+      if(p.slice(-7) == "enabled" && p.slice(0, 6) == "hotkey") {
+        var name = "#" + p;
+        if(obj[p]) $(name).prop("checked", true);
+      }
     }
   });
+  console.log(p + "-" + JSON.stringify(obj[p]));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -113,23 +123,16 @@ $(function() {
     $(this).parent().next().show();
     capturing = true;
   });
-  $("#hotkey-mk-enabled").change(function() {
-    chrome.storage.local.set({"hotkey-mk-enabled": $("#hotkey-mk-enabled").is(":checked")});
+  $("#hotkey-mk-on").change(function() {
+    chrome.storage.local.set({"hotkey-mk-on": $("#hotkey-mk-on").is(":checked")});
   });
-  $("#hotkey-grooveshark-enabled").change(function() {
-    chrome.storage.local.set({"hotkey-grooveshark-enabled": $("#hotkey-grooveshark-enabled").is(":checked")});
-  });
-  $("#hotkey-bandcamp-enabled").change(function() {
-    chrome.storage.local.set({"hotkey-bandcamp-enabled": $("#hotkey-bandcamp-enabled").is(":checked")});
-  });
-  $("#hotkey-rdio-enabled").change(function() {
-    chrome.storage.local.set({"hotkey-rdio-enabled": $("#hotkey-rdio-enabled").is(":checked")});
-  });
-  $("#hotkey-spotify-enabled").change(function() {
-    chrome.storage.local.set({"hotkey-spotify-enabled": $("#hotkey-spotify-enabled").is(":checked")});
-  });
-  $("#hotkey-pandora-enabled").change(function() {
-    chrome.storage.local.set({"hotkey-pandora-enabled": $("#hotkey-pandora-enabled").is(":checked")});
+  //On clicking a site name checkbox
+  $(".site-enable").change(function() {
+    var id = $(this).attr("id");
+    var js_id = "#" + id;
+    var storage_obj = {};
+    storage_obj[id] = $(js_id).is(":checked");
+    chrome.storage.local.set(storage_obj);
   });
   $("#btn-save").click(function() {
     chrome.extension.sendMessage({action: "update_keys"});
