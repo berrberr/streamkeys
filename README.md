@@ -1,5 +1,5 @@
-## Grooveshark hotkeys
-This is a very simple script to send "global" (ie. across the browser) hotkeys to various online media players.<br>
+## Music player hotkeys
+This is a simple script to send "global" (ie. across the browser) hotkeys to various online media players.<br>
 
 ##Default hotkeys:
 
