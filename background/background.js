@@ -1,10 +1,10 @@
 //***
 //Returns a regex that matches where the string is in a url's (domain) name
 //***
-String.prototype.URL_check = (function() {
+String.prototype.URL_check = function() {
   "use strict";
   return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + this + "|www." + this +")+\\.com"));
-});
+};
 
 //Class for storing keycodes and helper functions
 var Keys = function() {
@@ -82,7 +82,7 @@ URL_cache.prototype.remove_by_id = function(id) {
 //***
 //Returns a list of sites to find tabID's for
 //***
-URL_cache.prototype.get_sites_to_find = (function() {
+URL_cache.prototype.get_sites_to_find = function () {
   var tabs_to_find = [];
   for(var name in this.site) {
     if(this.site[name] === null) {
@@ -90,7 +90,18 @@ URL_cache.prototype.get_sites_to_find = (function() {
     }
   }
   return tabs_to_find;
-});
+};
+
+//***
+//Checks if a given URL is from a music site, returns site name if yes, false otherwise
+//***
+URL_cache.prototype.get_site_name_by_url = function(url) {
+  url_check = url.URL_check();
+  for(var name in this.site) {
+    if(url_check.test(name)) return name;
+  }
+  return false;
+};
 
 var hotkey_actions = {"play_pause": true, "play_next": true, "play_prev": true, "mute": true};
 var cache = new URL_cache();
@@ -98,9 +109,16 @@ var hotkeys = new Keys();
 hotkeys.Load();
 
 //***
-//When a tab is closed remove it from the cache
+//When a new tab is created check if it is a music player, if so add it to cache
 //***
-chrome.tabs.onRemoved.addListener(function (tabID, removeInfo) {cache.remove_by_id(tabID);});
+chrome.tabs.onCreated.addListener(function(tab) {
+
+});
+
+//***
+//When a tab is closed if it is in the cache then remove it from the cache
+//***
+chrome.tabs.onRemoved.addListener(function(tabID, removeInfo) {cache.remove_by_id(tabID);});
 
 //***
 //Searches tabs array for the first matching domain of site_name and sends the requested action to that tab
@@ -124,7 +142,27 @@ function send(cache, action) {
   }
 }
 
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+//***
+//Capture hotkeys and send their actions to tab(s) with music player running
+//***
+chrome.commands.onCommand.addListener(function(command) {
+  var tabs_to_find = cache.get_sites_to_find();
+  var action = command.name;
+  chrome.tabs.query({}, function(tabs) {
+    for(var i = 0; i < tabs.length; i++) {
+      for(var j = 0; j < tabs_to_find.length; j++) {
+        if(tabs_to_find[j].URL_check().test(tabs[i].url)){
+          cache.site[tabs_to_find[j]] = tabs[i].id;
+          tabs_to_find.splice(j, 1);
+        }
+      }
+    }
+    console.log("URL CACHE: " + JSON.stringify(cache));
+    send(cache, action);
+  });
+});
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.action == "get_keys") {
     sendResponse(JSON.stringify(hotkeys));
   }

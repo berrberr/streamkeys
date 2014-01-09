@@ -19,5 +19,35 @@
     ]
   }],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
-  "permissions": ["tabs", "<all_urls>", "storage"]
+  "permissions": ["tabs", "<all_urls>", "storage"],
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "default": "Alt+Shift+Q",
+        "mac": "Command+Shift+Q"
+      },
+      "description": "Toggle play/pause"
+    },
+    "play-next": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Play next track"
+    },
+    "play-preve": {
+      "suggested_key": {
+        "default": "Alt+Shift+A",
+        "mac": "Command+Shift+A"
+      },
+      "description": "Play previous track"
+    },
+    "mute": {
+      "suggested_key": {
+        "default": "Alt+Shift+M",
+        "mac": "Command+Shift+M"
+      },
+      "description": "Toggle mute"
+    }
+  }
 }

@@ -135,7 +135,7 @@ $(function() {
     chrome.storage.local.set(storage_obj);
   });
   $("#btn-save").click(function() {
-    chrome.extension.sendMessage({action: "update_keys"});
+    chrome.runtime.sendMessage({action: "update_keys"});
     chrome.tabs.getCurrent(function(tab) { //close this tab
       chrome.tabs.remove(tab.id, function() { });
     });

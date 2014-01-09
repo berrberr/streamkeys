@@ -1,5 +1,5 @@
 (function() {
-  chrome.extension.sendMessage({action: "get_keys"}, function(resp) {
+  chrome.runtime.sendMessage({action: "get_keys"}, function(resp) {
     var hotkeys = JSON.parse(resp);
 
     //***
@@ -38,19 +38,19 @@
     //***
     document.documentElement.addEventListener("keydown", function(k) {
       if(is_key_action("play", k) || hotkeys.mk_enabled && k.keyCode == hotkeys.mk_codes.mk_play) {
-        chrome.extension.sendMessage({action:"play_pause"});
+        chrome.runtime.sendMessage({action:"play_pause"});
         console.log("send play-pause");
       }
       if(is_key_action("next", k) || hotkeys.mk_enabled && k.keyCode == hotkeys.mk_codes.mk_next) {
-        chrome.extension.sendMessage({action:"play_next"});
+        chrome.runtime.sendMessage({action:"play_next"});
         console.log("send play-next");
       }
       if(is_key_action("prev", k) || hotkeys.mk_enabled && k.keyCode == hotkeys.mk_codes.mk_prev) {
-        chrome.extension.sendMessage({action:"play_prev"});
+        chrome.runtime.sendMessage({action:"play_prev"});
         console.log("send play-prev");
       }
       if(is_key_action("mute", k) || hotkeys.mk_enabled && k.keyCode == hotkeys.mk_codes.mk_mute) {
-        chrome.extension.sendMessage({action:"mute"});
+        chrome.runtime.sendMessage({action:"mute"});
         console.log("send mute");
       }
     });
@@ -86,7 +86,7 @@
     //***
     //Recieve a request for media player action. Process request and send a click to requested element
     //***
-    chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       console.log("message recv" + request);
       if(request.action == "update_keys") {
         hotkeys = JSON.parse(request.data);
