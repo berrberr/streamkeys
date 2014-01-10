@@ -1,9 +1,9 @@
 //***
 //Returns a regex that matches where the string is in a url's (domain) name
 //***
-String.prototype.URL_check = function() {
+var URL_check = function(domain) {
   "use strict";
-  return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + this + "|www." + this +")+\\.com"));
+  return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\.com"));
 };
 
 //Class for storing keycodes and helper functions
@@ -86,34 +86,16 @@ URL_cache.prototype.get_sites_to_find = function () {
   var tabs_to_find = [];
   for(var name in this.site) {
     if(this.site[name] === null) {
-      tabs_to_find.push(name);
+      tabs_to_find.push({"name": name, "url_regex": URL_check(name)});
     }
   }
   return tabs_to_find;
-};
-
-//***
-//Checks if a given URL is from a music site, returns site name if yes, false otherwise
-//***
-URL_cache.prototype.get_site_name_by_url = function(url) {
-  url_check = url.URL_check();
-  for(var name in this.site) {
-    if(url_check.test(name)) return name;
-  }
-  return false;
 };
 
 var hotkey_actions = {"play_pause": true, "play_next": true, "play_prev": true, "mute": true};
 var cache = new URL_cache();
 var hotkeys = new Keys();
 hotkeys.Load();
-
-//***
-//When a new tab is created check if it is a music player, if so add it to cache
-//***
-chrome.tabs.onCreated.addListener(function(tab) {
-
-});
 
 //***
 //When a tab is closed if it is in the cache then remove it from the cache
@@ -137,7 +119,7 @@ function send(cache, action) {
   for(var name in cache.site) {
     if(hotkeys.sites[name] && cache.site[name] !== null) { //If the site we are sending to is enabled in the settings, and the tab we are sending to exists
       console.log("BG request:" + action + " SEND TO: " + cache.site[name]);
-      chrome.tabs.sendMessage(cache.site[name], {"action": action, site: name});
+      chrome.tabs.sendMessage(cache.site[name], {"action": action, "site": name});
     }
   }
 }
@@ -147,18 +129,17 @@ function send(cache, action) {
 //***
 chrome.commands.onCommand.addListener(function(command) {
   var tabs_to_find = cache.get_sites_to_find();
-  var action = command.name;
   chrome.tabs.query({}, function(tabs) {
     for(var i = 0; i < tabs.length; i++) {
       for(var j = 0; j < tabs_to_find.length; j++) {
-        if(tabs_to_find[j].URL_check().test(tabs[i].url)){
-          cache.site[tabs_to_find[j]] = tabs[i].id;
+        if(tabs_to_find[j].url_regex.test(tabs[i].url)){
+          cache.site[tabs_to_find[j].name] = tabs[i].id;
           tabs_to_find.splice(j, 1);
         }
       }
     }
     console.log("URL CACHE: " + JSON.stringify(cache));
-    send(cache, action);
+    send(cache, command);
   });
 });
 
@@ -175,20 +156,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
   }
   //This is a request for a hotkey action
-  else if(request.action in hotkey_actions) {
-    var tabs_to_find = cache.get_sites_to_find();
-    var action = request.action;
-    chrome.tabs.query({}, function(tabs) {
-      for(var i = 0; i < tabs.length; i++) {
-        for(var j = 0; j < tabs_to_find.length; j++) {
-          if(tabs_to_find[j].URL_check().test(tabs[i].url)){
-            cache.site[tabs_to_find[j]] = tabs[i].id;
-            tabs_to_find.splice(j, 1);
-          }
-        }
-      }
-      console.log("URL CACHE: " + JSON.stringify(cache));
-      send(cache, action);
-    });
-  }
+  // else if(request.action in hotkey_actions) {
+  //   var tabs_to_find = cache.get_sites_to_find();
+  //   var action = request.action;
+  //   chrome.tabs.query({}, function(tabs) {
+  //     for(var i = 0; i < tabs.length; i++) {
+  //       for(var j = 0; j < tabs_to_find.length; j++) {
+  //         if(tabs_to_find[j].URL_check().test(tabs[i].url)){
+  //           cache.site[tabs_to_find[j]] = tabs[i].id;
+  //           tabs_to_find.splice(j, 1);
+  //         }
+  //       }
+  //     }
+  //     console.log("URL CACHE: " + JSON.stringify(cache));
+  //     send(cache, action);
+  //   });
+  // }
 });

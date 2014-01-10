@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Streamkeys: Global Music Player Hotkeys",
   "description": "Global hotkeys for online music players including support for media keys.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "icons": {"48": "icon48.png", "128": "icon128.png"},
   "options_page": "options.html",
   "background": {
@@ -21,21 +21,21 @@
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
   "permissions": ["tabs", "<all_urls>", "storage"],
   "commands": {
-    "play-pause": {
+    "play_pause": {
       "suggested_key": {
         "default": "Alt+Shift+Q",
         "mac": "Command+Shift+Q"
       },
       "description": "Toggle play/pause"
     },
-    "play-next": {
+    "play_next": {
       "suggested_key": {
         "default": "Alt+Shift+S",
         "mac": "Command+Shift+S"
       },
       "description": "Play next track"
     },
-    "play-preve": {
+    "play_prev": {
       "suggested_key": {
         "default": "Alt+Shift+A",
         "mac": "Command+Shift+A"
