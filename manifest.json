@@ -4,10 +4,8 @@
   "description": "Global hotkeys for online music players including support for media keys.",
   "version": "1.2.0",
   "icons": {"48": "icon48.png", "128": "icon128.png"},
-  "options_page": "options.html",
   "background": {
     "scripts": [
-      "lib/jquery-1.10.2.js",
       "background/background.js"
     ]
   },
@@ -23,22 +21,22 @@
   "commands": {
     "play_pause": {
       "suggested_key": {
-        "default": "Alt+Shift+Q",
-        "mac": "Command+Shift+Q"
+        "default": "MediaPlayPause",
+        "mac": "MediaPlayPause"
       },
       "description": "Toggle play/pause"
     },
     "play_next": {
       "suggested_key": {
-        "default": "Alt+Shift+S",
-        "mac": "Command+Shift+S"
+        "default": "MediaNextTrack",
+        "mac": "MediaNextTrack"
       },
       "description": "Play next track"
     },
     "play_prev": {
       "suggested_key": {
-        "default": "Alt+Shift+A",
-        "mac": "Command+Shift+A"
+        "default": "MediaPrevTrack",
+        "mac": "MediaPrevTrack"
       },
       "description": "Play previous track"
     },

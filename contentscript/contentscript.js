@@ -1,5 +1,3 @@
-console.log(this.chrome);
-
 //chrome.tabs.getCurrent(function(tab){console.log("***TAB" + tab);});
 //var hotkeys = JSON.parse(resp);
 
@@ -52,13 +50,8 @@ function click(elementId, site) {
 //***
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   console.log("message recv", request);
-  if(request.action == "update_keys") {
-    hotkeys = JSON.parse(request.data);
-    console.log(JSON.stringify(hotkeys));
-  } else {
-    if(typeof request !== 'undefined') {
-      console.log("CALL: " + request.site);
-      click(site_ids[request.site][request.action], request.site);
-    }
+  if(typeof request !== 'undefined') {
+    console.log("CALL: " + request.site);
+    click(site_ids[request.site][request.action], request.site);
   }
 });
