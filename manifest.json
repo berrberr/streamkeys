@@ -9,13 +9,20 @@
       "background/background.js"
     ]
   },
-  "content_scripts": [{
-    "matches": [ "<all_urls>" ],
-    "js": [
-      "lib/jquery-1.10.2.js",
-      "contentscript/contentscript.js"
-    ]
-  }],
+  "content_scripts": [ 
+    {
+      "matches": [ "<all_urls>" ],
+      "js": ["lib/jquery-1.10.2.js", "contentscript/contentscript.js"]
+    }, 
+    {
+      "matches": ["*://*.grooveshark.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/GroovesharkController.js"]
+    },
+    {
+      "matches": ["*://*.pandora.com/*"],
+      "js": ["controllers/BaseController.js"]
+    }
+  ],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
   "permissions": ["tabs", "<all_urls>", "storage"],
   "commands": {
