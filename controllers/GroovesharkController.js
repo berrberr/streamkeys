@@ -1,6 +1,12 @@
 var controller = new BaseController({
-  this.selector_playpause = "#play-pause";
-  this.selector_playnext = "#play-next";
-  this.selector_playprev = "#play-prev";
-  this.selector_mute = "#volume";
+  selector_playpause: "#play-pause",
+  selector_playnext: "#play-next",
+  selector_playprev: "#play-prev",
+  selector_mute: "#volume"
 });
+
+controller.init("#play-pause", "#play-next", "#play-prev", "#volume");
+
+controller.inject();
+
+controller.attach_listener(controller);

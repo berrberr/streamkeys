@@ -94,5 +94,5 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 chrome.runtime.onInstalled.addListener(function (details) {
-  chrome.tabs.create({url: "streamkeys_installed.html"});
+  //chrome.tabs.create({url: "streamkeys_installed.html"});
 });

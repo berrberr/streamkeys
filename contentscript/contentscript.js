@@ -48,10 +48,10 @@ function click(elementId, site) {
 //***
 //Recieve a request for media player action. Process request and send a click to requested element
 //***
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log("message recv", request);
-  if(typeof request !== 'undefined') {
-    console.log("CALL: " + request.site);
-    click(site_ids[request.site][request.action], request.site);
-  }
-});
+// chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+//   console.log("message recv", request);
+//   // if(typeof request !== 'undefined') {
+//   //   console.log("CALL: " + request.site);
+//   //   click(site_ids[request.site][request.action], request.site);
+//   // }
+// });
