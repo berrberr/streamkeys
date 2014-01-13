@@ -41,21 +41,17 @@ BaseController.prototype.playprev = function() {
   this.click(this.selector_playprev);
 };
 
-function getThis() {
-  return this;
-}
-
 BaseController.prototype.do_request = function(request, sender, sendResponse) {
   console.log("BASE CONTROLLER MSG: ", request);
-  console.log("BASE CONTROLLER SCOPE: ", getThis());
+  console.log("BASE CONTROLLER SCOPE: ", this);
   if(typeof request !== "undefined") {
-    if(request.action == "play_pause") this.playpause;
-    if(request.action == "play_next") this.playnext;
-    if(request.action ==  "play-prev") this.playprev;
+    if(request.action == "play_pause") this.playpause();
+    if(request.action == "play_next") this.playnext();
+    if(request.action ==  "play-prev") this.playprev();
   }
-}
+};
 
 BaseController.prototype.attach_listener = function() {
-  chrome.runtime.onMessage.addListener(this.do_request);
+  chrome.runtime.onMessage.addListener(this.do_request.bind(this));
   console.log("SCOPE: ", this);
-}
+};
