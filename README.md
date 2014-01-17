@@ -15,3 +15,5 @@ This extension works by sending click events to the elements that control the mu
 ##TODO:
 
 Try to add capturing hotkeys when not focused on page. (not possible with content scripts...)
+
+Switch to chrome commands API for better key capturing
