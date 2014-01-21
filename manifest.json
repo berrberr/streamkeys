@@ -20,30 +20,30 @@
     },
     {
       "matches": ["*://*.pandora.com/*"],
-      "js": ["controllers/BaseController.js"]
+      "js": ["controllers/BaseController.js", "controllers/PandoraController.js"]
     }
   ],
   "web_accessible_resources": ["lib/jquery-1.10.2.js"],
-  "permissions": ["tabs", "<all_urls>", "storage"],
+  "permissions": ["tabs", "storage"],
   "commands": {
     "play_pause": {
       "suggested_key": {
         "default": "MediaPlayPause",
-        "mac": "MediaPlayPause"
+        "mac": "Alt+Shift+2"
       },
       "description": "Toggle play/pause"
     },
     "play_next": {
       "suggested_key": {
         "default": "MediaNextTrack",
-        "mac": "MediaNextTrack"
+        "mac": "Alt+Shift+3"
       },
       "description": "Play next track"
     },
     "play_prev": {
       "suggested_key": {
         "default": "MediaPrevTrack",
-        "mac": "MediaPrevTrack"
+        "mac": "Alt+Shift+1"
       },
       "description": "Play previous track"
     },

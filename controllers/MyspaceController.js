@@ -1,10 +1,10 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: "#play-pause", 
-  playnext: "#play-next", 
-  playprev: "#play-prev", 
-  mute: "#volume"
+  playpause: ".play",
+  playnext: ".next",
+  playprev: ".previous",
+  mute: "#volumeBtn"
 });
 
 controller.attach_listener(controller);

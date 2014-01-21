@@ -3,6 +3,8 @@ var BaseController = function() {
 
   //** Properties **//
   this.selector_playpause = null;
+  this.selector_play = null;
+  this.selector_pause = null;
   this.selector_playnext = null;
   this.selector_playprev = null;
   this.selector_mute = null;
@@ -11,11 +13,15 @@ var BaseController = function() {
 
 };
 
-BaseController.prototype.init = function(playpause, playnext, playprev, mute) {
-  this.selector_playpause = playpause || null;
-  this.selector_playnext = playnext || null;
-  this.selector_playprev = playprev || null;
-  this.selector_mute = mute || null;
+BaseController.prototype.init = function(selectors) {
+  this.selector_playpause = selectors.playpause || null;
+  this.selector_play = selectors.play || null;
+  this.selector_pause = selectors.pause || null;
+  this.selector_playnext = selectors.playnext || null;
+  this.selector_playprev = selectors.playprev || null;
+  this.selector_mute = selectors.mute || null;
+
+  console.log("GSHotkey content script loaded ... ", this);
 };
 
 BaseController.prototype.inject = function() {
@@ -29,8 +35,12 @@ BaseController.prototype.click = function(query_selector) {
 };
 
 BaseController.prototype.playpause = function() {
+  if(this.selector_play !== null && this.selector_pause !== null) {
+    this.playing ? this.click(this.selector_pause) : this.click(this.selector_play);
+  } else {
+    this.click(this.selector_playpause);
+  }
   this.playing = !this.playing;
-  this.click(this.selector_playpause);
 };
 
 BaseController.prototype.playnext = function() {
