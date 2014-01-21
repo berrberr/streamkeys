@@ -1,9 +1,9 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: "#play-pause",
-  playnext: "#next",
-  playprev: "#previous"
+  playpause: "[data-id=play-pause]",
+  playnext: "[data-id=forward]",
+  playprev: "[data-id=rewind]"
 });
 
 controller.attach_listener(controller);

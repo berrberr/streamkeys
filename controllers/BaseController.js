@@ -51,6 +51,10 @@ BaseController.prototype.playprev = function() {
   this.click(this.selector_playprev);
 };
 
+BaseController.prototype.mute = function() {
+  this.click(this.selector_mute);
+};
+
 BaseController.prototype.do_request = function(request, sender, sendResponse) {
   console.log("BASE CONTROLLER MSG: ", request);
   console.log("BASE CONTROLLER SCOPE: ", this);
@@ -58,6 +62,7 @@ BaseController.prototype.do_request = function(request, sender, sendResponse) {
     if(request.action == "play_pause") this.playpause();
     if(request.action == "play_next") this.playnext();
     if(request.action ==  "play-prev") this.playprev();
+    if(request.action ==  "mute") this.mute();
   }
 };
 
