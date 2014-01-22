@@ -18,7 +18,10 @@ var URL_cache = function()
     "pandora": null,
     "rdio": null,
     "spotify": null,
-    "soundcloud": null
+    "soundcloud": null,
+    "google": null,
+    "slacker": null,
+    "thesixtyone": null
   };
 };
 
@@ -79,19 +82,19 @@ function send(cache, action) {
 //***
 chrome.commands.onCommand.addListener(function(command) {
   chrome.runtime.sendMessage({"action": command});
-  // var tabs_to_find = cache.get_sites_to_find();
-  // chrome.tabs.query({}, function(tabs) {
-  //   for(var i = 0; i < tabs.length; i++) {
-  //     for(var j = 0; j < tabs_to_find.length; j++) {
-  //       if(tabs_to_find[j].url_regex.test(tabs[i].url)){
-  //         cache.site[tabs_to_find[j].name] = tabs[i].id;
-  //         tabs_to_find.splice(j, 1);
-  //       }
-  //     }
-  //   }
-  //   console.log("URL CACHE: " + JSON.stringify(cache));
-  //   send(cache, command);
-  // });
+  var tabs_to_find = cache.get_sites_to_find();
+  chrome.tabs.query({}, function(tabs) {
+    for(var i = 0; i < tabs.length; i++) {
+      for(var j = 0; j < tabs_to_find.length; j++) {
+        if(tabs_to_find[j].url_regex.test(tabs[i].url)){
+          cache.site[tabs_to_find[j].name] = tabs[i].id;
+          tabs_to_find.splice(j, 1);
+        }
+      }
+    }
+    console.log("URL CACHE: " + JSON.stringify(cache));
+    send(cache, command);
+  });
 });
 
 //***
