@@ -61,6 +61,10 @@
     {
       "matches": ["*://*.slacker.com/*"],
       "js": ["controllers/BaseController.js", "controllers/SlackerController.js"]
+    },
+    {
+      "matches": ["*://*.jango.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/JangoController.js"]
     }
   ],
   "permissions": ["tabs"],
@@ -68,21 +72,21 @@
     "play_pause": {
       "suggested_key": {
         "default": "MediaPlayPause",
-        "mac": "Alt+Shift+2"
+        "mac": "Ctrl+Shift+2"
       },
       "description": "Toggle play/pause"
     },
     "play_next": {
       "suggested_key": {
         "default": "MediaNextTrack",
-        "mac": "Alt+Shift+3"
+        "mac": "Ctrl+Shift+3"
       },
       "description": "Play next track"
     },
     "play_prev": {
       "suggested_key": {
         "default": "MediaPrevTrack",
-        "mac": "Alt+Shift+1"
+        "mac": "Ctrl+Shift+1"
       },
       "description": "Play previous track"
     },

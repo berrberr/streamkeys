@@ -18,6 +18,7 @@ BaseController.prototype.init = function(selectors) {
   this.selector_play = selectors.play || null;
   this.selector_pause = selectors.pause || null;
   this.selector_playnext = selectors.playnext || null;
+  this.selector_playprev = selectors.playprev || null;
   this.selector_mute = selectors.mute || null;
 
   console.log("GSHotkey content script loaded ... ", this);
@@ -72,8 +73,8 @@ BaseController.prototype.mute = function() {
 };
 
 BaseController.prototype.do_request = function(request, sender, sendResponse) {
-  console.log("BASE CONTROLLER MSG: ", request);
-  console.log("BASE CONTROLLER SCOPE: ", this);
+  //console.log("BASE CONTROLLER MSG: ", request);
+  //console.log("BASE CONTROLLER SCOPE: ", this);
   if(typeof request !== "undefined") {
     if(request.action == "play_pause") this.playpause();
     if(request.action == "play_next") this.playnext();
@@ -84,5 +85,4 @@ BaseController.prototype.do_request = function(request, sender, sendResponse) {
 
 BaseController.prototype.attach_listener = function() {
   chrome.runtime.onMessage.addListener(this.do_request.bind(this));
-  console.log("SCOPE: ", this);
 };

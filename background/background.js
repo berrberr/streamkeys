@@ -21,7 +21,8 @@ var URL_cache = function()
     "soundcloud": null,
     "google": null,
     "slacker": null,
-    "thesixtyone": null
+    "thesixtyone": null,
+    "music.google": null
   };
 };
 
@@ -47,7 +48,6 @@ URL_cache.prototype.get_sites_to_find = function () {
   return tabs_to_find;
 };
 
-var hotkey_actions = {"play_pause": true, "play_next": true, "play_prev": true, "mute": true};
 var cache = new URL_cache();
 
 //***
