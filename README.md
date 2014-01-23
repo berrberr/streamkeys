@@ -3,10 +3,15 @@ This is a simple script to send "global" (ie. across the browser) hotkeys to var
 
 ##Default hotkeys:
 
-* ALT + Q: Toggle play/pause
-* ALT + A: Previous song
-* ALT + S: Next Song
-* ALT + M: Toggle mute
+MAC:
+* Ctrl + Shift + 2: Toggle play/pause
+* Ctrl + Shift + 1: Previous song
+* Ctrl + Shift + 3: Next Song
+* Cmd + Shift + M: Toggle mute
+
+WINDOWS/LINUX
+* Mediakeys: play/pause, next, previous
+* Ctrl + Shift + M: mute
 
 ##Info:
 
@@ -14,6 +19,7 @@ This extension works by sending click events to the elements that control the mu
 
 ##TODO:
 
-Try to add capturing hotkeys when not focused on page. (not possible with content scripts...)
-
-Switch to chrome commands API for better key capturing
+Redo tab stack
+Add possibility of functions to onclick of BaseController
+See if media keys will work with mac
+Test on Ubuntu
