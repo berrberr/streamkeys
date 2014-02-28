@@ -90,8 +90,8 @@ BaseController.prototype.mute = function() {
 };
 
 BaseController.prototype.do_request = function(request, sender, sendResponse) {
-  console.log("BASE CONTROLLER MSG: ", request);
-  console.log("BASE CONTROLLER SCOPE: ", this);
+  //console.log("BASE CONTROLLER MSG: ", request);
+  //console.log("BASE CONTROLLER SCOPE: ", this);
   if(typeof request !== "undefined") {
     if(request.action == "play_pause") this.playpause();
     if(request.action == "play_next") this.playnext();
