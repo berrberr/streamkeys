@@ -44,7 +44,8 @@
     },
     {
       "matches": ["*://*.soundcloud.com/*"],
-      "js": ["controllers/BaseController.js", "controllers/SoundcloudController.js"]
+      "js": ["controllers/BaseController.js", "controllers/SoundcloudController.js"],
+      "all_frames": true
     },
     {
       "matches": ["*://*.spotify.com/*"],

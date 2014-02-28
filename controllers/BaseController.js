@@ -10,6 +10,7 @@ var BaseController = function() {
   this.selector_mute = null;
 
   this.playing = false;
+  this.isInline = false;
 
 };
 
@@ -18,7 +19,20 @@ BaseController.prototype.init = function(selectors) {
   this.selector_play = selectors.play || null;
   this.selector_pause = selectors.pause || null;
   this.selector_playnext = selectors.playnext || null;
+  this.selector_playprev = selectors.playprev || null;
   this.selector_mute = selectors.mute || null;
+
+  if(selectors.inline_playpause) {
+    this.selector_inline_playpause = selectors.inline_playpause || null;
+    this.selector_inline_playnext = selectors.inline_playnext || null;
+    this.selector_inline_playprev = selectors.inline_playprev || null;
+    this.selector_inline_mute = selectors.inline_mute || null;
+
+    //If the inline element is found then assume the player is inline
+    if(document.querySelector(selectors.inline_playpause).length) {
+      this.isInline = true;
+    }
+  }
 
   console.log("GSHotkey content script loaded ... ", this);
 };
@@ -48,14 +62,18 @@ BaseController.prototype.click = function(query_selector) {
 };
 
 BaseController.prototype.playpause = function() {
-  if(this.selector_play !== null && this.selector_pause !== null) {
-    if(this.is_playing()) {
-      this.click(this.selector_pause);
-    } else {
-      this.click(this.selector_play);
-    }
+  if(this.isInline) {
+    this.click(this.selector_inline_playpause);
   } else {
-    this.click(this.selector_playpause);
+    if(this.selector_play !== null && this.selector_pause !== null) {
+      if(this.is_playing()) {
+        this.click(this.selector_pause);
+      } else {
+        this.click(this.selector_play);
+      }
+    } else {
+      this.click(this.selector_playpause);
+    }
   }
 };
 
@@ -84,5 +102,5 @@ BaseController.prototype.do_request = function(request, sender, sendResponse) {
 
 BaseController.prototype.attach_listener = function() {
   chrome.runtime.onMessage.addListener(this.do_request.bind(this));
-  console.log("SCOPE: ", this);
+  console.log('Attached listener for ', this);
 };
