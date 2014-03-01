@@ -98,8 +98,16 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 //***
+//Sent from content scripts on creation
+//***
+chrome.runtime.onMessage.addListener(function(request, sender, response) {
+  console.log("CONTENT SCRIPT TABID:", sender.tab.id);
+});
+
+//***
 //Open info page on install/update
 //***
 chrome.runtime.onInstalled.addListener(function (details) {
   chrome.tabs.create({url: "streamkeys_installed.html"});
 });
+

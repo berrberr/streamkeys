@@ -29,10 +29,14 @@ BaseController.prototype.init = function(selectors) {
     this.selector_inline_mute = selectors.inline_mute || null;
 
     //If the inline element is found then assume the player is inline
-    if(document.querySelector(selectors.inline_playpause).length) {
+    if(document.querySelector(selectors.inline_playpause)) {
       this.isInline = true;
     }
   }
+
+  chrome.runtime.sendMessage({created: true}, function(response){
+    console.log("Told BG we are created");
+  });
 
   console.log("GSHotkey content script loaded ... ", this);
 };
