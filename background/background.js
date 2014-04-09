@@ -22,7 +22,7 @@ var URL_cache = function()
     "google": null,
     "slacker": null,
     "thesixtyone": null,
-    "music.google": null
+    "play.google": null
   };
 };
 
