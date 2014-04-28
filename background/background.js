@@ -108,6 +108,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
 //Open info page on install/update
 //***
 chrome.runtime.onInstalled.addListener(function (details) {
-  chrome.tabs.create({url: "streamkeys_installed.html"});
+  if(details.reason == "install" || details.reason == "update") {
+    chrome.tabs.create({url: "streamkeys_installed.html"});
+  }
 });
 
