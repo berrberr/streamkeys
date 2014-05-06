@@ -12,8 +12,10 @@ var URL_cache = function()
     "8tracks": null,
     "bandcamp": null,
     "deezer": null,
+    "earbits": null,
     "grooveshark": null,
     "hypem": null,
+    "indieshuffle": null,
     "myspace": null,
     "pandora": null,
     "rdio": null,
@@ -108,8 +110,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
 //Open info page on install/update
 //***
 chrome.runtime.onInstalled.addListener(function (details) {
-  if(details.reason == "install" || details.reason == "update") {
-    chrome.tabs.create({url: "streamkeys_installed.html"});
+  if(details.reason == "install") {
+    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
+  } else if(details.reason == "update") {
+    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
   }
 });
 
