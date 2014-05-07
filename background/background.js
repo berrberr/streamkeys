@@ -15,11 +15,11 @@ var URL_cache = function()
     "earbits": null,
     "grooveshark": null,
     "hypem": null,
-    "indieshuffle": null,
     "myspace": null,
     "pandora": null,
     "rdio": null,
     "spotify": null,
+    "songza": null,
     "soundcloud": null,
     "google": null,
     "slacker": null,
@@ -103,7 +103,7 @@ chrome.commands.onCommand.addListener(function(command) {
 //Sent from content scripts on creation
 //***
 chrome.runtime.onMessage.addListener(function(request, sender, response) {
-  console.log("CONTENT SCRIPT TABID:", sender.tab.id);
+  console.log("CONTENT SCRIPT TAB:", sender);
 });
 
 //***

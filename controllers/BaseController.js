@@ -38,7 +38,7 @@ BaseController.prototype.init = function(selectors) {
     console.log("Told BG we are created");
   });
 
-  console.log("GSHotkey content script loaded ... ", this);
+  console.log("GSHotkey content script loaded ... ");
 };
 
 BaseController.prototype.inject = function() {

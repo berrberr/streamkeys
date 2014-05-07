@@ -68,12 +68,12 @@
       "js": ["controllers/BaseController.js", "controllers/JangoController.js"]
     },
     {
-      "matches": ["*://*.indieshuffle.com/*"],
-      "js": ["controllers/BaseController.js", "controllers/IndieshuffleController.js"]
-    },
-    {
       "matches": ["*://*.earbits.com/*"],
       "js": ["controllers/BaseController.js", "controllers/EarbitsController.js"]
+    },
+    {
+      "matches": ["*://*.songza.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/SongzaController.js"]
     }
   ],
   "permissions": ["tabs"],
