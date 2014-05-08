@@ -22,6 +22,8 @@ This extension works by sending click events to the elements that control the mu
 * Redo tab stack
 * Add possibility of calling functions to onclick of BaseController
 * See if media keys can work with mac
-* Test the new global hotkeys in Chrome v34 (stable)
+* ~~Test the new global hotkeys in Chrome v34 (stable)~~ (works)
 * ~~Test on Ubuntu/Linux~~ (works)
 * See if it can work with embedded players (ie. soundcloud). Maybe check for existence of some element, if found add tab to stack (should be done after load)?
+* Add Youtube
+* Add VK
