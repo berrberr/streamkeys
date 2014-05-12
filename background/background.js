@@ -21,10 +21,11 @@ var URL_cache = function()
     "spotify": null,
     "songza": null,
     "soundcloud": null,
-    "google": null,
     "slacker": null,
+    "stitcher": null,
     "thesixtyone": null,
-    "play.google": null
+    "play.google": null,
+    "vk": null
   };
 };
 

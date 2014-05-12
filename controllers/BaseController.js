@@ -1,3 +1,13 @@
+(function() {
+  if(window.sk_log) return;
+
+  window.sk_log = function(msg, obj, err) {
+    obj = obj || "";
+    if(err) { console.error("STREAMKEYS - ERROR: " + msg, obj); }
+    else { console.log("STREAMKEYS - INFO: " + msg, obj); }
+  };
+})();
+
 var BaseController = function() {
   this.name = document.location.hostname;
 
@@ -35,10 +45,10 @@ BaseController.prototype.init = function(selectors) {
   }
 
   chrome.runtime.sendMessage({created: true}, function(response){
-    console.log("Told BG we are created");
+    sk_log("Told BG we are created");
   });
 
-  console.log("GSHotkey content script loaded ... ");
+  sk_log("SK content script loaded ...");
 };
 
 BaseController.prototype.inject = function() {
@@ -57,7 +67,7 @@ BaseController.prototype.is_playing = function() {
     displayStyle = window.getComputedStyle(elem, null).getPropertyValue("display");
   }
 
-  console.log("ISPLAYING: ", (displayStyle == "none"));
+  sk_log("IsPlaying: ", (displayStyle == "none"));
   return (displayStyle == "none");
 };
 
@@ -94,8 +104,6 @@ BaseController.prototype.mute = function() {
 };
 
 BaseController.prototype.do_request = function(request, sender, sendResponse) {
-  //console.log("BASE CONTROLLER MSG: ", request);
-  //console.log("BASE CONTROLLER SCOPE: ", this);
   if(typeof request !== "undefined") {
     if(request.action == "play_pause") this.playpause();
     if(request.action == "play_next") this.playnext();
@@ -106,5 +114,5 @@ BaseController.prototype.do_request = function(request, sender, sendResponse) {
 
 BaseController.prototype.attach_listener = function() {
   chrome.runtime.onMessage.addListener(this.do_request.bind(this));
-  console.log('Attached listener for ', this);
+  sk_log('Attached listener for ', this);
 };
