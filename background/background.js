@@ -6,6 +6,48 @@ var URL_check = function(domain) {
   return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\.com"));
 };
 
+//Class for storing keycodes and helper functions
+var Stored_data = function() {
+  this.sites =
+  {
+    "8tracks": false,
+    "bandcamp": false,
+    "deezer": false,
+    "grooveshark": false,
+    "hypem": false,
+    "myspace": false,
+    "pandora": false,
+    "rdio": false,
+    "spotify": false,
+    "soundcloud": false,
+    "slacker": false,
+    "stitcher": false,
+    "thesixtyone": false,
+    "play.google": false,
+    "vk": false
+  };
+};
+ 
+//***
+//Load setting from chrome extension storage into the Keys object
+//***
+Stored_data.prototype.load = (function() {
+  var _data = this;
+  chrome.storage.local.get(function(obj) {
+    for(var p in obj) {
+      if('hotkey-sites' == p) {
+				var sites = obj[p].split(',');
+        for (var site in _data.sites)
+          _data.sites[site] = -1 != sites.indexOf(site);
+      }
+    }
+		if (!obj['hotkey-sites']) // user didn't open settings, go all-on
+			for (var site in _data.sites)
+          _data.sites[site] = -1 != true;
+    //console.log("HOTKEYS: " + JSON.stringify(hotkeys));
+  });
+});
+
 var URL_cache = function()
 {
   this.site = {
@@ -52,6 +94,8 @@ URL_cache.prototype.get_sites_to_find = function () {
 };
 
 var cache = new URL_cache();
+var data = new Stored_data();
+data.load();
 
 //***
 //When a tab is closed if it is in the cache then remove it from the cache
@@ -73,7 +117,7 @@ function query_tabs(tabs, site_name, request_action) {
 //**
 function send(cache, action) {
   for(var name in cache.site) {
-    if(cache.site[name] !== null) { //If the site we are sending to is enabled in the settings, and the tab we are sending to exists
+    if(data.sites[name] && cache.site[name] !== null) { //If the site we are sending to is enabled in the settings, and the tab we are sending to exists
       console.log("BG request:" + action + " SEND TO: " + cache.site[name]);
       chrome.tabs.sendMessage(cache.site[name], {"action": action, "site": name});
     }
@@ -104,6 +148,9 @@ chrome.commands.onCommand.addListener(function(command) {
 //Sent from content scripts on creation
 //***
 chrome.runtime.onMessage.addListener(function(request, sender, response) {
+	if(request.action == "update_keys") {
+		data.load();
+	}
   console.log("CONTENT SCRIPT TAB:", sender);
 });
 
