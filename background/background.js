@@ -6,28 +6,31 @@ var URL_check = function(domain) {
   return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\.com"));
 };
 
+var sitelist = function(val)
+{
+  return {
+    "8tracks": val,
+    "bandcamp": val,
+    "deezer": val,
+    "grooveshark": val,
+    "hypem": val,
+    "myspace": val,
+    "pandora": val,
+    "rdio": val,
+    "spotify": val,
+    "soundcloud": val,
+    "slacker": val,
+    "stitcher": val,
+    "thesixtyone": val,
+    "play.google": val,
+    "vk": val
+  };
+}
+
 var URL_cache = function()
 {
-  this.site = {
-    "8tracks": null,
-    "bandcamp": null,
-    "deezer": null,
-    "earbits": null,
-    "grooveshark": null,
-    "hypem": null,
-    "myspace": null,
-    "pandora": null,
-    "rdio": null,
-    "spotify": null,
-    "songza": null,
-    "soundcloud": null,
-    "slacker": null,
-    "stitcher": null,
-    "thesixtyone": null,
-    "play.google": null,
-    "vk": null
-  };
-};
+  this.site = sitelist(null);
+}
 
 //***
 //Set a site's tab id to null when it's tab is closed
@@ -51,10 +54,6 @@ URL_cache.prototype.get_sites_to_find = function () {
   return tabs_to_find;
 };
 
-var cache = new URL_cache();
-var data = new Stored_data();
-data.load();
-
 //***
 //When a tab is closed if it is in the cache then remove it from the cache
 //***
@@ -75,11 +74,24 @@ function query_tabs(tabs, site_name, request_action) {
 //**
 function send(cache, action) {
   for(var name in cache.site) {
-    if(data.sites[name] && cache.site[name] !== null) { //If the site we are sending to is enabled in the settings, and the tab we are sending to exists
+    if(sites_enabled[name] && cache.site[name] !== null) { //If the site we are sending to is enabled in the settings, and the tab we are sending to exists
       console.log("BG request:" + action + " SEND TO: " + cache.site[name]);
       chrome.tabs.sendMessage(cache.site[name], {"action": action, "site": name});
     }
   }
+}
+
+//***
+//Load settings from chrome localstorage
+//***
+function load_settings(sites) {
+  chrome.storage.local.get(function(obj) {
+    if(obj.hasOwnProperty("hotkey-sites")) {
+      $.each(sites, function(key, value) {
+        sites[key] = obj["hotkey-sites"][key];
+      });
+    }
+  });
 }
 
 //***
@@ -107,8 +119,8 @@ chrome.commands.onCommand.addListener(function(command) {
 //***
 chrome.runtime.onMessage.addListener(function(request, sender, response) {
 	if(request.action == "update_keys") {
-		data.load();
-	}
+    load_settings(sites_enabled);
+  }
   console.log("CONTENT SCRIPT TAB:", sender);
 });
 
@@ -123,3 +135,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
   }
 });
 
+(function() {
+  window.cache = new URL_cache();
+  window.sites_enabled = sitelist(false);
+  load_settings(sites_enabled);
+})();
