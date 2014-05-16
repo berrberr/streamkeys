@@ -10,125 +10,83 @@
   <h2>Streamkeys Extension Options</h2>
   <div class="form-horizontal">
   <fieldset class="fieldset">
-    <legend>Hotkeys</legend>
-    <div class="form-group">
-      <label for="hotkey-play-pause" class="col-lg-2 control-label">Toggle Play/Pause</label>
-      <div class="col-lg-10">
-        <div class="col-lg-3">
-          <input type="text" class="form-control" id="hotkey-play-pause">
-        </div>
-        <div class="col-lg-7">
-          <div class="col-lg-2">
-            <button class="btn btn-danger btn-sm reset-btn" id="reset-play-pause" value="hotkey-play-pause">Reset</button>
-          </div>
-          <div class="alert alert-danger col-lg-4 capturing-alert" style="display:none;">Capturing key input</div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="hotkey-play-next" class="col-lg-2 control-label">Play Next</label>
-      <div class="col-lg-10">
-        <div class="col-lg-3">
-          <input type="text" class="form-control" id="hotkey-play-next">
-        </div>
-        <div class="col-lg-7">
-          <div class="col-lg-2">
-            <button class="btn btn-danger btn-sm reset-btn" id="reset-play-next" value="hotkey-play-next">Reset</button>
-          </div>
-          <div class="alert alert-danger col-lg-4 capturing-alert" style="display:none;">Capturing key input</div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="hotkey-play-prev" class="col-lg-2 control-label">Play Previous</label>
-      <div class="col-lg-10">
-        <div class="col-lg-3">
-          <input type="text" class="form-control" id="hotkey-play-prev">
-        </div>
-        <div class="col-lg-7">
-          <div class="col-lg-2">
-            <button class="btn btn-danger btn-sm reset-btn" id="reset-play-prev" value="hotkey-play-prev">Reset</button>
-          </div>
-          <div class="alert alert-danger col-lg-4 capturing-alert" style="display:none;">Capturing key input</div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="hotkey-mute" class="col-lg-2 control-label">Toggle Mute</label>
-      <div class="col-lg-10">
-        <div class="col-lg-3">
-          <input type="text" class="form-control" id="hotkey-mute">
-        </div>
-        <div class="col-lg-7">
-          <div class="col-lg-2">
-            <button class="btn btn-danger btn-sm reset-btn" id="reset-mute" value="hotkey-mute">Reset</button>
-          </div>
-          <div class="alert alert-danger col-lg-4 capturing-alert" style="display:none;">Capturing key input</div>
-        </div>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset class="fieldset">
     <legend>Websites</legend>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-8tracks-enabled" class="site-enable"><b>Enable For 8tracks</b>
+        <input type="checkbox" id="8tracks" class="site-enable"><b>Enable For 8tracks</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-bandcamp-enabled" class="site-enable"><b>Enable For Bandcamp</b>
+        <input type="checkbox" id="bandcamp" class="site-enable"><b>Enable For Bandcamp</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-deezer-enabled" class="site-enable"><b>Enable For Deezer</b>
+        <input type="checkbox" id="deezer" class="site-enable"><b>Enable For Deezer</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-grooveshark-enabled" class="site-enable"><b>Enable For Grooveshark</b>
+        <input type="checkbox" id="grooveshark" class="site-enable"><b>Enable For Grooveshark</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-hypem-enabled" class="site-enable"><b>Enable For Hypemachine</b>
+        <input type="checkbox" id="hypem" class="site-enable"><b>Enable For Hypemachine</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-myspace-enabled" class="site-enable"><b>Enable For Myspace</b>
+        <input type="checkbox" id="myspace" class="site-enable"><b>Enable For Myspace</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-pandora-enabled" class="site-enable"><b>Enable For Pandora</b>
+        <input type="checkbox" id="pandora" class="site-enable"><b>Enable For Pandora</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-rdio-enabled" class="site-enable"><b>Enable For Rdio</b>
+        <input type="checkbox" id="rdio" class="site-enable"><b>Enable For Rdio</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-spotify-enabled" class="site-enable"><b>Enable For Spotify Web Player</b>
+        <input type="checkbox" id="spotify" class="site-enable"><b>Enable For Spotify Web Player</b>
       </label>
     </div>
     <div class="checkbox col-lg-10 col-lg-offset-1">
       <label>
-        <input type="checkbox" id="hotkey-soundcloud-enabled" class="site-enable"><b>Enable For Soundcloud</b>
+        <input type="checkbox" id="soundcloud" class="site-enable"><b>Enable For Soundcloud</b>
+      </label>
+    </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="slacker" class="site-enable"><b>Enable For slacker</b>
+      </label>
+    </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="stitcher" class="site-enable"><b>Enable For stitcher</b>
+      </label>
+    </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="thesixtyone" class="site-enable"><b>Enable For thesixtyone</b>
+      </label>
+    </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="play.google" class="site-enable"><b>Enable For Google Music</b>
+      </label>
+    </div>
+    <div class="checkbox col-lg-10 col-lg-offset-1">
+      <label>
+        <input type="checkbox" id="vk" class="site-enable"><b>Enable For Vkontakte</b>
       </label>
     </div>
 
-  </fieldset>
-  <fieldset class="fieldset">
-    <legend>Options</legend>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="hotkey-mk-on"><b>Enable Media Keys</b>
-      </label>
-    </div>
   </fieldset>
   <div style="margin-bottom: 15px;"><button class="btn btn-success btn-md" id="btn-save">Save</button><p style="margin-top:5px;"><em>Note: You will have to refresh your media player tab for these changes to work.</em></p></div>
   <fieldset class="fieldset">
