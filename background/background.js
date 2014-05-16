@@ -6,48 +6,6 @@ var URL_check = function(domain) {
   return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\.com"));
 };
 
-//Class for storing keycodes and helper functions
-var Stored_data = function() {
-  this.sites =
-  {
-    "8tracks": false,
-    "bandcamp": false,
-    "deezer": false,
-    "grooveshark": false,
-    "hypem": false,
-    "myspace": false,
-    "pandora": false,
-    "rdio": false,
-    "spotify": false,
-    "soundcloud": false,
-    "slacker": false,
-    "stitcher": false,
-    "thesixtyone": false,
-    "play.google": false,
-    "vk": false
-  };
-};
- 
-//***
-//Load setting from chrome extension storage into the Keys object
-//***
-Stored_data.prototype.load = (function() {
-  var _data = this;
-  chrome.storage.local.get(function(obj) {
-    for(var p in obj) {
-      if('hotkey-sites' == p) {
-				var sites = obj[p].split(',');
-        for (var site in _data.sites)
-          _data.sites[site] = -1 != sites.indexOf(site);
-      }
-    }
-		if (!obj['hotkey-sites']) // user didn't open settings, go all-on
-			for (var site in _data.sites)
-          _data.sites[site] = -1 != true;
-    //console.log("HOTKEYS: " + JSON.stringify(hotkeys));
-  });
-});
-
 var URL_cache = function()
 {
   this.site = {

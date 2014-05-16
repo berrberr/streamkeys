@@ -24,7 +24,25 @@ function pretty_print(obj) {
 //Store default settings
 //***
 var Defaults = function() {
-  this.sites = "8tracks,bandcamp,deezer,grooveshark,hypem,myspace,pandora,rdio,spotify,soundcloud,slacker,stitcher,thesixtyone,play.google,vk";
+  this.get_sites = function(val) {
+   return {
+    "8tracks": val,
+     "bandcamp": val,
+     "deezer": val,
+     "grooveshark": val,
+     "hypem": val,
+     "myspace": val,
+     "pandora": val,
+     "rdio": val,
+     "spotify": val,
+     "soundcloud": val,
+     "slacker": val,
+     "stitcher": val,
+     "thesixtyone": val,
+     "play.google": val,
+     "vk": val
+    };
+  };
 };
 
 //***
@@ -32,7 +50,7 @@ var Defaults = function() {
 //***
 function load_defaults(d) {
   chrome.storage.local.get(function(obj){
-    if(!obj.hasOwnProperty("hotkey-sites")) {chrome.storage.local.set({"hotkey-sites": d.sites});}
+    if(!obj.hasOwnProperty("hotkey-sites")) {chrome.storage.local.set({"hotkey-sites": d.get_sites(true)});}
     restore_options();
   });
 }
@@ -41,34 +59,31 @@ function load_defaults(d) {
 //Restores form to saved value from chrome storage
 //***
 function restore_options() {
-  chrome.storage.local.get(function(obj){
-    for(var p in obj) {
-      //Restore multiple site enabled options
-      if('hotkey-sites' == p) {
-        var sites = obj[p].split(',');
-        for (var i in sites) {
-					var name = "#" + sites[i].replace(/\./g, '\\.'); // escaping the dot so jQuery won't confuse it with class query
-          if(obj[p]) $(name).prop("checked", true);
+  chrome.storage.local.get(function(obj) {
+    if(obj.hasOwnProperty("hotkey-sites")) {
+      for(var site in obj["hotkey-sites"]) {
+        if(obj["hotkey-sites"].hasOwnProperty(site)) {
+          var name = "#" + site.replace(/\./g, '\\.'); // escaping the dot so jQuery won't confuse it with class query
+          if(obj["hotkey-sites"][site]) $(name).prop("checked", true);
         }
       }
     }
   });
-  console.log(p + "-" + JSON.stringify(obj[p]));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  var default_settings = new Defaults();
   load_defaults(default_settings);
 });
 
 $(function() {
+  window.default_settings = new Defaults();
   //On clicking a site name checkbox
   $(".site-enable").change(function() {
-    sites = [];
+    sites = default_settings.get_sites(false);
     $('.site-enable:checked').each(function(index, site) {
-      sites.push($(site).attr('id'));
+      sites[$(site).attr('id')] = true;
     });
-    chrome.storage.local.set({'hotkey-sites': sites.join(',')});
+    chrome.storage.local.set({'hotkey-sites': sites});
   });
   $("#btn-save").click(function() {
     chrome.runtime.sendMessage({action: "update_keys"});
