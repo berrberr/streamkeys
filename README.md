@@ -27,4 +27,6 @@ This extension works by sending click events to the elements that control the mu
 * See if it can work with embedded players (ie. soundcloud). Maybe check for existence of some element, if found add tab to stack (should be done after load)?
 * Add Youtube
 * ~~Add VK~~ (added)
-* Add options page to enable/disable sites
+* ~~Add options page to enable/disable sites~~
+* Add iheartradio
+* Add mixcloud
