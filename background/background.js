@@ -3,7 +3,7 @@
 //***
 var URL_check = function(domain) {
   "use strict";
-  return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\.com"));
+  return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\."));
 };
 
 var sitelist = function(val)
@@ -14,9 +14,12 @@ var sitelist = function(val)
     "deezer": val,
     "grooveshark": val,
     "hypem": val,
+    "iheart": val,
+    "mixcloud": val,
     "myspace": val,
     "pandora": val,
     "rdio": val,
+    "seesu": val,
     "spotify": val,
     "soundcloud": val,
     "slacker": val,
@@ -84,12 +87,16 @@ function send(cache, action) {
 //***
 //Load settings from chrome localstorage
 //***
-function load_settings(sites) {
+function load_settings() {
   chrome.storage.local.get(function(obj) {
     if(obj.hasOwnProperty("hotkey-sites")) {
-      $.each(sites, function(key, value) {
-        sites[key] = obj["hotkey-sites"][key];
+      $.each(window.sites_enabled, function(key, value) {
+        window.sites_enabled[key] = obj["hotkey-sites"][key];
       });
+    } else {
+      //If we don't find our key in localstorage then assume options page has not
+      //been opened and set all sites to enabled
+      window.sites_enabled = sitelist(true);
     }
   });
 }
@@ -138,5 +145,5 @@ chrome.runtime.onInstalled.addListener(function (details) {
 (function() {
   window.cache = new URL_cache();
   window.sites_enabled = sitelist(false);
-  load_settings(sites_enabled);
+  load_settings();
 })();

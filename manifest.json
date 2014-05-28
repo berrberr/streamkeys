@@ -84,6 +84,18 @@
     {
       "matches": ["*://*.stitcher.com/*"],
       "js": ["controllers/BaseController.js", "controllers/StitcherController.js"]
+    },
+    {
+      "matches": ["*://*.mixcloud.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/MixcloudController.js"]
+    },
+    {
+      "matches": ["*://*.iheart.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/IheartController.js"]
+    },
+    {
+      "matches": ["*://*.seesu.me/*"],
+      "js": ["controllers/BaseController.js", "controllers/SeesuController.js"]
     }
   ],
   "permissions": ["tabs", "storage"],

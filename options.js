@@ -27,20 +27,23 @@ var Defaults = function() {
   this.get_sites = function(val) {
    return {
     "8tracks": val,
-     "bandcamp": val,
-     "deezer": val,
-     "grooveshark": val,
-     "hypem": val,
-     "myspace": val,
-     "pandora": val,
-     "rdio": val,
-     "spotify": val,
-     "soundcloud": val,
-     "slacker": val,
-     "stitcher": val,
-     "thesixtyone": val,
-     "play.google": val,
-     "vk": val
+    "bandcamp": val,
+    "deezer": val,
+    "grooveshark": val,
+    "hypem": val,
+    "iheart": val,
+    "mixcloud": val,
+    "myspace": val,
+    "pandora": val,
+    "rdio": val,
+    "seesu": val,
+    "spotify": val,
+    "soundcloud": val,
+    "slacker": val,
+    "stitcher": val,
+    "thesixtyone": val,
+    "play.google": val,
+    "vk": val
     };
   };
 };
