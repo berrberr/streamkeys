@@ -138,7 +138,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
   if(details.reason == "install") {
     chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
   } else if(details.reason == "update") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
+    //TODO: add this back
+    //chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
   }
 });
 

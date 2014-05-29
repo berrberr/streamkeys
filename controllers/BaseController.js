@@ -51,10 +51,12 @@ BaseController.prototype.init = function(selectors) {
   sk_log("SK content script loaded ...");
 };
 
-BaseController.prototype.inject = function() {
+BaseController.prototype.inject = function(file) {
   var script = document.createElement("script");
-  script.textContent = "window._basecontroller = " + (this) + ";";
-  document.head.appendChild(script);
+  //script.textContent = "window._basecontroller = " + (this) + ";";
+  script.setAttribute('type', 'text/javascript');
+  script.setAttribute('src', file);
+  document.getElementsByTagName("body")[0].appendChild(script);
 };
 
 BaseController.prototype.is_playing = function() {

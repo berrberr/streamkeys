@@ -1,11 +1,33 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: "#player_play_button",
-  play: "#player_play_button",
-  pause: "#player_pause_button",
-  playnext: "#player_skip_button",
-  mute: ".volume_mute"
+  playpause: "#override",
+  playnext: "#override",
+  playprev: "#override"
 });
 
 controller.attach_listener(controller);
+
+// var currentSong = window.su.p && window.su.p.c_song;
+// if (currentSong) {
+//   currentSong.playNext();
+//   currentSong.playPrev();
+//   currentSong.pause();
+//   currentSong.play();
+// }
+
+controller.getCurrentSong = function() {
+  return window.su.p && window.su.p.c_song;
+}
+controller.playpause = function() {
+  //var currentSong = window.su.p && window.su.p.c_song;
+  if(this.getCurrentSong()) this.getCurrentSong().play()
+}
+controller.playnext = function() {
+  if(this.getCurrentSong()) this.getCurrentSong().playNext()
+}
+controller.playprev = function() {
+  if(this.getCurrentSong()) this.getCurrentSong().playPrev()
+}
+
+controller.inject(chrome.extension.getURL("/controllers/SeesuController.js"));
