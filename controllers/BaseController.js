@@ -73,7 +73,12 @@ BaseController.prototype.is_playing = function() {
 };
 
 BaseController.prototype.click = function(query_selector) {
-  document.querySelector(query_selector).click();
+  var ele = document.querySelector(query_selector)
+  if(ele) {
+    ele.click();
+  } else {
+    sk_log('Element not found for click.', ele, true);
+  }
 };
 
 BaseController.prototype.playpause = function() {
