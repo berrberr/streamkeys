@@ -98,7 +98,7 @@
       "js": ["controllers/BaseController.js", "controllers/SeesuController.js"]
     }
   ],
-  "web_accessible_resources": ["controllers/SeesuController.js"],
+  "web_accessible_resources": ["contentscript/seesu_inject.js"],
   "permissions": ["tabs", "storage"],
   "commands": {
     "play_pause": {

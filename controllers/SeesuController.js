@@ -8,26 +8,14 @@ controller.init({
 
 controller.attach_listener(controller);
 
-// var currentSong = window.su.p && window.su.p.c_song;
-// if (currentSong) {
-//   currentSong.playNext();
-//   currentSong.playPrev();
-//   currentSong.pause();
-//   currentSong.play();
-// }
-
-controller.getCurrentSong = function() {
-  return window.su.p && window.su.p.c_song;
-}
 controller.playpause = function() {
-  //var currentSong = window.su.p && window.su.p.c_song;
-  if(this.getCurrentSong()) this.getCurrentSong().play()
+  document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'playpause'}));
 }
 controller.playnext = function() {
-  if(this.getCurrentSong()) this.getCurrentSong().playNext()
+  document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'next'}));
 }
 controller.playprev = function() {
-  if(this.getCurrentSong()) this.getCurrentSong().playPrev()
+  document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'prev'}));
 }
 
-controller.inject(chrome.extension.getURL("/controllers/SeesuController.js"));
+controller.inject(chrome.extension.getURL("/contentscript/seesu_inject.js"));

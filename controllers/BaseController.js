@@ -53,7 +53,6 @@ BaseController.prototype.init = function(selectors) {
 
 BaseController.prototype.inject = function(file) {
   var script = document.createElement("script");
-  //script.textContent = "window._basecontroller = " + (this) + ";";
   script.setAttribute('type', 'text/javascript');
   script.setAttribute('src', file);
   document.getElementsByTagName("body")[0].appendChild(script);
