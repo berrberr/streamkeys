@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(function() {
+  chrome.runtime.sendMessage({action: "get_sites"}, function(response) {
+    console.log("RESP: ", response);
+  });
   window.default_settings = new Defaults();
   //On clicking a site name checkbox
   $(".site-enable").change(function() {

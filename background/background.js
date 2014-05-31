@@ -6,34 +6,35 @@ var URL_check = function(domain) {
   return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\."));
 };
 
+//TODO: iterate over all tabs, check each tabs vs list of ignored sites.
 var sitelist = function(val)
 {
   return {
-    "8tracks": val,
-    "bandcamp": val,
-    "deezer": val,
-    "grooveshark": val,
-    "hypem": val,
-    "iheart": val,
-    "mixcloud": val,
-    "myspace": val,
-    "pandora": val,
-    "rdio": val,
-    "seesu": val,
-    "spotify": val,
-    "soundcloud": val,
-    "slacker": val,
-    "stitcher": val,
-    "thesixtyone": val,
-    "play.google": val,
-    "vk": val
+    "8tracks": {name: val, tabid: val, enabled: val},
+    "bandcamp": {name: val, tabid: val, enabled: val},
+    "deezer": {name: val, tabid: val, enabled: val},
+    "grooveshark": {name: val, tabid: val, enabled: val},
+    "hypem": {name: val, tabid: val, enabled: val},
+    "iheart": {name: val, tabid: val, enabled: val},
+    "mixcloud": {name: val, tabid: val, enabled: val},
+    "myspace": {name: val, tabid: val, enabled: val},
+    "pandora": {name: val, tabid: val, enabled: val},
+    "rdio": {name: val, tabid: val, enabled: val},
+    "seesu": {name: val, tabid: val, enabled: val},
+    "spotify": {name: val, tabid: val, enabled: val},
+    "soundcloud": {name: val, tabid: val, enabled: val},
+    "slacker": {name: val, tabid: val, enabled: val},
+    "stitcher": {name: val, tabid: val, enabled: val},
+    "thesixtyone": {name: val, tabid: val, enabled: val},
+    "play.google": {name: val, tabid: val, enabled: val},
+    "vk": {name: val, tabid: val, enabled: val}
   };
-}
+};
 
 var URL_cache = function()
 {
   this.site = sitelist(null);
-}
+};
 
 //***
 //Set a site's tab id to null when it's tab is closed
@@ -91,7 +92,7 @@ function load_settings() {
   chrome.storage.local.get(function(obj) {
     if(obj.hasOwnProperty("hotkey-sites")) {
       $.each(window.sites_enabled, function(key, value) {
-        window.sites_enabled[key] = obj["hotkey-sites"][key];
+        window.sites_enabled[key].enabled = obj["hotkey-sites"][key];
       });
     } else {
       //If we don't find our key in localstorage then assume options page has not
@@ -108,14 +109,18 @@ chrome.commands.onCommand.addListener(function(command) {
   chrome.runtime.sendMessage({"action": command});
   var tabs_to_find = cache.get_sites_to_find();
   chrome.tabs.query({}, function(tabs) {
-    for(var i = 0; i < tabs.length; i++) {
+    tabs.forEach(function(tab) {
       for(var j = 0; j < tabs_to_find.length; j++) {
         if(tabs_to_find[j].url_regex.test(tabs[i].url)){
           cache.site[tabs_to_find[j].name] = tabs[i].id;
           tabs_to_find.splice(j, 1);
         }
       }
-    }
+      chrome.tabs.sendMessage(tab.id, {"action": action, "site": name});
+    });
+    // tabs_to_find.forEach(function(site) {
+    //   if(site)
+    // });
     console.log("URL CACHE: " + JSON.stringify(cache));
     send(cache, command);
   });
@@ -123,12 +128,14 @@ chrome.commands.onCommand.addListener(function(command) {
 
 //***
 //Sent from content scripts on creation
+//TODO: Move array from options page to a call to background for site list. Why do I have two copies of the same list????? stupid.
 //***
 chrome.runtime.onMessage.addListener(function(request, sender, response) {
-	if(request.action == "update_keys") {
-    load_settings(sites_enabled);
+	if(request.action === "update_keys") load_settings(sites_enabled);
+  if(request.action === "get_sites") {
+    console.log("GETSIUTES");
+    response(window.sites_enabled);
   }
-  console.log("CONTENT SCRIPT TAB:", sender);
 });
 
 //***
