@@ -94,7 +94,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
 //***
 //Open info page on install/update
 //***
-chrome.runtime.onInstalled.addListener(function (details) {
+chrome.runtime.onInstalled.addListener(function(details) {
   if(details.reason == "install") {
     chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
   } else if(details.reason == "update") {
@@ -102,7 +102,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
   }
 });
 
-//TODO: Add chrome.management.onUninstall handler to track uninstalls
 //***
 //Define sk_sites as a sitelist in global context
 //***
