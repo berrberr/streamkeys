@@ -11,99 +11,10 @@
   <div class="form-horizontal">
   <fieldset class="fieldset">
     <legend>Websites</legend>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="8tracks" class="site-enable"><b>Enable For 8tracks</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="bandcamp" class="site-enable"><b>Enable For Bandcamp</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="deezer" class="site-enable"><b>Enable For Deezer</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="grooveshark" class="site-enable"><b>Enable For Grooveshark</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="hypem" class="site-enable"><b>Enable For Hypemachine</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="iheart" class="site-enable"><b>Enable For iHeartRadio</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="mixcloud" class="site-enable"><b>Enable For Mixcloud</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="myspace" class="site-enable"><b>Enable For Myspace</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="pandora" class="site-enable"><b>Enable For Pandora</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="rdio" class="site-enable"><b>Enable For Rdio</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="seesu" class="site-enable"><b>Enable For Seesu.me</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="spotify" class="site-enable"><b>Enable For Spotify Web Player</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="soundcloud" class="site-enable"><b>Enable For Soundcloud</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="slacker" class="site-enable"><b>Enable For Slacker</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="stitcher" class="site-enable"><b>Enable For Stitcher</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="thesixtyone" class="site-enable"><b>Enable For thesixtyone</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="play.google" class="site-enable"><b>Enable For Google Music</b>
-      </label>
-    </div>
-    <div class="checkbox col-lg-10 col-lg-offset-1">
-      <label>
-        <input type="checkbox" id="vk" class="site-enable"><b>Enable For Vkontakte</b>
-      </label>
-    </div>
-
+    <div id="sitelist"></div>
   </fieldset>
-  <div style="margin-bottom: 15px;"><button class="btn btn-success btn-md" id="btn-save">Save</button><p style="margin-top:5px;"><em>Note: You will have to refresh your media player tab for these changes to work.</em></p></div>
+  <div style="margin-bottom: 15px;"><button class="btn btn-success btn-md" id="btn-save">Save</button>
+  <br><br>
   <fieldset class="fieldset">
     <legend>Misc Info</legend>
     <p>Visit the <a href="http://www.streamkeys.com" target="blank">official extension page</a> to check for updates and leave feedback.</p>
@@ -114,6 +25,15 @@
 </body>
 
 <script src="lib/jquery-1.10.2.js"></script>
+<script src="lib/jquery.loadTemplate-1.4.4.min.js"></script>
 <script src="options.js"></script>
+
+<script type="text/html" id="template">
+  <div class="checkbox col-lg-10 col-lg-offset-1">
+    <label>
+      <input data-id="site_id" data-template-bind='{"attribute": "checked", "value": "enabled"}' type="checkbox" class="site-enable"><b><span data-content-append="site_name">Enable For </span></b>
+    </label>
+  </div>
+</script>
 
 </html>
