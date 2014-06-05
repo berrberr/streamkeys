@@ -36,12 +36,11 @@ Sitelist = function()
   this.load_settings = function() {
     var self = this;
     chrome.storage.local.get(function(obj) {
-      if(obj.hasOwnProperty("hotkey-sites")) {
-        $.each(self.sites, function(key, value) {
-          self.sites[key].enabled = obj["hotkey-sites"][key];
-          self.sites[key].url_regex = URL_check(key);
-        });
-      }
+      var objSet = obj.hasOwnProperty("hotkey-sites");
+      $.each(self.sites, function(key, value) {
+        self.sites[key].enabled = objSet ? obj["hotkey-sites"][key] : true;
+        self.sites[key].url_regex = URL_check(key);
+      });
     });
   };
 
@@ -83,7 +82,7 @@ chrome.commands.onCommand.addListener(function(command) {
 chrome.runtime.onMessage.addListener(function(request, sender, response) {
 	if(request.action === "update_keys") {
     console.log("Options page has updated settings. Reloading...")
-    sk_sites.load_settings();
+    window.sk_sites.load_settings();
   }
   if(request.action === "get_sites") {
     console.log("Options page wants the sitelist.");
