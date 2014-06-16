@@ -32,3 +32,6 @@ This extension works by sending click events to the elements that control the mu
 * ~~Add mixcloud~~
 * Add player.edge.ca
 * Add songstr
+* Add di.fm
+* Add radioparadise.com
+* Look into winamp/hbogo
