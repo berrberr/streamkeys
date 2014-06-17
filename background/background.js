@@ -91,6 +91,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
     console.log("Options page wants the sitelist.");
     response(window.sk_sites.sites);
   }
+  if(request.action === "get_commands") {
+    response(window.coms);
+  }
 });
 
 //***
@@ -98,9 +101,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
 //***
 chrome.runtime.onInstalled.addListener(function(details) {
   if(details.reason == "install") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
+    //chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
   } else if(details.reason == "update") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
+    //chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
   }
 });
 
@@ -110,4 +113,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 (function() {
   window.sk_sites = new Sitelist();
   sk_sites.load_settings();
+  chrome.commands.getAll(function(cmds) {
+    window.coms = cmds;
+  });
 })();

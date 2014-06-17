@@ -49,6 +49,9 @@ BaseController.prototype.init = function(selectors) {
   });
 
   sk_log("SK content script loaded ...");
+  chrome.runtime.sendMessage({action: "get_commands"}, function(resp) {
+    window.sk_log(JSON.stringify(resp));
+  });
 };
 
 BaseController.prototype.inject = function(file) {
@@ -82,6 +85,7 @@ BaseController.prototype.click = function(query_selector) {
 };
 
 BaseController.prototype.playpause = function() {
+  sk_log("playpause");
   if(this.isInline) {
     this.click(this.selector_inline_playpause);
   } else {
@@ -98,18 +102,22 @@ BaseController.prototype.playpause = function() {
 };
 
 BaseController.prototype.playnext = function() {
+  sk_log("playnext");
   this.click(this.selector_playnext);
 };
 
 BaseController.prototype.playprev = function() {
+  sk_log("playrev");
   this.click(this.selector_playprev);
 };
 
 BaseController.prototype.mute = function() {
+  sk_log("mute");
   if(typeof this.selector_mute !== "undefined") this.click(this.selector_mute);
 };
 
 BaseController.prototype.do_request = function(request, sender, sendResponse) {
+  window.sk_log("REQUEST RECV");
   if(typeof request !== "undefined") {
     if(request.action == "play_pause") this.playpause();
     if(request.action == "play_next") this.playnext();
