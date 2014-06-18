@@ -104,7 +104,7 @@
     "play_pause": {
       "suggested_key": {
         "default": "MediaPlayPause",
-        "mac": "Command+Shift+2"
+        "mac": "Alt+Shift+P"
       },
       "global": true,
       "description": "Toggle play/pause"

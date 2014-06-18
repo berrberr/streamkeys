@@ -3,8 +3,8 @@
 
   window.sk_log = function(msg, obj, err) {
     obj = obj || "";
-    if(err) { console.error("STREAMKEYS - ERROR: " + msg, obj); }
-    else { console.log("STREAMKEYS - INFO: " + msg, obj); }
+    if(err) { console.error("STREAMKEYS-ERROR: " + msg, obj); }
+    else { console.log("STREAMKEYS-INFO: " + msg, obj); }
   };
 })();
 
@@ -54,11 +54,20 @@ BaseController.prototype.init = function(selectors) {
   });
 };
 
-BaseController.prototype.inject = function(file) {
-  var script = document.createElement("script");
-  script.setAttribute('type', 'text/javascript');
-  script.setAttribute('src', file);
-  document.getElementsByTagName("body")[0].appendChild(script);
+BaseController.prototype.inject = function() {
+  // var script = document.createElement("script");
+  // script.setAttribute('type', 'text/javascript');
+  // script.setAttribute('src', file);
+  // (document.head||document.documentElement).appendChild(script);
+  var self = this;
+  document.addEventListener('SKTEST_function', function(e){
+    if(e.detail) {
+      if(e.detail == "play_pause") self.playpause();
+      if(e.detail == "play_next") self.playnext();
+      if(e.detail == "play_prev") self.playprev();
+      if(e.detail == "mute") self.mute();
+    }
+  });
 };
 
 BaseController.prototype.is_playing = function() {
@@ -77,9 +86,9 @@ BaseController.prototype.is_playing = function() {
 
 BaseController.prototype.click = function(query_selector) {
   var ele = document.querySelector(query_selector)
-  if(ele) {
+  try {
     ele.click();
-  } else {
+  } catch(e) {
     sk_log('Element not found for click.', ele, true);
   }
 };
