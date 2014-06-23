@@ -7,6 +7,4 @@ controller.init({
   mute: "#volume"
 });
 
-controller.inject();
-
 controller.attach_listener(controller);

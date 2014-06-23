@@ -52,6 +52,8 @@ BaseController.prototype.init = function(selectors) {
   chrome.runtime.sendMessage({action: "get_commands"}, function(resp) {
     window.sk_log(JSON.stringify(resp));
   });
+
+  this.inject();
 };
 
 BaseController.prototype.inject = function() {
@@ -62,9 +64,9 @@ BaseController.prototype.inject = function() {
   var self = this;
   document.addEventListener('SKTEST_function', function(e){
     if(e.detail) {
-      if(e.detail == "play_pause") self.playpause();
-      if(e.detail == "play_next") self.playnext();
-      if(e.detail == "play_prev") self.playprev();
+      if(e.detail == "playpause") self.playpause();
+      if(e.detail == "playnext") self.playnext();
+      if(e.detail == "playprev") self.playprev();
       if(e.detail == "mute") self.mute();
     }
   });
@@ -116,7 +118,7 @@ BaseController.prototype.playnext = function() {
 };
 
 BaseController.prototype.playprev = function() {
-  sk_log("playrev");
+  sk_log("playprev");
   this.click(this.selector_playprev);
 };
 
