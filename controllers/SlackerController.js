@@ -1,9 +1,9 @@
 var controller = new BaseController();
 
 controller.init({
-  playPause: "#playerPlayPauseButton",
-  playNext: "#playerSkipButton",
-  playPrev: "#playerSkipBackButton"
+  playPause: "#mini-play",
+  playNext: "#mini-skip",
+  mute: ".volume-icon"
 });
 
 controller.attach_listener(controller);
