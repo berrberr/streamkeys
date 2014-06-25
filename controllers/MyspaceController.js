@@ -1,9 +1,9 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: ".play",
-  playnext: ".next",
-  playprev: ".previous",
+  playPause: ".play",
+  playNext: ".next",
+  playPrev: ".previous",
   mute: "#volumeBtn"
 });
 

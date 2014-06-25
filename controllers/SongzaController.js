@@ -1,8 +1,8 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: ".miniplayer-control-play-pause",
-  playnext: ".miniplayer-control-skip",
+  playPause: ".miniplayer-control-play-pause",
+  playNext: ".miniplayer-control-skip",
   mute: ".miniplayer-volume-icon"
 });
 

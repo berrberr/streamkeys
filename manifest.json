@@ -96,6 +96,22 @@
     {
       "matches": ["*://*.seesu.me/*"],
       "js": ["controllers/BaseController.js", "controllers/SeesuController.js"]
+    },
+    {
+      "matches": ["*://*.songstr.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/SongstrController.js"]
+    },
+    {
+      "matches": ["*://player.edge.ca/*"],
+      "js": ["controllers/BaseController.js", "controllers/EdgeController.js"]
+    },
+    {
+      "matches": ["*://*.di.fm/*"],
+      "js": ["controllers/BaseController.js", "controllers/DiController.js"]
+    },
+    {
+      "matches": ["*://*.radioparadise.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/RadioparadiseController.js"]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],

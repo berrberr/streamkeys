@@ -1,10 +1,10 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: "#player_play_button",
+  playPause: "#player_play_button",
   play: "#player_play_button",
   pause: "#player_pause_button",
-  playnext: "#player_skip_button",
+  playNext: "#player_skip_button",
   mute: ".volume_mute"
 });
 

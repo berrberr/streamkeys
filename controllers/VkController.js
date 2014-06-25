@@ -2,21 +2,21 @@ var controller = new BaseController();
 controller.selector_controlbox = "#head_music";
 
 controller.init({
-  playpause: "#head_play_btn",
-  playnext: ".next.ctrl",
-  playprev: ".prev.ctrl"
+  playPause: "#head_play_btn",
+  playNext: ".next.ctrl",
+  playPrev: ".prev.ctrl"
 });
 
 controller.attach_listener(controller);
 
 //Must have control box open to click the next/prev controls
-controller.playnext = function() {
+controller.playNext = function() {
   this.click(this.selector_controlbox);
-  this.click(this.selector_playnext);
+  this.click(this.selector_playNext);
   this.click(this.selector_controlbox);
 };
-controller.playprev = function() {
+controller.playPrev = function() {
   this.click(this.selector_controlbox);
-  this.click(this.selector_playprev);
+  this.click(this.selector_playPrev);
   this.click(this.selector_controlbox);
 };

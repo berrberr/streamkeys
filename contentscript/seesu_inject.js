@@ -4,16 +4,36 @@
     //Get seesu current song object (thanks Gleb!)
     var song = window.su.p && window.su.p.c_song;
     if(song) {
-      if(e.detail === 'playpause') {
+      if(e.detail === 'playPause') {
         if(song.states.play) {
-          song.pause() 
-        } else { 
-          song.play();
+          try {
+            song.pause();
+            sk_log("playPause");
+          } catch (e) {
+            sk_log("playPause", {}, true);
+          }
+        } else {
+          try {
+            song.play();
+            sk_log("playPause");
+          } catch (e) {
+            sk_log("playPause", {}, true);
+          }
         }
       } else if(e.detail === 'next') {
-        song.playNext();
+        try {
+          song.playNext();
+          sk_log("playNext");
+        } catch (e) {
+          sk_log("playNext", {}, true);
+        }
       } else if(e.detail === 'prev') {
-        song.playPrev();
+        try{
+          song.playPrev();
+          sk_log("playPrev"); 
+        } catch (e) {
+          sk_log("playPrev", {}, true);
+        }
       }
     }
   });

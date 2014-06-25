@@ -1,21 +1,21 @@
 var controller = new BaseController();
 
 controller.init({
-  playpause: "#override",
-  playnext: "#override",
-  playprev: "#override"
+  playPause: "#override",
+  playNext: "#override",
+  playPrev: "#override"
 });
 
 controller.attach_listener(controller);
 
-controller.playpause = function() {
-  document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'playpause'}));
+controller.playPause = function() {
+  document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'playPause'}));
 }
-controller.playnext = function() {
+controller.playNext = function() {
   document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'next'}));
 }
-controller.playprev = function() {
+controller.playPrev = function() {
   document.dispatchEvent(new CustomEvent('streamkeys-cmd', {'detail': 'prev'}));
 }
 
-controller.inject(chrome.extension.getURL("/contentscript/seesu_inject.js"));
+controller.inject_script({url: "/contentscript/seesu_inject.js"});
