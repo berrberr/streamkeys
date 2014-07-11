@@ -13,6 +13,10 @@
   },
   "content_scripts": [
     {
+      "matches": ["*://*.streamkeys.com/*"],
+      "js": ["contentscript/sksite_inject.js"]
+    },
+    {
       "matches": ["*://*.grooveshark.com/*"],
       "js": ["controllers/BaseController.js", "controllers/GroovesharkController.js"]
     },
