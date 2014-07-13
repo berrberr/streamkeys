@@ -1,15 +1,16 @@
+"use strict";
+
 //***
 //@return [RegExp] a regex that matches where the string is in a url's (domain) name
 //***
 var URL_check = function(domain) {
-  "use strict";
   return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\."));
 };
 
 //***
 //Base class for all sites enabled in extension
 //***
-Sitelist = function()
+var Sitelist = function()
 {
   this.sites = {
     "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true, url_regex: null},
@@ -44,9 +45,9 @@ Sitelist = function()
     var self = this;
     chrome.storage.local.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites");
-      $.each(self.sites, function(key, value) {
+      $.each(self.sites, function(key) {
         self.sites[key].enabled = objSet ? obj["hotkey-sites"][key] : true;
-        self.sites[key].url_regex = URL_check(key);
+        self.sites[key].url_regex = new URL_check(key);
       });
     });
   };
@@ -55,8 +56,8 @@ Sitelist = function()
   this.get_enabled = function() {
     return $.map(this.sites, function(val, key) {
       if(val.enabled) return key;
-    })
-  }
+    });
+  };
 
   //@param url [str] url of site to check for
   //@return [bool] true if url matches an enabled site
@@ -65,7 +66,7 @@ Sitelist = function()
     return this.get_enabled().some(function(sitename) {
       return (_sites[sitename].url_regex.test(url));
     });
-  }
+  };
 };
 
 //***
@@ -87,8 +88,8 @@ chrome.commands.onCommand.addListener(function(command) {
 //Messages sent from Options page
 //***
 chrome.runtime.onMessage.addListener(function(request, sender, response) {
-	if(request.action === "update_keys") {
-    console.log("Options page has updated settings. Reloading...")
+  if(request.action === "update_keys") {
+    console.log("Options page has updated settings. Reloading...");
     window.sk_sites.load_settings();
   }
   if(request.action === "get_sites") {
@@ -116,7 +117,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 //***
 (function() {
   window.sk_sites = new Sitelist();
-  sk_sites.load_settings();
+  window.sk_sites.load_settings();
   chrome.commands.getAll(function(cmds) {
     window.coms = cmds;
   });

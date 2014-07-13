@@ -1,7 +1,4 @@
-//Debugging function shortcut
-function chrome_storage() {
-  chrome.storage.local.get(function(obj){console.log("stuff: " + JSON.stringify(obj));});
-}
+"use strict";
 
 function render_site_checkbox(id, name, checked) {
   $("#sitelist").loadTemplate(
@@ -24,11 +21,11 @@ $(function() {
 
     //On clicking a site name checkbox
     $(".site-enable").click(function() {
-      sites = {}
-      $('.site-enable').each(function(index, site) {
-        sites[$(site).attr('id')] = $(site).prop('checked');
+      var sites = {};
+      $(".site-enable").each(function(index, site) {
+        sites[$(site).attr("id")] = $(site).prop("checked");
       });
-      chrome.storage.local.set({'hotkey-sites': sites});
+      chrome.storage.local.set({"hotkey-sites": sites});
     });
   });
 
