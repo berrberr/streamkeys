@@ -106,9 +106,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
 //***
 chrome.runtime.onInstalled.addListener(function(details) {
   if(details.reason == "install") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
+    // chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
   } else if(details.reason == "update") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
+    // chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
   }
 });
 
