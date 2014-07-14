@@ -25,12 +25,24 @@ module.exports = function(grunt) {
           ]
         }
       }
-    }
+    },
+    compress: {
+      main: {
+        options: {
+          archive: "gshotkeys.zip",
+          pretty: true
+        },
+        expand: true,
+        src: ["*.*", "background/**", "contentscript/**", "controllers/**", "css/**", "lib/**"]
+      }
+    },
   });
 
 
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-lintspaces");
+  grunt.loadNpmTasks("grunt-contrib-compress");
   grunt.registerTask("lint", ["jshint"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "compress"]);
   grunt.registerTask("default", ["lint", "lintspaces"]);
 };
