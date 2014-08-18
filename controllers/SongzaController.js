@@ -5,5 +5,3 @@ controller.init({
   playNext: ".miniplayer-control-skip",
   mute: ".miniplayer-volume-icon"
 });
-
-controller.attach_listener(controller);

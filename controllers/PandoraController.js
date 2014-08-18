@@ -6,5 +6,3 @@ controller.init({
   pause: ".pauseButton",
   playNext: ".skipButton"
 });
-
-controller.attach_listener(controller);

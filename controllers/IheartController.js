@@ -1,9 +1,7 @@
 var controller = new BaseController();
 
 controller.init({
-  playPause: ".js-play", 
-  playNext: ".js-next", 
+  playPause: ".js-play",
+  playNext: ".js-next",
   mute: ".js-header-volume"
 });
-
-controller.attach_listener(controller);

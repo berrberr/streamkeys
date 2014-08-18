@@ -4,8 +4,6 @@ controller.init({
   playPause: "#override"
 });
 
-controller.attach_listener(controller);
-
 controller.playPause = function() {
   var doc = document.querySelectorAll("iframe")[0].contentDocument;
   try {

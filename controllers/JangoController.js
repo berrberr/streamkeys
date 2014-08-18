@@ -1,9 +1,8 @@
 var controller = new BaseController();
 
 controller.init({
-  playPause: "#btn-playPause",
+  playPause: "#btn-playpause",
   playNext: "#btn-ff",
-  mute: "#player_volume_icon"
+  mute: "#player_volume_icon",
+  iframe: "[name=content]"
 });
-
-controller.attach_listener(controller);

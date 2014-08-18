@@ -8,57 +8,51 @@ var BaseController = function() {
   this.name = document.location.hostname;
 };
 
-BaseController.prototype.init = function(selectors) {
+BaseController.prototype.init = function(options) {
 
   //** Inject console log formatter **//
-  this.inject_script({script: sk_log});
-  this.inject_test_communicator();
+  this.injectScript({script: sk_log});
 
   //** Properties **//
-  this.selector_playPause = selectors.playPause || null;
-  this.selector_play = selectors.play || null;
-  this.selector_pause = selectors.pause || null;
-  this.selector_playNext = selectors.playNext || null;
-  this.selector_playPrev = selectors.playPrev || null;
-  this.selector_mute = selectors.mute || null;
+  this.selector_playPause = options.playPause || null;
+  this.selector_play = options.play || null;
+  this.selector_pause = options.pause || null;
+  this.selector_playNext = options.playNext || null;
+  this.selector_playPrev = options.playPrev || null;
+  this.selector_mute = options.mute || null;
+  this.selector_iframe = options.iframe || null;
 
   //Optional. Style of play and pause buttons when they are NOT in use
   //EX: When a play button is in use, css class "playing" is added
   //In that case, set play_style to "playing"
-  this.play_style = selectors.playStyle || null;
-  this.pause_style = selectors.pauseStyle || null;
+  this.play_style = options.playStyle || null;
+  this.pause_style = options.pauseStyle || null;
+
+  this.iframe = (typeof options.iframe === "string");
+
+  //Default listener sends actions to main document
+  if(this.iframe) {
+    this.attachFrameListener();
+  } else {
+    this.attachListener();
+  }
 
   chrome.runtime.sendMessage({created: true}, function(response){
     sk_log("Told BG we are created");
   });
 
   sk_log("SK content script loaded");
-  // chrome.runtime.sendMessage({action: "get_commands"}, function(resp) {
-  //   window.sk_log(JSON.stringify(resp));
-  // });
 };
 
-BaseController.prototype.inject_script = function(file) {
+BaseController.prototype.injectScript = function(file) {
   var script = document.createElement("script");
   script.setAttribute('type', 'text/javascript');
   if(file.url) {script.setAttribute('src', chrome.extension.getURL(file.url));}
   if(file.script) {script.innerHTML = file.script;}
   (document.head||document.documentElement).appendChild(script);
-}
-
-BaseController.prototype.inject_test_communicator = function() {
-  var self = this;
-  document.addEventListener('streamkeys-test', function(e){
-    if(e.detail) {
-      if(e.detail == "playPause") self.playPause();
-      if(e.detail == "playNext") self.playNext();
-      if(e.detail == "playPrev") self.playPrev();
-      if(e.detail == "mute") self.mute();
-    }
-  });
 };
 
-BaseController.prototype.is_playing = function() {
+BaseController.prototype.isPlaying = function() {
   var elem = document.querySelector(this.selector_play);
   var displayStyle = "none";
   var isPlaying = false;
@@ -81,41 +75,66 @@ BaseController.prototype.is_playing = function() {
   return isPlaying;
 };
 
-BaseController.prototype.click = function(query_selector, action) {
-  var ele = document.querySelector(query_selector)
+//** Click inside document **//
+BaseController.prototype.click = function(selectorButton, action) {
+  var ele = document.querySelector(selectorButton)
   try {
     ele.click();
     sk_log(action);
   } catch(e) {
-    sk_log("Element not found for click.", ele, true);
+    sk_log("Element not found for click.", selectorButton, true);
   }
 };
 
+//** Click inside an iframe **//
+BaseController.prototype.clickInFrame = function(selectorFrame, selectorButton, action) {
+  var doc = document.querySelector(selectorFrame).contentWindow.document;
+  if (!doc) return null;
+
+  try {
+    doc.querySelector(selectorButton).click();
+    sk_log(action);
+  } catch(e) {
+    sk_log("Element not found for click.", selectorButton, true);
+  }
+};
+
+//TODO: make isPlaying work with iframes
 BaseController.prototype.playPause = function() {
   if(this.selector_play !== null && this.selector_pause !== null) {
-    if(this.is_playing()) {
+    if(this.isPlaying()) {
       this.click(this.selector_pause, "playPause");
     } else {
       this.click(this.selector_play, "playPause");
     }
   } else {
-    this.click(this.selector_playPause, "playPause");
+    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPause, "playPause");
+    else            this.click(this.selector_playPause, "playPause");
   }
 };
 
 BaseController.prototype.playNext = function() {
-  if(this.selector_playNext) this.click(this.selector_playNext, "playNext");
+  if(this.selector_playNext) {
+    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playNext, "playNext");
+    else            this.click(this.selector_playNext, "playNext");
+  }
 };
 
 BaseController.prototype.playPrev = function() {
-  if(this.selector_playPrev) this.click(this.selector_playPrev, "playPrev");
+  if(this.selector_playPrev) {
+    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPrev, "playPrev");
+    else            this.click(this.selector_playPrev, "playPrev");
+  }
 };
 
 BaseController.prototype.mute = function() {
-  if(this.selector_mute) this.click(this.selector_mute, "mute");
+  if(this.selector_mute) {
+    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_mute, "mute");
+    else            this.click(this.selector_mute, "mute");
+  }
 };
 
-BaseController.prototype.do_request = function(request, sender, sendResponse) {
+BaseController.prototype.doRequest = function(request, sender, sendResponse) {
   if(typeof request !== "undefined") {
     if(request.action == "play_pause") this.playPause();
     if(request.action == "play_next") this.playNext();
@@ -124,7 +143,13 @@ BaseController.prototype.do_request = function(request, sender, sendResponse) {
   }
 };
 
-BaseController.prototype.attach_listener = function() {
-  chrome.runtime.onMessage.addListener(this.do_request.bind(this));
-  sk_log('Attached listener for ', this);
+BaseController.prototype.attachListener = function() {
+  chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
+  sk_log("Attached listener for ", this);
 };
+
+BaseController.prototype.attachFrameListener = function() {
+  chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
+  sk_log("Attached frame listener for ", this);
+};
+

@@ -7,8 +7,6 @@ controller.init({
   playPrev: ".prev.ctrl"
 });
 
-controller.attach_listener(controller);
-
 //Must have control box open to click the next/prev controls
 controller.playNext = function() {
   this.click(this.selector_controlbox);

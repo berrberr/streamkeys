@@ -7,5 +7,3 @@ controller.init({
   playNext: "#large_next_song_button",
   playPrev: "#large_previous_song_button"
 });
-
-controller.attach_listener(controller);

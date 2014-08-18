@@ -8,5 +8,3 @@ controller.init({
   pauseStyle: "disabled",
   mute: ".vol-icon"
 });
-
-controller.attach_listener(controller);

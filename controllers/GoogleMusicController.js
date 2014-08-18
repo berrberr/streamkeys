@@ -5,5 +5,3 @@ controller.init({
   playNext: "[data-id=forward]",
   playPrev: "[data-id=rewind]"
 });
-
-controller.attach_listener(controller);

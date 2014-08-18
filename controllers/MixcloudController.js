@@ -1,11 +1,9 @@
 var controller = new BaseController();
 
 controller.init({
-  playPause: "[m-player-play-button]", 
+  playPause: "[m-player-play-button]",
   mute: ".player-volume-percent"
 });
-
-controller.attach_listener(controller);
 
 controller.mute = function() {
   sk_log("mute");

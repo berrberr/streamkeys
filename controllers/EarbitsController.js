@@ -6,5 +6,3 @@ controller.init({
   playPrev: ".btn-rewind",
   mute: ".btn-volume"
 });
-
-controller.attach_listener(controller);

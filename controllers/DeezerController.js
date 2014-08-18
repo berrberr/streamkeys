@@ -8,5 +8,3 @@ controller.init({
   playPrev: "#player_control_prev",
   mute: "#player_volume_0"
 });
-
-controller.attach_listener(controller);

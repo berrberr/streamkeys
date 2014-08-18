@@ -7,5 +7,3 @@ controller.init({
   playNext: "#player_skip_button",
   mute: ".volume_mute"
 });
-
-controller.attach_listener(controller);
