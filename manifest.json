@@ -124,7 +124,7 @@
     "play_pause": {
       "suggested_key": {
         "default": "MediaPlayPause",
-        "mac": "Alt+Shift+P"
+        "mac": "Command+Shift+2"
       },
       "global": true,
       "description": "Toggle play/pause"
@@ -132,7 +132,7 @@
     "play_next": {
       "suggested_key": {
         "default": "MediaNextTrack",
-        "mac": "Command+Shift+3"
+        "mac": "Command+Shift+X"
       },
       "global": true,
       "description": "Play next track"
@@ -140,7 +140,7 @@
     "play_prev": {
       "suggested_key": {
         "default": "MediaPrevTrack",
-        "mac": "Command+Shift+1"
+        "mac": "Command+Shift+Z"
       },
       "global": true,
       "description": "Play previous track"
@@ -148,7 +148,7 @@
     "mute": {
       "suggested_key": {
         "default": "Alt+Shift+M",
-        "mac": "MacCtrl+Shift+M"
+        "mac": "Command+Shift+M"
       },
       "global": true,
       "description": "Toggle mute"
