@@ -14,6 +14,7 @@ var Sitelist = function()
 {
   this.sites = {
     "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true, url_regex: null},
+    "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player", enabled: true, url_regex: null},
     "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true, url_regex: null},
     "deezer": {name: "Deezer", url: "http://www.deezer.com", enabled: true, url_regex: null},
     "di": {name: "Di.fm", url: "http://www.di.fm", enabled: true, url_regex: null},
@@ -25,6 +26,7 @@ var Sitelist = function()
     "jango": {name: "Jango", url: "http://www.jango.com", enabled: true, url_regex: null},
     "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true, url_regex: null},
     "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true, url_regex: null},
+    "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true, url_regex: null},
     "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true, url_regex: null},
     "play.google": {name: "Google Music", url: "http://play.google.com", enabled: true, url_regex: null},
     "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true, url_regex: null},

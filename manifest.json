@@ -116,6 +116,14 @@
     {
       "matches": ["*://*.radioparadise.com/*"],
       "js": ["controllers/BaseController.js", "controllers/RadioparadiseController.js"]
+    },
+    {
+      "matches": ["*://one.npr.org/*"],
+      "js": ["controllers/BaseController.js", "controllers/NprController.js"]
+    },
+    {
+      "matches": ["*://*.amazon.com/gp/dmusic/*"],
+      "js": ["controllers/BaseController.js", "controllers/AmazonController.js"]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],

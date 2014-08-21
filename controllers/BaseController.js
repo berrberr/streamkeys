@@ -24,9 +24,9 @@ BaseController.prototype.init = function(options) {
 
   //Optional. Style of play and pause buttons when they are NOT in use
   //EX: When a play button is in use, css class "playing" is added
-  //In that case, set play_style to "playing"
-  this.play_style = options.playStyle || null;
-  this.pause_style = options.pauseStyle || null;
+  //In that case, set playStyle to "playing"
+  this.playStyle = options.playStyle || null;
+  this.pauseStyle = options.pauseStyle || null;
 
   this.iframe = (typeof options.iframe === "string");
 
@@ -53,20 +53,20 @@ BaseController.prototype.injectScript = function(file) {
 };
 
 BaseController.prototype.isPlaying = function() {
-  var elem = document.querySelector(this.selector_play);
-  var displayStyle = "none";
-  var isPlaying = false;
+  var playEl = document.querySelector(this.selector_play),
+      displayStyle = "none",
+      isPlaying = false;
 
   //Check for play/pause style overrides
-  if(this.play_style && this.pause_style) {
+  if(this.playStyle && this.pauseStyle) {
     //Check if the class list contains the class that is only active when play button is playing
-    isPlaying = elem.classList.contains(this.play_style);
+    isPlaying = playEl.classList.contains(this.playStyle);
   } else {
     //hack to get around sometimes not being able to read css properties that are not inline
-    if (elem.currentStyle) {
-      displayStyle = elem.currentStyle.display;
+    if (playEl.currentStyle) {
+      displayStyle = playEl.currentStyle.display;
     } else if (window.getComputedStyle) {
-      displayStyle = window.getComputedStyle(elem, null).getPropertyValue("display");
+      displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
     }
     isPlaying = (displayStyle == "none");
   }
