@@ -124,6 +124,10 @@
     {
       "matches": ["*://*.amazon.com/gp/dmusic/*"],
       "js": ["controllers/BaseController.js", "controllers/AmazonController.js"]
+    },
+    {
+      "matches": ["*://*.7digital.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/7digitalController.js"]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],

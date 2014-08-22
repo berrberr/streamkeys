@@ -13,6 +13,7 @@ var URL_check = function(domain) {
 var Sitelist = function()
 {
   this.sites = {
+    "7digital": {name: "7digital", url: "http://www.7digital.com", enabled: true, url_regex: null},
     "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true, url_regex: null},
     "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player", enabled: true, url_regex: null},
     "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true, url_regex: null},
