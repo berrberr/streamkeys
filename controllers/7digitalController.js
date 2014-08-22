@@ -1,9 +1,9 @@
 var controller = new BaseController();
 
 controller.init({
-  playPause: "#control-play",
-  play: "#control-play",
-  pause: "#control-pause",
+  playPause: ".css-icon.jp-play",
+  play: ".css-icon.jp-play",
+  pause: ".css-icon.jp-pause",
   playNext: "#control-forward",
   playPrev: "#control-back",
   mute: "#volume"
