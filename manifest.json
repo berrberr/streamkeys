@@ -132,6 +132,10 @@
     {
       "matches": ["*://*.plex.tv/*"],
       "js": ["controllers/BaseController.js", "controllers/PlexController.js"]
+    },
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/YoutubeController.js"]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],
@@ -140,7 +144,7 @@
     "play_pause": {
       "suggested_key": {
         "default": "MediaPlayPause",
-        "mac": "Command+Shift+2"
+        "mac": "Alt+Shift+2"
       },
       "global": true,
       "description": "Toggle play/pause"
@@ -148,7 +152,7 @@
     "play_next": {
       "suggested_key": {
         "default": "MediaNextTrack",
-        "mac": "Command+Shift+X"
+        "mac": "Alt+Shift+3"
       },
       "global": true,
       "description": "Play next track"
@@ -156,7 +160,7 @@
     "play_prev": {
       "suggested_key": {
         "default": "MediaPrevTrack",
-        "mac": "Command+Shift+Z"
+        "mac": "Alt+Shift+1"
       },
       "global": true,
       "description": "Play previous track"
@@ -164,7 +168,7 @@
     "mute": {
       "suggested_key": {
         "default": "Alt+Shift+M",
-        "mac": "Command+Shift+M"
+        "mac": "Alt+Shift+M"
       },
       "global": true,
       "description": "Toggle mute"

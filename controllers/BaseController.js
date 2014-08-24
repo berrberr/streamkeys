@@ -30,6 +30,9 @@ BaseController.prototype.init = function(options) {
 
   this.iframe = (typeof options.iframe === "string");
 
+  //Set to true if the play/pause buttons share the same element
+  this.buttonSwitch = options.buttonSwitch || false;
+
   //Default listener sends actions to main document
   if(this.iframe) {
     this.attachFrameListener();
@@ -57,18 +60,23 @@ BaseController.prototype.isPlaying = function() {
       displayStyle = "none",
       isPlaying = false;
 
-  //Check for play/pause style overrides
-  if(this.playStyle && this.pauseStyle) {
-    //Check if the class list contains the class that is only active when play button is playing
-    isPlaying = playEl.classList.contains(this.playStyle);
+  if(this.buttonSwitch) {
+    //If playEl does not exist then it is currently playing
+    isPlaying = (playEl === null);
   } else {
-    //hack to get around sometimes not being able to read css properties that are not inline
-    if (playEl.currentStyle) {
-      displayStyle = playEl.currentStyle.display;
-    } else if (window.getComputedStyle) {
-      displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+    //Check for play/pause style overrides
+    if(this.playStyle && this.pauseStyle) {
+      //Check if the class list contains the class that is only active when play button is playing
+      isPlaying = playEl.classList.contains(this.playStyle);
+    } else {
+      //hack to get around sometimes not being able to read css properties that are not inline
+      if (playEl.currentStyle) {
+        displayStyle = playEl.currentStyle.display;
+      } else if (window.getComputedStyle) {
+        displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+      }
+      isPlaying = (displayStyle == "none");
     }
-    isPlaying = (displayStyle == "none");
   }
 
   sk_log("IsPlaying: " + isPlaying);
@@ -77,7 +85,8 @@ BaseController.prototype.isPlaying = function() {
 
 //** Click inside document **//
 BaseController.prototype.click = function(selectorButton, action) {
-  var ele = document.querySelector(selectorButton)
+  var ele = document.querySelector(selectorButton);
+
   try {
     ele.click();
     sk_log(action);

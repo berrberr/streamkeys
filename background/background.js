@@ -41,7 +41,8 @@ var Sitelist = function()
     "slacker": {name: "Slacker", url: "http://www.slacker.com", enabled: true, url_regex: null},
     "stitcher": {name: "Stitcher", url: "http://www.stitcher.com", enabled: true, url_regex: null},
     "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true, url_regex: null},
-    "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true, url_regex: null}
+    "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true, url_regex: null},
+    "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, url_regex: null}
   };
 
   //Get site settings from localstorage
