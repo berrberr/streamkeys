@@ -160,7 +160,7 @@
     "play_prev": {
       "suggested_key": {
         "default": "MediaPrevTrack",
-        "mac": "Alt+Shift+1"
+        "mac": "Alt+Shift+E"
       },
       "global": true,
       "description": "Play previous track"
