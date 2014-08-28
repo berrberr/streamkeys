@@ -111,9 +111,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, response) {
 //***
 chrome.runtime.onInstalled.addListener(function(details) {
   if(details.reason == "install") {
-    // chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
+    //Only open the site if not already on it
+    //streamkeys-install session var will be created on click of install button on streamkeys site
+    var fromSite = sessionStorage.getItem("streamkeys-install");
+    if(fromSite !== null) chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
   } else if(details.reason == "update") {
-    // chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
+    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
   }
 });
 
