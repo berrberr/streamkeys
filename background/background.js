@@ -42,7 +42,7 @@ var Sitelist = function()
     "stitcher": {name: "Stitcher", url: "http://www.stitcher.com", enabled: true, url_regex: null},
     "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true, url_regex: null},
     "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true, url_regex: null},
-    "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, url_regex: null}
+    "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: false, url_regex: null}
   };
 
   //Get site settings from localstorage
@@ -51,7 +51,7 @@ var Sitelist = function()
     chrome.storage.local.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites");
       $.each(self.sites, function(key) {
-        self.sites[key].enabled = objSet ? obj["hotkey-sites"][key] : true;
+        self.sites[key].enabled = objSet ? obj["hotkey-sites"][key] : self.sites[key].enabled;
         self.sites[key].url_regex = new URL_check(key);
       });
     });
@@ -113,10 +113,12 @@ chrome.runtime.onInstalled.addListener(function(details) {
   if(details.reason == "install") {
     //Only open the site if not already on it
     //streamkeys-install session var will be created on click of install button on streamkeys site
-    var fromSite = sessionStorage.getItem("streamkeys-install");
-    if(fromSite !== null) chrome.tabs.create({url: "http://www.streamkeys.com/help.html?installed=true"});
+    //TODO: figure out how to make this work
+    //var fromSite = sessionStorage.getItem("streamkeys-install");
+    //if(fromSite === null)
+    chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
   } else if(details.reason == "update") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/help.html?updated=true"});
+    chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
   }
 });
 
