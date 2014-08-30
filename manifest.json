@@ -136,6 +136,10 @@
     {
       "matches": ["*://*.youtube.com/*"],
       "js": ["controllers/BaseController.js", "controllers/YoutubeController.js"]
+    },
+    {
+      "matches": ["*://music.sonyentertainmentnetwork.com/*"],
+      "js": ["controllers/BaseController.js", "controllers/SonyMusicUnlimited.js"]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],

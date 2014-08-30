@@ -38,6 +38,7 @@ var Sitelist = function()
     "soundcloud": {name: "Soundcloud", url: "http://www.soundcloud.com", enabled: true, url_regex: null},
     "songstr": {name: "Songstr", url: "http://www.songstr.com", enabled: true, url_regex: null},
     "songza": {name: "Songza", url: "http://www.songza.com", enabled: true, url_regex: null},
+    "sonymusicunlimited": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com", enabled: true, url_regex: null},
     "slacker": {name: "Slacker", url: "http://www.slacker.com", enabled: true, url_regex: null},
     "stitcher": {name: "Stitcher", url: "http://www.stitcher.com", enabled: true, url_regex: null},
     "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true, url_regex: null},
