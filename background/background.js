@@ -26,6 +26,7 @@ var Sitelist = function()
     "iheart": {name: "iHeartRadio", url: "http://www.iheart.com", enabled: true, url_regex: null},
     "jango": {name: "Jango", url: "http://www.jango.com", enabled: true, url_regex: null},
     "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true, url_regex: null},
+    "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com", enabled: true, url_regex: null},
     "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true, url_regex: null},
     "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true, url_regex: null},
     "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true, url_regex: null},
