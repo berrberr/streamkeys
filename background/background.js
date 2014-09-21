@@ -54,7 +54,7 @@ var Sitelist = function()
     chrome.storage.local.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites");
       $.each(self.sites, function(key) {
-        self.sites[key].enabled = objSet && obj["hotkey-sites"][key] && obj["hotkey-sites"][key] || self.sites[key].enabled;
+        if(objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) self.sites[key].enabled = obj["hotkey-sites"][key];
         self.sites[key].url_regex = new URL_check(key);
       });
     });
