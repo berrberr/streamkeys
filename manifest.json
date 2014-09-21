@@ -140,6 +140,14 @@
     {
       "matches": ["*://music.sonyentertainmentnetwork.com/*"],
       "js": ["controllers/BaseController.js", "controllers/SonyMusicUnlimited.js"]
+    },
+    {
+      "matches": ["*://*.bop.fm/*"],
+      "js": ["controllers/BaseController.js", "controllers/BopfmController.js"]
+    },
+    {
+      "matches": ["*://*.last.fm/*"],
+      "js": ["controllers/BaseController.js", "controllers/LastfmController.js"]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],

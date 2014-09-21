@@ -17,6 +17,7 @@ var Sitelist = function()
     "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true, url_regex: null},
     "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player", enabled: true, url_regex: null},
     "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true, url_regex: null},
+    "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true, url_regex: null},
     "deezer": {name: "Deezer", url: "http://www.deezer.com", enabled: true, url_regex: null},
     "di": {name: "Di.fm", url: "http://www.di.fm", enabled: true, url_regex: null},
     "earbits": {name: "Earbits", url: "http://www.earbits.com", enabled: true, url_regex: null},
@@ -25,6 +26,7 @@ var Sitelist = function()
     "hypem": {name: "Hypemachine", url: "http://www.hypem.com", enabled: true, url_regex: null},
     "iheart": {name: "iHeartRadio", url: "http://www.iheart.com", enabled: true, url_regex: null},
     "jango": {name: "Jango", url: "http://www.jango.com", enabled: true, url_regex: null},
+    "last": {name: "LastFm", url: "http://www.last.fm", enabled: true, url_regex: null},
     "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true, url_regex: null},
     "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com", enabled: true, url_regex: null},
     "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true, url_regex: null},
@@ -52,7 +54,7 @@ var Sitelist = function()
     chrome.storage.local.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites");
       $.each(self.sites, function(key) {
-        self.sites[key].enabled = objSet ? obj["hotkey-sites"][key] : self.sites[key].enabled;
+        self.sites[key].enabled = objSet && obj["hotkey-sites"][key] && obj["hotkey-sites"][key] || self.sites[key].enabled;
         self.sites[key].url_regex = new URL_check(key);
       });
     });
@@ -117,9 +119,9 @@ chrome.runtime.onInstalled.addListener(function(details) {
     //TODO: figure out how to make this work
     //var fromSite = sessionStorage.getItem("streamkeys-install");
     //if(fromSite === null)
-    chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
+    //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
   } else if(details.reason == "update") {
-    chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
+    //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
   }
 });
 
