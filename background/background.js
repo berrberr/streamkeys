@@ -33,6 +33,7 @@ var Sitelist = function()
     "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true, url_regex: null},
     "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true, url_regex: null},
     "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true, url_regex: null},
+    "pleer": {name: "Pleer.com", url: "http://pleer.com", enabled: true, url_regex: null},
     "play.google": {name: "Google Music", url: "http://play.google.com", enabled: true, url_regex: null},
     "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true, url_regex: null},
     "rdio": {name: "Rdio", url: "http://www.rdio.com", enabled: true, url_regex: null},
