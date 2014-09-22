@@ -50,8 +50,7 @@
     },
     {
       "matches": ["*://*.soundcloud.com/*"],
-      "js": ["controllers/BaseController.js", "controllers/SoundcloudController.js"],
-      "all_frames": true
+      "js": ["controllers/BaseController.js", "controllers/SoundcloudController.js"]
     },
     {
       "matches": ["*://*.spotify.com/*"],
@@ -156,6 +155,10 @@
     {
       "js": [ "controllers/BaseController.js", "controllers/PleerComController.js" ],
       "matches": [ "*://*.pleer.com/*" ]
+    },
+    {
+      "js": [ "controllers/BaseController.js", "controllers/YouarelisteningtoController.js" ],
+      "matches": [ "*://*.youarelistening.to/*" ]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],

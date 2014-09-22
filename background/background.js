@@ -47,6 +47,7 @@ var Sitelist = function()
     "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true, url_regex: null},
     "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true, url_regex: null},
     "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true, url_regex: null},
+    "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", enabled: true, url_regex: null},
     "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: false, url_regex: null}
   };
 
