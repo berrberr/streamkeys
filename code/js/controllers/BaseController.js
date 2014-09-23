@@ -4,11 +4,9 @@ function sk_log(msg, obj, err) {
   else { console.log("STREAMKEYS-INFO: " + msg, obj); }
 };
 
-var BaseController = function() {
-  this.name = document.location.hostname;
-};
-
+function BaseController();
 BaseController.prototype.init = function(options) {
+  this.name = document.location.hostname;
 
   //** Inject console log formatter **//
   this.injectScript({script: sk_log});
@@ -162,3 +160,8 @@ BaseController.prototype.attachFrameListener = function() {
   sk_log("Attached frame listener for ", this);
 };
 
+
+var singleton = new BaseController();
+module.exports = {
+  init: function(options) { singleton.init(options).bind(singleton); }
+}

@@ -1,0 +1,393 @@
+{
+    "manifest_version": 2,
+    "homepage_url": "http://www.streamkeys.com",
+    "icons": {
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "options_page": "options.html",
+    "background": {
+        "scripts": [
+            "lib/jquery-1.10.2.js",
+            "background/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.streamkeys.com/*"
+            ],
+            "js": [
+                "contentscript/sksite_inject.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.grooveshark.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/GroovesharkController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.pandora.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/PandoraController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.8tracks.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/8tracksController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.bandcamp.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/BandcampController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.deezer.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/DeezerController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.hypem.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/HypemController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.myspace.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/MyspaceController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.rdio.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/RdioController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.soundcloud.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SoundcloudController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.spotify.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SpotifyController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://play.google.com/music/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/GoogleMusicController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.thesixtyone.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/ThesixtyoneController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.slacker.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SlackerController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.jango.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/JangoController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.earbits.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/EarbitsController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.songza.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SongzaController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.vk.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/VkController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.stitcher.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/StitcherController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.mixcloud.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/MixcloudController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.iheart.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/IheartController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.seesu.me/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SeesuController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.songstr.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SongstrController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://player.edge.ca/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/EdgeController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.di.fm/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/DiController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.radioparadise.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/RadioparadiseController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://one.npr.org/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/NprController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.amazon.com/gp/dmusic/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/AmazonController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.7digital.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/7digitalController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.plex.tv/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/PlexController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.youtube.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/YoutubeController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://music.sonyentertainmentnetwork.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/SonyMusicUnlimited.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.bop.fm/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/BopfmController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.last.fm/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/LastfmController.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.tunein.com/*"
+            ],
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/TuneinController.js"
+            ]
+        },
+        {
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/PleerComController.js"
+            ],
+            "matches": [
+                "*://*.pleer.com/*"
+            ]
+        },
+        {
+            "js": [
+                "controllers/BaseController.js",
+                "controllers/YouarelisteningtoController.js"
+            ],
+            "matches": [
+                "*://*.youarelistening.to/*"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "contentscript/seesu_inject.js"
+    ],
+    "permissions": [
+        "tabs",
+        "storage"
+    ],
+    "commands": {
+        "play_pause": {
+            "suggested_key": {
+                "default": "MediaPlayPause",
+                "mac": "Alt+Shift+2"
+            },
+            "global": true,
+            "description": "Toggle play/pause"
+        },
+        "play_next": {
+            "suggested_key": {
+                "default": "MediaNextTrack",
+                "mac": "Alt+Shift+3"
+            },
+            "global": true,
+            "description": "Play next track"
+        },
+        "play_prev": {
+            "suggested_key": {
+                "default": "MediaPrevTrack",
+                "mac": "Alt+Shift+E"
+            },
+            "global": true,
+            "description": "Play previous track"
+        },
+        "mute": {
+            "suggested_key": {
+                "default": "Alt+Shift+M",
+                "mac": "Alt+Shift+M"
+            },
+            "global": true,
+            "description": "Toggle mute"
+        }
+    },
+    "name": "Streamkeys",
+    "version": "1.3.7",
+    "description": "Global hotkeys for online music players including support for media keys."
+}
