@@ -159,6 +159,10 @@
     {
       "js": [ "controllers/BaseController.js", "controllers/YouarelisteningtoController.js" ],
       "matches": [ "*://*.youarelistening.to/*" ]
+    },
+    {
+      "js": [ "controllers/BaseController.js", "controllers/AmbientsleepingpillController.js" ],
+      "matches": [ "*://*.ambientsleepingpill.com/" ]
     }
   ],
   "web_accessible_resources": ["contentscript/seesu_inject.js"],
