@@ -3,7 +3,8 @@
 /* global module, require */
 module.exports = function(grunt) {
 
-  var jsFiles = ["Gruntfile.js", "options.js", "background/background.js"];
+  var jsFiles = ["Gruntfile.js", "options.js", "background/background.js", "contentscript/*.js"];
+  var jsonFiles = ["manifest.json", "package.json"];
 
   grunt.initConfig({
     jshint: {
@@ -36,13 +37,19 @@ module.exports = function(grunt) {
         src: ["*.*", "background/**", "contentscript/**", "controllers/**", "css/**", "lib/**"]
       }
     },
+    jsonlint: {
+      sample: {
+        src: [ jsonFiles ]
+      }
+    }
   });
 
 
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-contrib-compress");
-  grunt.registerTask("lint", ["jshint"]);
-  grunt.registerTask("rel", ["jshint", "lintspaces", "compress"]);
-  grunt.registerTask("default", ["lint", "lintspaces"]);
+  grunt.loadNpmTasks("grunt-jsonlint");
+  grunt.registerTask("lint", ["jshint", "jsonlint"]);
+  grunt.registerTask("rel", ["lint", "compress"]);
+  grunt.registerTask("default", ["lint"]);
 };
