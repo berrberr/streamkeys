@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: "gshotkeys.zip",
+          archive: "streamkeys.zip",
           pretty: true
         },
         expand: true,
