@@ -2,13 +2,12 @@
   "use strict";
 
   var BaseController = function() { return this; };
-  var sk_log = require("../modules/sk_log.js").sk_log;
+  var sk_log = require("../modules/sk_log.js");
 
   BaseController.prototype.init = function(options) {
     this.name = document.location.hostname;
 
     //** Inject console log formatter **//
-    //this.injectScript({script: sk_log});
 
     //** Properties **//
     this.selector_playPause = options.playPause || null;
@@ -37,7 +36,7 @@
       this.attachListener();
     }
 
-    chrome.runtime.sendMessage({created: true}, function(response) {
+    chrome.runtime.sendMessage({created: true}, function() {
       sk_log("Told BG we are created");
     });
 
@@ -140,7 +139,7 @@
     }
   };
 
-  BaseController.prototype.doRequest = function(request, sender, sendResponse) {
+  BaseController.prototype.doRequest = function(request) {
     if(typeof request !== "undefined") {
       if(request.action == "play_pause") this.playPause();
       if(request.action == "play_next") this.playNext();

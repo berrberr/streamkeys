@@ -1,8 +1,10 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#play-pause",
-  playNext: "#play-next",
-  playPrev: "#play-prev",
-  mute: "#volume"
-});
+  require("../modules/BaseController.js").init({
+    playPause: "#play-pause",
+    playNext: "#play-next",
+    playPrev: "#play-prev",
+    mute: "#volume"
+  });
+})();

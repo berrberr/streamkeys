@@ -1,7 +1,9 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#audio_player-play",
-  playNext: "#audio_player-skip",
-  mute: "#audio_player-volume"
-});
+  require("../modules/BaseController.js").init({
+    playPause: "#audio_player-play",
+    playNext: "#audio_player-skip",
+    mute: "#audio_player-volume"
+  });
+})();

@@ -5,11 +5,10 @@
         "48": "icon48.png",
         "128": "icon128.png"
     },
-    "options_page": "options.html",
+    "options_page": "html/options.html",
     "background": {
         "scripts": [
-            "lib/jquery-1.10.2.js",
-            "js/background/background.js"
+            "js/background.js"
         ]
     },
     "content_scripts": [
@@ -18,7 +17,7 @@
                 "*://*.streamkeys.com/*"
             ],
             "js": [
-                "js/contentscript/sksite_inject.js"
+                "js/sksite_inject.js"
             ]
         },
         {
@@ -26,7 +25,6 @@
                 "*://*.grooveshark.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/GroovesharkController.js"
             ]
         },
@@ -35,7 +33,6 @@
                 "*://*.pandora.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/PandoraController.js"
             ]
         },
@@ -44,7 +41,6 @@
                 "*://*.8tracks.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/8tracksController.js"
             ]
         },
@@ -61,7 +57,6 @@
                 "*://*.deezer.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/DeezerController.js"
             ]
         },
@@ -70,7 +65,6 @@
                 "*://*.hypem.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/HypemController.js"
             ]
         },
@@ -79,7 +73,6 @@
                 "*://*.myspace.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/MyspaceController.js"
             ]
         },
@@ -88,7 +81,6 @@
                 "*://*.rdio.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/RdioController.js"
             ]
         },
@@ -97,7 +89,6 @@
                 "*://*.soundcloud.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SoundcloudController.js"
             ]
         },
@@ -106,7 +97,6 @@
                 "*://*.spotify.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SpotifyController.js"
             ]
         },
@@ -115,7 +105,6 @@
                 "*://play.google.com/music/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/GoogleMusicController.js"
             ]
         },
@@ -124,7 +113,6 @@
                 "*://*.thesixtyone.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/ThesixtyoneController.js"
             ]
         },
@@ -133,7 +121,6 @@
                 "*://*.slacker.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SlackerController.js"
             ]
         },
@@ -142,7 +129,6 @@
                 "*://*.jango.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/JangoController.js"
             ]
         },
@@ -151,7 +137,6 @@
                 "*://*.earbits.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/EarbitsController.js"
             ]
         },
@@ -160,7 +145,6 @@
                 "*://*.songza.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SongzaController.js"
             ]
         },
@@ -169,7 +153,6 @@
                 "*://*.vk.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/VkController.js"
             ]
         },
@@ -178,7 +161,6 @@
                 "*://*.stitcher.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/StitcherController.js"
             ]
         },
@@ -187,7 +169,6 @@
                 "*://*.mixcloud.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/MixcloudController.js"
             ]
         },
@@ -196,7 +177,6 @@
                 "*://*.iheart.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/IheartController.js"
             ]
         },
@@ -205,7 +185,6 @@
                 "*://*.seesu.me/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SeesuController.js"
             ]
         },
@@ -214,7 +193,6 @@
                 "*://*.songstr.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SongstrController.js"
             ]
         },
@@ -223,7 +201,6 @@
                 "*://player.edge.ca/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/EdgeController.js"
             ]
         },
@@ -232,7 +209,6 @@
                 "*://*.di.fm/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/DiController.js"
             ]
         },
@@ -241,7 +217,6 @@
                 "*://*.radioparadise.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/RadioparadiseController.js"
             ]
         },
@@ -250,7 +225,6 @@
                 "*://one.npr.org/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/NprController.js"
             ]
         },
@@ -259,7 +233,6 @@
                 "*://*.amazon.com/gp/dmusic/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/AmazonController.js"
             ]
         },
@@ -268,7 +241,6 @@
                 "*://*.7digital.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/7digitalController.js"
             ]
         },
@@ -277,7 +249,6 @@
                 "*://*.plex.tv/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/PlexController.js"
             ]
         },
@@ -286,7 +257,6 @@
                 "*://*.youtube.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/YoutubeController.js"
             ]
         },
@@ -295,7 +265,6 @@
                 "*://music.sonyentertainmentnetwork.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/SonyMusicUnlimited.js"
             ]
         },
@@ -304,7 +273,6 @@
                 "*://*.bop.fm/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/BopfmController.js"
             ]
         },
@@ -313,7 +281,6 @@
                 "*://*.last.fm/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/LastfmController.js"
             ]
         },
@@ -322,31 +289,28 @@
                 "*://*.tunein.com/*"
             ],
             "js": [
-                "js/controllers/BaseController.js",
                 "js/controllers/TuneinController.js"
             ]
         },
         {
-            "js": [
-                "js/controllers/BaseController.js",
-                "js/controllers/PleerComController.js"
-            ],
             "matches": [
                 "*://*.pleer.com/*"
+            ],
+            "js": [
+                "js/controllers/PleerComController.js"
             ]
         },
         {
-            "js": [
-                "js/controllers/BaseController.js",
-                "js/controllers/YouarelisteningtoController.js"
-            ],
             "matches": [
                 "*://*.youarelistening.to/*"
+            ],
+            "js": [
+                "js/controllers/YouarelisteningtoController.js"
             ]
         }
     ],
     "web_accessible_resources": [
-        "js/contentscript/seesu_inject.js"
+        "js/seesu_inject.js"
     ],
     "permissions": [
         "tabs",

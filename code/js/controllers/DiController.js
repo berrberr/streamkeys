@@ -1,6 +1,8 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#ctl-play",
-  mute: "#btn-volume"
-});
+  require("../modules/BaseController.js").init({
+    playPause: "#ctl-play",
+    mute: "#btn-volume"
+  });
+})();

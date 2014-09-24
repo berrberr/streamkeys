@@ -1,19 +1,23 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#override",
-  playNext: "#override",
-  playPrev: "#override"
-});
+  var controller = require("../modules/BaseController.js").init({
+    playPause: "#override",
+    playNext: "#override",
+    playPrev: "#override"
+  });
 
-controller.playPause = function() {
-  document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "playPause"}));
-}
-controller.playNext = function() {
-  document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "next"}));
-}
-controller.playPrev = function() {
-  document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "prev"}));
-}
+  /* Overrides */
+  controller.playPause = function() {
+    document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "playPause"}));
+  };
+  controller.playNext = function() {
+    document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "next"}));
+  };
+  controller.playPrev = function() {
+    document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "prev"}));
+  };
 
-controller.injectScript({url: "/contentscript/seesu_inject.js"});
+  /* */
+  controller.injectScript({url: "/js/seesu_inject.js"});
+})();

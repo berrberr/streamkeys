@@ -1,10 +1,12 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#playButton",
-  play: "#playButton",
-  pause: "#stopButton",
-  playStyle: "disabled",
-  pauseStyle: "disabled",
-  mute: ".vol-icon"
-});
+  require("../modules/BaseController.js").init({
+    playPause: "#playButton",
+    play: "#playButton",
+    pause: "#stopButton",
+    playStyle: "disabled",
+    pauseStyle: "disabled",
+    mute: ".vol-icon"
+  });
+})();

@@ -2,11 +2,11 @@
   "browser": true,
   "esnext": true,
   "globals": {
-    "$": false,
-    "console": false,
-    "chrome": false,
-    "require": false,
-    "define": false
+    "console": true,
+    "chrome": true,
+    "require": true,
+    "define": true,
+    "module": true
   },
   "globalstrict": true,
   "quotmark": "double",

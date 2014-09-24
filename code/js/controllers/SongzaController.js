@@ -1,7 +1,9 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: ".miniplayer-control-play-pause",
-  playNext: ".miniplayer-control-skip",
-  mute: ".miniplayer-volume-icon"
-});
+  require("../modules/BaseController.js").init({
+    playPause: ".miniplayer-control-play-pause",
+    playNext: ".miniplayer-control-skip",
+    mute: ".miniplayer-volume-icon"
+  });
+})();

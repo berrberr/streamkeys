@@ -1,21 +1,17 @@
-"use strict";
-
-/* global module, require */
 module.exports = function(grunt) {
 
-  var pkg = grunt.file.readJSON("package.json");
-  var mnf = grunt.file.readJSON("code/manifest.json");
+  var pkg = grunt.file.readJSON("package.json"),
+      mnf = grunt.file.readJSON("code/manifest.json"),
+      fileMaps = { browserify: {}, uglify: {} },
+      jsFiles = grunt.file.expand(["code/js/**/*.js", "!code/js/lib/*"]),
+      file,
+      files = grunt.file.expand({cwd:"code/js/"}, ["**/*.js"]);
 
-  var fileMaps = { browserify: {}, uglify: {} };
-  var jsFiles = [];
-  var file, files = grunt.file.expand({cwd:"code/js/"}, ["**/*.js"]);
   for (var i = 0; i < files.length; i++) {
-    file = files[i];
-    jsFiles[i] = "code/js/" + file;
+    var file = files[i];
     fileMaps.browserify["build/unpacked-dev/js/" + file] = "code/js/" + file;
     fileMaps.uglify["build/unpacked-prod/js/" + file] = "build/unpacked-dev/js/" + file;
   }
-  console.log("JSFILES: ", jsFiles);
 
   grunt.initConfig({
 
@@ -67,14 +63,10 @@ module.exports = function(grunt) {
 
     lintspaces: {
       all: {
-        src: [
-          jsFiles
-        ],
+        src: [jsFiles, "!*.min.js"],
         options: {
           editorconfig: ".editorconfig",
-          ignores: [
-            "js-comments"
-          ]
+          ignores: ["js-comments"]
         }
       }
     },
@@ -113,7 +105,7 @@ module.exports = function(grunt) {
     }
   );
 
-  grunt.registerTask("lint", ["jshint"]);
+  grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "compress"]);
   grunt.registerTask("default", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
     "mkdir:js", "browserify"]);

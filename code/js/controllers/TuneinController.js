@@ -1,9 +1,7 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: ".playbutton-cont",
-});
-
-// play: "#tuner.playing",
-// pause: "#tuner.stopped"
-// buttonSwitch: true
+  require("../modules/BaseController.js").init({
+    playPause: ".playbutton-cont",
+  });
+})();

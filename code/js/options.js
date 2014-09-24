@@ -1,18 +1,19 @@
-"use strict";
+;(function() {
+  "use strict";
 
-function render_site_checkbox(id, name, checked) {
-  $("#sitelist").loadTemplate(
-    $("#template"),
-    {
-      site_id: id,
-      site_name: name,
-      enabled: checked
-    },
-    {append: true}
-  );
-}
+  var $ = require("./lib/jquery-1.11.1.min.js");
+  function render_site_checkbox(id, name, checked) {
+    $("#sitelist").loadTemplate(
+      $("#template"),
+      {
+        site_id: id,
+        site_name: name,
+        enabled: checked
+      },
+      {append: true}
+    );
+  }
 
-$(function() {
   chrome.runtime.sendMessage({action: "get_sites"}, function(response) {
     console.log("RESP: ", response);
     $.each(response, function(key, val) {
@@ -35,4 +36,4 @@ $(function() {
       chrome.tabs.remove(tab.id, function() { });
     });
   });
-});
+})();

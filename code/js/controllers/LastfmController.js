@@ -1,9 +1,11 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#radioControlPlay",
-  play: "#radioControlPlay",
-  pause: "#radioControlPause",
-  playNext: "#radioControlSkip",
-  like: "#radioControlLove"
-});
+  require("../modules/BaseController.js").init({
+    playPause: "#radioControlPlay",
+    play: "#radioControlPlay",
+    pause: "#radioControlPause",
+    playNext: "#radioControlSkip",
+    like: "#radioControlLove"
+  });
+})();

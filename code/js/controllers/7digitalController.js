@@ -1,10 +1,12 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: ".css-icon.jp-play",
-  play: ".css-icon.jp-play",
-  pause: ".css-icon.jp-pause",
-  playNext: "#control-forward",
-  playPrev: "#control-back",
-  mute: "#volume"
-});
+  require("../modules/BaseController.js").init({
+    playPause: ".css-icon.jp-play",
+    play: ".css-icon.jp-play",
+    pause: ".css-icon.jp-pause",
+    playNext: "#control-forward",
+    playPrev: "#control-back",
+    mute: "#volume"
+  });
+})();

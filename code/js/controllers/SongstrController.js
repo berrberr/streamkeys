@@ -1,5 +1,7 @@
-var controller = new BaseController();
+;(function() {
+  "use strict";
 
-controller.init({
-  playPause: "#playing_control"
-});
+  require("../modules/BaseController.js").init({
+    playPause: "#playing_control"
+  });
+})();
