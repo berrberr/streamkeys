@@ -1,167 +1,167 @@
-function sk_log(msg, obj, err) {
-  obj = obj || "";
-  if(err) { console.error("STREAMKEYS-ERROR: " + msg, obj); }
-  else { console.log("STREAMKEYS-INFO: " + msg, obj); }
-};
+;(function() {
+  "use strict";
 
-function BaseController();
-BaseController.prototype.init = function(options) {
-  this.name = document.location.hostname;
+  var BaseController = function() { return this; };
+  var sk_log = require("../modules/sk_log.js").sk_log;
 
-  //** Inject console log formatter **//
-  this.injectScript({script: sk_log});
+  BaseController.prototype.init = function(options) {
+    this.name = document.location.hostname;
 
-  //** Properties **//
-  this.selector_playPause = options.playPause || null;
-  this.selector_play = options.play || null;
-  this.selector_pause = options.pause || null;
-  this.selector_playNext = options.playNext || null;
-  this.selector_playPrev = options.playPrev || null;
-  this.selector_mute = options.mute || null;
-  this.selector_iframe = options.iframe || null;
+    //** Inject console log formatter **//
+    //this.injectScript({script: sk_log});
 
-  //Optional. Style of play and pause buttons when they are NOT in use
-  //EX: When a play button is in use, css class "playing" is added
-  //In that case, set playStyle to "playing"
-  this.playStyle = options.playStyle || null;
-  this.pauseStyle = options.pauseStyle || null;
+    //** Properties **//
+    this.selector_playPause = options.playPause || null;
+    this.selector_play = options.play || null;
+    this.selector_pause = options.pause || null;
+    this.selector_playNext = options.playNext || null;
+    this.selector_playPrev = options.playPrev || null;
+    this.selector_mute = options.mute || null;
+    this.selector_iframe = options.iframe || null;
 
-  this.iframe = (typeof options.iframe === "string");
+    //Optional. Style of play and pause buttons when they are NOT in use
+    //EX: When a play button is in use, css class "playing" is added
+    //In that case, set playStyle to "playing"
+    this.playStyle = options.playStyle || null;
+    this.pauseStyle = options.pauseStyle || null;
 
-  //Set to true if the play/pause buttons share the same element
-  this.buttonSwitch = options.buttonSwitch || false;
+    this.iframe = (typeof options.iframe === "string");
 
-  //Default listener sends actions to main document
-  if(this.iframe) {
-    this.attachFrameListener();
-  } else {
-    this.attachListener();
-  }
+    //Set to true if the play/pause buttons share the same element
+    this.buttonSwitch = options.buttonSwitch || false;
 
-  chrome.runtime.sendMessage({created: true}, function(response){
-    sk_log("Told BG we are created");
-  });
-
-  sk_log("SK content script loaded");
-};
-
-BaseController.prototype.injectScript = function(file) {
-  var script = document.createElement("script");
-  script.setAttribute('type', 'text/javascript');
-  if(file.url) {script.setAttribute('src', chrome.extension.getURL(file.url));}
-  if(file.script) {script.innerHTML = file.script;}
-  (document.head||document.documentElement).appendChild(script);
-};
-
-BaseController.prototype.isPlaying = function() {
-  var playEl = document.querySelector(this.selector_play),
-      displayStyle = "none",
-      isPlaying = false;
-
-  if(this.buttonSwitch) {
-    //If playEl does not exist then it is currently playing
-    isPlaying = (playEl === null);
-  } else {
-    //Check for play/pause style overrides
-    if(this.playStyle && this.pauseStyle) {
-      //Check if the class list contains the class that is only active when play button is playing
-      isPlaying = playEl.classList.contains(this.playStyle);
+    //Default listener sends actions to main document
+    if(this.iframe) {
+      this.attachFrameListener();
     } else {
-      //hack to get around sometimes not being able to read css properties that are not inline
-      if (playEl.currentStyle) {
-        displayStyle = playEl.currentStyle.display;
-      } else if (window.getComputedStyle) {
-        displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+      this.attachListener();
+    }
+
+    chrome.runtime.sendMessage({created: true}, function(response) {
+      sk_log("Told BG we are created");
+    });
+
+    sk_log("SK content script loaded");
+  };
+
+  BaseController.prototype.injectScript = function(file) {
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    if(file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
+    if(file.script) {script.innerHTML = file.script;}
+    (document.head||document.documentElement).appendChild(script);
+  };
+
+  BaseController.prototype.isPlaying = function() {
+    var playEl = document.querySelector(this.selector_play),
+        displayStyle = "none",
+        isPlaying = false;
+
+    if(this.buttonSwitch) {
+      //If playEl does not exist then it is currently playing
+      isPlaying = (playEl === null);
+    } else {
+      //Check for play/pause style overrides
+      if(this.playStyle && this.pauseStyle) {
+        //Check if the class list contains the class that is only active when play button is playing
+        isPlaying = playEl.classList.contains(this.playStyle);
+      } else {
+        //hack to get around sometimes not being able to read css properties that are not inline
+        if (playEl.currentStyle) {
+          displayStyle = playEl.currentStyle.display;
+        } else if (window.getComputedStyle) {
+          displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+        }
+        isPlaying = (displayStyle == "none");
       }
-      isPlaying = (displayStyle == "none");
     }
-  }
 
-  sk_log("IsPlaying: " + isPlaying);
-  return isPlaying;
-};
+    sk_log("IsPlaying: " + isPlaying);
+    return isPlaying;
+  };
 
-//** Click inside document **//
-BaseController.prototype.click = function(selectorButton, action) {
-  var ele = document.querySelector(selectorButton);
+  //** Click inside document **//
+  BaseController.prototype.click = function(selectorButton, action) {
+    var ele = document.querySelector(selectorButton);
 
-  try {
-    ele.click();
-    sk_log(action);
-  } catch(e) {
-    sk_log("Element not found for click.", selectorButton, true);
-  }
-};
+    try {
+      ele.click();
+      sk_log(action);
+    } catch(e) {
+      sk_log("Element not found for click.", selectorButton, true);
+    }
+  };
 
-//** Click inside an iframe **//
-BaseController.prototype.clickInFrame = function(selectorFrame, selectorButton, action) {
-  var doc = document.querySelector(selectorFrame).contentWindow.document;
-  if (!doc) return null;
+  //** Click inside an iframe **//
+  BaseController.prototype.clickInFrame = function(selectorFrame, selectorButton, action) {
+    var doc = document.querySelector(selectorFrame).contentWindow.document;
+    if (!doc) return null;
 
-  try {
-    doc.querySelector(selectorButton).click();
-    sk_log(action);
-  } catch(e) {
-    sk_log("Element not found for click.", selectorButton, true);
-  }
-};
+    try {
+      doc.querySelector(selectorButton).click();
+      sk_log(action);
+    } catch(e) {
+      sk_log("Element not found for click.", selectorButton, true);
+    }
+  };
 
-//TODO: make isPlaying work with iframes
-BaseController.prototype.playPause = function() {
-  if(this.selector_play !== null && this.selector_pause !== null) {
-    if(this.isPlaying()) {
-      this.click(this.selector_pause, "playPause");
+  //TODO: make isPlaying work with iframes
+  BaseController.prototype.playPause = function() {
+    if(this.selector_play !== null && this.selector_pause !== null) {
+      if(this.isPlaying()) {
+        this.click(this.selector_pause, "playPause");
+      } else {
+        this.click(this.selector_play, "playPause");
+      }
     } else {
-      this.click(this.selector_play, "playPause");
+      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPause, "playPause");
+      else            this.click(this.selector_playPause, "playPause");
     }
-  } else {
-    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPause, "playPause");
-    else            this.click(this.selector_playPause, "playPause");
-  }
-};
+  };
 
-BaseController.prototype.playNext = function() {
-  if(this.selector_playNext) {
-    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playNext, "playNext");
-    else            this.click(this.selector_playNext, "playNext");
-  }
-};
+  BaseController.prototype.playNext = function() {
+    if(this.selector_playNext) {
+      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playNext, "playNext");
+      else            this.click(this.selector_playNext, "playNext");
+    }
+  };
 
-BaseController.prototype.playPrev = function() {
-  if(this.selector_playPrev) {
-    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPrev, "playPrev");
-    else            this.click(this.selector_playPrev, "playPrev");
-  }
-};
+  BaseController.prototype.playPrev = function() {
+    if(this.selector_playPrev) {
+      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPrev, "playPrev");
+      else            this.click(this.selector_playPrev, "playPrev");
+    }
+  };
 
-BaseController.prototype.mute = function() {
-  if(this.selector_mute) {
-    if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_mute, "mute");
-    else            this.click(this.selector_mute, "mute");
-  }
-};
+  BaseController.prototype.mute = function() {
+    if(this.selector_mute) {
+      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_mute, "mute");
+      else            this.click(this.selector_mute, "mute");
+    }
+  };
 
-BaseController.prototype.doRequest = function(request, sender, sendResponse) {
-  if(typeof request !== "undefined") {
-    if(request.action == "play_pause") this.playPause();
-    if(request.action == "play_next") this.playNext();
-    if(request.action == "play_prev") this.playPrev();
-    if(request.action == "mute") this.mute();
-  }
-};
+  BaseController.prototype.doRequest = function(request, sender, sendResponse) {
+    if(typeof request !== "undefined") {
+      if(request.action == "play_pause") this.playPause();
+      if(request.action == "play_next") this.playNext();
+      if(request.action == "play_prev") this.playPrev();
+      if(request.action == "mute") this.mute();
+    }
+  };
 
-BaseController.prototype.attachListener = function() {
-  chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
-  sk_log("Attached listener for ", this);
-};
+  BaseController.prototype.attachListener = function() {
+    chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
+    sk_log("Attached listener for ", this);
+  };
 
-BaseController.prototype.attachFrameListener = function() {
-  chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
-  sk_log("Attached frame listener for ", this);
-};
+  BaseController.prototype.attachFrameListener = function() {
+    chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
+    sk_log("Attached frame listener for ", this);
+  };
 
 
-var singleton = new BaseController();
-module.exports = {
-  init: function(options) { singleton.init(options).bind(singleton); }
-}
+  var singleton = new BaseController();
+  module.exports = {
+    init: function(options) { singleton.init(options); }
+  };
+})();

@@ -6,8 +6,12 @@
 //   playPrev: ".prevbutton"
 // });
 
-var controller = require('BaseController.js').init({
-  playPause: ".playbutton",
-  playNext: ".nextbutton",
-  playPrev: ".prevbutton"
-});
+;(function() {
+  "use strict";
+
+  require("./BaseController.js").init({
+    playPause: ".playbutton",
+    playNext: ".nextbutton",
+    playPrev: ".prevbutton"
+  });
+})();
