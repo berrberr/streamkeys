@@ -1,8 +1,8 @@
 ;(function() {
   "use strict";
 
-  require("../modules/BaseController.js").init({
-    playPause: ".btn-playPause",
+  require("BaseController").init({
+    playPause: ".btn-playpause",
     playNext: ".btn-skip",
     playPrev: ".btn-rewind",
     mute: ".btn-volume"

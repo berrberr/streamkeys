@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  var $ = require("./lib/jquery-1.11.1.min.js");
+  var $ = require("jquery");
+  require("./lib/jquery.loadTemplate-1.4.4.min.js");
+
   function render_site_checkbox(id, name, checked) {
     $("#sitelist").loadTemplate(
       $("#template"),

@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  require("../modules/BaseController.js").init({
+  require("BaseController").init({
     playPause: "#radioControlPlay",
     play: "#radioControlPlay",
     pause: "#radioControlPause",

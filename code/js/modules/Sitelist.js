@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  var $ = require("../lib/jquery-1.11.1.min.js");
+  var $ = require("jquery");
 
   //***
   //@return [RegExp] a regex that matches where the string is in a url's (domain) name
@@ -86,6 +86,10 @@
     });
   };
 
+  //***
+  //When Sitelist is required create a new singleton and return that
+  //Note: This makes all methods/properties of Sitelist publicly exposed
+  //***
   var singleton = new Sitelist();
   module.exports = singleton;
 })();

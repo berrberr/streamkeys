@@ -2,6 +2,7 @@
   "browser": true,
   "esnext": true,
   "globals": {
+    "$": true,
     "console": true,
     "chrome": true,
     "require": true,

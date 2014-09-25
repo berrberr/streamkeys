@@ -1,11 +1,10 @@
 ;(function() {
   "use strict";
 
-  var controller = require("../modules/BaseController.js").init({
-    playPause: "#override"
-  });
+  var controller = require("BaseController");
   var sk_log = require("../modules/sk_log.js");
 
+  controller.init({playPause: "#override"});
   controller.playPause = function() {
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
     try {

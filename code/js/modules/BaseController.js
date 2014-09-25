@@ -160,7 +160,5 @@
 
 
   var singleton = new BaseController();
-  module.exports = {
-    init: function(options) { singleton.init(options); }
-  };
+  module.exports = singleton;
 })();

@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  require("../modules/BaseController.js").init({
+  require("BaseController").init({
     playPause: "#button_play_pause",
     playNext: "#button_forward",
     playPrev: "#button_back"

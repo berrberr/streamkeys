@@ -71,6 +71,10 @@ module.exports = function(grunt) {
       }
     },
 
+    uglify: {
+      min: { files: fileMaps.uglify }
+    },
+
     compress: {
       main: {
         options: {
@@ -78,9 +82,14 @@ module.exports = function(grunt) {
           pretty: true
         },
         expand: true,
-        src: ["*.*", "background/**", "contentscript/**", "controllers/**", "css/**", "lib/**"]
+        src: ["build/unpacked-prod/**/*"]
       }
     },
+
+    watch: {
+      files: jsFiles,
+      tasks: ["jshint:all", "lintspaces:all", "browserify"]
+    }
   });
 
   grunt.loadNpmTasks("grunt-contrib-jshint");
@@ -89,6 +98,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-mkdir");
 
   /* Tasks */
@@ -100,13 +111,14 @@ module.exports = function(grunt) {
         var field = fields[i];
         mnf[field] = pkg[field];
       }
-      grunt.file.write("build/unpacked-dev/manifest.json", JSON.stringify(mnf, null, 4) + "\n");
+      grunt.file.write("build/unpacked-dev/manifest.json", JSON.stringify(mnf, null, 2) + "\n");
       grunt.log.ok("manifest.json generated");
     }
   );
 
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
-  grunt.registerTask("rel", ["jshint", "lintspaces", "compress"]);
   grunt.registerTask("default", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify"]);
+    "mkdir:js", "browserify", "copy:prod", "uglify"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
+    "mkdir:js", "browserify", "copy:prod", "uglify", "compress"]);
 };
