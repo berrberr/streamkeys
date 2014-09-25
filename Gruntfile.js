@@ -40,6 +40,10 @@ module.exports = function(grunt) {
         cwd: "build/",
         src: [pkg.name + "-" + pkg.version + ".crx"],
         dest: process.env.CIRCLE_ARTIFACTS
+      } ] },
+      test: { files: [ {
+        src: ["streamkeys-dev.zip"],
+        dest: "test/"
       } ] }
     },
 
@@ -76,13 +80,21 @@ module.exports = function(grunt) {
     },
 
     compress: {
-      main: {
+      rel: {
         options: {
           archive: "streamkeys.zip",
           pretty: true
         },
         expand: true,
         src: ["build/unpacked-prod/**/*"]
+      },
+      dev: {
+        options: {
+          archive: "streamkeys-dev.zip"
+        },
+        expand: true,
+        cwd: "build/unpacked-dev",
+        src: "**/*"
       }
     },
 
@@ -119,6 +131,8 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("default", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
     "mkdir:js", "browserify", "copy:prod", "uglify"]);
+  grunt.registerTask("dev", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
+    "mkdir:js", "browserify", "compress:dev", "copy:test"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:prod", "uglify", "compress"]);
+    "mkdir:js", "browserify", "copy:prod", "uglify", "compress:rel"]);
 };

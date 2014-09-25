@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController")
+  var controller = require("BaseController");
   controller.init({
     playPause: "#override",
     playNext: "#override",

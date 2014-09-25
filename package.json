@@ -29,6 +29,10 @@
     "jshint": "~2.5.1",
     "jshint-stylish": "~0.2.0",
     "browserify": "~3.39.0",
-    "browserify-shim": "~3.7.0"
+    "browserify-shim": "~3.7.0",
+    "chai": "~1.9.1",
+    "chai-webdriver": "~0.9.3",
+    "mocha": "~1.21.4",
+    "selenium-webdriver": "~2.43.5"
   }
 }
