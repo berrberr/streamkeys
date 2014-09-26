@@ -2,21 +2,23 @@ var base = require("../basetest.js"),
     test = base.test,
     driver = base.getDriver();
 
-test.describe("Grooveshark", function() {
+test.describe("Bandcamp", function() {
 
   test.before(function() {
-    driver.get("http://www.grooveshark.com");
-    //driver.sleep(5000);
+    driver.get("http://www.bandcamp.com");
+    console.log("INSIDE: ", this);
   });
 
   test.after(function() {
     driver.quit();
   });
 
+  shared.shouldBehaveLikeAMusicSite(driver);
+
   test.it("should play", function() {
     driver.executeScript(helpers.eventScript("playPause")).then(function() {
       driver.manage().logs().get("browser").then(function(ent) {
-        console.log(ent);
+        //console.log(ent);
         //expect(helpers.parseLog(ent)).to.be.true;
       });
     });

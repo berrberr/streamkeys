@@ -1,20 +1,19 @@
 var sw = require("selenium-webdriver"),
     path = require("path"),
-    chrome = require("selenium-webdriver/chrome"),
-    chai = require("chai"),
-    chaiWebdriver = require("chai-webdriver");
+    chrome = require("selenium-webdriver/chrome");
 
 var chromeOptions = new chrome.Options();
-var extPath = "--load-extension=" + path.resolve("test/streamkeys-ext/");
+var extPath = "--load-extension=" + path.resolve("streamkeys-ext/");
 chromeOptions.addArguments([extPath, "--log-level=0"]);
 chromeOptions.setLoggingPrefs({browser: "ALL"});
 
-var driver = chrome.createDriver(chromeOptions);
-chai.use(chaiWebdriver(driver));
+global.expect = require("chai").expect;
+global.shared = require("./musicsite.js");
+global.helpers = require("./helpers.js");
 
+console.log("we were required", extPath);
 /* exports */
 module.exports = {
-  expect: chai.expect,
   test: require("selenium-webdriver/testing"),
-  driver: driver
+  getDriver: function() { return chrome.createDriver(chromeOptions); }
 }
