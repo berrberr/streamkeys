@@ -1,7 +1,10 @@
 ;(function() {
   "use strict";
 
-  var sendCommand = function(command) {
+  //***
+  //Capture hotkeys and send their actions to tab(s) with music player running
+  //***
+  chrome.commands.onCommand.addListener(function(command) {
     chrome.tabs.query({}, function(tabs) {
       tabs.forEach(function(tab) {
         if(window.sk_sites.check_enabled(tab.url)) {
@@ -10,22 +13,6 @@
         }
       });
     });
-  };
-
-  //***
-  //Capture hotkeys and send their actions to tab(s) with music player running
-  //***
-  chrome.commands.onCommand.addListener(function(command) {
-    sendCommand(command);
-  });
-
-  //***
-  //Test event handler to simulate command presses
-  //***
-  document.addEventListener("streamkeys-test", function(e) {
-    if(e.detail && (e.detail == "playPause" || e.detail == "playNext" || e.detail == "playPrev" || e.detail == "mute")) {
-      sendCommand(e.detail);
-    }
   });
 
   //***

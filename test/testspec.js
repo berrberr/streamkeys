@@ -1,12 +1,14 @@
 var sw = require("selenium-webdriver"),
     test = require("selenium-webdriver/testing"),
+    path = require("path"),
     chrome = require("selenium-webdriver/chrome"),
     chai = require("chai"),
     chaiWebdriver = require("chai-webdriver"),
     expect = chai.expect;
 
 var chromeOptions = new chrome.Options();
-chromeOptions.addArguments(["--load-extension=streamkeys-dev.zip", "--log-level=0"]);
+var extPath = "--load-extension=" + path.resolve("test/streamkeys-ext/");
+chromeOptions.addArguments([extPath, "--log-level=0"]);
 chromeOptions.setLoggingPrefs({browser: "ALL"});
 var driver = chrome.createDriver(chromeOptions);
 // var driver = new sw.Builder()
@@ -31,8 +33,9 @@ test.describe("Grooveshark", function() {
     driver.executeScript(script);
     driver.executeScript("console.log('SUP BRO');");
     driver.sleep(2000);
-    driver.manage().logs().get("browser").then(function(ent) {console.log(ent);});
-    //console.log(expect);
+    driver.manage().logs().get("browser").then(function(ent) {
+      console.log(ent);
+    });
   })
 })
 

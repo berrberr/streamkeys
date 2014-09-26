@@ -81,6 +81,8 @@
 
   //** Click inside document **//
   BaseController.prototype.click = function(selectorButton, action) {
+    if(selectorButton === null) return sk_log("disabled", action);
+
     var ele = document.querySelector(selectorButton);
 
     try {
@@ -93,6 +95,8 @@
 
   //** Click inside an iframe **//
   BaseController.prototype.clickInFrame = function(selectorFrame, selectorButton, action) {
+    if(selectorButton === null) return sk_log("disabled", action);
+
     var doc = document.querySelector(selectorFrame).contentWindow.document;
     if (!doc) return null;
 
@@ -148,8 +152,18 @@
     }
   };
 
+  BaseController.prototype.doTestRequest = function(e) {
+    if(e.detail && (e.detail == "playPause" || e.detail == "playNext" || e.detail == "playPrev" || e.detail == "mute")) {
+      this.doRequest({action: e.detail});
+    }
+  };
+
   BaseController.prototype.attachListener = function() {
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
+
+    //Test event handler to simulate command presses
+    document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
+
     sk_log("Attached listener for ", this);
   };
 

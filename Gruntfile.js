@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    clean: ["build/unpacked-dev", "build/unpacked-prod", "build/*.crx"],
+    clean: ["build/unpacked-dev", "build/unpacked-prod", "test/streamkeys-ext"],
 
     mkdir: {
       unpacked: { options: { create: ["build/unpacked-dev", "build/unpacked-prod"] } },
@@ -42,8 +42,10 @@ module.exports = function(grunt) {
         dest: process.env.CIRCLE_ARTIFACTS
       } ] },
       test: { files: [ {
-        src: ["streamkeys-dev.zip"],
-        dest: "test/"
+        expand: true,
+        cwd: "build/unpacked-dev/",
+        src: ["**"],
+        dest: "test/streamkeys-ext/"
       } ] }
     },
 
@@ -86,7 +88,8 @@ module.exports = function(grunt) {
           pretty: true
         },
         expand: true,
-        src: ["build/unpacked-prod/**/*"]
+        cwd: "build/unpacked-prod",
+        src: "**/*"
       },
       dev: {
         options: {
