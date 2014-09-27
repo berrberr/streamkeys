@@ -15,18 +15,18 @@ test.describe("Bandcamp", function() {
 
   shared.shouldBehaveLikeAMusicSite(driver);
 
-  test.it("should play", function() {
-    driver.executeScript(helpers.eventScript("playPause")).then(function() {
-      driver.manage().logs().get("browser").then(function(ent) {
-        //console.log(ent);
-        //expect(helpers.parseLog(ent)).to.be.true;
-      });
-    });
-  });
+  // test.it("should play", function() {
+  //   driver.executeScript(helpers.eventScript("playPause")).then(function() {
+  //     driver.manage().logs().get("browser").then(function(ent) {
+  //       //console.log(ent);
+  //       //expect(helpers.parseLog(ent)).to.be.true;
+  //     });
+  //   });
+  // });
 
-  test.it("should pause", function() {
-    console.log("should not see this till first test is done");
-  })
+  // test.it("should pause", function() {
+  //   console.log("should not see this till first test is done");
+  // })
 
   //shared.shouldBehaveLikeAMusicSite.apply(that);
   // test.it("loads extension", function() {

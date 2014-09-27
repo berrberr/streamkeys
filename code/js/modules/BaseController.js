@@ -123,24 +123,24 @@
   };
 
   BaseController.prototype.playNext = function() {
-    if(this.selector_playNext) {
+    //if(this.selector_playNext) {
       if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playNext, "playNext");
       else            this.click(this.selector_playNext, "playNext");
-    }
+    //}
   };
 
   BaseController.prototype.playPrev = function() {
-    if(this.selector_playPrev) {
+    //if(this.selector_playPrev) {
       if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPrev, "playPrev");
       else            this.click(this.selector_playPrev, "playPrev");
-    }
+    //}
   };
 
   BaseController.prototype.mute = function() {
-    if(this.selector_mute) {
+    //if(this.selector_mute) {
       if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_mute, "mute");
       else            this.click(this.selector_mute, "mute");
-    }
+    //}
   };
 
   BaseController.prototype.doRequest = function(request) {

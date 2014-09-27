@@ -6,25 +6,26 @@ test.describe("Grooveshark", function() {
 
   test.before(function() {
     driver.get("http://www.grooveshark.com");
-    //driver.sleep(5000);
   });
 
   test.after(function() {
     driver.quit();
   });
 
-  test.it("should play", function() {
-    driver.executeScript(helpers.eventScript("playPause")).then(function() {
-      driver.manage().logs().get("browser").then(function(ent) {
-        console.log(ent);
-        //expect(helpers.parseLog(ent)).to.be.true;
-      });
-    });
-  });
+  shared.shouldBehaveLikeAMusicSite(driver);
 
-  test.it("should pause", function() {
-    console.log("should not see this till first test is done");
-  })
+  // test.it("should play", function() {
+  //   driver.executeScript(helpers.eventScript("playPause")).then(function() {
+  //     driver.manage().logs().get("browser").then(function(ent) {
+  //       console.log(ent);
+  //       //expect(helpers.parseLog(ent)).to.be.true;
+  //     });
+  //   });
+  // });
+
+  // test.it("should pause", function() {
+  //   console.log("should not see this till first test is done");
+  // })
 
   //shared.shouldBehaveLikeAMusicSite.apply(that);
   // test.it("loads extension", function() {
