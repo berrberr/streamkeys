@@ -1,43 +1,16 @@
 var base = require("../basetest.js"),
-    test = base.test,
     driver = base.getDriver();
 
-test.describe("Bandcamp", function() {
+base.test.describe("Bandcamp", function() {
 
-  test.before(function() {
-    driver.get("http://www.bandcamp.com");
-    console.log("INSIDE: ", this);
-  });
-
-  test.after(function() {
-    driver.quit();
-  });
-
-  shared.shouldBehaveLikeAMusicSite(driver);
-
-  // test.it("should play", function() {
-  //   driver.executeScript(helpers.eventScript("playPause")).then(function() {
-  //     driver.manage().logs().get("browser").then(function(ent) {
-  //       //console.log(ent);
-  //       //expect(helpers.parseLog(ent)).to.be.true;
-  //     });
-  //   });
+  // base.test.before(function(done) {
+  //   base.loadSite(driver, "http://www.bandcamp.com", done);
   // });
 
-  // test.it("should pause", function() {
-  //   console.log("should not see this till first test is done");
-  // })
+  // base.test.after(function() {
+  //   driver.quit();
+  // });
 
-  //shared.shouldBehaveLikeAMusicSite.apply(that);
-  // test.it("loads extension", function() {
+  shared.shouldBehaveLikeAMusicSite(driver, "http://www.bandcamp.com");
 
-  //   // driver.sleep(5000);
-  //   // var script = "document.dispatchEvent(new CustomEvent('streamkeys-test', {detail: 'playPause'}));"
-  //   // driver.executeScript(script);
-  //   // driver.executeScript("console.log('SUP BRO');");
-  //   // driver.sleep(2000);
-  //   // driver.manage().logs().get("browser").then(function(ent) {
-  //   //   console.log(ent);
-  //   // });
-  // })
 });

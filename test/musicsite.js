@@ -1,6 +1,26 @@
-exports.shouldBehaveLikeAMusicSite = function(driver) {
+exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
   describe("music site behaviour", function() {
+
+    after(function() {
+      driver.quit();
+    });
+
+    driver.get(url).then(function() {
+      driver.wait(function() {
+        console.log("Waiting for: " + url);
+        return driver.executeScript("return document.readyState;").then(function(res) {
+          return res === "complete";
+        });
+      }, 10000)
+      .then(function() {
+        driver.wait(function() {
+          return driver.manage().logs().get("browser").then(function(log) {
+            return helpers.parseLog(log, "Attached listener");
+          });
+        }, 20000).then(function(){ console.log("Extension loaded!"); });
+      });
+    });
 
     it("should play", function(done) {
       driver.executeScript(helpers.eventScript("playPause")).then(function() {
@@ -48,5 +68,4 @@ exports.shouldBehaveLikeAMusicSite = function(driver) {
     });
 
   });
-
 };
