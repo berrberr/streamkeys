@@ -2,23 +2,36 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
   describe("music site behaviour", function() {
 
-    after(function() {
-      driver.quit();
-    });
+    // after(function() {
+    //   driver.quit();
+    // });
 
-    driver.get(url).then(function() {
-      driver.wait(function() {
-        console.log("Waiting for: " + url);
-        return driver.executeScript("return document.readyState;").then(function(res) {
-          return res === "complete";
+
+    before(function() {
+      console.log("BEFORE: " + url);
+      driver.get(url).then(function() {
+        // Attempt to close any active alerts if they exist
+        driver.switchTo().alert().then(function(alert) {
+          alert.accept();
+        }, function(error) {
+          console.log("No alert found, continue...");
         });
-      }, 10000)
-      .then(function() {
+
+        // Wait for document to be ready
         driver.wait(function() {
-          return driver.manage().logs().get("browser").then(function(log) {
-            return helpers.parseLog(log, "Attached listener");
+          console.log("Waiting for: " + url);
+          return driver.executeScript("return document.readyState;").then(function(res) {
+            return res === "complete";
           });
-        }, 20000).then(function(){ console.log("Extension loaded!"); });
+        }, 10000)
+        .then(function() {
+          // Wait for Streamkeys attached console message
+          driver.wait(function() {
+            return driver.manage().logs().get("browser").then(function(log) {
+              return helpers.parseLog(log, "Attached listener");
+            });
+          }, 20000).then(function(){ console.log("Extension loaded!"); });
+        });
       });
     });
 
