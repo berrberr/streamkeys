@@ -35,6 +35,7 @@ var Sitelist = function()
     "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true, url_regex: null},
     "pleer": {name: "Pleer.com", url: "http://pleer.com", enabled: true, url_regex: null},
     "play.google": {name: "Google Music", url: "http://play.google.com", enabled: true, url_regex: null},
+	"pocketcasts": {name: "PocketCasts", url: "http://play.pocketcasts.com", enabled: true, url_regex: null},
     "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true, url_regex: null},
     "rdio": {name: "Rdio", url: "http://www.rdio.com", enabled: true, url_regex: null},
     "seesu": {name: "Seesu.me", url: "http://www.seesu.me", enabled: true, url_regex: null},
