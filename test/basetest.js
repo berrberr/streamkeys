@@ -18,6 +18,7 @@ global.helpers = require("./helpers.js");
 /* exports */
 module.exports = {
   test: require("selenium-webdriver/testing"),
+  webdriver: sw,
   getDriver: function() { return chrome.createDriver(chromeOptions); },
   loadSite: function(driver, url, callback) {
     driver.get(url).then(function() { callback(); } );

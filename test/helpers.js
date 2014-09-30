@@ -15,7 +15,7 @@ exports.eventScript = function(action) {
  */
 exports.parseLog = function(log, action) {
   return log.some(function(entry) {
-    //console.log(entry.message);
+    console.log(entry.message);
     return (entry.message.indexOf(SKINFO + action) > 0 || entry.message.indexOf(SKINFO + "disabled") > 0);
   });
 };

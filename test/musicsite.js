@@ -6,7 +6,6 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
     //   driver.quit();
     // });
 
-
     before(function() {
       console.log("BEFORE: " + url);
       driver.get(url).then(function() {
@@ -23,14 +22,14 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
           return driver.executeScript("return document.readyState;").then(function(res) {
             return res === "complete";
           });
-        }, 10000)
+        }, 20000)
         .then(function() {
           // Wait for Streamkeys attached console message
           driver.wait(function() {
             return driver.manage().logs().get("browser").then(function(log) {
               return helpers.parseLog(log, "Attached listener");
             });
-          }, 20000).then(function(){ console.log("Extension loaded!"); });
+          }, 20000).then(function() {console.log("Extension loaded!");});
         });
       });
     });
