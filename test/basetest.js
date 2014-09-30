@@ -14,10 +14,10 @@ chromeOptions.setLoggingPrefs({browser: "ALL"});
 global.expect = require("chai").expect;
 global.shared = require("./musicsite.js");
 global.helpers = require("./helpers.js");
+global.test = require("selenium-webdriver/testing");
 
 /* exports */
 module.exports = {
-  test: require("selenium-webdriver/testing"),
   webdriver: sw,
   getDriver: function() { return chrome.createDriver(chromeOptions); },
   loadSite: function(driver, url, callback) {
