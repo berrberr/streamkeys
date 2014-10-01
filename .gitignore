@@ -2,3 +2,4 @@
 node_modules/
 build/*
 test/streamkeys-ext/*
+test/secrets.json

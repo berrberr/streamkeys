@@ -1,90 +1,102 @@
+// Missing Tests:
+// Amazon
+// Deezer
+// Earbits
+// Google Music
+// iHeartRadio
+// Pandora
+// Rdio
+// Seesu
+// SonyMusicUnlimited
+// Spotify
+// VK
+// YouTube
+
 var base = require("./_base_test.js"),
-    driver = base.getDriver();
+    driver = base.getDriver(),
+    secrets = require("./secrets.json");
 
 const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
 
-//driver.flow_.on("uncaughtException", function(e) {
-  //console.log(this);
-  // console.log(e.message);
-  // console.error("Unhandled error: ", e);
-  // if(TIMEOUT_ERROR.test(e.message)) {
-  //   console.log("SKIP");
-  //this.describe.skip();
-  //}
-//});
+
+var baseSites = [
+  {name: "7digital", url: "http://www.7digital.com"},
+  {name: "bandcamp", url: "http://www.bandcamp.com"},
+  {name: "bop.fm", url: "http://www.bop.fm"},
+  {name: "di.fm", url: "http://www.di.fm"},
+  {name: "edge player", url: "http://player.edge.ca"},
+  {name: "grooveshar", url: "http://www.grooveshark.com"},
+  {name: "hypemachine", url: "http://www.hypem.fm"},
+  {name: "jango", url: "http://www.jango.com/stations/263448187/"},
+  {name: "last.fm", url: "http://www.last.fm"},
+  {name: "myspace", url: "http://music.myspace.com"},
+  {name: "mixcloud", url: "http://www.mixcloud.com"},
+  {name: "NPR one", url: "http://one.npr.org"},
+  {name: "pleer", url: "http://www.pleer.com"},
+  {name: "radio paradise", url: "http://www.radioparadise.com"},
+  {name: "soundcloud", url: "http://www.soundcloud.com"},
+  {name: "thesixtyone", url: "http://www.thesixtyone.com"},
+  {name: "tunein", url: "http://www.tunein.com"}
+];
 
 describe("Streamkeys suite", function() {
+
+  before(function() {
+    this.driver = driver;
+  });
 
   after(function() {
     driver.quit();
   });
 
-  describe("7digital", function() {
-    shared.shouldBehaveLikeAMusicSite(driver, "http://www.7digital.com");
+  baseSites.forEach(function(site) {
+    describe(site.name, function() {
+      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+    });
   });
-  // TODO: fix
-  // describe("8tracks", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.8tracks.com");
-  // });
-  describe("bandcamp", function() {
-    shared.shouldBehaveLikeAMusicSite(driver, "http://www.bandcamp.com");
-  });
-  describe("bop.fm", function() {
-    shared.shouldBehaveLikeAMusicSite(driver, "http://www.bop.fm");
-  });
-  describe("di.fm", function() {
-    shared.shouldBehaveLikeAMusicSite(driver, "http://www.di.fm/ambient");
-  });
-  // describe("edge player", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://player.edge.ca");
-  // });
-  // describe("grooveshark", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.grooveshark.com");
-  // });
-  // describe("hypemachine", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.hypem.com");
-  // });
-  // describe("jango", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.jango.com/stations/263448187/");
-  // });
-  // describe("last.fm", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.last.fm/listen");
-  // });
-  // describe("myspace", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://music.myspace.com");
-  // });
-  // describe("mixcloud", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.mixcloud.com");
-  // });
-  // describe("NPR one", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://one.npr.org");
 
-  //   after(function() {
-  //     console.log("After npr sleep");
-  //     driver.sleep(5000);
-  //   });
-  // });
-  // describe("pleer", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.pleer.com");
-  // });
-  // describe("radio paradise", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.radioparadise.com");
-  // });
-  // // TODO: fix
-  // // describe("seesu.me", function() {
-  // //   shared.shouldBehaveLikeAMusicSite(driver, "http://seesu.me/o#/catalog/The+Smiths/albums_lfm/The+Smiths/Reel+Around+the+Fountain");
-  // // });
-  // describe("songstr", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.songstr.com");
-  // });
-  // describe("soundcloud", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.soundcloud.com");
-  // });
-  // describe("thesixtyone", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://www.thesixtyone.com");
-  // });
-  // describe("tunein", function() {
-  //   shared.shouldBehaveLikeAMusicSite(driver, "http://tunein.com");
-  // });
+  describe("8tracks", function() {
+    var self = this;
 
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.8tracks.com");
+      driver.executeScript("document.querySelector('a.mix_name').click()").then(function() {
+        console.log("Clicked mix link");
+        helpers.waitForLoad(driver);
+        driver.executeScript("document.querySelector('a#play_overlay').click()").then(function() {
+          console.log("Clicked play link");
+          done();
+        });
+      });
+    })
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  describe("songstr", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://songstr.com/#!/search/The-Smiths");
+      driver.executeScript("document.querySelector('td.logo_on > img').click()").then(function() {
+        console.log("clicked play");
+        done();
+      });
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  describe("sony music unlimited", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "https://music.sonyentertainmentnetwork.com/");
+      driver.wait(function() {
+        //wait for body class
+        return false;
+      }, 20000)
+      .then(function() {
+        done();
+      });
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
 });

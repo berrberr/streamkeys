@@ -2,50 +2,65 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
   describe("music site behaviour", function() {
 
-    /* Has the page and extension loaded properly */
-    var loadError = false;
+    before(function() {
+      // Extension not loaded error message
+      this.skLoadError = new Error("Streamkeys not loaded!");
 
+      // Has the page and extension loaded properly
+      this.loadError = false;
+
+      // Are we on the first test
+      this.firstTest = true;
+    });
+
+    after(function() {
+      driver.sleep(500);
+    });
+
+    /**
+     * Check for a load error.
+     * If found throw an error to exit out of describe block without running remaining tests.
+     */
     beforeEach(function() {
-      if(this.loadError) this.test.error(new Error("Streamkeys not loaded!"));
+      if(this.loadError && !this.firstTest) throw this.skLoadError;
     });
 
     it("should load", function(done) {
       var self = this;
+      this.firstTest = false;
 
-      driver.get(url).then(function() {
+      if(url) {
+        driver.get(url);
         // Attempt to close any active alerts if they exist
-        driver.switchTo().alert().then(function(alert) {
-          alert.accept();
-        }, function(error) {
-          console.log("No alert found, continue...");
-        });
+        helpers.alertCheck(driver);
+      }
 
-        // Wait for document to be ready
-        driver.wait(function() {
-          console.log("Waiting for: " + url);
-          return driver.executeScript("return document.readyState;").then(function(res) {
-            return res === "complete";
-          });
-        }, 10).thenCatch(function(err) {
-          console.log("Driver Timeout!", err);
-          self.loadError = true;
-        });
+      // Wait for document to be ready
+      // driver.wait(function() {
+      //   console.log("Waiting for: " + url);
+      //   return driver.executeScript("return document.readyState;").then(function(res) {
+      //     return res === "complete";
+      //   });
+      // }, 15000)
+      helpers.waitForLoad(driver).thenCatch(function(err) {
+        console.log("Driver Timeout!", err);
+        self.loadError = true;
+      });
 
-        // Wait for Streamkeys attached console message
-        driver.wait(function() {
-          return driver.manage().logs().get("browser").then(function(log) {
-            return helpers.parseLog(log, "Attached listener");
-          });
-        }, 10)
-        .then(function() {
-          console.log("Extension loaded!");
-          self.loadError = false;
-          done();
-        }, function(e) {
-          console.log("Extension load timed out!", e);
-          self.loadError = true;
-          done();
+      // Wait for Streamkeys attached console message
+      driver.wait(function() {
+        return driver.manage().logs().get("browser").then(function(log) {
+          return helpers.parseLog(log, "Attached listener");
         });
+      }, 15000)
+      .then(function() {
+        console.log("Extension loaded!");
+        self.loadError = false;
+        done();
+      }, function(e) {
+        console.log("Extension load timed out!", e);
+        self.loadError = true;
+        done();
       });
     });
 

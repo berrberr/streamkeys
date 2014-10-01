@@ -1,5 +1,4 @@
-var sw = require("selenium-webdriver"),
-    chrome = require("selenium-webdriver/chrome");
+var chrome = require("selenium-webdriver/chrome");
 
 /* globals */
 global.expect = require("chai").expect;
@@ -14,7 +13,6 @@ console.log("Extension load path: " + extPath);
 
 chromeOptions.addArguments([extPath, "--log-level=0"]);
 chromeOptions.setLoggingPrefs({browser: "ALL"});
-
 
 /* exports */
 module.exports = {
