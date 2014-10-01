@@ -152,10 +152,10 @@
       "matches": ["*://*.tunein.com/*"],
       "js": ["controllers/BaseController.js", "controllers/TuneinController.js"]
     },
-	{
-		"matches": ["*://*.pocketcasts.com/*"],
+    {
+      "matches": ["*://*.pocketcasts.com/*"],
       "js": ["controllers/BaseController.js", "controllers/PocketcastsController.js"]
-	},
+    },
     {
       "js": [ "controllers/BaseController.js", "controllers/PleerComController.js" ],
       "matches": [ "*://*.pleer.com/*" ]
