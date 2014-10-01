@@ -1,4 +1,4 @@
-var base = require("./basetest.js"),
+var base = require("./_base_test.js"),
     driver = base.getDriver();
 
 const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
