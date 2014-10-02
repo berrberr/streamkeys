@@ -41,7 +41,7 @@ exports.parseLog = function(log, action) {
 exports.getAndWait = function(driver, url) {
   driver.get(url);
   alertCheck(driver);
-  waitForLoad(driver);
+  return waitForLoad(driver);
 }
 
 /**
