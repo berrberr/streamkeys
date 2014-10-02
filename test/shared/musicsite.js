@@ -50,7 +50,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
       // Wait for Streamkeys attached console message
       driver.wait(function() {
         return driver.manage().logs().get("browser").then(function(log) {
-          return helpers.parseLog(log, "Attached listener");
+          return helpers.parseLog(log, "Attached");
         });
       }, 15000)
       .then(function() {

@@ -169,6 +169,10 @@
 
   BaseController.prototype.attachFrameListener = function() {
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
+
+    //Test event handler to simulate command presses
+    document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
+
     sk_log("Attached frame listener for ", this);
   };
 

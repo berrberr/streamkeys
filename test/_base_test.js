@@ -7,11 +7,12 @@ global.helpers = require("./shared/helpers.js");
 global.test = require("selenium-webdriver/testing");
 
 var chromeOptions = new chrome.Options(),
-    extPath = "--load-extension=" + helpers.getPath(__filename, "streamkeys-ext/");
+    extPath = "--load-extension=" + helpers.getPath(__filename, "streamkeys-ext/"),
+    proxy = "--proxy-server=http://23.228.160.2:38356";
 
 console.log("Extension load path: " + extPath);
 
-chromeOptions.addArguments([extPath, "--log-level=0"]);
+chromeOptions.addArguments([extPath, proxy, "--log-level=0"]);
 chromeOptions.setLoggingPrefs({browser: "ALL"});
 
 /* exports */
