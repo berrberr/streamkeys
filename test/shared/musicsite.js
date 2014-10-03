@@ -45,7 +45,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
         return driver.manage().logs().get("browser").then(function(log) {
           return helpers.parseLog(log, "Attached");
         });
-      }, 15000)
+      }, 30000)
       .then(function() {
         console.log("Extension loaded!");
         self.loadError = false;

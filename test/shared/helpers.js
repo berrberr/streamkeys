@@ -3,7 +3,7 @@ var path = require("path"),
 
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
-const WAIT_TIMEOUT = 15000;
+const WAIT_TIMEOUT = 30000;
 
 /**
  * Joins two paths based on first path directory name
@@ -36,6 +36,13 @@ exports.parseLog = function(log, action) {
   });
 };
 
+/**
+ * Waits until an element is visible
+ * @param driver [webdriver instance]
+ * @param selector [obj] webdriver locator object
+ * @param timeout [int] optional timeout
+ * @return promise
+ */
 exports.waitForSelector = function(driver, selector, timeout) {
   var timeout = timeout || WAIT_TIMEOUT;
 
@@ -67,7 +74,7 @@ exports.getAndWait = function(driver, url) {
   driver.get(url);
   alertCheck(driver);
   return waitForLoad(driver);
-}
+};
 
 /**
  * Accept an alert if visible
@@ -81,7 +88,7 @@ var alertCheck = exports.alertCheck = function(driver) {
   });
 
   return true;
-}
+};
 
 /**
  * Block until document.readyState is complete
@@ -93,4 +100,4 @@ var waitForLoad = exports.waitForLoad = function(driver) {
       return res === "complete";
     });
   }, 20000);
-}
+};

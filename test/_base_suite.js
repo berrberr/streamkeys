@@ -11,7 +11,7 @@ var base = require("./_base_test.js"),
     By = require("selenium-webdriver").By;
 
 const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
-const WAIT_TIMEOUT = 20000;
+const WAIT_TIMEOUT = 30000;
 
 
 var baseSites = [
@@ -43,16 +43,18 @@ describe("Streamkeys suite", function() {
     });
   });
 
+  // @depends: .playControls_wrapper
   describe("soundcloud", function() {
     before(function(done) {
       helpers.getAndWait(driver, "https://soundcloud.com/explore");
-      helpers.waitForSelector(driver, {css: ".playControls__wrapper"});
+      helpers.waitForSelector(driver, {className: "playControls__wrapper"});
       done();
     });
 
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
+  // @depends: #ready_link
   describe("thesixtyone", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.thesixtyone.com");
@@ -154,9 +156,7 @@ describe("Streamkeys suite", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.earbits.com");
       helpers.waitAndClick(driver, {className: "top-channel"});
-      driver.wait(function() {
-        return (driver.isElementPresent({className: "audio-buttons"}));
-      }, WAIT_TIMEOUT);
+      helpers.waitForSelector(driver, {className: "audio-buttons"});
       done();
     });
 
@@ -167,7 +167,7 @@ describe("Streamkeys suite", function() {
   describe("deezer", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.deezer.com");
-      driver.findElement({id: "login_btn"}).click();
+      helpers.waitAndClick(driver, {id: "login_btn"});
       driver.wait(function() {
         return (driver.isElementPresent({id: "login_mail"}) &&
                 driver.isElementPresent({id: "login_password"}) &&
@@ -190,8 +190,8 @@ describe("Streamkeys suite", function() {
   describe("iHeartRadio", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.iheart.com");
-      driver.findElement({className: "genre-btn"}).click();
-      driver.findElement({className: "btn-primary"}).click();
+      helpers.waitAndClick(driver, {className: "genre-btn"});
+      helpers.waitAndClick(driver, {className: "btn-primary"});
       driver.wait(function() {
         var playerEl = driver.findElement({className: "player-controls"});
         return playerEl.getAttribute("data-station-id").then(function(val) {
@@ -216,9 +216,7 @@ describe("Streamkeys suite", function() {
       driver.findElement({id: "username"}).sendKeys(secrets.rdio.username);
       driver.findElement({id: "password"}).sendKeys(secrets.rdio.password);
       driver.findElement({name: "submit"}).click();
-      driver.wait(function() {
-        return (driver.isElementPresent({className: "player_bottom"}));
-      }, WAIT_TIMEOUT);
+      helpers.waitForSelector(driver, {className: "player_bottom"});
       done();
     });
 
@@ -237,9 +235,7 @@ describe("Streamkeys suite", function() {
       driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
       driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
       driver.findElement({id: "quick_login_button"}).click();
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "head_music"}));
-      }, WAIT_TIMEOUT);
+      helpers.waitForSelector(driver, {id: "head_music"});
       done();
     });
 

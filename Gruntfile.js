@@ -104,18 +104,25 @@ module.exports = function(grunt) {
     watch: {
       files: jsFiles,
       tasks: ["jshint:all", "lintspaces:all", "browserify"]
+    },
+
+    exec: {
+      run_tests: {
+        command: "node test/runner.js"
+      }
     }
   });
 
   grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-contrib-compress");
-  grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-exec");
   grunt.loadNpmTasks("grunt-mkdir");
+  grunt.loadNpmTasks("grunt-lintspaces");
+  grunt.loadNpmTasks("grunt-browserify");
 
   /* Tasks */
   grunt.registerTask(
@@ -132,8 +139,7 @@ module.exports = function(grunt) {
   );
 
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
-  grunt.registerTask("default", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:prod", "uglify"]);
+  grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("dev", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
     "mkdir:js", "browserify", "compress:dev", "copy:test"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",

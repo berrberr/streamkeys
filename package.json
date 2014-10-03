@@ -26,12 +26,12 @@
     "grunt-mkdir": "~0.1.1",
     "grunt-lintspaces": "~0.5.1",
     "grunt-browserify": "~2.0.3",
+    "grunt-exec": "~0.4.6",
     "jshint": "~2.5.1",
     "jshint-stylish": "~0.2.0",
     "browserify": "~3.39.0",
     "browserify-shim": "~3.7.0",
     "chai": "~1.9.1",
-    "chai-webdriver": "~0.9.3",
     "mocha": "~1.21.4",
     "selenium-webdriver": "~2.43.5"
   }
