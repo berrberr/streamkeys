@@ -35,13 +35,6 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
         helpers.alertCheck(driver);
       }
 
-      // Wait for document to be ready
-      // driver.wait(function() {
-      //   console.log("Waiting for: " + url);
-      //   return driver.executeScript("return document.readyState;").then(function(res) {
-      //     return res === "complete";
-      //   });
-      // }, 15000)
       helpers.waitForLoad(driver).thenCatch(function(err) {
         console.log("Driver Timeout!", err);
         self.loadError = true;

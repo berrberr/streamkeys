@@ -5,6 +5,6 @@
     playPause: ".playControl",
     playNext: ".skipControl__next",
     playPrev: ".skipControl__previous",
-    mute: ".volume__togglemute",
+    mute: ".volumeVertical__togglemute",
   });
 })();

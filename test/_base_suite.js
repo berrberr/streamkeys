@@ -4,7 +4,6 @@
 // Pandora
 // Seesu
 // Spotify
-// YouTube
 
 var base = require("./_base_test.js"),
     driver = base.getDriver(),
@@ -28,40 +27,61 @@ var baseSites = [
   {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
-  {name: "soundcloud", url: "https://soundcloud.com/explore"},
   {name: "thesixtyone", url: "http://www.thesixtyone.com"},
   {name: "tunein", url: "http://www.tunein.com"}
 ];
 
 describe("Streamkeys suite", function() {
 
-  before(function() {
-    this.driver = driver;
-  });
-
   after(function() {
     driver.quit();
   });
 
-  // baseSites.forEach(function(site) {
-  //   describe(site.name, function() {
-  //     shared.shouldBehaveLikeAMusicSite(driver, site.url);
-  //   });
-  // });
+  baseSites.forEach(function(site) {
+    describe(site.name, function() {
+      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+    });
+  });
+
+  describe("soundcloud", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "https://soundcloud.com/explore");
+      helpers.waitForSelector(driver, {css: ".playControls__wrapper"});
+      done();
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  describe("thesixtyone", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.thesixtyone.com");
+      helpers.waitAndClick(driver, {id: "ready_link"});
+      done();
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  // @depends: a.yt-uix-tile-link
+  describe("youtube", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.youtube.com");
+      helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
+      done();
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
 
   // @depends: a.mix_name, a#play_overlay
   describe("8tracks", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.8tracks.com");
-      driver.executeScript("document.querySelector('a.mix_name').click()").then(function() {
-        helpers.waitForLoad(driver);
-        driver.wait(function() {
-          return (driver.isElementPresent({css: "a#play_overlay"}));
-        }, WAIT_TIMEOUT);
-        driver.findElement({css: "a#play_overlay"}).click().then(function() {
-          done();
-        });
-      });
+      helpers.waitAndClick(driver, {css: "a.mix_name"})
+      helpers.waitForLoad(driver);
+      helpers.waitAndClick(driver, {css: "a#play_overlay"})
+      done();
     })
 
     shared.shouldBehaveLikeAMusicSite(driver, false);
@@ -71,7 +91,13 @@ describe("Streamkeys suite", function() {
   describe("jango", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.jango.com");
-      driver.findElement({className: "station_anchor"}).click().then(function() {
+      helpers.waitAndClick(driver, {className: "station_anchor"});
+      done();
+    });
+
+    // Ad popup might mess up driver
+    after(function(done) {
+      driver.sleep(5000).then(function() {
         done();
       });
     });
@@ -85,6 +111,7 @@ describe("Streamkeys suite", function() {
       done();
     });
 
+    // Ad popup might mess up driver
     after(function(done) {
       driver.sleep(5000).then(function() {
         done();
@@ -98,10 +125,8 @@ describe("Streamkeys suite", function() {
   describe("songstr", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://songstr.com/#!/search/The-Smiths");
-      driver.executeScript("document.querySelector('td.logo_on > img').click()").then(function() {
-        console.log("clicked play");
-        done();
-      });
+      helpers.waitAndClick(driver, {css: "td.logo_on > img"});
+      done();
     });
 
     shared.shouldBehaveLikeAMusicSite(driver, false);
@@ -117,10 +142,8 @@ describe("Streamkeys suite", function() {
         return el.getAttribute("class").then(function(classNames) {
           return (classNames.indexOf("dragdrop-dropTarget") > 0);
         });
-      }, WAIT_TIMEOUT)
-      .then(function() {
-        done();
-      });
+      }, WAIT_TIMEOUT);
+      done();
     });
 
     shared.shouldBehaveLikeAMusicSite(driver, false);
@@ -130,13 +153,10 @@ describe("Streamkeys suite", function() {
   describe("earbits", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.earbits.com");
-      driver.wait(function() {
-        return (driver.isElementPresent({className: "top-channel"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({className: "top-channel"}).click();
+      helpers.waitAndClick(driver, {className: "top-channel"});
       driver.wait(function() {
         return (driver.isElementPresent({className: "audio-buttons"}));
-      });
+      }, WAIT_TIMEOUT);
       done();
     });
 

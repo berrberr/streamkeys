@@ -3,6 +3,7 @@ var path = require("path"),
 
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
+const WAIT_TIMEOUT = 15000;
 
 /**
  * Joins two paths based on first path directory name
@@ -28,11 +29,35 @@ exports.eventScript = function(action) {
  */
 exports.parseLog = function(log, action) {
   return log.some(function(entry) {
-    console.log(entry.message);
     var actionFound = (entry.message.indexOf(SKINFO + action) > 0 || entry.message.indexOf(SKINFO + "disabled") > 0);
-    if(actionFound) console.log(entry.message);
+    var errorFound = (entry.message.indexOf(SKERR) > 0);
+    if(actionFound || errorFound) console.log(entry.message);
     return actionFound;
   });
+};
+
+exports.waitForSelector = function(driver, selector, timeout) {
+  var timeout = timeout || WAIT_TIMEOUT;
+
+  return driver.wait(function() {
+    return (driver.isElementPresent(selector));
+  }, timeout);
+};
+
+/**
+ * Waits for an element to be visible and then clicks it
+ * @param driver [webdriver instance]
+ * @param selector [obj] webdriver locator object
+ * @param timeout [int] optional timeout
+ * @return promise
+ */
+exports.waitAndClick = function(driver, selector, timeout) {
+  var timeout = timeout || WAIT_TIMEOUT;
+
+  driver.wait(function() {
+    return (driver.isElementPresent(selector));
+  }, timeout);
+  return driver.findElement(selector).click();
 };
 
 /**
