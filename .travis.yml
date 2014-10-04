@@ -1,6 +1,7 @@
 language: node_js
-node_js:
-  - "0.10"
-install: PATH="$HOME/noode_modules/chromedriver/lib/chromedriver:$PATH"
+node_js: ["0.10"]
+install:
+  - npm install
+  - PATH="$HOME/noode_modules/chromedriver/lib/chromedriver:$PATH"
 before_script:
   - npm install -g grunt-cli
