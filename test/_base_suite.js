@@ -111,23 +111,23 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: .station_anchor
-  describe("jango", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.jango.com");
-      helpers.waitAndClick(driver, {className: "station_anchor"});
-      done();
-    });
+  // // @depends: .station_anchor
+  // describe("jango", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.jango.com");
+  //     helpers.waitAndClick(driver, {className: "station_anchor"});
+  //     done();
+  //   });
 
-    // Ad popup might mess up driver
-    after(function(done) {
-      driver.sleep(5000).then(function() {
-        done();
-      });
-    });
+  //   // Ad popup might mess up driver
+  //   after(function(done) {
+  //     driver.sleep(5000).then(function() {
+  //       done();
+  //     });
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   describe("NPR one", function() {
     before(function(done) {
