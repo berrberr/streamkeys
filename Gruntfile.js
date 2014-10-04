@@ -43,7 +43,7 @@ module.exports = function(grunt) {
       } ] },
       test: { files: [ {
         expand: true,
-        cwd: "build/unpacked-dev/",
+        cwd: "build/unpacked-prod/",
         src: ["**"],
         dest: "test/streamkeys-ext/"
       } ] }
@@ -140,8 +140,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
+  grunt.registerTask("rel-test", ["rel", "test"]);
   grunt.registerTask("dev", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "compress:dev", "copy:test"]);
+    "mkdir:js", "browserify", "copy:test"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:prod", "uglify", "compress:rel"]);
+    "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test", "compress:rel"]);
 };

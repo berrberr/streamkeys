@@ -14,6 +14,9 @@
       "browserify-shim"
     ]
   },
+  "scripts": {
+    "test": "grunt rel-test"
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-compress": "~0.10.0",
@@ -33,6 +36,7 @@
     "browserify-shim": "~3.7.0",
     "chai": "~1.9.1",
     "mocha": "~1.21.4",
-    "selenium-webdriver": "~2.43.5"
+    "selenium-webdriver": "~2.43.5",
+    "chromedriver": "~2.10.0-1"
   }
 }

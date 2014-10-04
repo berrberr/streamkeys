@@ -81,7 +81,7 @@ exports.getAndWait = function(driver, url) {
  */
 var alertCheck = exports.alertCheck = function(driver) {
   driver.switchTo().alert().then(function(alert) {
-    console.log("Accept alert");
+    console.log("Accept alert...");
     alert.accept();
   }, function(error) {
     console.log("No alert found, continue...");
@@ -95,7 +95,7 @@ var alertCheck = exports.alertCheck = function(driver) {
  */
 var waitForLoad = exports.waitForLoad = function(driver) {
   return driver.wait(function() {
-    console.log("Waiting for pageload");
+    console.log("Waiting for pageload...");
     return driver.executeScript("return document.readyState;").then(function(res) {
       return res === "complete";
     });

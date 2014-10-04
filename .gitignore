@@ -3,3 +3,5 @@ node_modules/
 build/*
 test/streamkeys-ext/*
 test/secrets.json
+streamkeys-dev.zip
+streamkeys.zip

@@ -14,7 +14,11 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
     });
 
     after(function() {
-      driver.sleep(500);
+      driver.sleep(1000);
+    });
+
+    afterEach(function() {
+      driver.sleep(200);
     });
 
     /**

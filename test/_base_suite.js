@@ -1,6 +1,5 @@
 // Missing Tests:
 // Amazon
-// Google Music
 // Pandora
 // Seesu
 // Spotify
@@ -12,7 +11,6 @@ var base = require("./_base_test.js"),
 
 const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
 const WAIT_TIMEOUT = 30000;
-
 
 var baseSites = [
   {name: "7digital", url: "http://www.7digital.com"},
@@ -27,8 +25,9 @@ var baseSites = [
   {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
-  {name: "thesixtyone", url: "http://www.thesixtyone.com"},
-  {name: "tunein", url: "http://www.tunein.com"}
+  {name: "slacker", url: "http://www.slacker.com"},
+  {name: "tunein", url: "http://www.tunein.com"},
+  {name: "youarelisteningto", url: "http://www.youarelistening.to"}
 ];
 
 describe("Streamkeys suite", function() {
@@ -37,10 +36,33 @@ describe("Streamkeys suite", function() {
     driver.quit();
   });
 
-  baseSites.forEach(function(site) {
-    describe(site.name, function() {
-      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+  // baseSites.forEach(function(site) {
+  //   describe(site.name, function() {
+  //     shared.shouldBehaveLikeAMusicSite(driver, site.url);
+  //   });
+  // });
+
+  // @depends: a.guest-login
+  describe("stitcher", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://app.stitcher.com/");
+      helpers.waitAndClick(driver, {css: "a.guest-login"});
+      done();
     });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  // @depends: img.concierge-situation-image, div.concierge-filter-play-icon
+  describe("songza", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://songza.com/");
+      helpers.waitAndClick(driver, {css: "img.concierge-situation-image"});
+      helpers.waitAndClick(driver, {css: "div.concierge-filter-play-icon"});
+      done();
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
   // @depends: .playControls_wrapper
@@ -236,6 +258,27 @@ describe("Streamkeys suite", function() {
       driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
       driver.findElement({id: "quick_login_button"}).click();
       helpers.waitForSelector(driver, {id: "head_music"});
+      done();
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  // @depends: #Email, #Passwd, #signIn, #player
+  describe("googlemusic", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://music.google.com");
+      driver.wait(function() {
+        return (driver.isElementPresent({id: "Email"}) &&
+                driver.isElementPresent({id: "Passwd"}));
+      }, WAIT_TIMEOUT);
+      driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
+      driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
+      helpers.waitAndClick(driver, {id: "signIn"});
+      driver.wait(function() {
+        return (driver.isElementPresent({id: "player"}));
+      }, WAIT_TIMEOUT);
+
       done();
     });
 
