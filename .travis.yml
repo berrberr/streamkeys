@@ -1,7 +1,11 @@
 language: node_js
-node_js: ["0.10"]
+node_js:
+- '0.10'
 install:
-  - npm install
-  - PATH="$HOME/noode_modules/chromedriver/lib/chromedriver:$PATH"
+- npm install
+- PATH="$HOME/noode_modules/chromedriver/lib/chromedriver:$PATH"
 before_script:
-  - npm install -g grunt-cli
+- npm install -g grunt-cli
+before_install:
+- openssl aes-256-cbc -K $encrypted_e72e740b7464_key -iv $encrypted_e72e740b7464_iv
+  -in secrets.json.enc -out test/secrets.json -d
