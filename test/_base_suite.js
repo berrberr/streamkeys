@@ -43,11 +43,11 @@ describe("Streamkeys suite", function() {
     driver.quit();
   });
 
-  // baseSites.forEach(function(site) {
-  //   describe(site.name, function() {
-  //     shared.shouldBehaveLikeAMusicSite(driver, site.url);
-  //   });
-  // });
+  baseSites.forEach(function(site) {
+    describe(site.name, function() {
+      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+    });
+  });
 
   // @depends: a.guest-login
   describe("stitcher", function() {
@@ -105,17 +105,17 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: a.mix_name, a#play_overlay
-  describe("8tracks", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.8tracks.com");
-      helpers.waitAndClick(driver, {css: "a.mix_name"});
-      helpers.waitAndClick(driver, {css: "a#play_overlay"});
-      done();
-    })
+  // // @depends: a.mix_name, a#play_overlay
+  // describe("8tracks", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.8tracks.com");
+  //     helpers.waitAndClick(driver, {css: "a.mix_name"});
+  //     helpers.waitAndClick(driver, {css: "a#play_overlay"});
+  //     done();
+  //   })
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   // @depends: .station_anchor
   describe("jango", function() {
@@ -151,124 +151,124 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: td.logo_on, /search/
-  describe("songstr", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://songstr.com/#!/search/The-Smiths");
-      helpers.waitAndClick(driver, {css: "td.logo_on > img"});
-      done();
-    });
+  // // @depends: td.logo_on, /search/
+  // describe("songstr", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://songstr.com/#!/search/The-Smiths");
+  //     helpers.waitAndClick(driver, {css: "td.logo_on > img"});
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  // @depends: body.dragdrop-dropTarget
-  describe("sony music unlimited", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "https://music.sonyentertainmentnetwork.com/");
-      // Wait for body to contain class that is added when webapp has loaded
-      driver.wait(function() {
-        var el = driver.findElement({tagName: "body"});
-        return el.getAttribute("class").then(function(classNames) {
-          return (classNames.indexOf("dragdrop-dropTarget") > 0);
-        });
-      }, WAIT_TIMEOUT);
-      done();
-    });
+  // // @depends: body.dragdrop-dropTarget
+  // describe("sony music unlimited", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "https://music.sonyentertainmentnetwork.com/");
+  //     // Wait for body to contain class that is added when webapp has loaded
+  //     driver.wait(function() {
+  //       var el = driver.findElement({tagName: "body"});
+  //       return el.getAttribute("class").then(function(classNames) {
+  //         return (classNames.indexOf("dragdrop-dropTarget") > 0);
+  //       });
+  //     }, WAIT_TIMEOUT);
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  // @depends: .top-channel, .audio-buttons
-  describe("earbits", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.earbits.com");
-      helpers.waitAndClick(driver, {className: "top-channel"});
-      helpers.waitForSelector(driver, {className: "audio-buttons"});
-      done();
-    });
+  // // @depends: .top-channel, .audio-buttons
+  // describe("earbits", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.earbits.com");
+  //     helpers.waitAndClick(driver, {className: "top-channel"});
+  //     helpers.waitForSelector(driver, {className: "audio-buttons"});
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
-  describe("deezer", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.deezer.com");
-      helpers.waitAndClick(driver, {id: "login_btn"});
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "login_mail"}) &&
-                driver.isElementPresent({id: "login_password"}) &&
-                driver.isElementPresent({id: "login_form_submit"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "login_mail"}).sendKeys(secrets.deezer.username);
-      driver.findElement({id: "login_password"}).sendKeys(secrets.deezer.password);
-      driver.findElement({id: "login_form_submit"}).click();
-      driver.wait(function() {
-        return (driver.isElementPresent({className: "player-controls"}));
-      }, WAIT_TIMEOUT);
+  // // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
+  // describe("deezer", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.deezer.com");
+  //     helpers.waitAndClick(driver, {id: "login_btn"});
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({id: "login_mail"}) &&
+  //               driver.isElementPresent({id: "login_password"}) &&
+  //               driver.isElementPresent({id: "login_form_submit"}));
+  //     }, WAIT_TIMEOUT);
+  //     driver.findElement({id: "login_mail"}).sendKeys(secrets.deezer.username);
+  //     driver.findElement({id: "login_password"}).sendKeys(secrets.deezer.password);
+  //     driver.findElement({id: "login_form_submit"}).click();
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({className: "player-controls"}));
+  //     }, WAIT_TIMEOUT);
 
-      done();
-    });
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  // @depends: .genre-btn, .btn-primary, .player-controls, [@data-station-id]
-  describe("iHeartRadio", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.iheart.com");
-      helpers.waitAndClick(driver, {className: "genre-btn"});
-      helpers.waitAndClick(driver, {className: "btn-primary"});
-      driver.wait(function() {
-        var playerEl = driver.findElement({className: "player-controls"});
-        return playerEl.getAttribute("data-station-id").then(function(val) {
-          return val !== null;
-        })
-      }, WAIT_TIMEOUT);
-      done();
-    });
+  // // @depends: .genre-btn, .btn-primary, .player-controls, [@data-station-id]
+  // describe("iHeartRadio", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.iheart.com");
+  //     helpers.waitAndClick(driver, {className: "genre-btn"});
+  //     helpers.waitAndClick(driver, {className: "btn-primary"});
+  //     driver.wait(function() {
+  //       var playerEl = driver.findElement({className: "player-controls"});
+  //       return playerEl.getAttribute("data-station-id").then(function(val) {
+  //         return val !== null;
+  //       })
+  //     }, WAIT_TIMEOUT);
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  // @depends: #username, #password, [name=submit], .player_bottom, /account/signin/
-  describe("rdio", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "https://www.rdio.com/account/signin/");
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "username"}) &&
-                driver.isElementPresent({id: "password"}) &&
-                driver.isElementPresent({name: "submit"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "username"}).sendKeys(secrets.rdio.username);
-      driver.findElement({id: "password"}).sendKeys(secrets.rdio.password);
-      driver.findElement({name: "submit"}).click();
-      helpers.waitForSelector(driver, {className: "player_bottom"});
-      done();
-    });
+  // // @depends: #username, #password, [name=submit], .player_bottom, /account/signin/
+  // describe("rdio", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "https://www.rdio.com/account/signin/");
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({id: "username"}) &&
+  //               driver.isElementPresent({id: "password"}) &&
+  //               driver.isElementPresent({name: "submit"}));
+  //     }, WAIT_TIMEOUT);
+  //     driver.findElement({id: "username"}).sendKeys(secrets.rdio.username);
+  //     driver.findElement({id: "password"}).sendKeys(secrets.rdio.password);
+  //     driver.findElement({name: "submit"}).click();
+  //     helpers.waitForSelector(driver, {className: "player_bottom"});
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
-  describe("vk", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.vk.com");
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "quick_email"}) &&
-                driver.isElementPresent({id: "quick_pass"}) &&
-                driver.isElementPresent({id: "quick_login_button"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
-      driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
-      driver.findElement({id: "quick_login_button"}).click();
-      helpers.waitForSelector(driver, {id: "head_music"});
-      done();
-    });
+  // //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
+  // describe("vk", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.vk.com");
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({id: "quick_email"}) &&
+  //               driver.isElementPresent({id: "quick_pass"}) &&
+  //               driver.isElementPresent({id: "quick_login_button"}));
+  //     }, WAIT_TIMEOUT);
+  //     driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
+  //     driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
+  //     driver.findElement({id: "quick_login_button"}).click();
+  //     helpers.waitForSelector(driver, {id: "head_music"});
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   // // @depends: #Email, #Passwd, #signIn, #player
   // describe("googlemusic", function() {
