@@ -98,36 +98,36 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: a.mix_name, a#play_overlay
-  describe("8tracks", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.8tracks.com");
-      helpers.waitAndClick(driver, {css: "a.mix_name"})
-      helpers.waitForLoad(driver);
-      helpers.waitAndClick(driver, {css: "a#play_overlay"})
-      done();
-    })
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // // @depends: .station_anchor
-  // describe("jango", function() {
+  // // @depends: a.mix_name, a#play_overlay
+  // describe("8tracks", function() {
   //   before(function(done) {
-  //     helpers.getAndWait(driver, "http://www.jango.com");
-  //     helpers.waitAndClick(driver, {className: "station_anchor"});
+  //     helpers.getAndWait(driver, "http://www.8tracks.com");
+  //     helpers.waitAndClick(driver, {css: "a.mix_name"})
+  //     helpers.waitForLoad(driver);
+  //     helpers.waitAndClick(driver, {css: "a#play_overlay"})
   //     done();
-  //   });
-
-  //   // Ad popup might mess up driver
-  //   after(function(done) {
-  //     driver.sleep(5000).then(function() {
-  //       done();
-  //     });
-  //   });
+  //   })
 
   //   shared.shouldBehaveLikeAMusicSite(driver, false);
   // });
+
+  // @depends: .station_anchor
+  describe("jango", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.jango.com");
+      helpers.waitAndClick(driver, {className: "station_anchor"});
+      done();
+    });
+
+    // Ad popup might mess up driver
+    after(function(done) {
+      driver.sleep(5000).then(function() {
+        done();
+      });
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
 
   describe("NPR one", function() {
     before(function(done) {
