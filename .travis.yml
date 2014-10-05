@@ -3,8 +3,8 @@ node_js:
 - '0.10'
 install:
 - npm install
-- sudo chmod 777 $HOME/node_modules/selenium-chromedriver/bin/chromedriver
-- PATH="$HOME/node_modules/selenium-chromedriver/bin:$PATH"
+- sudo chmod +x $TRAVIS_BUILD_DIR/node_modules/selenium-chromedriver/bin/chromedriver
+- PATH="$TRAVIS_BUILD_DIR/node_modules/selenium-chromedriver/bin:$PATH"
 before_script:
 - npm install -g grunt-cli
 before_install:
@@ -35,4 +35,4 @@ before_install:
 - sleep 2
 cache:
   directories:
-  - node_modules
+  - $TRAVIS_BUILD_DIR/node_modules
