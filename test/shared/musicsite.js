@@ -13,14 +13,6 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
       this.firstTest = true;
     });
 
-    after(function() {
-      driver.sleep(2000);
-    });
-
-    afterEach(function() {
-      driver.sleep(1000);
-    });
-
     /**
      * Check for a load error.
      * If found throw an error to exit out of describe block without running remaining tests.

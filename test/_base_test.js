@@ -7,10 +7,12 @@ global.helpers = require("./shared/helpers.js");
 global.test = require("selenium-webdriver/testing");
 
 var chromeOptions = new chrome.Options(),
-    extPath = "--load-extension=" + helpers.getPath(__filename, "streamkeys-ext/");
+    extPath = "--load-extension=" + helpers.getPath(__filename, "streamkeys-ext/"),
+    adblockPath = helpers.getPath(__filename, "adblockplus.crx");
 
 console.log("Extension load path: " + extPath);
 
+chromeOptions.addExtensions(adblockPath);
 chromeOptions.addArguments([extPath, "--log-level=0"]);
 chromeOptions.setLoggingPrefs({browser: "ALL"});
 

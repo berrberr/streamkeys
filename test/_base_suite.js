@@ -32,6 +32,13 @@ var baseSites = [
 
 describe("Streamkeys suite", function() {
 
+  before(function(done) {
+    // Wait for ABP to load
+    driver.sleep(1000).then(function() {
+      done();
+    });
+  });
+
   after(function() {
     driver.quit();
   });
@@ -98,18 +105,17 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // // @depends: a.mix_name, a#play_overlay
-  // describe("8tracks", function() {
-  //   before(function(done) {
-  //     helpers.getAndWait(driver, "http://www.8tracks.com");
-  //     helpers.waitAndClick(driver, {css: "a.mix_name"})
-  //     helpers.waitForLoad(driver);
-  //     helpers.waitAndClick(driver, {css: "a#play_overlay"})
-  //     done();
-  //   })
+  // @depends: a.mix_name, a#play_overlay
+  describe("8tracks", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.8tracks.com");
+      helpers.waitAndClick(driver, {css: "a.mix_name"});
+      helpers.waitAndClick(driver, {css: "a#play_overlay"});
+      done();
+    })
 
-  //   shared.shouldBehaveLikeAMusicSite(driver, false);
-  // });
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
 
   // @depends: .station_anchor
   describe("jango", function() {
@@ -264,26 +270,26 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: #Email, #Passwd, #signIn, #player
-  describe("googlemusic", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://music.google.com");
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "Email"}) &&
-                driver.isElementPresent({id: "Passwd"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
-      driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
-      helpers.waitAndClick(driver, {id: "signIn"});
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "player"}));
-      }, WAIT_TIMEOUT);
+  // // @depends: #Email, #Passwd, #signIn, #player
+  // describe("googlemusic", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://music.google.com");
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({id: "Email"}) &&
+  //               driver.isElementPresent({id: "Passwd"}));
+  //     }, WAIT_TIMEOUT);
+  //     driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
+  //     driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
+  //     helpers.waitAndClick(driver, {id: "signIn"});
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({id: "player"}));
+  //     }, WAIT_TIMEOUT);
 
-      done();
-    });
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   // // Iframes are too anoying
   // describe("spotify", function() {

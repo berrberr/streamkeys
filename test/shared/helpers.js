@@ -62,9 +62,12 @@ exports.waitAndClick = function(driver, selector, timeout) {
   var timeout = timeout || WAIT_TIMEOUT;
 
   driver.wait(function() {
+    console.log("Waiting on click...");
     return (driver.isElementPresent(selector));
-  }, timeout);
-  return driver.findElement(selector).click();
+  }, timeout).then(function() {
+    console.log("Waiting for click done");
+    return driver.findElement(selector).click();
+  });
 };
 
 /**

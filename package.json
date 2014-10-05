@@ -37,6 +37,6 @@
     "chai": "~1.9.1",
     "mocha": "~1.21.4",
     "selenium-webdriver": "~2.43.5",
-    "chromedriver": "~2.10.0-1"
+    "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git"
   }
 }
