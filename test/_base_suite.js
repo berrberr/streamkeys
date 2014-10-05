@@ -13,12 +13,12 @@ const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
 const WAIT_TIMEOUT = 30000;
 
 var baseSites = [
-  {name: "7digital", url: "http://www.7digital.com"},
-  {name: "bandcamp", url: "http://www.bandcamp.com"},
-  {name: "bop.fm", url: "http://www.bop.fm"},
-  {name: "di.fm", url: "http://www.di.fm/ambient"},
-  {name: "edge player", url: "http://player.edge.ca"},
-  {name: "grooveshar", url: "http://www.grooveshark.com"},
+  // {name: "7digital", url: "http://www.7digital.com"},
+  // {name: "bandcamp", url: "http://www.bandcamp.com"},
+  // {name: "bop.fm", url: "http://www.bop.fm"},
+  // {name: "di.fm", url: "http://www.di.fm/ambient"},
+  // {name: "edge player", url: "http://player.edge.ca"},
+  {name: "grooveshark", url: "http://www.grooveshark.com"},
   {name: "hypemachine", url: "http://www.hypem.com"},
   {name: "last.fm", url: "http://www.last.fm/listen"},
   {name: "myspace", url: "http://music.myspace.com"},
@@ -49,107 +49,117 @@ describe("Streamkeys suite", function() {
     });
   });
 
-  // @depends: a.guest-login
-  describe("stitcher", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://app.stitcher.com/");
-      helpers.waitAndClick(driver, {css: "a.guest-login"});
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // @depends: img.concierge-situation-image, div.concierge-filter-play-icon
-  describe("songza", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://songza.com/");
-      helpers.waitAndClick(driver, {css: "img.concierge-situation-image"});
-      helpers.waitAndClick(driver, {css: "div.concierge-filter-play-icon"});
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // @depends: .playControls_wrapper
-  describe("soundcloud", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "https://soundcloud.com/explore");
-      helpers.waitForSelector(driver, {className: "playControls__wrapper"});
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // @depends: #ready_link
-  describe("thesixtyone", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.thesixtyone.com");
-      helpers.waitAndClick(driver, {id: "ready_link"});
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // @depends: a.yt-uix-tile-link
-  describe("youtube", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.youtube.com");
-      helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // // @depends: a.mix_name, a#play_overlay
-  // describe("8tracks", function() {
+  // // @depends: a.guest-login
+  // describe("stitcher", function() {
   //   before(function(done) {
-  //     helpers.getAndWait(driver, "http://www.8tracks.com");
-  //     helpers.waitAndClick(driver, {css: "a.mix_name"});
-  //     helpers.waitAndClick(driver, {css: "a#play_overlay"});
+  //     var newDriver = base.getDriver();
+  //     helpers.getAndWait(newDriver, "http://app.stitcher.com/");
+  //     helpers.waitAndClick(newDriver, {css: "a.guest-login"});
   //     done();
-  //   })
+  //   });
+
+  //   after(function() {
+  //     newDriver.quit();
+  //   });
+
+  //   shared.shouldBehaveLikeAMusicSite(newDriver, false);
+  // });
+
+  // // @depends: img.concierge-situation-image, div.concierge-filter-play-icon
+  // describe("songza", function() {
+  //   before(function(done) {
+  //     var newDriver = base.getDriver();
+  //     helpers.getAndWait(newDriver, "http://songza.com/");
+  //     helpers.waitAndClick(newDriver, {css: "img.concierge-situation-image"});
+  //     helpers.waitAndClick(newDriver, {css: "div.concierge-filter-play-icon"});
+  //     done();
+  //   });
+
+  //   after(function() {
+  //     newDriver.quit();
+  //   });
+
+  //   shared.shouldBehaveLikeAMusicSite(newDriver, false);
+  // });
+
+  // // @depends: .playControls_wrapper
+  // describe("soundcloud", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "https://soundcloud.com/explore");
+  //     helpers.waitForSelector(driver, {className: "playControls__wrapper"});
+  //     done();
+  //   });
 
   //   shared.shouldBehaveLikeAMusicSite(driver, false);
   // });
 
-  // @depends: .station_anchor
-  describe("jango", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.jango.com");
-      helpers.waitAndClick(driver, {className: "station_anchor"});
-      done();
-    });
+  // // @depends: #ready_link
+  // describe("thesixtyone", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.thesixtyone.com");
+  //     helpers.waitAndClick(driver, {id: "ready_link"});
+  //     done();
+  //   });
 
-    // Ad popup might mess up driver
-    after(function(done) {
-      driver.sleep(5000).then(function() {
-        done();
-      });
-    });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  // // @depends: a.yt-uix-tile-link
+  // describe("youtube", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.youtube.com");
+  //     helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
+  //     done();
+  //   });
 
-  describe("NPR one", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://one.npr.org");
-      done();
-    });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-    // Ad popup might mess up driver
-    after(function(done) {
-      driver.sleep(5000).then(function() {
-        done();
-      });
-    });
+  // // // @depends: a.mix_name, a#play_overlay
+  // // describe("8tracks", function() {
+  // //   before(function(done) {
+  // //     helpers.getAndWait(driver, "http://www.8tracks.com");
+  // //     helpers.waitAndClick(driver, {css: "a.mix_name"});
+  // //     helpers.waitAndClick(driver, {css: "a#play_overlay"});
+  // //     done();
+  // //   })
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  // //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // // });
+
+  // // @depends: .station_anchor
+  // describe("jango", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.jango.com");
+  //     helpers.waitAndClick(driver, {className: "station_anchor"});
+  //     done();
+  //   });
+
+  //   // Ad popup might mess up driver
+  //   after(function(done) {
+  //     driver.sleep(5000).then(function() {
+  //       done();
+  //     });
+  //   });
+
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
+
+  // describe("NPR one", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://one.npr.org");
+  //     done();
+  //   });
+
+  //   // Ad popup might mess up driver
+  //   after(function(done) {
+  //     driver.sleep(5000).then(function() {
+  //       done();
+  //     });
+  //   });
+
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   // // @depends: td.logo_on, /search/
   // describe("songstr", function() {

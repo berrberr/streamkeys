@@ -13,7 +13,7 @@ var chromeOptions = new chrome.Options(),
 console.log("Extension load path: " + extPath);
 
 chromeOptions.addExtensions(adblockPath);
-chromeOptions.addArguments([extPath, "--log-level=0"]);
+chromeOptions.addArguments([extPath, "--log-level=0", "--test-type"]);
 chromeOptions.setLoggingPrefs({browser: "ALL"});
 
 /* exports */

@@ -74,8 +74,11 @@ exports.waitAndClick = function(driver, selector, timeout) {
  * Get a site, dismiss alerts and wait for document load
  */
 exports.getAndWait = function(driver, url) {
+  console.log("Getting: ", url);
   driver.get(url);
+  console.log("Got URL, checking alerts");
   alertCheck(driver);
+  console.log("alertCheckDone");
   return waitForLoad(driver);
 };
 
@@ -83,14 +86,13 @@ exports.getAndWait = function(driver, url) {
  * Accept an alert if visible
  */
 var alertCheck = exports.alertCheck = function(driver) {
-  driver.switchTo().alert().then(function(alert) {
+  console.log("Checking for alerts...");
+  return driver.switchTo().alert().then(function(alert) {
     console.log("Accept alert...");
     alert.accept();
   }, function(error) {
     console.log("No alert found, continue...");
   });
-
-  return true;
 };
 
 /**
