@@ -27,7 +27,8 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
       if(url) {
         console.log("Override alerts and unloads");
-        driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;").then(function(val) {
+        helpers.overrideAlerts(driver).then(function(val) {
+          console.log("Override complete.");
           driver.get(url).then(function() {
             console.log("2 second sleep");
             driver.sleep(2000).then(function() {
@@ -67,7 +68,33 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
           });
         });
       } else {
-        done();
+        helpers.alertCheck(driver).then(function() {
+          console.log("Alert check done");
+          console.log("Starting waitforload");
+          helpers.waitForLoad(driver)
+          .thenCatch(function(err) {
+            console.log("Driver Timeout!", err);
+            self.loadError = true;
+          })
+          .then(function() {
+            console.log("Waitforload done!");
+            // Wait for Streamkeys attached console message
+            driver.wait(function() {
+              return driver.manage().logs().get("browser").then(function(log) {
+                return helpers.parseLog(log, "Attached");
+              });
+            }, 30000)
+            .then(function() {
+              console.log("Extension loaded!");
+              self.loadError = false;
+              done();
+            }, function(e) {
+              console.log("Extension load timed out!", e);
+              self.loadError = true;
+              done();
+            });
+          });
+        });
       }
     });
 

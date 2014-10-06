@@ -74,12 +74,19 @@ exports.waitAndClick = function(driver, selector, timeout) {
  * Get a site, dismiss alerts and wait for document load
  */
 exports.getAndWait = function(driver, url) {
-  console.log("Getting: ", url);
-  driver.get(url);
-  console.log("Got URL, checking alerts");
-  alertCheck(driver);
-  console.log("alertCheckDone");
-  return waitForLoad(driver);
+  console.log("Override alerts/unloads");
+  overrideAlerts(driver).then(function() {
+    console.log("Getting: ", url);
+    driver.get(url);
+    console.log("Got URL, checking alerts");
+    alertCheck(driver);
+    console.log("alertCheckDone");
+    return waitForLoad(driver);
+  });
+};
+
+var overrideAlerts = exports.overrideAlerts = function(driver) {
+  return driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;");
 };
 
 /**
