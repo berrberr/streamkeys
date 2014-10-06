@@ -27,37 +27,40 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
       if(url) {
         console.log("Override alerts and unloads");
-        driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;").then(function(val) {
+        driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;").then(function(val) {
           driver.get(url).then(function() {
-            console.log("GOT: " + url + "...Checking alerts next...");
-            // driver.getCurrentUrl().then(function(u) {
-            //   console.log("current url: ", u);
-            // });
-            // Attempt to close any active alerts if they exist
-            helpers.alertCheck(driver).then(function() {
-              console.log("Alert check done");
-              console.log("Starting waitforload");
-              helpers.waitForLoad(driver)
-              .thenCatch(function(err) {
-                console.log("Driver Timeout!", err);
-                self.loadError = true;
-              })
-              .then(function() {
-                console.log("Waitforload done!");
-                // Wait for Streamkeys attached console message
-                driver.wait(function() {
-                  return driver.manage().logs().get("browser").then(function(log) {
-                    return helpers.parseLog(log, "Attached");
-                  });
-                }, 30000)
-                .then(function() {
-                  console.log("Extension loaded!");
-                  self.loadError = false;
-                  done();
-                }, function(e) {
-                  console.log("Extension load timed out!", e);
+            console.log("2 second sleep");
+            driver.sleep(2000).then(function() {
+              console.log("GOT: " + url + "...Checking alerts next...");
+              // driver.getCurrentUrl().then(function(u) {
+              //   console.log("current url: ", u);
+              // });
+              // Attempt to close any active alerts if they exist
+              helpers.alertCheck(driver).then(function() {
+                console.log("Alert check done");
+                console.log("Starting waitforload");
+                helpers.waitForLoad(driver)
+                .thenCatch(function(err) {
+                  console.log("Driver Timeout!", err);
                   self.loadError = true;
-                  done();
+                })
+                .then(function() {
+                  console.log("Waitforload done!");
+                  // Wait for Streamkeys attached console message
+                  driver.wait(function() {
+                    return driver.manage().logs().get("browser").then(function(log) {
+                      return helpers.parseLog(log, "Attached");
+                    });
+                  }, 30000)
+                  .then(function() {
+                    console.log("Extension loaded!");
+                    self.loadError = false;
+                    done();
+                  }, function(e) {
+                    console.log("Extension load timed out!", e);
+                    self.loadError = true;
+                    done();
+                  });
                 });
               });
             });
