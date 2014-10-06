@@ -29,8 +29,8 @@ exports.eventScript = function(action) {
  */
 exports.parseLog = function(log, action) {
   return log.some(function(entry) {
-    var actionFound = (entry.message.indexOf(SKINFO + action) > 0 || entry.message.indexOf(SKINFO + "disabled") > 0);
-    var errorFound = (entry.message.indexOf(SKERR) > 0);
+    var actionFound = (entry.message.indexOf(SKINFO + action) !== -1 || entry.message.indexOf(SKINFO + "disabled") !== -1);
+    var errorFound = (entry.message.indexOf(SKERR) !== -1);
     if(actionFound || errorFound) console.log(entry.message);
     return actionFound;
   });
@@ -87,11 +87,22 @@ exports.getAndWait = function(driver, url) {
  */
 var alertCheck = exports.alertCheck = function(driver) {
   console.log("Checking for alerts...");
-  return driver.switchTo().alert().then(function(alert) {
-    console.log("Accept alert...");
-    alert.accept();
-  }, function(error) {
-    console.log("No alert found, continue...");
+  driver.getAllWindowHandles().then(function(handles) {
+    driver.getWindowHandle().then(function(handle) {
+      console.log("HANDLE: ", handle);
+      console.log("HANDLES: ", handles);
+      if(handles.indexOf(handle) !== -1) {
+        console.log("THERE IS A WINDOW OPEN");
+        driver.switchTo().alert().then(function(alert) {
+          console.log("Accept alert...");
+          alert.accept();
+        }, function(error) {
+          console.log("No alert found, continue...");
+        });
+      } else {
+        console.log("NO OPEN WINDOW FOUND!");
+      }
+    });
   });
 };
 
