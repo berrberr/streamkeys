@@ -13,16 +13,16 @@ const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
 const WAIT_TIMEOUT = 30000;
 
 var baseSites = [
-  // {name: "7digital", url: "http://www.7digital.com"},
-  // {name: "bandcamp", url: "http://www.bandcamp.com"},
-  // {name: "bop.fm", url: "http://www.bop.fm"},
-  // {name: "di.fm", url: "http://www.di.fm/ambient"},
-  // {name: "edge player", url: "http://player.edge.ca"},
+  {name: "7digital", url: "http://www.7digital.com"},
+  {name: "bandcamp", url: "http://www.bandcamp.com"},
+  {name: "bop.fm", url: "http://www.bop.fm"},
+  {name: "di.fm", url: "http://www.di.fm/ambient"},
+  {name: "edge player", url: "http://player.edge.ca"},
   {name: "grooveshark", url: "http://www.grooveshark.com"},
   {name: "hypemachine", url: "http://www.hypem.com"},
   {name: "last.fm", url: "http://www.last.fm/listen"},
   {name: "myspace", url: "http://music.myspace.com"},
-  {name: "mixcloud", url: "http://www.mixcloud.com"},
+  // {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
   {name: "slacker", url: "http://www.slacker.com"},
