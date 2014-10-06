@@ -87,7 +87,7 @@ exports.getAndWait = function(driver, url) {
  */
 var alertCheck = exports.alertCheck = function(driver) {
   console.log("Checking for alerts...");
-  driver.getAllWindowHandles().then(function(handles) {
+  return driver.getAllWindowHandles().then(function(handles) {
     driver.getWindowHandle().then(function(handle) {
       console.log("HANDLE: ", handle);
       console.log("HANDLES: ", handles);
