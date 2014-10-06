@@ -94,16 +94,17 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: a.yt-uix-tile-link
-  describe("youtube", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.youtube.com");
-      helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
-      done();
-    });
+  // // @depends: a.yt-uix-tile-link
+  // // Load up a playlist to test next/previous buttons
+  // describe("youtube", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "https://www.youtube.com/watch?v=j5fYOYrsocs&list=PLOU2XLYxmsII8L540LbY5hdC23cmoZMhV&index=1");
+  //     //helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   // // @depends: a.mix_name, a#play_overlay
   // describe("8tracks", function() {
@@ -215,12 +216,7 @@ describe("Streamkeys suite", function() {
       helpers.getAndWait(driver, "http://www.iheart.com");
       helpers.waitAndClick(driver, {className: "genre-btn"});
       helpers.waitAndClick(driver, {className: "btn-primary"});
-      driver.wait(function() {
-        var playerEl = driver.findElement({className: "player-controls"});
-        return playerEl.getAttribute("data-station-id").then(function(val) {
-          return val !== null;
-        })
-      }, WAIT_TIMEOUT);
+      helpers.waitForSelector(driver, {className: "player-controls"})
       done();
     });
 
@@ -265,26 +261,26 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // // @depends: #Email, #Passwd, #signIn, #player
-  // describe("googlemusic", function() {
-  //   before(function(done) {
-  //     helpers.getAndWait(driver, "http://music.google.com");
-  //     driver.wait(function() {
-  //       return (driver.isElementPresent({id: "Email"}) &&
-  //               driver.isElementPresent({id: "Passwd"}));
-  //     }, WAIT_TIMEOUT);
-  //     driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
-  //     driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
-  //     helpers.waitAndClick(driver, {id: "signIn"});
-  //     driver.wait(function() {
-  //       return (driver.isElementPresent({id: "player"}));
-  //     }, WAIT_TIMEOUT);
+  // @depends: #Email, #Passwd, #signIn, #player
+  describe("googlemusic", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://music.google.com");
+      driver.wait(function() {
+        return (driver.isElementPresent({id: "Email"}) &&
+                driver.isElementPresent({id: "Passwd"}));
+      }, WAIT_TIMEOUT);
+      driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
+      driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
+      helpers.waitAndClick(driver, {id: "signIn"});
+      driver.wait(function() {
+        return (driver.isElementPresent({id: "player"}));
+      }, WAIT_TIMEOUT);
 
-  //     done();
-  //   });
+      done();
+    });
 
-  //   shared.shouldBehaveLikeAMusicSite(driver, false);
-  // });
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
 
   // // Iframes are too anoying
   // describe("spotify", function() {

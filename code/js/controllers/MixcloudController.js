@@ -1,7 +1,8 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController").init({
+  var controller = require("BaseController");
+  controller.init({
     playPause: "[m-player-play-button]",
     mute: ".player-volume-percent"
   });

@@ -41,9 +41,15 @@ module.exports = function(grunt) {
         src: [pkg.name + "-" + pkg.version + ".crx"],
         dest: process.env.CIRCLE_ARTIFACTS
       } ] },
-      test: { files: [ {
+      test_dev: { files: [ {
         expand: true,
-        cwd: "build/unpacked-prod/",
+        cwd: "build/unpacked-dev",
+        src: ["**"],
+        dest: "test/streamkeys-ext/"
+      } ] },
+      test_prod: { files: [ {
+        expand: true,
+        cwd: "build/unpacked-prod",
         src: ["**"],
         dest: "test/streamkeys-ext/"
       } ] }
@@ -142,7 +148,7 @@ module.exports = function(grunt) {
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
   grunt.registerTask("dev", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:test"]);
+    "mkdir:js", "browserify", "copy:test_dev"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test", "compress:rel"]);
+    "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
 };
