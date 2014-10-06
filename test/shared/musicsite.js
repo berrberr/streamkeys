@@ -27,15 +27,20 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
       if(url) {
         driver.get(url);
+        console.log("GOT: " + url + "...Checking alerts next...");
+        console.log("DRIVER STATUS: ", driver);
         // Attempt to close any active alerts if they exist
         helpers.alertCheck(driver);
+        console.log("Alert check done");
       }
 
+      console.log("Starting waitforload");
       helpers.waitForLoad(driver).thenCatch(function(err) {
         console.log("Driver Timeout!", err);
         self.loadError = true;
       });
 
+      console.log("waitforload done.");
       // Wait for Streamkeys attached console message
       driver.wait(function() {
         return driver.manage().logs().get("browser").then(function(log) {
