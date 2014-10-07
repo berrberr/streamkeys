@@ -1,13 +1,18 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
-  var checkControls = function(selector, action) {
+  var controller = require("BaseController"),
+      sk_log = require("../modules/sk_log.js");
+
+  var checkControls = function(selector, action, count) {
+    count = count || 0;
+    if(count > 30) return;
+
     if(document.querySelector(this.selector_playcontrols) === null) {
-      window.setTimeout(checkControls.bind(this), 100, selector, action);
+      window.setTimeout(checkControls.bind(this), 100, selector, action, count + 1);
     } else {
       this.click(selector, action);
-      this.click(this.selector_hideControls, "closeControls");
+      if(document.querySelector(this.selector_playcontrols) !== null) this.click(this.selector_hideControls, "closeControls");
     }
   };
 

@@ -28,14 +28,33 @@ exports.eventScript = function(action) {
  * Parses a log array looking for a streamkeys action or disabled message
  * @return [bool] true if action is found in log messages
  */
-exports.parseLog = function(log, action) {
-  console.log(log);
+var parseLog = exports.parseLog = function(log, action) {
   return log.some(function(entry) {
     var actionFound = (entry.message.indexOf(SKINFO + action) !== -1 || entry.message.indexOf(SKINFO + "disabled") !== -1);
     var errorFound = (entry.message.indexOf(SKERR) !== -1);
-    //if(actionFound || errorFound) console.log(entry.message);
+    if(actionFound || errorFound) console.log(entry.message);
     return actionFound;
   });
+};
+
+var waitForLog = exports.waitForLog = function(driver, opts) {
+  var def = opts.promise || webdriver.promise.defer();
+  if(opts.count > 20) def.fulfill(false);
+
+  console.log("Waiting for log...", opts.count);
+  // Weird webdriver bug where sometimes console messages are not picked up unless we send a message before
+  driver.executeScript("console.log('REFRESH');").then(function() {
+    driver.manage().logs().get("browser").then(function(log) {
+      if(helpers.parseLog(log, opts.action)) {
+        def.fulfill(true);
+      } else {
+        driver.sleep(500).then(function() {
+          waitForLog(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
+        });
+      }
+    });
+  });
+  return def.promise;
 };
 
 /**
@@ -86,9 +105,14 @@ exports.getAndWait = function(driver, url) {
         console.log("Got URL, checking alerts");
         alertCheck(driver).then(function() {
           console.log("Alert check complete!");
-          waitForLoad(driver).then(function() {
+          waitForLoad(driver)
+          .then(function() {
             console.log("Load complete!");
             def.fulfill(null);
+          })
+          .thenCatch(function(err) {
+            console.log("Driver Timeout!", err);
+            def.reject(err);
           });
         });
       });
@@ -109,8 +133,6 @@ var alertCheck = exports.alertCheck = function(driver) {
   console.log("Checking for alerts...");
   driver.getAllWindowHandles().then(function(handles) {
     driver.getWindowHandle().then(function(handle) {
-      console.log("HANDLE: ", handle);
-      console.log("HANDLES: ", handles);
       if(handles.indexOf(handle) !== -1) {
         console.log("There is a window open...");
         driver.switchTo().alert().then(function(alert) {
@@ -137,7 +159,7 @@ var waitForLoad = exports.waitForLoad = function(driver) {
   return driver.wait(function() {
     console.log("Waiting for pageload...");
     return driver.executeScript("return document.readyState;").then(function(res) {
-      return res === "complete";
+      return (res === "complete");
     });
-  }, 20000);
+  }, WAIT_TIMEOUT);
 };
