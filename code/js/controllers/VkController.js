@@ -1,8 +1,7 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController"),
-      sk_log = require("../modules/sk_log.js");
+  var controller = require("BaseController");
 
   var checkControls = function(selector, action, count) {
     count = count || 0;
