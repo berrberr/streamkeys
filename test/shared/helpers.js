@@ -1,5 +1,6 @@
 var path = require("path"),
-    fs = require("fs");
+    fs = require("fs"),
+    webdriver = require("selenium-webdriver");
 
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
@@ -28,10 +29,11 @@ exports.eventScript = function(action) {
  * @return [bool] true if action is found in log messages
  */
 exports.parseLog = function(log, action) {
+  console.log(log);
   return log.some(function(entry) {
     var actionFound = (entry.message.indexOf(SKINFO + action) !== -1 || entry.message.indexOf(SKINFO + "disabled") !== -1);
     var errorFound = (entry.message.indexOf(SKERR) !== -1);
-    if(actionFound || errorFound) console.log(entry.message);
+    //if(actionFound || errorFound) console.log(entry.message);
     return actionFound;
   });
 };
@@ -74,15 +76,25 @@ exports.waitAndClick = function(driver, selector, timeout) {
  * Get a site, dismiss alerts and wait for document load
  */
 exports.getAndWait = function(driver, url) {
+  var def = webdriver.promise.defer();
   console.log("Override alerts/unloads");
-  overrideAlerts(driver).then(function() {
-    console.log("Getting: ", url);
-    driver.get(url);
-    console.log("Got URL, checking alerts");
-    alertCheck(driver);
-    console.log("alertCheckDone");
-    return waitForLoad(driver);
+  driver.getWindowHandle().then(function(handle) {
+    console.log("Window handle: ", handle);
+    overrideAlerts(driver).then(function() {
+      console.log("Getting: ", url);
+      driver.get(url).then(function() {
+        console.log("Got URL, checking alerts");
+        alertCheck(driver).then(function() {
+          console.log("Alert check complete!");
+          waitForLoad(driver).then(function() {
+            console.log("Load complete!");
+            def.fulfill(null);
+          });
+        });
+      });
+    });
   });
+  return def.promise;
 };
 
 var overrideAlerts = exports.overrideAlerts = function(driver) {
@@ -93,24 +105,29 @@ var overrideAlerts = exports.overrideAlerts = function(driver) {
  * Accept an alert if visible
  */
 var alertCheck = exports.alertCheck = function(driver) {
+  var def = webdriver.promise.defer();
   console.log("Checking for alerts...");
-  return driver.getAllWindowHandles().then(function(handles) {
+  driver.getAllWindowHandles().then(function(handles) {
     driver.getWindowHandle().then(function(handle) {
       console.log("HANDLE: ", handle);
       console.log("HANDLES: ", handles);
       if(handles.indexOf(handle) !== -1) {
-        console.log("THERE IS A WINDOW OPEN");
+        console.log("There is a window open...");
         driver.switchTo().alert().then(function(alert) {
           console.log("Accept alert...");
           alert.accept();
+          def.fulfill(null);
         }, function(error) {
           console.log("No alert found, continue...");
+          def.fulfill(null);
         });
       } else {
-        console.log("NO OPEN WINDOW FOUND!");
+        console.log("No open window found!");
+        def.fulfill(null);
       }
     });
   });
+  return def.promise;
 };
 
 /**

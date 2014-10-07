@@ -1,4 +1,6 @@
-exports.shouldBehaveLikeAMusicSite = function(driver, url) {
+var webdriver = require("selenium-webdriver");
+
+exports.shouldBehaveLikeAMusicSite = function(driver, url, sleepAfterCommand) {
 
   describe("music site behaviour", function() {
 
@@ -11,6 +13,10 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
       // Are we on the first test
       this.firstTest = true;
+
+      // Should we sleep after we execute a streamkeys test request?
+      // Ugly hack, only used for VK
+      this.sleepAfterCommand = sleepAfterCommand || 0;
     });
 
     /**
@@ -69,8 +75,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
         });
       } else {
         helpers.alertCheck(driver).then(function() {
-          console.log("Alert check done");
-          console.log("Starting waitforload");
+          console.log("Alert check done!\nStarting waitforload");
           helpers.waitForLoad(driver)
           .thenCatch(function(err) {
             console.log("Driver Timeout!", err);
@@ -100,18 +105,46 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
     it("should play", function(done) {
       driver.executeScript(helpers.eventScript("playPause")).then(function() {
-        driver.manage().logs().get("browser").then(function(log) {
-          expect(helpers.parseLog(log, "playPause")).to.be.true;
+        //TODO: move this block from wait to a setTimeout function in helpers.
+        var def = webdriver.promise.defer();
+        driver.wait(function() {
+          driver.manage().logs().get("browser").then(function(log) {
+            console.log("log from inside: ", log);
+            if(helpers.parseLog(log, "playPause")) def.fulfill(true);
+          });
+          return def.promise;
+        }, 5000)
+        .thenCatch(function(e) {
+          console.log("ERR: ", e);
+          done();
+        })
+        .then(function(res) {
+          expect(res).to.be.true;
           done();
         });
       });
+      // var self = this;
+      // driver.executeScript(helpers.eventScript("playPause")).then(function() {
+      //   console.log("have exec script, init sleep");
+      //   driver.sleep(self.sleepAfterCommand).then(function() {
+      //     console.log("sleep done");
+      //     driver.manage().logs().get("browser").then(function(log) {
+      //       console.log("log from insdie: ", log);
+      //       expect(helpers.parseLog(log, "playPause")).to.be.true;
+      //       done();
+      //     });
+      //   });
+      // });
     });
 
     it("should pause", function(done) {
+      var self = this;
       driver.executeScript(helpers.eventScript("playPause")).then(function() {
-        driver.manage().logs().get("browser").then(function(log) {
-          expect(helpers.parseLog(log, "playPause")).to.be.true;
-          done();
+        driver.sleep(self.sleepAfterCommand).then(function() {
+          driver.manage().logs().get("browser").then(function(log) {
+            expect(helpers.parseLog(log, "playPause")).to.be.true;
+            done();
+          });
         });
       });
     });

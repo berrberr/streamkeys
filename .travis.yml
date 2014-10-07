@@ -33,4 +33,4 @@ before_install:
 - sleep 2
 cache:
   directories:
-  - $TRAVIS_BUILD_DIR/node_modules
+  - "$TRAVIS_BUILD_DIR/node_modules"

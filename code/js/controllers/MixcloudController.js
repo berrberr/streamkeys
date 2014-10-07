@@ -1,12 +1,13 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var controller = require("BaseController"),
+      sk_log = require("../modules/sk_log.js");
+
   controller.init({
     playPause: "[m-player-play-button]",
     mute: ".player-volume-percent"
   });
-  var sk_log = require("../modules/sk_log.js");
 
   controller.mute = function() {
     sk_log("mute");

@@ -21,7 +21,6 @@
   controller.selector_showControls = "#head_music";
   controller.selector_hideControls = ".pad_close_btn > button";
 
-
   //Must have control box open to click the next/prev controls
   controller.playPause = function() {
     if(document.querySelector(this.selector_playcontrols) === null) this.click(this.selector_showControls, "openControls");
