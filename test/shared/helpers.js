@@ -18,6 +18,7 @@ exports.getPath = function(base, filePath) {
 
 /**
  * Create a custom event containing a streamkeys test action
+ * @param action [str] name of streamkeys-test action to perform
  * @return [str] the js as a string
  */
 exports.eventScript = function(action) {
@@ -38,29 +39,32 @@ var parseLog = exports.parseLog = function(log, action) {
   });
 };
 
+/**
+ * Waits for the log to contain a given value
+ * @param opts.action [str] string to search log for
+ * @param opts.count [int] how many times has check has been performed
+ * @param opts.promise [promise] promise to resolve on success/fail
+ * @return promise
+ */
 var waitForLog = exports.waitForLog = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
   if(opts.count > 20) def.fulfill(false);
 
   console.log("Waiting for log...", opts.count);
-  // Weird webdriver bug where sometimes console messages are not picked up unless we send a message before
-  driver.executeScript("console.log('REFRESH');").then(function() {
-    driver.manage().logs().get("browser").then(function(log) {
-      if(helpers.parseLog(log, opts.action)) {
-        def.fulfill(true);
-      } else {
-        driver.sleep(500).then(function() {
-          waitForLog(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
-        });
-      }
-    });
+  driver.manage().logs().get("browser").then(function(log) {
+    if(helpers.parseLog(log, opts.action)) {
+      def.fulfill(true);
+    } else {
+      driver.sleep(500).then(function() {
+        waitForLog(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
+      });
+    }
   });
   return def.promise;
 };
 
 /**
  * Waits until an element is visible
- * @param driver [webdriver instance]
  * @param selector [obj] webdriver locator object
  * @param timeout [int] optional timeout
  * @return promise
@@ -75,7 +79,6 @@ exports.waitForSelector = function(driver, selector, timeout) {
 
 /**
  * Waits for an element to be visible and then clicks it
- * @param driver [webdriver instance]
  * @param selector [obj] webdriver locator object
  * @param timeout [int] optional timeout
  * @return promise
@@ -94,6 +97,7 @@ exports.waitAndClick = function(driver, selector, timeout) {
 
 /**
  * Get a site, dismiss alerts and wait for document load
+ * @return promise
  */
 exports.getAndWait = function(driver, url) {
   var def = webdriver.promise.defer();
@@ -122,13 +126,17 @@ exports.getAndWait = function(driver, url) {
   return def.promise;
 };
 
+/**
+ * Attempts to override alerts an unload events on a page
+ * @return promise
+ */
 var overrideAlerts = exports.overrideAlerts = function(driver) {
-  return driver.executeScript("");
-  //return driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;");
+  return driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;");
 };
 
 /**
  * Accept an alert if visible
+ * @return promise
  */
 var alertCheck = exports.alertCheck = function(driver) {
   var def = webdriver.promise.defer();
@@ -156,6 +164,7 @@ var alertCheck = exports.alertCheck = function(driver) {
 
 /**
  * Block until document.readyState is complete
+ * @return promise
  */
 var waitForLoad = exports.waitForLoad = function(driver) {
   return driver.wait(function() {
