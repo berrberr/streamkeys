@@ -122,7 +122,8 @@ exports.getAndWait = function(driver, url) {
 };
 
 var overrideAlerts = exports.overrideAlerts = function(driver) {
-  return driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;");
+  return driver.executeScript("");
+  //return driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;");
 };
 
 /**

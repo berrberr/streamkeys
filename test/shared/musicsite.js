@@ -57,6 +57,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url, sleepAfterCommand) {
           .thenCatch(function(err) {
             console.log("Driver Timeout!", err);
             self.loadError = true;
+            throw self.skLoadError;
           })
           .then(function() {
             console.log("Waitforload done!");

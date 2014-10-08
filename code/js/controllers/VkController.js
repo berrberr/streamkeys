@@ -5,7 +5,7 @@
 
   var checkControls = function(selector, action, count) {
     count = count || 0;
-    if(count > 30) return;
+    if(count > 40) return;
 
     if(document.querySelector(this.selector_playcontrols) === null) {
       window.setTimeout(checkControls.bind(this), 100, selector, action, count + 1);
