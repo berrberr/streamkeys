@@ -15,20 +15,47 @@
     }
   };
 
+  var observer = new MutationObserver(function(mutations) {
+    //console.log(mutations);
+    mutations.forEach(function(mutation) {
+      if(mutation.target.id === "pad_cont") {
+        if(mutation.addedNodes.length > 0) {
+          for(var i = 0; i < mutation.addedNodes.length; i++) {
+            if(mutation.addedNodes[i].id == "pad_controls") {
+              console.log("Controls visible");
+              controller.click(controller.selector_playPause, "playPause");
+              controller.click(controller.selector_hideControls, "closeControls");
+              observer.disconnect();
+              return;
+            }
+          }
+        }
+      }
+    });
+  });
+
+  // stop watching using:
+  // observer.disconnect()
+
   controller.init({
     playPause: "#pd_play",
     playNext: "#pd_next",
     playPrev: "#pd_prev"
   });
 
-  controller.selector_playcontrols = "#pad_controls";
+  controller.selector_playcontrols = "#pad_cont";
   controller.selector_showControls = "#head_music";
   controller.selector_hideControls = ".pad_close_btn > button";
 
   //Must have control box open to click the next/prev controls
   controller.playPause = function() {
-    if(document.querySelector(this.selector_playcontrols) === null) this.click(this.selector_showControls, "openControls");
-    window.setTimeout(checkControls.bind(this), 100, this.selector_playPause, "playPause");
+    if(document.querySelector(this.selector_playcontrols) === null) {
+      this.click(this.selector_showControls, "openControls");
+      observer.observe(document.body, {childList: true, subtree: true, attributes: true, attributeOldValue: true, attributeFilter: ["style"], characterData: false});
+    } else {
+      this.click(this.selector_playPause, "playPause");
+    }
+    //window.setTimeout(checkControls.bind(this), 100, this.selector_playPause, "playPause");
   };
   controller.playNext = function() {
     if(document.querySelector(this.selector_playcontrols) === null) this.click(this.selector_showControls, "openControls");

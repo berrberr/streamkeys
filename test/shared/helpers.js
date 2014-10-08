@@ -44,7 +44,7 @@ var waitForLog = exports.waitForLog = function(driver, opts) {
 
   console.log("Waiting for log...", opts.count);
   // Weird webdriver bug where sometimes console messages are not picked up unless we send a message before
-  driver.executeScript("console.log('REFRESH');").then(function() {
+  //driver.executeScript("console.log('REFRESH');").then(function() {
     driver.manage().logs().get("browser").then(function(log) {
       if(helpers.parseLog(log, opts.action)) {
         def.fulfill(true);
@@ -54,7 +54,7 @@ var waitForLog = exports.waitForLog = function(driver, opts) {
         });
       }
     });
-  });
+  //});
   return def.promise;
 };
 
@@ -100,7 +100,7 @@ exports.getAndWait = function(driver, url) {
   console.log("Override alerts/unloads");
   driver.getWindowHandle().then(function(handle) {
     console.log("Window handle: ", handle);
-    overrideAlerts(driver).then(function() {
+    //overrideAlerts(driver).then(function() {
       console.log("Getting: ", url);
       driver.get(url).then(function() {
         console.log("Got URL, checking alerts");
@@ -117,7 +117,7 @@ exports.getAndWait = function(driver, url) {
           });
         });
       });
-    });
+    //});
   });
   return def.promise;
 };
