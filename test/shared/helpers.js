@@ -4,7 +4,7 @@ var path = require("path"),
 
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
-const WAIT_TIMEOUT = 15000;
+const WAIT_TIMEOUT = 30000;
 
 /**
  * Joins two paths based on first path directory name
@@ -48,7 +48,7 @@ var parseLog = exports.parseLog = function(log, action) {
  */
 var waitForLog = exports.waitForLog = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
-  if(opts.count > 20) def.fulfill(false);
+  if(opts.count > 30) def.fulfill(false);
 
   console.log("Waiting for log...", opts.count);
   driver.manage().logs().get("browser").then(function(log) {
@@ -116,7 +116,6 @@ exports.getAndWait = function(driver, url) {
             def.fulfill(null);
           })
           .thenCatch(function(err) {
-            console.log("Driver Timeout!", err);
             def.reject(err);
           });
         });

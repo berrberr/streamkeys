@@ -54,29 +54,40 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url, sleepAfterCommand) {
         helpers.alertCheck(driver).then(function() {
           console.log("Alert check done!\nStarting waitforload");
           helpers.waitForLoad(driver)
-          .thenCatch(function(err) {
-            console.log("Driver Timeout!", err);
-            self.loadError = true;
-            throw self.skLoadError;
-          })
           .then(function() {
             console.log("Waitforload done!");
             // Wait for Streamkeys attached console message
-            driver.wait(function() {
-              return driver.manage().logs().get("browser").then(function(log) {
-                return helpers.parseLog(log, "Attached");
-              });
-            }, 30000)
-            .then(function() {
-              console.log("Extension loaded!");
-              self.loadError = false;
-              done();
-            }, function(e) {
-              console.log("Extension load timed out!", e);
-              self.loadError = true;
+            helpers.waitForLog(driver, {action: "Attached", count: 0}).then(function(result) {
+              if(result) {
+                console.log("Extension loaded!");
+                self.loadError = false;
+              } else {
+                console.log("Extension load timed out!", e);
+                self.loadError = true;
+              }
+              expect(result).to.be.true;
               done();
             });
+          }, function(e) {
+            console.log("Driver Timeout!", e);
+            self.loadError = true;
+            throw self.skLoadError;
           });
+            // driver.wait(function() {
+            //   return driver.manage().logs().get("browser").then(function(log) {
+            //     return helpers.parseLog(log, "Attached");
+            //   });
+            // }, 30000)
+            // .then(function() {
+            //   console.log("Extension loaded!");
+            //   self.loadError = false;
+            //   done();
+            // }, function(e) {
+            //   console.log("Extension load timed out!", e);
+            //   self.loadError = true;
+            //   done();
+            // });
+
         });
       });
     });
