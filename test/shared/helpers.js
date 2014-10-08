@@ -29,6 +29,7 @@ exports.eventScript = function(action) {
  * @return [bool] true if action is found in log messages
  */
 var parseLog = exports.parseLog = function(log, action) {
+  console.log(log);
   return log.some(function(entry) {
     var actionFound = (entry.message.indexOf(SKINFO + action) !== -1 || entry.message.indexOf(SKINFO + "disabled") !== -1);
     var errorFound = (entry.message.indexOf(SKERR) !== -1);
