@@ -70,7 +70,7 @@ var waitForLog = exports.waitForLog = function(driver, opts) {
  * @return promise
  */
 exports.waitForSelector = function(driver, selector, timeout) {
-  var timeout = timeout || WAIT_TIMEOUT;
+  timeout = timeout || WAIT_TIMEOUT;
 
   return driver.wait(function() {
     return (driver.isElementPresent(selector));
@@ -84,7 +84,7 @@ exports.waitForSelector = function(driver, selector, timeout) {
  * @return promise
  */
 exports.waitAndClick = function(driver, selector, timeout) {
-  var timeout = timeout || WAIT_TIMEOUT;
+  timeout = timeout || WAIT_TIMEOUT;
 
   driver.wait(function() {
     console.log("Waiting on click...");

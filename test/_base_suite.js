@@ -120,8 +120,10 @@ describe("Streamkeys suite", function() {
   describe("jango", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.jango.com");
-      helpers.waitAndClick(driver, {className: "station_anchor"});
-      done();
+      driver.sleep(5000).then(function() {
+        helpers.waitAndClick(driver, {className: "station_anchor"}, 30000);
+        done();
+      });
     });
 
     // Ad popup might mess up driver
