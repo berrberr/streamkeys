@@ -48,15 +48,15 @@ var parseLog = exports.parseLog = function(log, action) {
  */
 var waitForLog = exports.waitForLog = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
-  if(opts.count > 30) def.fulfill(false);
+  if(opts.count > 30) return def.fulfill(false);
 
   console.log("Waiting for log...", opts.count);
   driver.manage().logs().get("browser").then(function(log) {
     if(helpers.parseLog(log, opts.action)) {
-      def.fulfill(true);
+      return def.fulfill(true);
     } else {
       driver.sleep(500).then(function() {
-        waitForLog(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
+        return waitForLog(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
       });
     }
   });
