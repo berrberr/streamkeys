@@ -73,21 +73,6 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url, sleepAfterCommand) {
             self.loadError = true;
             throw self.skLoadError;
           });
-            // driver.wait(function() {
-            //   return driver.manage().logs().get("browser").then(function(log) {
-            //     return helpers.parseLog(log, "Attached");
-            //   });
-            // }, 30000)
-            // .then(function() {
-            //   console.log("Extension loaded!");
-            //   self.loadError = false;
-            //   done();
-            // }, function(e) {
-            //   console.log("Extension load timed out!", e);
-            //   self.loadError = true;
-            //   done();
-            // });
-
         });
       });
     });

@@ -1,7 +1,7 @@
 var Mocha = require("mocha"),
     getPath = require("./shared/helpers.js").getPath;
 
-var mocha = new Mocha({timeout: 60000, title: "Streamkeys tests", ui: "bdd"});
+var mocha = new Mocha({timeout: 120000, title: "Streamkeys tests", ui: "bdd"});
 
 mocha.addFile(getPath(__filename, "/_base_suite.js"));
 

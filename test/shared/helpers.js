@@ -104,23 +104,21 @@ exports.getAndWait = function(driver, url) {
   console.log("Override alerts/unloads");
   driver.getWindowHandle().then(function(handle) {
     console.log("Window handle: ", handle);
-    //overrideAlerts(driver).then(function() {
-      console.log("Getting: ", url);
-      driver.get(url).then(function() {
-        console.log("Got URL, checking alerts");
-        alertCheck(driver).then(function() {
-          console.log("Alert check complete!");
-          waitForLoad(driver)
-          .then(function() {
-            console.log("Load complete!");
-            def.fulfill(null);
-          })
-          .thenCatch(function(err) {
-            def.reject(err);
-          });
+    console.log("Getting: ", url);
+    driver.get(url).then(function() {
+      console.log("Got URL, checking alerts");
+      alertCheck(driver).then(function() {
+        console.log("Alert check complete!");
+        waitForLoad(driver)
+        .then(function() {
+          console.log("Load complete!");
+          def.fulfill(null);
+        })
+        .thenCatch(function(err) {
+          def.reject(err);
         });
       });
-    //});
+    });
   });
   return def.promise;
 };

@@ -23,7 +23,7 @@ var baseSites = [
   {name: "hypemachine", url: "http://www.hypem.com"},
   {name: "last.fm", url: "http://www.last.fm/listen"},
   {name: "myspace", url: "http://music.myspace.com"},
-  // {name: "mixcloud", url: "http://www.mixcloud.com"},
+  {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
   {name: "slacker", url: "http://www.slacker.com"},
