@@ -154,6 +154,10 @@
     {
       "matches": ["*://*.youarelistening.to/*"],
       "js": ["js/controllers/YouarelisteningtoController.js"]
+    },
+    {
+      "matches": ["*://*.play.pocketcasts.com/*"],
+      "js": ["js/controllers/PocketcastsController.js"]
     }
   ],
   "web_accessible_resources": ["js/seesu_inject.js"],
