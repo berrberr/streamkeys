@@ -4,7 +4,7 @@ var path = require("path"),
 
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
-const WAIT_TIMEOUT = 30000;
+const WAIT_TIMEOUT = 120000;
 
 /**
  * Joins two paths based on first path directory name

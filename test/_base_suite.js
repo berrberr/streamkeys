@@ -11,7 +11,7 @@ var base = require("./_base_test.js"),
     By = require("selenium-webdriver").By;
 
 const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
-const WAIT_TIMEOUT = 30000;
+const WAIT_TIMEOUT = 120000;
 
 var baseSites = [
   {name: "7digital", url: "http://www.7digital.com"},
@@ -21,7 +21,6 @@ var baseSites = [
   {name: "edge player", url: "http://player.edge.ca"},
   {name: "grooveshark", url: "http://www.grooveshark.com"},
   {name: "hypemachine", url: "http://www.hypem.com"},
-  {name: "last.fm", url: "http://www.last.fm/listen"},
   {name: "myspace", url: "http://music.myspace.com"},
   {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
@@ -55,6 +54,17 @@ describe("Streamkeys suite", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://app.stitcher.com/");
       helpers.waitAndClick(driver, {css: "a.guest-login"});
+      done();
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  // @depends: .stationbutton
+  describe("last.fm", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.last.fm/listen");
+      helpers.waitAndClick(driver, {className: "stationbutton"});
       done();
     });
 

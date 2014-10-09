@@ -6,7 +6,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url, sleepAfterCommand) {
 
     before(function() {
       // Extension not loaded error message
-      this.skLoadError = new Error("Streamkeys not loaded!");
+      this.skLoadError = new Error("Page not loaded!");
 
       // Has the page and extension loaded properly
       this.loadError = false;
@@ -62,7 +62,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url, sleepAfterCommand) {
                 console.log("Extension loaded!");
                 self.loadError = false;
               } else {
-                console.log("Extension load timed out!", e);
+                console.log("Extension load timed out!");
                 self.loadError = true;
               }
               expect(result).to.be.true;
