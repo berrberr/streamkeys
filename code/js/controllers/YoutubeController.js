@@ -15,12 +15,18 @@
   });
 
   controller.playNext = function() {
-    if(document.querySelector(this.selector_playNext) === null) sk_log("disabled. Playlist selectors not found!");
+    if(document.querySelector(this.selector_playNext) === null) {
+      sk_log("disabled. Playlist selectors not found!");
+      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "disabled"}));
+    }
     else this.click(this.selector_playNext, "playNext");
   };
 
   controller.playPrev = function() {
-    if(document.querySelector(this.selector_playPrev) === null) sk_log("disabled. Playlist selectors not found!");
+    if(document.querySelector(this.selector_playPrev) === null) {
+      sk_log("disabled. Playlist selectors not found!");
+      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "disabled"}));
+    }
     else this.click(this.selector_playPrev, "playPrev");
   };
 })();

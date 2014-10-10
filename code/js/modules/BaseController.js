@@ -7,8 +7,6 @@
   BaseController.prototype.init = function(options) {
     this.name = document.location.hostname;
 
-    //** Inject console log formatter **//
-
     //** Properties **//
     this.selector_playPause = options.playPause || null;
     this.selector_play = options.play || null;
@@ -24,23 +22,22 @@
     this.playStyle = options.playStyle || null;
     this.pauseStyle = options.pauseStyle || null;
 
-    this.iframe = (typeof options.iframe === "string");
-
     //Set to true if the play/pause buttons share the same element
     this.buttonSwitch = options.buttonSwitch || false;
 
     //Default listener sends actions to main document
-    if(this.iframe) {
-      this.attachFrameListener();
-    } else {
-      this.attachListener();
-    }
+    this.attachListener();
 
     chrome.runtime.sendMessage({created: true}, function() {
       sk_log("Told BG we are created");
     });
 
     sk_log("SK content script loaded");
+
+    document.addEventListener("streamkeys-test-loaded", function() {
+      console.log("~~~~~~GOT LOAD EVENT REQUEST~~~~~");
+      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "loaded"}));
+    });
   };
 
   BaseController.prototype.injectScript = function(file) {
@@ -80,31 +77,24 @@
   };
 
   //** Click inside document **//
-  BaseController.prototype.click = function(selectorButton, action) {
-    if(selectorButton === null) return sk_log("disabled", action);
-
-    var ele = document.querySelector(selectorButton);
-
-    try {
-      ele.click();
-      sk_log(action);
-    } catch(e) {
-      sk_log("Element not found for click.", selectorButton, true);
+  BaseController.prototype.click = function(opts) {
+    opts = opts || {};
+    if(opts.selectorButton === null) {
+      sk_log("disabled", opts.action);
+      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "disabled"}));
+      return;
     }
-  };
 
-  //** Click inside an iframe **//
-  BaseController.prototype.clickInFrame = function(selectorFrame, selectorButton, action) {
-    if(selectorButton === null) return sk_log("disabled", action);
-
-    var doc = document.querySelector(selectorFrame).contentWindow.document;
-    if (!doc) return null;
+    var doc = (opts.selectorFrame) ? document.querySelector(opts.selectorFrame).contentWindow.document : document;
+    if (!doc) return;
 
     try {
-      doc.querySelector(selectorButton).click();
-      sk_log(action);
+      doc.querySelector(opts.selectorButton).click();
+      sk_log(opts.action);
+      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: opts.action}));
     } catch(e) {
-      sk_log("Element not found for click.", selectorButton, true);
+      sk_log("Element not found for click.", opts.selectorButton, true);
+      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "FAILURE: " + opts.action}));
     }
   };
 
@@ -112,29 +102,25 @@
   BaseController.prototype.playPause = function() {
     if(this.selector_play !== null && this.selector_pause !== null) {
       if(this.isPlaying()) {
-        this.click(this.selector_pause, "playPause");
+        this.click({action: "playPause", selectorButton: this.selector_pause, selectorFrame: this.selector_iframe});
       } else {
-        this.click(this.selector_play, "playPause");
+        this.click({action: "playPause", selectorButton: this.selector_play, selectorFrame: this.selector_iframe});
       }
     } else {
-      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPause, "playPause");
-      else            this.click(this.selector_playPause, "playPause");
+      this.click({action: "playPause", selectorButton: this.selector_playPause, selectorFrame: this.selector_iframe});
     }
   };
 
   BaseController.prototype.playNext = function() {
-      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playNext, "playNext");
-      else            this.click(this.selector_playNext, "playNext");
+    this.click({action: "playNext", selectorButton: this.selector_playNext, selectorFrame: this.selector_iframe});
   };
 
   BaseController.prototype.playPrev = function() {
-      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_playPrev, "playPrev");
-      else            this.click(this.selector_playPrev, "playPrev");
+    this.click({action: "playPrev", selectorButton: this.selector_playPrev, selectorFrame: this.selector_iframe});
   };
 
   BaseController.prototype.mute = function() {
-      if(this.iframe) this.clickInFrame(this.selector_iframe, this.selector_mute, "mute");
-      else            this.click(this.selector_mute, "mute");
+    this.click({action: "mute", selectorButton: this.selector_mute, selectorFrame: this.selector_iframe});
   };
 
   BaseController.prototype.doRequest = function(request) {
@@ -160,16 +146,6 @@
 
     sk_log("Attached listener for ", this);
   };
-
-  BaseController.prototype.attachFrameListener = function() {
-    chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
-
-    //Test event handler to simulate command presses
-    document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
-
-    sk_log("Attached frame listener for ", this);
-  };
-
 
   var singleton = new BaseController();
   module.exports = singleton;

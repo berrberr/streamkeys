@@ -14,7 +14,7 @@ const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
 const WAIT_TIMEOUT = 120000;
 
 var baseSites = [
-  {name: "7digital", url: "http://www.7digital.com"},
+  // {name: "7digital", url: "http://www.7digital.com"},
   {name: "bandcamp", url: "http://www.bandcamp.com"},
   {name: "bop.fm", url: "http://www.bop.fm"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},
@@ -116,25 +116,31 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: .station_anchor
-  describe("jango", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.jango.com");
-      driver.sleep(5000).then(function() {
-        helpers.waitAndClick(driver, {className: "station_anchor"}, 30000);
-        done();
-      });
-    });
+  // // @depends: .station_anchor
+  // describe("jango", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.jango.com");
+  //     driver.sleep(5000).then(function() {
+  //       helpers.waitAndClick(driver, {className: "station_anchor"}, 30000);
+  //       done();
+  //     });
+  //   });
 
-    // Ad popup might mess up driver
-    after(function(done) {
-      driver.sleep(5000).then(function() {
-        done();
-      });
-    });
+  //   afterEach(function(done) {
+  //     driver.sleep(5000).then(function() {
+  //       done();
+  //     });
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   // Ad popup might mess up driver
+  //   after(function(done) {
+  //     driver.sleep(5000).then(function() {
+  //       done();
+  //     });
+  //   });
+
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   describe("NPR one", function() {
     before(function(done) {

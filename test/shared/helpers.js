@@ -5,6 +5,7 @@ var path = require("path"),
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
 const WAIT_TIMEOUT = 120000;
+const WAIT_COUNT = 30;
 
 /**
  * Joins two paths based on first path directory name
@@ -25,18 +26,83 @@ exports.eventScript = function(action) {
   return "document.dispatchEvent(new CustomEvent('streamkeys-test', {detail: '" + action + "'}));";
 };
 
+var injectTestCapture = exports.injectTestCapture = function(driver) {
+  return driver.executeScript(function() {
+    window.sk_actionStack = window.sk_actionStack || [];
+    document.addEventListener("streamkeys-test-response", function(e) {
+      var val = e.detail;
+      console.log(val);
+      console.log("\n\n~~~~~~GOT ACTION:~~~~~~" + val);
+      window.sk_actionStack.push(val);
+    });
+
+    window.sk_getLastAction = function() {
+      var val = window.sk_actionStack[window.sk_actionStack.length - 1];
+      console.log("\n\n\nPOPPPPPPPED: " + val + "\n\n\n");
+      return val;
+    }
+  });
+};
+
 /**
  * Parses a log array looking for a streamkeys action or disabled message
  * @return [bool] true if action is found in log messages
  */
 var parseLog = exports.parseLog = function(log, action) {
-  //console.log(log);
+  console.log(log);
   return log.some(function(entry) {
     var actionFound = (entry.message.indexOf(SKINFO + action) !== -1 || entry.message.indexOf(SKINFO + "disabled") !== -1);
     var errorFound = (entry.message.indexOf(SKERR) !== -1);
     if(actionFound || errorFound) console.log(entry.message);
     return actionFound;
   });
+};
+
+var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts) {
+  console.log("waitForExtensionLoad called.");
+  var def = opts.promise || webdriver.promise.defer();
+  opts.count = opts.count || 0;
+  if(opts.count > WAIT_COUNT) return def.fulfill(false);
+
+  driver.executeScript(function() {
+    document.dispatchEvent(new CustomEvent("streamkeys-test-loaded"));
+  })
+  .then(function() {
+    console.log("DISPATCH SENT");
+    driver.executeScript(function() {
+      return (window.sk_getLastAction() === "loaded");
+    }).then(function(res) {
+      if(res) def.fulfill(true);
+      else return waitForExtensionLoad(driver, {promise: opts.promise, count: (opts.count + 1)});
+    });
+  });
+
+  return def.promise;
+};
+
+var waitForAction = exports.waitForAction = function(driver, opts) {
+  var def = opts.promise || webdriver.promise.defer();
+  opts.count = opts.count || 0;
+  if(opts.count > WAIT_COUNT) return def.fulfill(false);
+
+  driver.executeScript(function() {
+    var lastAction = window.sk_getLastAction(),
+        action = arguments[arguments.length - 1];
+    if(lastAction === action || lastAction === "disabled")
+      return "success";
+    else if(lastAction.indexOf("FAILURE") !== -1)
+      return "fail";
+    else
+      return null;
+  }, opts.action).then(function(res) {
+    console.log("Last action: " + res);
+
+    if(res === "success") def.fulfill(true);
+    else if(res === "fail") def.fulfill(false);
+    else return waitForAction(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
+  });
+
+  return def.promise;
 };
 
 /**
@@ -48,7 +114,7 @@ var parseLog = exports.parseLog = function(log, action) {
  */
 var waitForLog = exports.waitForLog = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
-  if(opts.count > 30) return def.fulfill(false);
+  if(opts.count > WAIT_COUNT) return def.fulfill(false);
 
   console.log("Waiting for log...", opts.count);
   driver.manage().logs().get("browser").then(function(log) {
@@ -60,6 +126,7 @@ var waitForLog = exports.waitForLog = function(driver, opts) {
       });
     }
   });
+
   return def.promise;
 };
 
@@ -108,14 +175,17 @@ exports.getAndWait = function(driver, url) {
     driver.get(url).then(function() {
       console.log("Got URL, checking alerts");
       alertCheck(driver).then(function() {
-        console.log("Alert check complete!");
-        waitForLoad(driver)
-        .then(function() {
-          console.log("Load complete!");
-          def.fulfill(null);
-        })
-        .thenCatch(function(err) {
-          def.reject(err);
+        console.log("Injecting test capture");
+        injectTestCapture(driver).then(function() {
+          console.log("Alert check complete!");
+          waitForLoad(driver)
+          .then(function() {
+            console.log("Load complete!");
+            def.fulfill(null);
+          })
+          .thenCatch(function(err) {
+            def.reject(err);
+          });
         });
       });
     });
