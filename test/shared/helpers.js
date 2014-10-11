@@ -5,7 +5,7 @@ var path = require("path"),
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
 const WAIT_TIMEOUT = 120000;
-const WAIT_COUNT = 30;
+const WAIT_COUNT = 10;
 
 /**
  * Joins two paths based on first path directory name
@@ -22,7 +22,7 @@ exports.getPath = function(base, filePath) {
  * @param action [str] name of streamkeys-test action to perform
  * @return [str] the js as a string
  */
-exports.eventScript = function(action) {
+var eventScript = exports.eventScript = function(action) {
   return "document.dispatchEvent(new CustomEvent('streamkeys-test', {detail: '" + action + "'}));";
 };
 
@@ -30,17 +30,10 @@ var injectTestCapture = exports.injectTestCapture = function(driver) {
   return driver.executeScript(function() {
     window.sk_actionStack = window.sk_actionStack || [];
     document.addEventListener("streamkeys-test-response", function(e) {
-      var val = e.detail;
-      console.log(val);
-      console.log("\n\n~~~~~~GOT ACTION:~~~~~~" + val);
-      window.sk_actionStack.push(val);
+      window.sk_actionStack.push(e.detail);
     });
 
-    window.sk_getLastAction = function() {
-      var val = window.sk_actionStack[window.sk_actionStack.length - 1];
-      console.log("\n\n\nPOPPPPPPPED: " + val + "\n\n\n");
-      return val;
-    }
+    window.sk_getLastAction = function() { return window.sk_actionStack[window.sk_actionStack.length - 1]; }
   });
 };
 
@@ -59,10 +52,11 @@ var parseLog = exports.parseLog = function(log, action) {
 };
 
 var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts) {
-  console.log("waitForExtensionLoad called.");
+  console.log("waitForExtensionLoad called..." + opts.count);
   var def = opts.promise || webdriver.promise.defer();
   opts.count = opts.count || 0;
-  if(opts.count > WAIT_COUNT) return def.fulfill(false);
+
+  if(opts.count > WAIT_COUNT) return def.reject("Extension load timeout!!!");
 
   driver.executeScript(function() {
     document.dispatchEvent(new CustomEvent("streamkeys-test-loaded"));
@@ -72,8 +66,8 @@ var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts)
     driver.executeScript(function() {
       return (window.sk_getLastAction() === "loaded");
     }).then(function(res) {
-      if(res) def.fulfill(true);
-      else return waitForExtensionLoad(driver, {promise: opts.promise, count: (opts.count + 1)});
+      if(res) return def.fulfill(true);
+      else return waitForExtensionLoad(driver, {promise: def, count: (opts.count + 1)});
     });
   });
 
@@ -83,7 +77,8 @@ var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts)
 var waitForAction = exports.waitForAction = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
   opts.count = opts.count || 0;
-  if(opts.count > WAIT_COUNT) return def.fulfill(false);
+
+  if(opts.count > WAIT_COUNT) return def.reject("No response for action: " + opts.action);
 
   driver.executeScript(function() {
     var lastAction = window.sk_getLastAction(),
@@ -92,18 +87,38 @@ var waitForAction = exports.waitForAction = function(driver, opts) {
       return "success";
     else if(lastAction.indexOf("FAILURE") !== -1)
       return "fail";
-    else
-      return null;
   }, opts.action).then(function(res) {
-    console.log("Last action: " + res);
+    console.log("Last action: " + opts.action + " - " + res);
 
-    if(res === "success") def.fulfill(true);
-    else if(res === "fail") def.fulfill(false);
+    if(res === "success") return def.fulfill(true);
+    else if(res === "fail") return def.fulfill(false);
     else return waitForAction(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
   });
 
   return def.promise;
 };
+
+var playerAction = exports.playerAction = function(driver, opts) {
+  var def = opts.promise || webdriver.promise.defer();
+  opts.count = opts.count || 0;
+  //console.log("Checking player action: " + opts.action + " run " + opts.count);
+
+  if(opts.count > 4) return def.fulfill(false);
+
+  driver.executeScript(eventScript(opts.action)).then(function() {
+    waitForAction(driver, {action: opts.action, count: 0})
+    .then(function(result) {
+      return def.fulfill(result);
+    }, function(err) {
+      console.log(err);
+      driver.sleep(1000).then(function() {
+        return playerAction(driver, {promise: def, action: opts.action, count: (opts.count + 1)});
+      });
+    });
+  });
+
+  return def.promise;
+}
 
 /**
  * Waits for the log to contain a given value

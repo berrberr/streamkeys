@@ -35,8 +35,7 @@
     sk_log("SK content script loaded");
 
     document.addEventListener("streamkeys-test-loaded", function() {
-      console.log("~~~~~~GOT LOAD EVENT REQUEST~~~~~");
-      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "loaded"}));
+      sk_log("loaded");
     });
   };
 
@@ -47,6 +46,10 @@
     if(file.script) {script.innerHTML = file.script;}
     (document.head||document.documentElement).appendChild(script);
   };
+
+  // BaseController.prototype.sendTestMessage = function(msg) {
+  //   document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: msg}));
+  // }
 
   BaseController.prototype.isPlaying = function() {
     var playEl = document.querySelector(this.selector_play),
@@ -81,7 +84,6 @@
     opts = opts || {};
     if(opts.selectorButton === null) {
       sk_log("disabled", opts.action);
-      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "disabled"}));
       return;
     }
 
@@ -91,10 +93,8 @@
     try {
       doc.querySelector(opts.selectorButton).click();
       sk_log(opts.action);
-      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: opts.action}));
     } catch(e) {
       sk_log("Element not found for click.", opts.selectorButton, true);
-      document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: "FAILURE: " + opts.action}));
     }
   };
 
