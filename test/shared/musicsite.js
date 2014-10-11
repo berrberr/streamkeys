@@ -50,12 +50,12 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
                 done();
               }, function(err) {
                 console.log("Extension error: ", err);
-                throw this.skLoadError;
+                done();
               });
             });
           }, function(err) {
             console.log("Driver Timeout!", err);
-            throw this.skLoadError;
+            done();
           });
         });
       });

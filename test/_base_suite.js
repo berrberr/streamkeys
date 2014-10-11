@@ -252,43 +252,43 @@ describe("Streamkeys suite", function() {
   });
 
 
-  // @depends: #Email, #Passwd, #signIn, #player
-  describe("googlemusic", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://music.google.com");
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "Email"}) &&
-                driver.isElementPresent({id: "Passwd"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
-      driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
-      helpers.waitAndClick(driver, {id: "signIn"});
-      helpers.waitForSelector(driver, {id: "player"});
-      done();
-    });
+  // // @depends: #Email, #Passwd, #signIn, #player
+  // describe("googlemusic", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://music.google.com");
+  //     driver.wait(function() {
+  //       return (driver.isElementPresent({id: "Email"}) &&
+  //               driver.isElementPresent({id: "Passwd"}));
+  //     }, WAIT_TIMEOUT);
+  //     driver.findElement({id: "Email"}).sendKeys(secrets.googlemusic.username);
+  //     driver.findElement({id: "Passwd"}).sendKeys(secrets.googlemusic.password);
+  //     helpers.waitAndClick(driver, {id: "signIn"});
+  //     helpers.waitForSelector(driver, {id: "player"});
+  //     done();
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
-  //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
-  describe("vk", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.vk.com").then(function() {
-        driver.wait(function() {
-          return (driver.isElementPresent({id: "quick_email"}) &&
-                  driver.isElementPresent({id: "quick_pass"}) &&
-                  driver.isElementPresent({id: "quick_login_button"}));
-        }, WAIT_TIMEOUT);
-        driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
-        driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
-        driver.findElement({id: "quick_login_button"}).click();
-        helpers.waitForSelector(driver, {id: "head_music"});
-        done();
-      });
-    });
+  // //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
+  // describe("vk", function() {
+  //   before(function(done) {
+  //     helpers.getAndWait(driver, "http://www.vk.com").then(function() {
+  //       driver.wait(function() {
+  //         return (driver.isElementPresent({id: "quick_email"}) &&
+  //                 driver.isElementPresent({id: "quick_pass"}) &&
+  //                 driver.isElementPresent({id: "quick_login_button"}));
+  //       }, WAIT_TIMEOUT);
+  //       driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
+  //       driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
+  //       driver.findElement({id: "quick_login_button"}).click();
+  //       helpers.waitForSelector(driver, {id: "head_music"});
+  //       done();
+  //     });
+  //   });
 
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
+  //   shared.shouldBehaveLikeAMusicSite(driver, false);
+  // });
 
   // // Iframes are too anoying
   // describe("spotify", function() {
