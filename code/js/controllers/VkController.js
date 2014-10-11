@@ -9,8 +9,8 @@
         if(mutation.target && mutation.target.style.opacity === "1") {
           console.log("Controls visible");
           observer.disconnect();
-          controller.click(controller.selector_playPause, "playPause");
-          controller.click(controller.selector_hideControls, "closeControls");
+          controller.click({selectorButton: controller.selector_playPause, action: "playPause"});
+          controller.click({selectorButton: controller.selector_hideControls});
           return;
         }
       }
@@ -33,29 +33,29 @@
 
     // If the control box has already been loaded this play selector will be visible
     if(document.querySelector(this.selector_loadedPlayPause) !== null) {
-      this.click(this.selector_loadedPlayPause, "playPause");
+      this.click({selectorButton: this.selector_loadedPlayPause, action: "playPause"});
     }
 
     // If that selector is not visible then we have to load the control box first
     // It is async so use a mutation observer to wait to click the controls
     else if(document.querySelector(this.selector_playPause) === null) {
-      this.click(this.selector_showControls, "openControls");
+      this.click({selectorButton: this.selector_showControls, action: "openControls"});
       observer.observe(document.body, {childList: true, subtree: true, attributes: true, attributeOldValue: true, attributeFilter: ["style"], characterData: false});
     }
 
     // Fallback - this can happen if the controls box is visible via a user click
     else {
-      this.click(this.selector_playPause, "playPause");
+      this.click({selectorButton: this.selector_playPause, action: "playPause"});
     }
   };
   controller.playNext = function() {
-    if(document.querySelector(this.selector_playcontrols) === null) this.click(this.selector_showControls, "openControls");
-    this.click(this.selector_playNext, "playNext");
-    this.click(this.selector_hideControls, "closeControls");
+    if(document.querySelector(this.selector_playcontrols) === null) this.click({selectorButton: this.selector_showControls, action: "openControls"});
+    this.click({selectorButton: this.selector_playNext, action: "playNext"});
+    this.click({selectorButton: this.selector_hideControls});
   };
   controller.playPrev = function() {
-    if(document.querySelector(this.selector_playcontrols) === null) this.click(this.selector_showControls, "openControls");
-    this.click(this.selector_playPrev, "playPrev");
-    this.click(this.selector_hideControls, "closeControls");
+    if(document.querySelector(this.selector_playcontrols) === null) this.click({selectorButton: this.selector_showControls, action: "openControls"});
+    this.click({selectorButton: this.selector_playPrev, action: "playPrev"});
+    this.click({selectorButton: this.selector_hideControls});
   };
 })();

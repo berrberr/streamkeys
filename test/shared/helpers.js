@@ -4,7 +4,7 @@ var path = require("path"),
 
 const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
-const WAIT_TIMEOUT = 120000;
+const WAIT_TIMEOUT = 80000;
 const WAIT_COUNT = 10;
 
 /**
@@ -56,7 +56,7 @@ var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts)
   var def = opts.promise || webdriver.promise.defer();
   opts.count = opts.count || 0;
 
-  if(opts.count > WAIT_COUNT) return def.reject("Extension load timeout!!!");
+  if(opts.count > 30) return def.reject("Extension load timeout!!!");
 
   driver.executeScript(function() {
     document.dispatchEvent(new CustomEvent("streamkeys-test-loaded"));
@@ -64,8 +64,9 @@ var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts)
   .then(function() {
     console.log("DISPATCH SENT");
     driver.executeScript(function() {
-      return (window.sk_getLastAction() === "loaded");
+      return (window.sk_getLastAction && window.sk_getLastAction() === "loaded");
     }).then(function(res) {
+      console.log("Load result: ", res);
       if(res) return def.fulfill(true);
       else return waitForExtensionLoad(driver, {promise: def, count: (opts.count + 1)});
     });
@@ -83,7 +84,9 @@ var waitForAction = exports.waitForAction = function(driver, opts) {
   driver.executeScript(function() {
     var lastAction = window.sk_getLastAction(),
         action = arguments[arguments.length - 1];
-    if(lastAction === action || lastAction === "disabled")
+
+    if(typeof lastAction === "undefined") return false;
+    if(lastAction === action || lastAction.indexOf("disabled") !== -1)
       return "success";
     else if(lastAction.indexOf("FAILURE") !== -1)
       return "fail";
@@ -190,21 +193,21 @@ exports.getAndWait = function(driver, url) {
     driver.get(url).then(function() {
       console.log("Got URL, checking alerts");
       alertCheck(driver).then(function() {
-        console.log("Injecting test capture");
-        injectTestCapture(driver).then(function() {
-          console.log("Alert check complete!");
-          waitForLoad(driver)
-          .then(function() {
-            console.log("Load complete!");
-            def.fulfill(null);
-          })
-          .thenCatch(function(err) {
-            def.reject(err);
-          });
+        console.log("Alert check complete!");
+        waitForLoad(driver)
+        .then(function() {
+          console.log("Load complete!");
+          def.fulfill(null);
+        })
+        .thenCatch(function(err) {
+          def.reject(err);
         });
       });
+    }, function(err) {
+      def.reject(err);
     });
   });
+
   return def.promise;
 };
 

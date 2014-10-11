@@ -16,16 +16,16 @@
     this.selector_mute = options.mute || null;
     this.selector_iframe = options.iframe || null;
 
-    //Optional. Style of play and pause buttons when they are NOT in use
-    //EX: When a play button is in use, css class "playing" is added
-    //In that case, set playStyle to "playing"
+    // Optional. Style of play and pause buttons when they are NOT in use
+    // EX: When a play button is in use, css class "playing" is added
+    // In that case, set playStyle to "playing"
     this.playStyle = options.playStyle || null;
     this.pauseStyle = options.pauseStyle || null;
 
-    //Set to true if the play/pause buttons share the same element
+    // Set to true if the play/pause buttons share the same element
     this.buttonSwitch = options.buttonSwitch || false;
 
-    //Default listener sends actions to main document
+    // Default listener sends actions to main document
     this.attachListener();
 
     chrome.runtime.sendMessage({created: true}, function() {
@@ -39,17 +39,18 @@
     });
   };
 
+  /**
+   * Inject a script into the current document
+   * @param file.url [str] /relative/path/to/script
+   * @param file.script [str] plaintext script as a string
+   */
   BaseController.prototype.injectScript = function(file) {
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
     if(file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
     if(file.script) {script.innerHTML = file.script;}
-    (document.head||document.documentElement).appendChild(script);
+    (document.head || document.documentElement).appendChild(script);
   };
-
-  // BaseController.prototype.sendTestMessage = function(msg) {
-  //   document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: msg}));
-  // }
 
   BaseController.prototype.isPlaying = function() {
     var playEl = document.querySelector(this.selector_play),
@@ -57,15 +58,15 @@
         isPlaying = false;
 
     if(this.buttonSwitch) {
-      //If playEl does not exist then it is currently playing
+      // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
     } else {
-      //Check for play/pause style overrides
+      // Check for play/pause style overrides
       if(this.playStyle && this.pauseStyle) {
-        //Check if the class list contains the class that is only active when play button is playing
+        // Check if the class list contains the class that is only active when play button is playing
         isPlaying = playEl.classList.contains(this.playStyle);
       } else {
-        //hack to get around sometimes not being able to read css properties that are not inline
+        // Hack to get around sometimes not being able to read css properties that are not inline
         if (playEl.currentStyle) {
           displayStyle = playEl.currentStyle.display;
         } else if (window.getComputedStyle) {
@@ -79,7 +80,12 @@
     return isPlaying;
   };
 
-  //** Click inside document **//
+  /**
+   * Click inside document
+   * @param opts.selectorButton [str] css selector for button to click
+   * @param opts.action [str] name of action to log to console for debugging purposes
+   * @param opts.selectorFrame [str] OPTIONAL css selector for iframe to send clicks to
+   */
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
     if(opts.selectorButton === null) {
@@ -98,7 +104,7 @@
     }
   };
 
-  //TODO: make isPlaying work with iframes
+  // TODO: make isPlaying work with iframes
   BaseController.prototype.playPause = function() {
     if(this.selector_play !== null && this.selector_pause !== null) {
       if(this.isPlaying()) {
@@ -141,7 +147,7 @@
   BaseController.prototype.attachListener = function() {
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
 
-    //Test event handler to simulate command presses
+    // Test event handler to simulate command presses
     document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
 
     sk_log("Attached listener for ", this);

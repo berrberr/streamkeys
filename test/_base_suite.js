@@ -3,7 +3,6 @@
 // Pandora
 // Seesu
 // Spotify
-// VK
 
 var base = require("./_base_test.js"),
     driver = base.getDriver(),
@@ -120,16 +119,8 @@ describe("Streamkeys suite", function() {
   describe("jango", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.jango.com");
-      driver.sleep(5000).then(function() {
-        helpers.waitAndClick(driver, {className: "station_anchor"}, 60000);
-        done();
-      });
-    });
-
-    afterEach(function(done) {
-      driver.sleep(1000).then(function() {
-        done();
-      });
+      helpers.waitAndClick(driver, {className: "station_anchor"}, 60000);
+      done();
     });
 
     // Ad popup might mess up driver
@@ -279,26 +270,25 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // // Strange bug here with webdriver messing up reading the console output
-  // //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
-  // describe("vk", function() {
-  //   before(function(done) {
-  //     helpers.getAndWait(driver, "http://www.vk.com").then(function() {
-  //       driver.wait(function() {
-  //         return (driver.isElementPresent({id: "quick_email"}) &&
-  //                 driver.isElementPresent({id: "quick_pass"}) &&
-  //                 driver.isElementPresent({id: "quick_login_button"}));
-  //       }, WAIT_TIMEOUT);
-  //       driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
-  //       driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
-  //       driver.findElement({id: "quick_login_button"}).click();
-  //       helpers.waitForSelector(driver, {id: "head_music"});
-  //       done();
-  //     });
-  //   });
+  //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
+  describe("vk", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.vk.com").then(function() {
+        driver.wait(function() {
+          return (driver.isElementPresent({id: "quick_email"}) &&
+                  driver.isElementPresent({id: "quick_pass"}) &&
+                  driver.isElementPresent({id: "quick_login_button"}));
+        }, WAIT_TIMEOUT);
+        driver.findElement({id: "quick_email"}).sendKeys(secrets.vk.username);
+        driver.findElement({id: "quick_pass"}).sendKeys(secrets.vk.password);
+        driver.findElement({id: "quick_login_button"}).click();
+        helpers.waitForSelector(driver, {id: "head_music"});
+        done();
+      });
+    });
 
-  //   shared.shouldBehaveLikeAMusicSite(driver, false);
-  // });
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
 
   // // Iframes are too anoying
   // describe("spotify", function() {

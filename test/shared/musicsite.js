@@ -41,16 +41,17 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
           console.log("Alert check done!\nStarting waitforload");
           helpers.waitForLoad(driver)
           .then(function() {
-            console.log("Wait for load done!");
-            // Wait for Streamkeys attached console message
-            helpers.waitForExtensionLoad(driver, {count: 0})
-            .then(function(result) {
-              console.log("Extension loaded!");
-              expect(result).to.be.true;
-              done();
-            }, function(err) {
-              console.log(err);
-              throw this.skLoadError;
+            console.log("Wait for load done!\nInjecting test capture.");
+            helpers.injectTestCapture(driver).then(function() {
+              helpers.waitForExtensionLoad(driver, {count: 0})
+              .then(function(result) {
+                console.log("Extension loaded!");
+                expect(result).to.be.true;
+                done();
+              }, function(err) {
+                console.log("Extension error: ", err);
+                throw this.skLoadError;
+              });
             });
           }, function(err) {
             console.log("Driver Timeout!", err);
