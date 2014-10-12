@@ -37,14 +37,14 @@
   //***
   chrome.runtime.onInstalled.addListener(function(details) {
     if(details.reason == "install") {
-      //Only open the site if not already on it
-      //streamkeys-install session var will be created on click of install button on streamkeys site
-      //TODO: figure out how to make this work
-      //var fromSite = sessionStorage.getItem("streamkeys-install");
-      //if(fromSite === null)
-      //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
+      // Only open the site if not already on it
+      // streamkeys-install session var will be created on click of install button on streamkeys site
+      // TODO: figure out how to make this work
+      // var fromSite = sessionStorage.getItem("streamkeys-install");
+      // if(fromSite === null)
+      // chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
     } else if(details.reason == "update") {
-      //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
+      // chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
     }
   });
 
