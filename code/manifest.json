@@ -158,6 +158,14 @@
     {
       "matches": ["*://*.play.pocketcasts.com/*"],
       "js": ["js/controllers/PocketcastsController.js"]
+    },
+    {
+      "matches": ["*://*.music.yandex.ru/*"],
+      "js": ["js/controllers/YandexController.js"]
+    },
+    {
+      "matches": ["*://*.ambientsleepingpill.com/"],
+      "js": ["js/controllers/AmbientsleepingpillController.js"]
     }
   ],
   "web_accessible_resources": ["js/seesu_inject.js"],
@@ -165,32 +173,29 @@
   "commands": {
     "playPause": {
       "suggested_key": {
-        "default": "MediaPlayPause",
-        "mac": "Alt+Shift+2"
+        "default": "MediaPlayPause"
       },
       "global": true,
       "description": "Toggle play/pause"
     },
     "playNext": {
       "suggested_key": {
-        "default": "MediaNextTrack",
-        "mac": "Alt+Shift+3"
+        "default": "MediaNextTrack"
       },
       "global": true,
       "description": "Play next track"
     },
     "playPrev": {
       "suggested_key": {
-        "default": "MediaPrevTrack",
-        "mac": "Alt+Shift+E"
+        "default": "MediaPrevTrack"
       },
       "global": true,
       "description": "Play previous track"
     },
     "mute": {
       "suggested_key": {
-        "default": "Alt+Shift+M",
-        "mac": "Alt+Shift+M"
+        "default": "Ctrl+Shift+2",
+        "mac": "MacCtrl+Shift+2"
       },
       "global": true,
       "description": "Toggle mute"

@@ -1,8 +1,9 @@
 // Missing Tests:
-// Amazon
-// Pandora
+// Amazon (need US ip)
+// Pandora (need US ip)
 // Seesu
 // Spotify
+// Yandex (need RU ip)
 
 var base = require("./_base_test.js"),
     driver = base.getDriver(),
@@ -14,6 +15,7 @@ const WAIT_TIMEOUT = 120000;
 
 var baseSites = [
   {name: "7digital", url: "http://www.7digital.com"},
+  {name: "Ambientsleepingpill", url: "http://ambientsleepingpill.com"},
   {name: "bandcamp", url: "http://www.bandcamp.com"},
   {name: "bop.fm", url: "http://www.bop.fm"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},

@@ -118,24 +118,22 @@ module.exports = function(grunt) {
       }
     },
 
-    "string-replace": {
+    replace: {
       prod: {
-        files: [{src: ["code/js/background.js"], dest: "code/js/background.js"}],
-        options: {
-          replacements: [{
-            pattern: /\/\/( *)chrome\.tabs\.create\({url: "http:\/\/www\.streamkeys\.com\/guide.html/ig,
-            replacement: 'chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
-          }]
-        }
+        src: ["code/js/background.js"],
+        dest: "code/js/background.js",
+        replacements: [{
+          from: /\/\/[ ]*chrome\.tabs\.create\({url: "http:\/\/www\.streamkeys\.com\/guide.html/gm,
+          to: 'chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
+        }]
       },
       dev: {
-        files: [{src: ["code/js/background.js"], dest: "code/js/background.js"}],
-        options: {
-          replacements: [{
-            pattern: /( *)chrome\.tabs\.create\({url: "http:\/\/www\.streamkeys\.com\/guide.html/ig,
-            replacement: '$1// chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
-          }]
-        }
+        src: ["code/js/background.js"],
+        dest: "code/js/background.js",
+        replacements: [{
+          from: /^( *)chrome\.tabs\.create\({url: "http:\/\/www\.streamkeys\.com\/guide.html/gm,
+          to: '$1//chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
+        }]
       }
     }
   });
@@ -150,7 +148,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-mkdir");
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks("grunt-string-replace");
+  grunt.loadNpmTasks("grunt-text-replace");
 
   /* Tasks */
   grunt.registerTask(
@@ -169,9 +167,9 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
-  grunt.registerTask("dev", ["string-replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
+  grunt.registerTask("dev", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
     "mkdir:js", "browserify", "copy:test_dev"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
     "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
-  grunt.registerTask("rel-store", ["string-replace:prod", "rel"]);
+  grunt.registerTask("rel-store", ["replace:prod", "rel"]);
 };

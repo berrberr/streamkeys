@@ -42,9 +42,9 @@
       // TODO: figure out how to make this work
       // var fromSite = sessionStorage.getItem("streamkeys-install");
       // if(fromSite === null)
-      // chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
+      //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
     } else if(details.reason == "update") {
-      // chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
+      //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
     }
   });
 

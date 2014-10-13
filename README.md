@@ -78,16 +78,9 @@ node test/runner.js
 ```
 
 ##Default hotkeys:
-MAC:
-* Ctrl + Shift + 2: Toggle play/pause
-* Ctrl + Shift + 1: Previous song
-* Ctrl + Shift + 3: Next Song
-* Ctrl + Shift + M: Toggle mute
 
-WINDOWS/LINUX
 * Mediakeys: play/pause, next, previous
-* Ctrl + Shift + M: mute
-
+* Ctrl + Shift + 2: mute
 
 ##TODO:
 * Redo tab stack

@@ -20,6 +20,7 @@
       "7digital": {name: "7digital", url: "http://www.7digital.com", enabled: true, url_regex: null},
       "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true, url_regex: null},
       "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player", enabled: true, url_regex: null},
+      "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com", enabled: true, url_regex: null},
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true, url_regex: null},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true, url_regex: null},
       "deezer": {name: "Deezer", url: "http://www.deezer.com", enabled: true, url_regex: null},
@@ -52,8 +53,9 @@
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true, url_regex: null},
       "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true, url_regex: null},
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true, url_regex: null},
+      "yandex": {name: "Yandex", url: "http://music.yandex.ru", enabled: true, url_regex: null},
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", enabled: true, url_regex: null},
-      "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: false, url_regex: null}
+      "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, url_regex: null}
     };
   };
 
