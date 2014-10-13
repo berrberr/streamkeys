@@ -166,6 +166,10 @@
     {
       "matches": ["*://*.ambientsleepingpill.com/"],
       "js": ["js/controllers/AmbientsleepingpillController.js"]
+    },
+    {
+      "matches": ["*://*.oplayer.org/"],
+      "js": ["js/controllers/OPlayerController.js"]
     }
   ],
   "web_accessible_resources": ["js/seesu_inject.js"],
