@@ -4,6 +4,7 @@ module.exports = function(grunt) {
       mnf = grunt.file.readJSON("code/manifest.json"),
       fileMaps = { browserify: {}, uglify: {} },
       jsFiles = grunt.file.expand(["code/js/**/*.js", "!code/js/lib/*"]),
+      htmlFiles = grunt.file.expand(["code/html/*.html"]),
       file,
       files = grunt.file.expand({cwd:"code/js/"}, ["**/*.js"]);
 
@@ -108,8 +109,8 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      files: jsFiles,
-      tasks: ["jshint:all", "lintspaces:all", "browserify"]
+      files: jsFiles.concat(htmlFiles),
+      tasks: ["dev"] // let machines suffer
     },
 
     exec: {
@@ -135,6 +136,14 @@ module.exports = function(grunt) {
           to: '$1//chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
         }]
       }
+    },
+
+    growl : {
+      build_success : {
+        message : "extension built successfully!",
+        title : "Grunt",
+        image: __dirname + "/code/icon128.png"
+      }
     }
   });
 
@@ -149,6 +158,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-text-replace");
+  grunt.loadNpmTasks('grunt-growl');
 
   /* Tasks */
   grunt.registerTask(
@@ -168,7 +178,7 @@ module.exports = function(grunt) {
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
   grunt.registerTask("dev", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:test_dev"]);
+    "mkdir:js", "browserify", "copy:test_dev",  "growl:build_success"]);
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
     "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
   grunt.registerTask("rel-store", ["replace:prod", "rel"]);
