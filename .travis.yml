@@ -8,7 +8,7 @@ install:
 before_script:
 - npm install -g grunt-cli
 before_install:
-- openssl aes-256-cbc -k "$secrets_password" -in secret.json.enc -out tests/secret.json -d
+- openssl aes-256-cbc -k "$secrets_password" -in secrets.json.enc -out tests/secrets.json -d
 - sudo apt-get remove chromium-browser
 - sudo apt-get update
 - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
