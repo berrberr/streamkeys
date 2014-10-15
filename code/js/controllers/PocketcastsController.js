@@ -2,10 +2,9 @@
   "use strict";
 
   require("BaseController").init({
-    playPause: "#audio_play_button",
-    play: "#audio_play_button",
-    pause: "#audio_pause_button",
-    playNext: "#audio_skip_forward_button",
-    playPrev: "#audio_skip_back_button"
+    playPause: ".play_pause_button",
+    playNext: ".skip_forward_button",
+    playPrev: ".skip_back_button",
+    mute: ".audio_volume_slider"
   });
 })();
