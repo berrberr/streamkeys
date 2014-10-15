@@ -32,6 +32,9 @@ var baseSites = [
   {name: "youarelisteningto", url: "http://www.youarelistening.to"}
 ];
 
+var runSecure = !(process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST === "false");
+console.log("Should run secure tests? ", runSecure);
+
 describe("Streamkeys suite", function() {
 
   before(function(done) {
@@ -187,29 +190,6 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
-  describe("deezer", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.deezer.com");
-      helpers.waitAndClick(driver, {id: "login_btn"});
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "login_mail"}) &&
-                driver.isElementPresent({id: "login_password"}) &&
-                driver.isElementPresent({id: "login_form_submit"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "login_mail"}).sendKeys(secrets.deezer.username);
-      driver.findElement({id: "login_password"}).sendKeys(secrets.deezer.password);
-      driver.findElement({id: "login_form_submit"}).click();
-      driver.wait(function() {
-        return (driver.isElementPresent({className: "player-controls"}));
-      }, WAIT_TIMEOUT);
-
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
   // @depends: .genre-btn, .btn-primary, .player-controls, [@data-station-id]
   describe("iHeartRadio", function() {
     before(function(done) {
@@ -217,25 +197,6 @@ describe("Streamkeys suite", function() {
       helpers.waitAndClick(driver, {className: "genre-btn"});
       helpers.waitAndClick(driver, {className: "btn-primary"});
       helpers.waitForSelector(driver, {className: "player-controls"})
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
-  // @depends: #username, #password, [name=submit], .player_bottom, /account/signin/
-  describe("rdio", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "https://www.rdio.com/account/signin/");
-      driver.wait(function() {
-        return (driver.isElementPresent({id: "username"}) &&
-                driver.isElementPresent({id: "password"}) &&
-                driver.isElementPresent({name: "submit"}));
-      }, WAIT_TIMEOUT);
-      driver.findElement({id: "username"}).sendKeys(secrets.rdio.username);
-      driver.findElement({id: "password"}).sendKeys(secrets.rdio.password);
-      driver.findElement({name: "submit"}).click();
-      helpers.waitForSelector(driver, {className: "player_bottom"});
       done();
     });
 
@@ -253,6 +214,50 @@ describe("Streamkeys suite", function() {
 
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
+
+  if(runSecure) {
+    // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
+    describe("deezer", function() {
+      before(function(done) {
+        helpers.getAndWait(driver, "http://www.deezer.com");
+        helpers.waitAndClick(driver, {id: "login_btn"});
+        driver.wait(function() {
+          return (driver.isElementPresent({id: "login_mail"}) &&
+                  driver.isElementPresent({id: "login_password"}) &&
+                  driver.isElementPresent({id: "login_form_submit"}));
+        }, WAIT_TIMEOUT);
+        driver.findElement({id: "login_mail"}).sendKeys(secrets.deezer.username);
+        driver.findElement({id: "login_password"}).sendKeys(secrets.deezer.password);
+        driver.findElement({id: "login_form_submit"}).click();
+        driver.wait(function() {
+          return (driver.isElementPresent({className: "player-controls"}));
+        }, WAIT_TIMEOUT);
+
+        done();
+      });
+
+      shared.shouldBehaveLikeAMusicSite(driver, false);
+    });
+
+    // @depends: #username, #password, [name=submit], .player_bottom, /account/signin/
+    describe("rdio", function() {
+      before(function(done) {
+        helpers.getAndWait(driver, "https://www.rdio.com/account/signin/");
+        driver.wait(function() {
+          return (driver.isElementPresent({id: "username"}) &&
+                  driver.isElementPresent({id: "password"}) &&
+                  driver.isElementPresent({name: "submit"}));
+        }, WAIT_TIMEOUT);
+        driver.findElement({id: "username"}).sendKeys(secrets.rdio.username);
+        driver.findElement({id: "password"}).sendKeys(secrets.rdio.password);
+        driver.findElement({name: "submit"}).click();
+        helpers.waitForSelector(driver, {className: "player_bottom"});
+        done();
+      });
+
+      shared.shouldBehaveLikeAMusicSite(driver, false);
+    });
+  }
 
   // //@depends: #username, #password, [name=submit], .player_bottom, /account/signin/
   // describe("vk", function() {
