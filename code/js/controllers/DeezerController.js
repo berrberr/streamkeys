@@ -1,12 +1,18 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var controller = require("BaseController");
+
+  var isNew = document.querySelector("#loading_bar") !== null;
+
+  controller.init({
     playPause: ".control.control-play",
     play: ".control.control-play",
     pause: ".control.control-pause",
     playNext: ".control.control-next",
     playPrev: ".control.control-prev",
-    mute: ".icon-volume-off"
+    mute: ".icon-volume-off",
+    buttonSwitch: isNew
   });
+
 })();
