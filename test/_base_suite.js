@@ -1,6 +1,7 @@
 // Missing Tests:
 // Amazon (need US ip)
 // Pandora (need US ip)
+// Plex
 // Seesu
 // Spotify
 // Yandex (need RU ip)
