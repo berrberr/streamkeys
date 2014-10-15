@@ -36,6 +36,7 @@
       "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com", enabled: true, url_regex: null},
       "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true, url_regex: null},
       "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true, url_regex: null},
+      "oplayer": {name: "oPlayer", url: "http://oplayer.org", enabled: true, url_regex: null},
       "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true, url_regex: null},
       "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com", enabled: true, url_regex: null},
       "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true, url_regex: null},
