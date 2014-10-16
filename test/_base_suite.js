@@ -32,7 +32,7 @@ var baseSites = [
   {name: "youarelisteningto", url: "http://www.youarelistening.to"}
 ];
 
-var secrets = (fs.existsSync("./secrets.json") && require("./secrets.json")) || false;
+var secrets = (fs.existsSync(helpers.getPath(__filename, "secrets.json")) && require("./secrets.json")) || false;
 
 describe("Streamkeys suite", function() {
 

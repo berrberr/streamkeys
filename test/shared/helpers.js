@@ -6,6 +6,7 @@ const SKINFO = "STREAMKEYS-INFO: ";
 const SKERR = "STREAMKEYS-ERROR: ";
 const WAIT_TIMEOUT = 80000;
 const WAIT_COUNT = 10;
+const PLAYER_WAIT_COUNT = 4;
 
 /**
  * Joins two paths based on first path directory name
@@ -106,7 +107,7 @@ var playerAction = exports.playerAction = function(driver, opts) {
   opts.count = opts.count || 0;
   //console.log("Checking player action: " + opts.action + " run " + opts.count);
 
-  if(opts.count > 4) return def.fulfill(false);
+  if(opts.count > PLAYER_WAIT_COUNT) return def.fulfill(false);
 
   driver.executeScript(eventScript(opts.action)).then(function() {
     waitForAction(driver, {action: opts.action, count: 0})

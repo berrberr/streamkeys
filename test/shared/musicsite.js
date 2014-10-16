@@ -1,24 +1,13 @@
 var webdriver = require("selenium-webdriver");
+const NUM_RETRY = 4;
 
 exports.shouldBehaveLikeAMusicSite = function(driver, url) {
 
   describe("music site behaviour", function() {
 
-    before(function() {
-      // Extension not loaded error message
-      this.skLoadError = new Error("Page not loaded!");
-
-      // Has the page and extension loaded properly
-      this.loadError = false;
-
-      // Are we on the first test
-      this.firstTest = true;
-    });
-
-    it("should load", function(done) {
+    it(NUM_RETRY, "should load", function(done) {
       var self = this,
           pageLoad = true;
-      this.firstTest = false;
 
       if(url) {
         pageLoad = false;
@@ -28,8 +17,8 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
         })
         .thenCatch(function(err) {
           console.log("Driver Timeout!", err);
-          pageLoad = true;
-          throw this.skLoadError;
+          //pageLoad = true;
+          return done(new Error("Driver timeout!"));
         });
       }
 
@@ -46,57 +35,58 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
               helpers.waitForExtensionLoad(driver, {count: 0})
               .then(function(result) {
                 console.log("Extension loaded!");
-                expect(result).to.be.true;
+                //expect(result).to.be.true;
+                if(!result) return done(new Error("Extension load error!"));
                 done();
               }, function(err) {
                 console.log("Extension error: ", err);
-                done();
+                return done(err);
               });
             });
           }, function(err) {
             console.log("Driver Timeout!", err);
-            done();
+            return done(err);
           });
         });
       });
     });
 
-    it("should play", function(done) {
+    it(NUM_RETRY, "should play", function(done) {
       helpers.playerAction(driver, {action: "playPause"})
       .then(function(result) {
-        expect(result).to.be.true;
+        if(!result) return done(new Error("Play failed!"));
         done();
       });
     });
 
-    it("should pause", function(done) {
+    it(NUM_RETRY, "should pause", function(done) {
       helpers.playerAction(driver, {action: "playPause"})
       .then(function(result) {
-        expect(result).to.be.true;
+        if(!result) return done(new Error("Play failed!"));
         done();
       });
     });
 
-    it("should play next", function(done) {
+    it(NUM_RETRY, "should play next", function(done) {
       helpers.playerAction(driver, {action: "playNext"})
       .then(function(result) {
-        expect(result).to.be.true;
+        if(!result) return done(new Error("Play Next failed!"));
         done();
       });
     });
 
-    it("should play previous", function(done) {
+    it(NUM_RETRY, "should play previous", function(done) {
       helpers.playerAction(driver, {action: "playPrev"})
       .then(function(result) {
-        expect(result).to.be.true;
+        if(!result) return done(new Error("Play Prev failed!"));
         done();
       });
     });
 
-    it("should mute", function(done) {
+    it(NUM_RETRY, "should mute", function(done) {
       helpers.playerAction(driver, {action: "mute"})
       .then(function(result) {
-        expect(result).to.be.true;
+        if(!result) return done(new Error("Mute failed!"));
         done();
       });
     });
