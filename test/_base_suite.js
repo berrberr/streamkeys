@@ -8,7 +8,7 @@
 
 var base = require("./_base_test.js"),
     driver = base.getDriver(),
-    secrets = require("./secrets.json"),
+    fs = require("fs"),
     By = require("selenium-webdriver").By;
 
 const TIMEOUT_ERROR = /Wait timed out after ([0-9]* ?)ms/;
@@ -32,8 +32,7 @@ var baseSites = [
   {name: "youarelisteningto", url: "http://www.youarelistening.to"}
 ];
 
-var runSecure = !(process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST === "false");
-console.log("Should run secure tests? ", runSecure);
+var secrets = (fs.existsSync("./secrets.json") && require("./secrets.json")) || false;
 
 describe("Streamkeys suite", function() {
 
@@ -215,7 +214,7 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  if(runSecure) {
+  if(secrets) {
     // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
     describe("deezer", function() {
       before(function(done) {
