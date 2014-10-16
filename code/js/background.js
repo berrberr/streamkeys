@@ -7,7 +7,9 @@
   chrome.commands.onCommand.addListener(function(command) {
     chrome.tabs.query({}, function(tabs) {
       tabs.forEach(function(tab) {
-        if(window.sk_sites.check_enabled(tab.url)) {
+        var is_enabled       = window.sk_sites.check_enabled(tab.url);
+        var is_temp_disabled = window.sk_sites.check_temp_disabled(tab.url);
+        if(is_enabled && !is_temp_disabled) {
           chrome.tabs.sendMessage(tab.id, {"action": command});
           console.log("SENT " + command + " TO " + tab.url);
         }
