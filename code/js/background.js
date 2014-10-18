@@ -6,10 +6,21 @@
   //***
   chrome.commands.onCommand.addListener(function(command) {
     chrome.tabs.query({}, function(tabs) {
+      var uniq_domains   = [],
+          tab_domain     = null,
+          is_uniq_domain = null;
+
       tabs.forEach(function(tab) {
-        if(window.sk_sites.check_enabled(tab.url)) {
-          chrome.tabs.sendMessage(tab.id, {"action": command});
-          console.log("SENT " + command + " TO " + tab.url);
+        tab_domain     = tab.url.split('//')[1].split('/')[0];
+        is_uniq_domain = uniq_domains.indexOf(tab_domain) === -1;
+
+        if(is_uniq_domain) {
+          if(window.sk_sites.check_enabled(tab.url)) {
+            chrome.tabs.sendMessage(tab.id, {"action": command});
+            console.log("SENT " + command + " TO " + tab.url);
+          }
+
+          uniq_domains.push(tab_domain);
         }
       });
     });
