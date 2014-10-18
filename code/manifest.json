@@ -4,7 +4,7 @@
   "icons": {"48": "icon48.png", "128": "icon128.png"},
   "options_page": "html/options.html",
   "background": {
-    "scripts": ["js/lib/jquery-1.11.1.min.js", "js/background.js"]
+    "scripts": ["js/background.js"]
   },
   "browser_action": {
     "default_title": "Streamkeys",
