@@ -1,0 +1,105 @@
+html {
+  height: 50px;
+}
+
+.ext-container {
+  margin: 0;
+  width: 170px;
+}
+
+.toggle, #fail-message {
+  padding: 5px;
+}
+
+.ext-options ul {
+  list-style: none;
+}
+
+.ext-options a, .ext-options a:active, .ext-options a:visited {
+  color: #3F6EC2;
+  display: block;
+  border-top: 1px solid #DDDDDD;
+  padding: 3px;
+  padding-left: 10px;
+  text-decoration: none;
+}
+
+.ext-options a:hover {
+  background: #EEEEEE;
+}
+
+#options-link {
+  font-family : "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+}
+
+.ext-options ul {
+  padding: 0;
+}
+
+#tab-favicon {
+  display: inline-block;
+  margin: 0 1px 4px 0;
+}
+
+// thanks to @Hachapury for checkbox toggler
+// http://codepen.io/Hachapury/pen/KrcBm
+
+#check {
+  display: none;
+}
+
+.check-box-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 25px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+  background: #cc3737;
+  overflow: hidden;
+}
+
+.check-box-wrapper #check-label {
+  border: 1px solid #bdbfbe;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+  background: #e8efeb;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  display: block;
+  font-size: 11px;
+  left: 0;
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  margin: 1px;
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.check-box-wrapper #check-label:before {
+  content: "ON";
+  display: inline-block;
+  float: left;
+  padding-top: 4px;
+  margin-left: -22px;
+  color: #e8efeb;
+}
+.check-box-wrapper #check-label:after {
+  content: "OFF";
+  display: inline-block;
+  float: left;
+  padding-top: 4px;
+  margin-left: 24px;
+  color: #e8efeb;
+}
+
+.check-box-wrapper #check:checked + #check-label {
+  left: 27px;
+}

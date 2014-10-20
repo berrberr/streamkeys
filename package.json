@@ -39,6 +39,7 @@
     "mocha": "~1.21.4",
     "selenium-webdriver": "~2.43.5",
     "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git",
-    "mocha-retry": "~0.0.9"
+    "mocha-retry": "~0.0.9",
+    "grunt-growl": "^0.1.5"
   }
 }
