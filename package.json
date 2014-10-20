@@ -1,5 +1,5 @@
 {
-  "name": "Streamkeys test",
+  "name": "Streamkeys",
   "version": "1.4.0",
   "description": "Global hotkeys for online music players including support for media keys.",
   "browser": {
