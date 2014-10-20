@@ -9,7 +9,7 @@ before_script:
 - npm install -g grunt-cli
 before_install:
 - echo $TRAVIS_PULL_REQUEST
-- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -k "$secrets_password" -in secrets.json.enc -out test/secrets.json -d || false'
+- ./travis-prcheck.sh
 - sudo apt-get remove chromium-browser
 - sudo apt-get update
 - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
