@@ -4,10 +4,10 @@ html {
 
 .ext-container {
   margin: 0;
-  width: 170px;
+  width: 190px;
 }
 
-.toggle, #fail-message {
+#fail-message {
   padding: 5px;
 }
 
@@ -19,8 +19,7 @@ html {
   color: #3F6EC2;
   display: block;
   border-top: 1px solid #DDDDDD;
-  padding: 3px;
-  padding-left: 10px;
+  padding-top: 3px;
   text-decoration: none;
 }
 
@@ -37,9 +36,30 @@ html {
   padding: 0;
 }
 
-#tab-favicon {
+.top-row {
+  height: 20px;
+  line-height: 20px;
+  margin-bottom: 5px;
+  display: "none";
+}
+
+.toggle {
   display: inline-block;
-  margin: 0 1px 4px 0;
+  visibility: hidden;
+  vertical-align: middle;
+}
+
+#tab-favicon {
+  margin-right: 4px;
+  height: 16px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+#info-message {
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 4px;
 }
 
 // thanks to @Hachapury for checkbox toggler
@@ -52,8 +72,8 @@ html {
 .check-box-wrapper {
   position: relative;
   display: inline-block;
-  width: 52px;
-  height: 25px;
+  width: 30px;
+  height: 20px;
   -moz-border-radius: 25px;
   -webkit-border-radius: 25px;
   border-radius: 25px;
@@ -73,8 +93,8 @@ html {
   font-size: 11px;
   left: 0;
   position: absolute;
-  width: 21px;
-  height: 21px;
+  width: 15px;
+  height: 15px;
   margin: 1px;
   cursor: pointer;
   -moz-transition: 0.3s;
@@ -84,7 +104,7 @@ html {
 }
 
 .check-box-wrapper #check-label:before {
-  content: "ON";
+  content: "";
   display: inline-block;
   float: left;
   padding-top: 4px;
@@ -92,7 +112,7 @@ html {
   color: #e8efeb;
 }
 .check-box-wrapper #check-label:after {
-  content: "OFF";
+  content: "";
   display: inline-block;
   float: left;
   padding-top: 4px;
@@ -101,5 +121,5 @@ html {
 }
 
 .check-box-wrapper #check:checked + #check-label {
-  left: 27px;
+  left: 11px;
 }

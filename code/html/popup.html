@@ -4,23 +4,26 @@
     <link rel="stylesheet" href="/css/popup.css">
   </head>
 
-  <body class="ext-container">
-    <div class="toggle">
+  <body>
+  <div class="ext-container">
+
+    <div class="top-row">
       <img id="tab-favicon">
-
-      <div class="check-box-wrapper">
-        <input type="checkbox" id="check" style='display: none;'/>
-        <label id="check-label" for="check"></label>
+      <div class="toggle">
+        <div class="check-box-wrapper">
+          <input type="checkbox" id="check" style="display: none;"/>
+          <label id="check-label" for="check"></label>
+        </div>
       </div>
-
       <div id="info-message"></div>
     </div>
 
-    <div id="fail-message">There is not such site in database! :(</div>
+    <div id="fail-message">Not a music site!</div>
 
     <div class="ext-options">
-      <ul><li><a tabindex="-1" id="options-link" target="_blank">Options</a></li></ul>
+      <a tabindex="-1" id="options-link" target="_blank">Options</a>
     </div>
+  </div>
 
   </body>
 </html>
