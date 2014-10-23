@@ -1,5 +1,11 @@
 html {
-  height: 50px;
+  height: 30px;
+}
+body {
+  font-family : "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  height: 30px;
+  width: 190px;
 }
 
 .ext-container {
@@ -11,29 +17,18 @@ html {
   padding: 5px;
 }
 
-.ext-options ul {
-  list-style: none;
+.ext-options {
+  margin-top: 10px;
+  border-top: 1px solid #DDDDDD;
 }
-
 .ext-options a, .ext-options a:active, .ext-options a:visited {
   color: #3F6EC2;
-  display: block;
-  border-top: 1px solid #DDDDDD;
-  padding-top: 3px;
+  display: inline-block;
+  padding: 5px 5px 5px 5px;
   text-decoration: none;
 }
-
 .ext-options a:hover {
   background: #EEEEEE;
-}
-
-#options-link {
-  font-family : "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  font-size: 12px;
-}
-
-.ext-options ul {
-  padding: 0;
 }
 
 .top-row {
