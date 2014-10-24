@@ -10,33 +10,28 @@
       <a href="http://www.streamkeys.com" target="_blank" tabindex="-1">Streamkeys</a>
     </div>
 
-    <div class="player-row">
-      <span class="glyphicon glyphicon-backward"></span>
-      <span class="glyphicon glyphicon-play"></span>
-      <span class="glyphicon glyphicon-forward"></span>
+    <div id="music-site">
+      <div class="player-row">
+        <button type="button" class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-backward"></span></button>
+        <button type="button" class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-play"></span></button>
+        <button type="button" class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-forward"></span></button>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="enable-site" class="btn btn-sm btn-success" tabindex="-1">
+          <span class="glyphicon glyphicon-ok"></span>Enabled for this site
+        </button>
+        <button type="button" id="enable-tab" class="btn btn-sm btn-success" tabindex="-1">
+          <span class="glyphicon glyphicon-ok"></span>Enabled for this tab
+        </button>
+      </div>
     </div>
 
-    <div class="button-row">
-      <button type="button" class="btn btn-sm btn-success" tabindex="-1">
-        <span class="glyphicon glyphicon-ok"></span>Enabled for this site
-      </button>
-      <button type="button" class="btn btn-sm btn-success" tabindex="-1">
-        <span class="glyphicon glyphicon-ok"></span>Enabled for this tab
-      </button>
-      <div class="toggle">
-        <div class="check-box-wrapper">
-          <input type="checkbox" id="check" style="display: none;"/>
-          <label id="check-label" for="check"></label>
-        </div>
-      </div>
-      <div id="info-message"></div>
-      <div id="fail-message">Not a music site!</div>
-    </div>
+    <div id="fail-message">Not a music site!</div>
 
     <div class="ext-options">
       <a tabindex="-1" id="options-link" target="_blank">Options</a>
       <a href="http://www.streamkeys.com/guide.html" tabindex="-1" id="help-link" target="_blank">Help</a>
-      <a href="http://www.streamkeys.com" tabindex="-1" id="ext-link" target="_blank">Homepage</a>
     </div>
 
   </body>

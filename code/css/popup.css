@@ -23,10 +23,13 @@ a, a:hover, a:visited {
     text-decoration: none; }
 
 .player-row {
-  margin: 10px 0 10px 40px; }
+  margin: 10px 0 10px 0;
+  text-align: center; }
   .player-row span {
     display: inline-block;
-    width: 40px; }
+    width: 20px; }
+  .player-row span:hover {
+    opacity: 0.7; }
 
 .button-row {
   text-align: center; }
@@ -35,9 +38,6 @@ a, a:hover, a:visited {
     width: 170px; }
     .button-row button span {
       margin: 0 10px 0 -10px; }
-
-#fail-message {
-  padding: 5px; }
 
 .ext-options {
   margin-top: 10px;
@@ -51,27 +51,14 @@ a, a:hover, a:visited {
 .ext-options a:hover {
   background: #EEEEEE; }
 
-.top-row {
-  height: 20px;
-  line-height: 20px;
-  margin-bottom: 5px;
-  display: "none"; }
-
 .toggle {
   display: inline-block;
   visibility: hidden;
   vertical-align: middle; }
 
-#tab-favicon {
-  margin-right: 4px;
-  height: 16px;
-  vertical-align: middle;
-  display: inline-block; }
-
-#info-message {
-  vertical-align: middle;
-  display: inline-block;
-  margin-left: 4px; }
+#fail-message {
+  padding: 5px;
+  display: none; }
 
 #check {
   display: none; }
@@ -126,5 +113,3 @@ a, a:hover, a:visited {
 
 .check-box-wrapper #check:checked + #check-label {
   left: 11px; }
-
-/*# sourceMappingURL=popup.css.map */

@@ -27,10 +27,14 @@ a, a:hover, a:visited {
 }
 
 .player-row {
-  margin: 10px 0 10px 40px;
+  margin: 10px 0 10px 0;
+  text-align: center;
   span {
     display: inline-block;
-    width: 40px;
+    width: 20px;
+  }
+  span:hover {
+    opacity: 0.7;
   }
 }
 
@@ -43,10 +47,6 @@ a, a:hover, a:visited {
       margin: 0 10px 0 -10px;
     }
   }
-}
-
-#fail-message {
-  padding: 5px;
 }
 
 .ext-options {
@@ -62,30 +62,15 @@ a, a:hover, a:visited {
   background: #EEEEEE;
 }
 
-.top-row {
-  height: 20px;
-  line-height: 20px;
-  margin-bottom: 5px;
-  display: "none";
-}
-
 .toggle {
   display: inline-block;
   visibility: hidden;
   vertical-align: middle;
 }
 
-#tab-favicon {
-  margin-right: 4px;
-  height: 16px;
-  vertical-align: middle;
-  display: inline-block;
-}
-
-#info-message {
-  vertical-align: middle;
-  display: inline-block;
-  margin-left: 4px;
+#fail-message {
+  padding: 5px;
+  display: none;
 }
 
 // thanks to @Hachapury for checkbox toggler
