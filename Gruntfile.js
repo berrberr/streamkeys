@@ -4,7 +4,7 @@ module.exports = function(grunt) {
       mnf = grunt.file.readJSON("code/manifest.json"),
       fileMaps = { browserify: {}, uglify: {} },
       jsFiles = grunt.file.expand(["code/js/**/*.js", "!code/js/lib/*"]),
-      htmlFiles = grunt.file.expand(["code/html/*.html"]),
+      htmlFiles = grunt.file.expand(["code/html/*.html", "code/css/*"]),
       file,
       files = grunt.file.expand({cwd:"code/js/"}, ["**/*.js"]);
 
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       main: { files: [ {
         expand: true,
         cwd: "code/",
-        src: ["**", "!js/**", "!**/*.md"],
+        src: ["**", "!js/**", "!**/*.md", "!**/*.scss", "!**/*.map"],
         dest: "build/unpacked-dev/"
       } ] },
       prod: { files: [ {
@@ -59,10 +59,10 @@ module.exports = function(grunt) {
     browserify: {
       build: {
         files: fileMaps.browserify,
-        options: { bundleOptions: {
+        options: {
           debug: true,  // for source maps
           standalone: pkg["export-symbol"]
-        } }
+        }
       }
     },
 
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
 
     watch: {
       files: jsFiles.concat(htmlFiles),
-      tasks: ["dev"] // let machines suffer
+      tasks: ["dev"]
     },
 
     exec: {
@@ -138,6 +138,14 @@ module.exports = function(grunt) {
       }
     },
 
+    sass: {
+      dist: {
+        files: {
+          "code/css/popup.css": "code/css/popup.scss"
+        }
+      }
+    },
+
     growl : {
       build_success : {
         message : "extension built successfully!",
@@ -153,6 +161,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-contrib-sass");
   grunt.loadNpmTasks("grunt-exec");
   grunt.loadNpmTasks("grunt-mkdir");
   grunt.loadNpmTasks("grunt-lintspaces");
@@ -177,9 +186,9 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
-  grunt.registerTask("dev", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
+  grunt.registerTask("dev", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest",
     "mkdir:js", "browserify", "copy:test_dev",  "growl:build_success"]);
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "manifest",
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest",
     "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
   grunt.registerTask("rel-store", ["replace:prod", "rel"]);
 };

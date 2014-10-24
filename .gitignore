@@ -5,3 +5,4 @@ test/streamkeys-ext/*
 test/secrets.json
 streamkeys-dev.zip
 streamkeys.zip
+.sass-cache/
