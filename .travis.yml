@@ -10,6 +10,7 @@ before_script:
 before_install:
 - echo $TRAVIS_PULL_REQUEST
 - ./travis-prcheck.sh
+- gem install sass
 - sudo apt-get remove chromium-browser
 - sudo apt-get update
 - echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
