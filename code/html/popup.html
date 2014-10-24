@@ -1,12 +1,22 @@
 <html>
   <head>
     <script type="text/javascript" src="/js/popup.js"></script>
-    <link rel="stylesheet" href="/css/popup.css">
+    <link href="/css/popup.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
 
   <body>
+    <div class="header">
+      <a href="http://www.streamkeys.com" target="_blank" tabindex="-1">Streamkeys</a>
+    </div>
 
-    <div class="top-row">
+    <div class="player-row">
+      <span class="glyphicon glyphicon-backward"></span>
+      <span class="glyphicon glyphicon-play"></span>
+      <span class="glyphicon glyphicon-forward"></span>
+    </div>
+
+    <div class="button-row">
       <img id="tab-favicon">
       <div class="toggle">
         <div class="check-box-wrapper">
@@ -15,9 +25,8 @@
         </div>
       </div>
       <div id="info-message"></div>
+      <div id="fail-message">Not a music site!</div>
     </div>
-
-    <div id="fail-message">Not a music site!</div>
 
     <div class="ext-options">
       <a tabindex="-1" id="options-link" target="_blank">Options</a>

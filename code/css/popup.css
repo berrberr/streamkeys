@@ -1,16 +1,37 @@
 html {
-  height: 30px;
+  height: 100px;
+  padding: 0;
+  margin: 0;
 }
 body {
-  font-family : "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  font-size: 12px;
-  height: 30px;
-  width: 190px;
+  height: 100px;
+  width: 180px;
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
 }
 
 .ext-container {
   margin: 0;
   width: 190px;
+}
+
+.header {
+  background-color: #036564;
+}
+.header a, .header a:active, .header a:visited {
+  color: #FFFFFF;
+}
+
+.player-row {
+  margin: 10px 0 0 30px;
+}
+.player-row span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
 }
 
 #fail-message {
@@ -25,7 +46,6 @@ body {
   color: #3F6EC2;
   display: inline-block;
   padding: 5px 5px 5px 5px;
-  text-decoration: none;
 }
 .ext-options a:hover {
   background: #EEEEEE;
