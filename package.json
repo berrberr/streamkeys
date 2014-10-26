@@ -41,6 +41,7 @@
     "selenium-webdriver": "~2.43.5",
     "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git",
     "mocha-retry": "~0.0.9",
-    "grunt-growl": "^0.1.5"
+    "grunt-growl": "^0.1.5",
+    "watchify": "~2.1.0"
   }
 }

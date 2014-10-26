@@ -60,8 +60,9 @@ module.exports = function(grunt) {
       build: {
         files: fileMaps.browserify,
         options: {
-          debug: true,  // for source maps
-          standalone: pkg["export-symbol"]
+          browserifyOptions: {
+            debug: true
+          }
         }
       }
     },
