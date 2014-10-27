@@ -7,8 +7,8 @@
   chrome.commands.onCommand.addListener(function(command) {
     chrome.tabs.query({}, function(tabs) {
       tabs.forEach(function(tab) {
-        var is_enabled       = window.sk_sites.check_enabled(tab.url);
-        var is_temp_disabled = window.sk_sites.check_temp_disabled(tab.url);
+        var is_enabled       = window.sk_sites.checkEnabled(tab.url);
+        var is_temp_disabled = window.sk_sites.checkTemporarilyDisabled(tab.url);
         if(is_enabled && !is_temp_disabled) {
           chrome.tabs.sendMessage(tab.id, {"action": command});
           console.log("SENT " + command + " TO " + tab.url);
@@ -23,7 +23,7 @@
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
     if(request.action === "update_keys") {
       console.log("Options page has updated settings. Reloading...");
-      window.sk_sites.load_settings();
+      window.sk_sites.loadSettings();
     }
     if(request.action === "get_sites") {
       console.log("Options page wants the sitelist.");
@@ -60,5 +60,5 @@
   //***
   // window.sk_sites = new Sitelist();
   window.sk_sites = require("./modules/Sitelist.js");
-  window.sk_sites.load_settings();
+  window.sk_sites.loadSettings();
 })();

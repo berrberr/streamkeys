@@ -3,16 +3,16 @@
 
   var $ = require("jquery");
 
-  //***
-  //@return [RegExp] a regex that matches where the string is in a url's (domain) name
-  //***
+  /**
+   * @return [RegExp] a regex that matches where the string is in a url's (domain) name
+   */
   var URL_check = function(domain) {
     return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\."));
   };
 
-  //***
-  //Base class for all sites enabled in extension
-  //***
+  /**
+   * Base class for all sites enabled in extension
+   */
   var Sitelist = function() { return this; };
 
   Sitelist.prototype.init = function() {
@@ -60,8 +60,8 @@
     };
   };
 
-  //Get site settings from localstorage
-  Sitelist.prototype.load_settings = function() {
+  // Get site settings from localstorage
+  Sitelist.prototype.loadSettings = function() {
     var self = this;
     if(!this.sites) this.init();
     console.log(this);
@@ -74,25 +74,29 @@
     });
   };
 
-  //@return [arr] enabled sites
-  Sitelist.prototype.get_enabled = function() {
+  // @return [arr] enabled sites
+  Sitelist.prototype.getEnabled = function() {
     return $.map(this.sites, function(val, key) {
       if(val.enabled) return key;
     });
   };
 
-  //@param url [str] url of site to check for
-  //@return [bool] true if url matches an enabled site
-  Sitelist.prototype.check_enabled = function(url) {
+  /**
+   * @param url [str] url of site to check for
+   * @return [bool] true if url matches an enabled site
+   */
+  Sitelist.prototype.checkEnabled = function(url) {
     var _sites = this.sites;
-    return this.get_enabled().some(function(sitename) {
+    return this.getEnabled().some(function(sitename) {
       return (_sites[sitename].url_regex.test(url));
     });
   };
 
-  //@param url [str] url of site to check for temporarily disabled
-  //@return [bool] true if url matches an temporarily disabled site
-  Sitelist.prototype.check_temp_disabled = function(url) {
+  /**
+   * @param url [str] url of site to check for temporarily disabled
+   * @return [bool] true if url matches an temporarily disabled site
+   */
+  Sitelist.prototype.checkTemporarilyDisabled = function(url) {
     var _sites = this.sites;
     var filtered_sites = $.grep(Object.keys(_sites), function (name) {
       return window.sk_sites.sites[name].url_regex.test(url);
@@ -100,24 +104,23 @@
 
     if (!filtered_sites.length) { return; }
 
-    var site_name   = filtered_sites[0];
+    var site_name = filtered_sites[0];
     var site_by_url = window.sk_sites.sites[site_name];
 
     return (site_by_url.temp_disabled === true);
   };
 
-  //@param url [str] url of site to mark as temporarily disabled
-  Sitelist.prototype.markAsTemporarilyDisabled = function(url, is_checked) {
-    console.log(url);
-    var is_disabled = !is_checked;
-
+  /**
+   * @param url [str] url of site to mark as temporarily disabled
+   */
+  Sitelist.prototype.markAsTemporarilyDisabled = function(url, is_disabled) {
     var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
       return window.sk_sites.sites[name].url_regex.test(url);
     });
 
     if (!filtered_sites.length) { return; }
 
-    var site_name   = filtered_sites[0];
+    var site_name = filtered_sites[0];
     var site_by_url = window.sk_sites.sites[site_name];
     site_by_url.temp_disabled = is_disabled;
 
@@ -125,10 +128,10 @@
     chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
   };
 
-  //***
-  //When Sitelist is required create a new singleton and return that
-  //Note: This makes all methods/properties of Sitelist publicly exposed
-  //***
+  /**
+   * When Sitelist is required create a new singleton and return that
+   * Note: This makes all methods/properties of Sitelist publicly exposed
+   */
   var singleton = new Sitelist();
   module.exports = singleton;
 })();
