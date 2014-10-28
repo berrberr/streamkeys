@@ -1,20 +1,24 @@
 ;(function() {
   "use strict";
 
-  //***
-  //Capture hotkeys and send their actions to tab(s) with music player running
-  //***
-  chrome.commands.onCommand.addListener(function(command) {
+  var sendAction = function(command) {
     chrome.tabs.query({}, function(tabs) {
       tabs.forEach(function(tab) {
         var is_enabled       = window.sk_sites.checkEnabled(tab.url);
-        var is_temp_disabled = window.sk_sites.checkTemporarilyDisabled(tab.url);
-        if(is_enabled && !is_temp_disabled) {
+        var is_tab_enabled = window.sk_sites.checkTabEnabled(tab.id);
+        if(is_enabled && is_tab_enabled) {
           chrome.tabs.sendMessage(tab.id, {"action": command});
           console.log("SENT " + command + " TO " + tab.url);
         }
       });
     });
+  };
+
+  //***
+  //Capture hotkeys and send their actions to tab(s) with music player running
+  //***
+  chrome.commands.onCommand.addListener(function(command) {
+    sendAction(command);
   });
 
   //***
@@ -31,6 +35,9 @@
     }
     if(request.action === "get_commands") {
       response(window.coms);
+    }
+    if(request.action == "command") {
+      sendAction(request.command);
     }
   });
 

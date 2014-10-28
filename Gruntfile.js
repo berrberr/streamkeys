@@ -181,8 +181,8 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
-  grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "manifest"]);
-  grunt.registerTask("dev-post", ["copy:test_dev", "copy:main", "growl:build_success"]);
+  grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "sass", "manifest"]);
+  grunt.registerTask("dev-post", ["copy:test_dev", "growl:build_success"]);
   grunt.registerTask("dev-build", ["dev-pre", "browserify", "dev-post"]);
 
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);

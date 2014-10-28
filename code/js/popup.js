@@ -3,20 +3,37 @@
 
   var $ = require("jquery"),
       tab_url = "",
-      disabledBtnClass = "btn-danger";
+      tab_id = null,
+      disabledBtnClass = "btn-danger",
+      enableSiteBtn = "#enable-site",
+      enableSiteBtnText = {enable: "Enabled for this site", disable: "Disabled for this site"},
+      enableTabBtn = "#enable-tab",
+      enableTabBtnText = {enable: "Enabled for this tab", disable: "Disabled for this tab"},
+      popupSize = {
+        musicSite: "185px",
+        disabledMusicSite: "155px"
+      };
 
-  var toggleEnableBtn = function(is_disabled) {
-    var enable_site_btn = $("#enable-site");
+  var toggleEnableBtn = function(ele, text, is_disabled) {
     if(is_disabled) {
-      enable_site_btn.addClass(disabledBtnClass);
-      enable_site_btn.html(
-        "<span class=\"glyphicon glyphicon-remove\"></span>Disabled for this site");
+      ele.addClass(disabledBtnClass);
+      ele.html(
+        "<span class=\"glyphicon glyphicon-remove\"></span>" + text.disable);
     } else {
-      enable_site_btn.removeClass(disabledBtnClass);
-      enable_site_btn.html(
-        "<span class=\"glyphicon glyphicon-ok\"></span>Enabled for this site");
+      ele.removeClass(disabledBtnClass);
+      ele.html(
+        "<span class=\"glyphicon glyphicon-ok\"></span>" + text.enable);
     }
-    console.log("toggld");
+  };
+
+  var toggleTabBtn = function(is_disabled) {
+    if(is_disabled) {
+      $(enableTabBtn).css("display", "none");
+      document.body.style.height = popupSize.disabledMusicSite;
+    } else {
+      $(enableTabBtn).css("display", "inline-block");
+      document.body.style.height = popupSize.musicSite;
+    }
   };
 
   var onLoad = function() {
@@ -27,59 +44,47 @@
 
     chrome.tabs.getSelected(null, function(tab) {
       tab_url = tab.url;
+      tab_id = tab.id;
 
-      var is_disabled = chrome.extension.getBackgroundPage().window.sk_sites.checkTemporarilyDisabled(tab_url);
-      var is_music_site = chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
+      var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
+      var is_tab_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
+      var is_music_site = chrome.extension.getBackgroundPage().window.sk_sites.checkMusicSite(tab_url);
 
-      if(is_music_site) {
-        document.body.style.height = "185px";
-      } else {
+      if(!is_music_site) {
         music_controls.css("display", "none");
         fail_message.css("display", "block");
+      } else {
+        toggleTabBtn(is_disabled);
       }
 
-      console.log("Togglin: ", is_disabled);
-      toggleEnableBtn(is_disabled);
-      if(is_disabled) {
-        // toggle.style.visibility    = "visible";
-        // button_row.style.display   = "block";
-        // check.checked              = !is_disabled;
-        // fail_message.style.display = "none";
-        // setMessage(is_disabled);
-
-        // check_wrapper.style.background = check.checked ? green : red;
-        // check_wrapper.style.visibility = "visible";
-        // fav.src = "http://g.etfv.co/" + tab_url;
-
-        // if(is_disabled) {
-        //   chrome.browserAction.setIcon({
-        //     path: chrome.runtime.getURL("icon48_disabled.png"),
-        //     tabId: tab.id
-        //   });
-        // } else {
-        //   chrome.browserAction.setIcon({
-        //     path: chrome.runtime.getURL("icon48.png"),
-        //     tabId: tab.id
-        //   });
-        // }
-      }
+      toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
+      toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
     });
   };
 
   document.addEventListener("DOMContentLoaded", function() {
 
     // Toggle controls for a site
-    $("#enable-site").click(function() {
-      var disabled = !$("#enable-site").hasClass(disabledBtnClass);
+    $(enableSiteBtn).click(function() {
+      var disabled = !$(enableSiteBtn).hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markSiteAsDisabled(tab_url, disabled);
-      toggleEnableBtn(disabled);
+      toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, disabled);
+      toggleTabBtn(disabled);
     });
 
     // Toggle controls for a specific tab
-    $("#enable-tab").click(function() {
-      var disabled = !$("#enable-tab").hasClass(disabledBtnClass);
-      chrome.extension.getBackgroundPage().window.sk_sites.markTabAsTemporarilyDisabled(tab_url, disabled);
-      toggleEnableBtn(disabled);
+    $(enableTabBtn).click(function() {
+      var disabled = !$(enableTabBtn).hasClass(disabledBtnClass);
+      chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tab_id, disabled);
+      //toggleEnableTabBtn(disabled);
+      toggleEnableBtn($(enableTabBtn), enableTabBtnText, disabled);
+    });
+
+    $(".sk-playcontrols").click(function(el) {
+      console.log(el);
+      console.log($(el));
+      console.log($(el).attr("id"));
+      chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
     });
 
     onLoad();
