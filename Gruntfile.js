@@ -19,8 +19,7 @@ module.exports = function(grunt) {
     clean: ["build/unpacked-dev", "build/unpacked-prod", "test/streamkeys-ext"],
 
     mkdir: {
-      unpacked: { options: { create: ["build/unpacked-dev", "build/unpacked-prod"] } },
-      js: { options: { create: ["build/unpacked-dev/js"] } }
+      unpacked: { options: { create: ["build/unpacked-dev", "build/unpacked-dev/js", "build/unpacked-prod"] } }
     },
 
     copy: {
@@ -58,12 +57,7 @@ module.exports = function(grunt) {
 
     browserify: {
       build: {
-        files: fileMaps.browserify,
-        options: {
-          browserifyOptions: {
-            debug: true
-          }
-        }
+        files: fileMaps.browserify
       }
     },
 
@@ -111,7 +105,7 @@ module.exports = function(grunt) {
 
     watch: {
       files: jsFiles.concat(htmlFiles),
-      tasks: ["dev"]
+      tasks: ["dev-build"]
     },
 
     exec: {
@@ -187,9 +181,10 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
-  grunt.registerTask("dev", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:test_dev",  "growl:build_success"]);
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest",
-    "mkdir:js", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
+  grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "manifest"]);
+  grunt.registerTask("dev-post", ["copy:test_dev", "copy:main", "growl:build_success"]);
+  grunt.registerTask("dev-build", ["dev-pre", "browserify", "dev-post"]);
+
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
   grunt.registerTask("rel-store", ["replace:prod", "rel"]);
 };

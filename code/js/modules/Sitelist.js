@@ -58,6 +58,7 @@
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", enabled: true, temp_disabled: false, url_regex: null},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, temp_disabled: false, url_regex: null}
     };
+    this.disabledTabs = [];
   };
 
   // Get site settings from localstorage
@@ -113,7 +114,7 @@
   /**
    * @param url [str] url of site to mark as temporarily disabled
    */
-  Sitelist.prototype.markAsTemporarilyDisabled = function(url, is_disabled) {
+  Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
       return window.sk_sites.sites[name].url_regex.test(url);
     });
@@ -126,6 +127,21 @@
 
     window.sk_sites.sites[site_name] = site_by_url;
     chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
+  };
+
+  Sitelist.prototype.checkTabDisabled = function(tabId) {
+    return (tabId && this.disabledTabs.indexOf(tabId) !== -1);
+  };
+
+  /**
+   * @param tabId [int] id of tab to temp disable
+   * @param is_disabled [bool] disable tab if true, enable if false
+   */
+  Sitelist.prototype.markTabAsDisabled = function(tabId, is_disabled) {
+    if(is_disabled)
+      this.disabledTabs.push(tabId);
+    else
+      this.disabledTabs = this.disabledTabs.filter(function(el) { return el !== tabId; });
   };
 
   /**

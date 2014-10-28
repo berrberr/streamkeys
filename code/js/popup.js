@@ -68,9 +68,17 @@
 
   document.addEventListener("DOMContentLoaded", function() {
 
+    // Toggle controls for a site
     $("#enable-site").click(function() {
       var disabled = !$("#enable-site").hasClass(disabledBtnClass);
-      chrome.extension.getBackgroundPage().window.sk_sites.markAsTemporarilyDisabled(tab_url, disabled);
+      chrome.extension.getBackgroundPage().window.sk_sites.markSiteAsDisabled(tab_url, disabled);
+      toggleEnableBtn(disabled);
+    });
+
+    // Toggle controls for a specific tab
+    $("#enable-tab").click(function() {
+      var disabled = !$("#enable-tab").hasClass(disabledBtnClass);
+      chrome.extension.getBackgroundPage().window.sk_sites.markTabAsTemporarilyDisabled(tab_url, disabled);
       toggleEnableBtn(disabled);
     });
 
