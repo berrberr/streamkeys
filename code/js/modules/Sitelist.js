@@ -19,43 +19,49 @@
     this.sites = {
       "7digital": {name: "7digital", url: "http://www.7digital.com", enabled: true, url_regex: null},
       "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true, url_regex: null},
-      "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player", enabled: true, url_regex: null},
-      "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com", enabled: true, url_regex: null},
+      "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player",
+          enabled: true, url_regex: null},
+      "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com",
+          enabled: true, url_regex: null},
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true, url_regex: null},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true, url_regex: null},
       "deezer": {name: "Deezer", url: "http://www.deezer.com", enabled: true, url_regex: null},
       "di": {name: "Di.fm", url: "http://www.di.fm", enabled: true, url_regex: null},
       "earbits": {name: "Earbits", url: "http://www.earbits.com", enabled: true, url_regex: null},
-      "player.edge": {name: "Edge Player", url: "http://player.edge.ca", enabled: true, url_regex: null},
+      "player.edge": {name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js",
+          enabled: true, url_regex: null},
       "grooveshark": {name: "Grooveshark", url: "http://www.grooveshark.com", enabled: true, url_regex: null},
       "hypem": {name: "Hypemachine", url: "http://www.hypem.com", enabled: true, url_regex: null},
       "iheart": {name: "iHeartRadio", url: "http://www.iheart.com", enabled: true, url_regex: null},
       "jango": {name: "Jango", url: "http://www.jango.com", enabled: true, url_regex: null},
-      "last": {name: "LastFm", url: "http://www.last.fm", enabled: true, url_regex: null},
+      "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true, url_regex: null},
       "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true, url_regex: null},
-      "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com", enabled: true, url_regex: null},
+      "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com",
+          controller: "SonyMusicUnlimitedController.js", enabled: true, url_regex: null},
       "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true, url_regex: null},
       "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true, url_regex: null},
       "oplayer": {name: "oPlayer", url: "http://oplayer.org", enabled: true, url_regex: null},
       "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true, url_regex: null},
-      "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com", enabled: true, url_regex: null},
-      "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true, url_regex: null},
       "pleer": {name: "Pleer.com", url: "http://pleer.com", enabled: true, url_regex: null},
-      "play.google": {name: "Google Music", url: "http://play.google.com", enabled: true, url_regex: null},
+      "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true, url_regex: null},
+      "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com", enabled: true, url_regex: null},
+      "play.google": {name: "Google Music", url: "http://play.google.com", controller: "GoogleMusicController.js",
+          enabled: true, url_regex: null},
       "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true, url_regex: null},
       "rdio": {name: "Rdio", url: "http://www.rdio.com", enabled: true, url_regex: null},
       "seesu": {name: "Seesu.me", url: "http://www.seesu.me", enabled: true, url_regex: null},
-      "spotify": {name: "Spotify Web Player", url: "http://www.spotify.com", enabled: true, url_regex: null},
-      "soundcloud": {name: "Soundcloud", url: "http://www.soundcloud.com", enabled: true, url_regex: null},
+      "slacker": {name: "Slacker", url: "http://www.slacker.com", enabled: true, url_regex: null},
       "songstr": {name: "Songstr", url: "http://www.songstr.com", enabled: true, url_regex: null},
       "songza": {name: "Songza", url: "http://www.songza.com", enabled: true, url_regex: null},
-      "slacker": {name: "Slacker", url: "http://www.slacker.com", enabled: true, url_regex: null},
+      "soundcloud": {name: "Soundcloud", url: "http://www.soundcloud.com", enabled: true, url_regex: null},
+      "spotify": {name: "Spotify Web Player", url: "http://www.spotify.com", enabled: true, url_regex: null},
       "stitcher": {name: "Stitcher", url: "http://www.stitcher.com", enabled: true, url_regex: null},
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true, url_regex: null},
       "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true, url_regex: null},
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true, url_regex: null},
       "yandex": {name: "Yandex", url: "http://music.yandex.ru", enabled: true, url_regex: null},
-      "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", enabled: true, url_regex: null},
+      "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to",
+          controller: "YouarelisteningtoController.js", enabled: true, url_regex: null},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, url_regex: null}
     };
     this.disabledTabs = [];
@@ -80,6 +86,21 @@
     return $.map(this.sites, function(val, key) {
       if(val.enabled) return key;
     });
+  };
+
+  /**
+   * Returns the sitelist key of a url if it is matched to a music site
+   * @param url [str] url to check
+   * @return [str] sitelist key if found, null otherwise
+   */
+  Sitelist.prototype.getSitelistName = function(url) {
+    var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
+      return window.sk_sites.sites[name].url_regex.test(url);
+    });
+
+    if (!filtered_sites.length) return null;
+
+    return filtered_sites[0];
   };
 
   /**
@@ -110,15 +131,11 @@
    * @param is_disabled [bool] disable site if true, enable site if false
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
-    var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
-      return window.sk_sites.sites[name].url_regex.test(url);
-    });
-
-    if (!filtered_sites.length) { return; }
-
-    var site_name = filtered_sites[0];
-    window.sk_sites.sites[site_name].enabled = !is_disabled;
-    chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
+    var site_name = this.getSitelistName(url);
+    if(site_name) {
+      window.sk_sites.sites[site_name].enabled = !is_disabled;
+      chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
+    }
   };
 
   /**
@@ -139,6 +156,18 @@
       this.disabledTabs.push(tabId);
     else
       this.disabledTabs = this.disabledTabs.filter(function(el) { return el !== tabId; });
+  };
+
+  Sitelist.prototype.getController = function(url) {
+    var site_name = this.getSitelistName(url);
+    if(site_name) {
+      var site = window.sk_sites.sites[site_name];
+      if(site.controller) return site.controller;
+
+      return (site_name[0].toUpperCase() + site_name.slice(1) + "Controller.js");
+    }
+
+    return null;
   };
 
   /**

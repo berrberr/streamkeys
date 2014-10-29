@@ -33,12 +33,11 @@
       console.log("Options page wants the sitelist.");
       response(window.sk_sites.sites);
     }
-    if(request.action === "get_commands") {
-      response(window.coms);
+    if(request.action === "get_site_controller") {
+      response(window.sk_sites.getController(request.url));
     }
-    if(request.action == "command") {
-      sendAction(request.command);
-    }
+    if(request.action === "get_commands") response(window.coms);
+    if(request.action == "command") sendAction(request.command);
   });
 
   //***
