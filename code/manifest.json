@@ -17,7 +17,7 @@
     }
   ],
   "web_accessible_resources": ["js/seesu_inject.js", "js/controllers/*"],
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage", "http://*/", "https://*/"],
   "commands": {
     "playPause": {
       "suggested_key": {

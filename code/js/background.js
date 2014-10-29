@@ -36,6 +36,10 @@
     if(request.action === "get_site_controller") {
       response(window.sk_sites.getController(request.url));
     }
+    if(request.action === "inject_controller") {
+      console.log("Inject: " + request.file + " into: " + sender.tab.id);
+      chrome.tabs.executeScript(sender.tab.id, {file: request.file});
+    }
     if(request.action === "get_commands") response(window.coms);
     if(request.action == "command") sendAction(request.command);
   });
