@@ -81,6 +81,14 @@
     });
   };
 
+  Sitelist.prototype.setIcon = function(isDisabled, tabId) {
+    var iconPath = isDisabled ? "icon48_disabled.png" : "icon48.png";
+    chrome.browserAction.setIcon({
+      path: chrome.runtime.getURL(iconPath),
+      tabId: tabId
+    });
+  };
+
   // @return [arr] enabled sites
   Sitelist.prototype.getEnabled = function() {
     return $.map(this.sites, function(val, key) {
@@ -104,11 +112,30 @@
   };
 
   /**
+   * Gets all of the tabId's of a music site
+   */
+  Sitelist.prototype.getMusicTabsByUrl = function(url) {
+    var sitelist_name = this.getSitelistName(url),
+        tab_ids = [];
+    if(sitelist_name) {
+      var url_regex = this.sites[sitelist_name].url_regex;
+      chrome.tabs.query({}, function(tabs) {
+        tabs.forEach(function(tab) {
+          if(url_regex.test(tab.url)) tab_ids.push(tab.id);
+        });
+      });
+    }
+
+    return tab_ids;
+  };
+
+  /**
    * @param url [str] url of site to check for
    * @return [bool] true if url matches an enabled site
    */
   Sitelist.prototype.checkEnabled = function(url) {
     var _sites = this.sites;
+
     return this.getEnabled().some(function(sitename) {
       return (_sites[sitename].url_regex.test(url));
     });
@@ -120,6 +147,7 @@
    */
   Sitelist.prototype.checkMusicSite = function(url) {
     var sites_regex = $.map(this.sites, function(el) { return el.url_regex; });
+
     return sites_regex.some(function(url_regex) {
       return (url_regex.test(url));
     });
@@ -133,8 +161,11 @@
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url);
     if(site_name) {
-      window.sk_sites.sites[site_name].enabled = !is_disabled;
+      this.sites[site_name].enabled = !is_disabled;
       chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
+      this.getMusicTabsByUrl(url).forEach(function(tab_id) {
+        this.setIcon(is_disabled, tab_id);
+      });
     }
   };
 

@@ -4,7 +4,7 @@
   var sendAction = function(command) {
     chrome.tabs.query({}, function(tabs) {
       tabs.forEach(function(tab) {
-        var is_enabled       = window.sk_sites.checkEnabled(tab.url);
+        var is_enabled = window.sk_sites.checkEnabled(tab.url);
         var is_tab_enabled = window.sk_sites.checkTabEnabled(tab.id);
         if(is_enabled && is_tab_enabled) {
           chrome.tabs.sendMessage(tab.id, {"action": command});
@@ -14,16 +14,16 @@
     });
   };
 
-  //***
-  //Capture hotkeys and send their actions to tab(s) with music player running
-  //***
+  /**
+   * Capture hotkeys and send their actions to tab(s) with music player running
+   */
   chrome.commands.onCommand.addListener(function(command) {
     sendAction(command);
   });
 
-  //***
-  //Messages sent from Options page
-  //***
+  /**
+   * Messages sent from Options page
+   */
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
     if(request.action === "update_keys") {
       console.log("Options page has updated settings. Reloading...");
@@ -40,13 +40,18 @@
       console.log("Inject: " + request.file + " into: " + sender.tab.id);
       chrome.tabs.executeScript(sender.tab.id, {file: request.file});
     }
+    if(request.action === "get_icon") {
+      var is_disabled = (window.sk_sites.checkEnabled(request.url) &&
+                  window.sk_sites.checkTabEnabled(sender.tab.id));
+      window.sk_sites.setIcon(is_disabled, sender.tab.id);
+    }
     if(request.action === "get_commands") response(window.coms);
     if(request.action == "command") sendAction(request.command);
   });
 
-  //***
-  //Open info page on install/update
-  //***
+  /**
+   * Open info page on install/update
+   */
   chrome.runtime.onInstalled.addListener(function(details) {
     if(details.reason == "install") {
       // Only open the site if not already on it
@@ -60,15 +65,12 @@
     }
   });
 
-  //Store commands in global
+  // Store commands in global
   chrome.commands.getAll(function(cmds) {
     window.coms = cmds;
   });
 
-  //***
-  //Define sk_sites as a sitelist in global context
-  //***
-  // window.sk_sites = new Sitelist();
+  // Define sk_sites as a sitelist in global context
   window.sk_sites = require("./modules/Sitelist.js");
   window.sk_sites.loadSettings();
 })();

@@ -131,10 +131,10 @@
 
   BaseController.prototype.doRequest = function(request) {
     if(typeof request !== "undefined") {
-      if(request.action == "playPause") this.playPause();
-      if(request.action == "playNext") this.playNext();
-      if(request.action == "playPrev") this.playPrev();
-      if(request.action == "mute") this.mute();
+      if(request.action === "playPause") this.playPause();
+      if(request.action === "playNext") this.playNext();
+      if(request.action === "playPrev") this.playPrev();
+      if(request.action === "mute") this.mute();
     }
   };
 
