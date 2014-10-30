@@ -15,6 +15,12 @@
       };
 
   var toggleEnableBtn = function(ele, text, is_disabled) {
+    var icon = is_disabled ? "icon48_disabled.png" : "icon48.png";
+    chrome.browserAction.setIcon({
+      path: chrome.runtime.getURL(icon),
+      tabId: tab_id
+    });
+    console.log("ICON: ", icon);
     if(is_disabled) {
       ele.addClass(disabledBtnClass);
       ele.html(
@@ -47,7 +53,7 @@
       tab_id = tab.id;
 
       var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
-      var is_tab_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
+      var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
       var is_music_site = chrome.extension.getBackgroundPage().window.sk_sites.checkMusicSite(tab_url);
 
       if(!is_music_site) {
@@ -70,6 +76,11 @@
       chrome.extension.getBackgroundPage().window.sk_sites.markSiteAsDisabled(tab_url, disabled);
       toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, disabled);
       toggleTabBtn(disabled);
+
+      // If we go from site disabled => enabled then the tab button won't update until clicked or popup reset
+      // So instead toggle it if click is to enable site based on the tab's previous state
+      var tabDisableStatus = !(!disabled && chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id));
+      toggleEnableBtn($(enableTabBtn), enableTabBtnText, tabDisableStatus);
     });
 
     // Toggle controls for a specific tab
