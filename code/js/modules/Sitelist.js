@@ -67,17 +67,27 @@
     this.disabledTabs = [];
   };
 
-  // Get site settings from localstorage
+  // Get site enabled settings from localstorage
   Sitelist.prototype.loadSettings = function() {
-    var self = this;
+    var that = this;
     if(!this.sites) this.init();
     console.log(this);
     chrome.storage.local.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites");
-      $.each(self.sites, function(key) {
-        if(objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) self.sites[key].enabled = obj["hotkey-sites"][key];
-        self.sites[key].url_regex = new URL_check(key);
+      $.each(that.sites, function(key) {
+        if(objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) that.sites[key].enabled = obj["hotkey-sites"][key];
+        that.sites[key].url_regex = new URL_check(key);
       });
+    });
+  };
+
+  // Set site enabled settings in localstorage
+  Sitelist.prototype.setStorage = function(key, value) {
+    chrome.storage.local.get(function(obj) {
+      if(obj["hotkey-sites"] && obj["hotkey-sites"][key]) {
+        obj["hotkey-sites"][key] = value;
+        chrome.storage.local.set({"hotkey-sites": obj["hotkey-sites"]});
+      }
     });
   };
 
@@ -166,10 +176,12 @@
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
-        that = this;
+        that = this,
+        value = !is_disabled;
     if(site_name) {
-      this.sites[site_name].enabled = !is_disabled;
-      chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
+      this.sites[site_name].enabled = value;
+      this.setStorage(site_name, value);
+      //chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
       this.getMusicTabsByUrl(url).then(function(tab_ids) {
         console.log(tab_ids);
         tab_ids.forEach(function(tab_id) {
