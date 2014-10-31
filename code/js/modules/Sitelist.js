@@ -116,17 +116,23 @@
    */
   Sitelist.prototype.getMusicTabsByUrl = function(url) {
     var sitelist_name = this.getSitelistName(url),
-        tab_ids = [];
-    if(sitelist_name) {
-      var url_regex = this.sites[sitelist_name].url_regex;
+        that = this;
+
+    var promise = new Promise(function(resolve, reject) {
+      if(sitelist_name === null) reject([]);
+
+      var tab_ids = [];
+      var url_regex = that.sites[sitelist_name].url_regex;
       chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
+          console.log("IN LOOP: ", tab_ids);
           if(url_regex.test(tab.url)) tab_ids.push(tab.id);
-        });
+        }, this);
+        resolve(tab_ids);
       });
-    }
+    });
 
-    return tab_ids;
+    return promise;
   };
 
   /**
@@ -159,12 +165,20 @@
    * @param is_disabled [bool] disable site if true, enable site if false
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
-    var site_name = this.getSitelistName(url);
+    var site_name = this.getSitelistName(url),
+        that = this;
     if(site_name) {
       this.sites[site_name].enabled = !is_disabled;
       chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
-      this.getMusicTabsByUrl(url).forEach(function(tab_id) {
-        this.setIcon(is_disabled, tab_id);
+      this.getMusicTabsByUrl(url).then(function(tab_ids) {
+        console.log(tab_ids);
+        tab_ids.forEach(function(tab_id) {
+          console.log(tab_id);
+          console.log(that.setIcon);
+          that.setIcon(is_disabled, tab_id);
+        });
+      }, function(err) {
+        console.log(err);
       });
     }
   };
