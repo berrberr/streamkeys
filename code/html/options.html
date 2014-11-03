@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Streamkeys Extension Options</title>
   <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="../css/options.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,7 +14,7 @@
   <div class="form-horizontal">
   <fieldset class="fieldset">
     <legend>Websites</legend>
-    <div id="sitelist"></div>
+    <div id="sitelist" class="row"></div>
   </fieldset>
   <div style="margin-bottom: 15px;"><button class="btn btn-success btn-md" id="btn-save">Save</button>
   <br><br>
@@ -28,11 +29,15 @@
 
 <script src="../js/options.js"></script>
 
-<script type="text/html" id="template">
-  <div class="checkbox col-lg-10 col-lg-offset-1">
-    <label>
-      <input data-id="site_id" data-template-bind='{"attribute": "checked", "value": "enabled"}' type="checkbox" class="site-enable"><b><span data-content-append="site_name">Enable For </span></b>
-    </label>
+<script type="text/html" id="template-enabled">
+  <div class="col-xs-4">
+    <button data-id="site_id" class="btn btn-success btn-site-enable" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-ok"></span><span data-content-append="site_name">&nbsp;</span></button>
+  </div>
+</script>
+
+<script type="text/html" id="template-disabled">
+  <div class="col-xs-4">
+    <button data-id="site_id" class="btn btn-warning btn-site-enable" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-remove"></span><span data-content-append="site_name">&nbsp;</span></button>
   </div>
 </script>
 

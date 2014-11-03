@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       main: { files: [ {
         expand: true,
         cwd: "code/",
-        src: ["**", "!js/**", "!**/*.md", "!**/*.scss", "!**/*.map"],
+        src: ["**", "!js/**", "!**/*.md", "!**/*.scss"],
         dest: "build/unpacked-dev/"
       } ] },
       prod: { files: [ {
@@ -134,9 +134,16 @@ module.exports = function(grunt) {
     },
 
     sass: {
-      dist: {
+      prod: {
         files: {
-          "code/css/popup.css": "code/css/popup.scss"
+          "build/unpacked-prod/css/popup.css": "code/css/popup.scss",
+          "build/unpacked-prod/css/options.css": "code/css/options.scss"
+        }
+      },
+      dev: {
+        files: {
+          "build/unpacked-dev/css/popup.css": "code/css/popup.scss",
+          "build/unpacked-dev/css/options.css": "code/css/options.scss"
         }
       }
     },
@@ -181,10 +188,10 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
-  grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "copy:main", "sass", "manifest"]);
+  grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
   grunt.registerTask("dev-post", ["copy:test_dev", "growl:build_success"]);
   grunt.registerTask("dev", ["dev-pre", "browserify", "dev-post"]);
 
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
   grunt.registerTask("rel-store", ["replace:prod", "rel"]);
 };

@@ -5,8 +5,9 @@
   require("./lib/jquery.loadTemplate-1.4.4.min.js");
 
   function render_site_checkbox(id, name, checked) {
+    var template_name = checked ? "#template-enabled" : "#template-disabled";
     $("#sitelist").loadTemplate(
-      $("#template"),
+      $(template_name),
       {
         site_id: id,
         site_name: name,
@@ -23,11 +24,12 @@
     });
 
     //On clicking a site name checkbox
-    $(".site-enable").click(function() {
+    $(".btn-site-enable").click(function() {
       var sites = {};
-      $(".site-enable").each(function(index, site) {
-        sites[$(site).attr("id")] = $(site).prop("checked");
+      $(".btn-site-enable").each(function(index, site) {
+        sites[$(site).attr("id")] = $(site).attr("is-enabled");
       });
+      console.log(sites);
       chrome.storage.local.set({"hotkey-sites": sites});
     });
   });
