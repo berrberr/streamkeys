@@ -73,29 +73,25 @@
     if(!this.sites) this.init();
     console.log(this);
     chrome.storage.local.get(function(obj) {
-      var objSet = obj.hasOwnProperty("hotkey-sites");
+      var objSet = obj.hasOwnProperty("hotkey-sites"),
+          storageObj = {};
       $.each(that.sites, function(key) {
         if(objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) that.sites[key].enabled = obj["hotkey-sites"][key];
         that.sites[key].url_regex = new URL_check(key);
+        storageObj[key] = that.sites[key].enabled;
       });
+      // Set the storage key on init incase previous storage format becomes broken
+      chrome.storage.local.set({"hotkey-sites": storageObj});
     });
   };
 
   // Set site enabled settings in localstorage
   Sitelist.prototype.setStorage = function(key, value) {
     chrome.storage.local.get(function(obj) {
-      if(obj["hotkey-sites"] && obj["hotkey-sites"][key]) {
+      if(obj["hotkey-sites"]) {
         obj["hotkey-sites"][key] = value;
         chrome.storage.local.set({"hotkey-sites": obj["hotkey-sites"]});
       }
-    });
-  };
-
-  Sitelist.prototype.setIcon = function(isDisabled, tabId) {
-    var iconPath = isDisabled ? "icon48_disabled.png" : "icon48.png";
-    chrome.browserAction.setIcon({
-      path: chrome.runtime.getURL(iconPath),
-      tabId: tabId
     });
   };
 
@@ -176,18 +172,13 @@
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
-        that = this,
         value = !is_disabled;
     if(site_name) {
       this.sites[site_name].enabled = value;
       this.setStorage(site_name, value);
-      //chrome.storage.local.set({"hotkey-sites": window.sk_sites.sites});
       this.getMusicTabsByUrl(url).then(function(tab_ids) {
-        console.log(tab_ids);
         tab_ids.forEach(function(tab_id) {
-          console.log(tab_id);
-          console.log(that.setIcon);
-          that.setIcon(is_disabled, tab_id);
+          chrome.runtime.sendMessage({action: "set_icon", url: url, tab_id: tab_id});
         });
       }, function(err) {
         console.log(err);

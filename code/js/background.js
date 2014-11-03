@@ -8,9 +8,17 @@
         var is_tab_enabled = window.sk_sites.checkTabEnabled(tab.id);
         if(is_enabled && is_tab_enabled) {
           chrome.tabs.sendMessage(tab.id, {"action": command});
-          console.log("SENT " + command + " TO " + tab.url);
+          console.log("Sent: " + command + " To: " + tab.url);
         }
       });
+    });
+  };
+
+  var setIcon = function(isDisabled, tabId) {
+    var iconPath = isDisabled ? "icon48_disabled.png" : "icon48.png";
+    chrome.browserAction.setIcon({
+      path: chrome.runtime.getURL(iconPath),
+      tabId: tabId
     });
   };
 
@@ -40,10 +48,12 @@
       console.log("Inject: " + request.file + " into: " + sender.tab.id);
       chrome.tabs.executeScript(sender.tab.id, {file: request.file});
     }
-    if(request.action === "get_icon") {
-      var is_disabled = (window.sk_sites.checkEnabled(request.url) &&
-                  window.sk_sites.checkTabEnabled(sender.tab.id));
-      window.sk_sites.setIcon(is_disabled, sender.tab.id);
+    if(request.action === "set_icon") {
+      var tab_id = request.tab_id || sender.tab.id;
+      var is_disabled = !(window.sk_sites.checkEnabled(request.url) &&
+                  window.sk_sites.checkTabEnabled(tab_id));
+      console.log("Set icon - TabID: " + tab_id + " Disabled: " + is_disabled);
+      setIcon(is_disabled, tab_id);
     }
     if(request.action === "get_commands") response(window.coms);
     if(request.action == "command") sendAction(request.command);
