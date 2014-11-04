@@ -9,14 +9,22 @@
 
 <body>
 
-<div class="container" style="margin-left: 10px;">
+<div class="header">
   <h2>Streamkeys Extension Options</h2>
+</div>
+<div class="container" style="margin-left: 10px;">
   <div class="form-horizontal">
   <fieldset class="fieldset">
-    <legend>Websites</legend>
+    <legend>Website Settings</legend>
     <div id="sitelist" class="row"></div>
+    <div class="save-btn row"><button class="btn btn-success" id="btn-save">Save Changes</button></div>
   </fieldset>
-  <div style="margin-bottom: 15px;"><button class="btn btn-success btn-md" id="btn-save">Save</button>
+  <br><br>
+  <fieldset class="fieldset">
+    <legend>Hotkey Bindings</legend>
+    <p>To change the hotkey bindings go to the chrome extensions page (enter chrome://extensions in the URL bar) and click the
+    "Keyboard shortcuts" link at the bottom of the page. <a href="http://www.streamkeys.com/guide.html" target="_blank">Read the guide</a> for more detailed information</p>
+  </fieldset>
   <br><br>
   <fieldset class="fieldset">
     <legend>Misc Info</legend>
@@ -30,14 +38,14 @@
 <script src="../js/options.js"></script>
 
 <script type="text/html" id="template-enabled">
-  <div class="col-xs-4">
+  <div class="col-xs-4 button-col">
     <button data-id="site_id" class="btn btn-success btn-site-enable" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-ok"></span><span data-content-append="site_name">&nbsp;</span></button>
   </div>
 </script>
 
 <script type="text/html" id="template-disabled">
-  <div class="col-xs-4">
-    <button data-id="site_id" class="btn btn-warning btn-site-enable" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-remove"></span><span data-content-append="site_name">&nbsp;</span></button>
+  <div class="col-xs-4 button-col">
+    <button data-id="site_id" class="btn btn-danger btn-site-enable" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-remove"></span><span data-content-append="site_name">&nbsp;</span></button>
   </div>
 </script>
 

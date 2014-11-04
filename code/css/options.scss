@@ -1,3 +1,28 @@
 .btn-site-enable {
   width: 90%;
+  white-space: normal;
+}
+
+.button-col {
+  padding: 4px;
+}
+
+.save-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding-left: 4px;
+  button {
+    width: 100%;
+  }
+}
+
+.header {
+  background-color: #036564;
+  color: #FFFFFF;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  h2 {
+    display: inline-block;
+  }
 }
