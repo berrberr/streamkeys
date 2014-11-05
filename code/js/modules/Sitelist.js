@@ -87,12 +87,20 @@
 
   // Set site enabled settings in localstorage
   Sitelist.prototype.setStorage = function(key, value) {
-    chrome.storage.local.get(function(obj) {
-      if(obj["hotkey-sites"]) {
-        obj["hotkey-sites"][key] = value;
-        chrome.storage.local.set({"hotkey-sites": obj["hotkey-sites"]});
-      }
+    var promise = new Promise(function(resolve, reject) {
+      chrome.storage.local.get(function(obj) {
+        if(obj["hotkey-sites"]) {
+          obj["hotkey-sites"][key] = value;
+          chrome.storage.local.set({"hotkey-sites": obj["hotkey-sites"]}, function() {
+            resolve(true);
+          });
+        } else {
+          reject("Storage object not found.");
+        }
+      });
     });
+
+    return promise;
   };
 
   // @return [arr] enabled sites
@@ -131,7 +139,7 @@
       var url_regex = that.sites[sitelist_name].url_regex;
       chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
-          console.log("IN LOOP: ", tab_ids);
+          console.log("IN LOOP: ", tab);
           if(url_regex.test(tab.url)) tab_ids.push(tab.id);
         }, this);
         resolve(tab_ids);
@@ -165,6 +173,16 @@
     });
   };
 
+  Sitelist.prototype.setSiteTabIcons = function(url) {
+    this.getMusicTabsByUrl(url).then(function(tab_ids) {
+      tab_ids.forEach(function(tab_id) {
+        chrome.runtime.sendMessage({action: "set_icon", url: url, tab_id: tab_id});
+      });
+    }, function(err) {
+      console.log(err);
+    });
+  };
+
   /**
    * Set the disabled value of a music site and store results in localstorage
    * @param url [str] url of site to mark as disabled
@@ -175,11 +193,8 @@
         value = !is_disabled;
     if(site_name) {
       this.sites[site_name].enabled = value;
-      this.setStorage(site_name, value);
-      this.getMusicTabsByUrl(url).then(function(tab_ids) {
-        tab_ids.forEach(function(tab_id) {
-          chrome.runtime.sendMessage({action: "set_icon", url: url, tab_id: tab_id});
-        });
+      this.setStorage(site_name, value).then(function() {
+        this.setSiteTabIcons(url);
       }, function(err) {
         console.log(err);
       });

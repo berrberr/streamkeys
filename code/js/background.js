@@ -34,8 +34,10 @@
    */
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
     if(request.action === "update_keys") {
-      console.log("Options page has updated settings. Reloading...");
+      console.log("Options page has updated settings. Reloading..." + request.site_id);
       window.sk_sites.loadSettings();
+      // Get the site url based on the site_id key and pass that into setSiteTabIcons
+      //window.sk_sites.setSiteTabIcons();
     }
     if(request.action === "get_sites") {
       console.log("Options page wants the sitelist.");
@@ -49,10 +51,11 @@
       chrome.tabs.executeScript(sender.tab.id, {file: request.file});
     }
     if(request.action === "set_icon") {
+      if(request.tab_id) console.log("set_icon request from Sitelist.");
       var tab_id = request.tab_id || sender.tab.id;
       var is_disabled = !(window.sk_sites.checkEnabled(request.url) &&
                   window.sk_sites.checkTabEnabled(tab_id));
-      console.log("Set icon - TabID: " + tab_id + " Disabled: " + is_disabled);
+      console.log("Set icon - TabID: " + tab_id + " Disabled: " + is_disabled + " tabinfo: ", sender.tab);
       setIcon(is_disabled, tab_id);
     }
     if(request.action === "get_commands") response(window.coms);
