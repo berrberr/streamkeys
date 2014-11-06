@@ -139,7 +139,6 @@
       var url_regex = that.sites[sitelist_name].url_regex;
       chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
-          console.log("IN LOOP: ", tab);
           if(url_regex.test(tab.url)) tab_ids.push(tab.id);
         }, this);
         resolve(tab_ids);
