@@ -105,7 +105,7 @@ module.exports = function(grunt) {
 
     watch: {
       files: jsFiles.concat(htmlFiles),
-      tasks: ["dev-build"]
+      tasks: ["dev"]
     },
 
     exec: {
