@@ -194,7 +194,7 @@ describe("Streamkeys suite", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.iheart.com");
       helpers.waitAndClick(driver, {className: "genre-btn"});
-      helpers.waitAndClick(driver, {className: "btn-primary"});
+      helpers.waitAndClick(driver, {css: "div.genre-game-footer > button"});
       helpers.waitForSelector(driver, {className: "player-controls"})
       done();
     });
