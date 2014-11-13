@@ -112,8 +112,8 @@ describe("Streamkeys suite", function() {
   // @depends: a.yt-uix-tile-link
   describe("youtube", function() {
     before(function(done) {
-      helpers.getAndWait(driver, "https://www.youtube.com");
-      helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
+      helpers.getAndWait(driver, "http://www.youtube.com/watch?v=BcL---4xQYA");
+      // helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
       done();
     });
 

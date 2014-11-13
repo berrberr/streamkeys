@@ -35,6 +35,8 @@ before_install:
 cache:
   directories:
   - "$TRAVIS_BUILD_DIR/node_modules"
+notifications:
+  email: false
 env:
   global:
     secure: pp6fC0UKQzrsqRuWhB93QlJ96UbLlTNOqznIOYfmVGiY9WT/fHeBJaPDqL+x8peAoiqSfjKmv0ZANEdGAOUBPgZjHD6AC6fJi8zC08Gl4DOpG0XZXmjTUH0kEjZfo/GfMLE7xwpZVql2ubKKo9fDDHsNt//UYQpKKn5HrGNQaWU=
