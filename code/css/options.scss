@@ -20,7 +20,7 @@
   margin: 20px 0 0 10px;
 }
 
-.hdr {
+.header {
   background-color: #036564;
   color: #FFFFFF;
   width: 100%;
@@ -28,17 +28,67 @@
   padding: 10px;
   vertical-align: middle;
   position: relative;
-  h2 {
+  div {
+    h2 {
+      margin: 0;
+    }
+    a, a:hover {
+      color: #FFFFFF;
+      text-decoration: none;
+    }
     display: inline-block;
-    line-height: 100px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
-.btn-header {
-  float: right;
+.btn-hdr {
   margin-right: 5px;
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+}
+
+.btn-header {
+  color: #036564;
+  background-color: #FFFFFF;
+  border-color: #034746;
+}
+
+.btn-header:hover,
+.btn-header:focus,
+.btn-header:active,
+.btn-header.active,
+.open .dropdown-toggle.btn-header {
+  color: #036564;
+  background-color: #B4C2C2;
+  border-color: #034746;
+}
+
+.btn-header:active,
+.btn-header.active,
+.open .dropdown-toggle.btn-header {
+  background-image: none;
+}
+
+.btn-header.disabled,
+.btn-header[disabled],
+fieldset[disabled] .btn-header,
+.btn-header.disabled:hover,
+.btn-header[disabled]:hover,
+fieldset[disabled] .btn-header:hover,
+.btn-header.disabled:focus,
+.btn-header[disabled]:focus,
+fieldset[disabled] .btn-header:focus,
+.btn-header.disabled:active,
+.btn-header[disabled]:active,
+fieldset[disabled] .btn-header:active,
+.btn-header.disabled.active,
+.btn-header[disabled].active,
+fieldset[disabled] .btn-header.active {
+  background-color: #FFFFFF;
+  border-color: #034746;
+}
+
+.btn-header .badge {
+  color: #FFFFFF;
+  background-color: #036564;
 }
