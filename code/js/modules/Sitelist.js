@@ -6,8 +6,9 @@
   /**
    * @return [RegExp] a regex that matches where the string is in a url's (domain) name
    */
-  var URL_check = function(domain) {
-    return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + domain + "|www." + domain +")+\\."));
+  var URL_check = function(domain, alias) {
+    var inner = alias ? domain + "|www." + domain + "|" + alias.join("|") : domain + "|www." + domain;
+    return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + inner + ")+\\."));
   };
 
   /**
@@ -28,6 +29,7 @@
       "cubic": {name: "Cubic.fm", url: "http://www.cubic.fm", enabled: true, url_regex: null},
       "deezer": {name: "Deezer", url: "http://www.deezer.com", enabled: true, url_regex: null},
       "di": {name: "Di.fm", url: "http://www.di.fm", enabled: true, url_regex: null},
+      "disco": {name: "Disco.io", url: "http://www.disco.io", enabled: true, url_regex: null},
       "earbits": {name: "Earbits", url: "http://www.earbits.com", enabled: true, url_regex: null},
       "player.edge": {name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js",
           enabled: true, url_regex: null},
@@ -35,7 +37,8 @@
       "hypem": {name: "Hypemachine", url: "http://www.hypem.com", enabled: true, url_regex: null},
       "iheart": {name: "iHeartRadio", url: "http://www.iheart.com", enabled: true, url_regex: null},
       "jango": {name: "Jango", url: "http://www.jango.com", enabled: true, url_regex: null},
-      "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true, url_regex: null},
+      "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true,
+          url_regex: null, alias: ["lastfm"]},
       "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true, url_regex: null},
       "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com",
           controller: "SonyMusicUnlimitedController.js", enabled: true, url_regex: null},
@@ -79,7 +82,7 @@
           storageObj = {};
       $.each(that.sites, function(key) {
         if(objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) that.sites[key].enabled = obj["hotkey-sites"][key];
-        that.sites[key].url_regex = new URL_check(key);
+        that.sites[key].url_regex = new URL_check(key, that.sites[key].alias);
         storageObj[key] = that.sites[key].enabled;
       });
       // Set the storage key on init incase previous storage format becomes broken
