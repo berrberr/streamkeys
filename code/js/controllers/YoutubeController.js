@@ -8,19 +8,19 @@
     playPause: ".ytp-button-play",
     play: ".ytp-button-play",
     pause: ".ytp-button-pause",
-    playNext: ".next-playlist-list-item",
-    playPrev: ".prev-playlist-list-item",
+    playNext: ".ytp-button-next",
+    playPrev: ".ytp-button-prev",
     mute: ".ytp-button-volume",
     buttonSwitch: true
   });
 
   controller.playNext = function() {
     if(document.querySelector(this.selector_playNext) === null) sk_log("disabled. Playlist selectors not found!");
-    else this.click(this.selector_playNext, "playNext");
+    else this.click({selectorButton: this.selector_playNext, action: "playNext"});
   };
 
   controller.playPrev = function() {
     if(document.querySelector(this.selector_playPrev) === null) sk_log("disabled. Playlist selectors not found!");
-    else this.click(this.selector_playPrev, "playPrev");
+    else this.click({selectorButton: this.selector_playPrev, action: "playPrev"});
   };
 })();
