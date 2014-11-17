@@ -8,12 +8,17 @@
   },
   "browser_action": {
     "default_title": "Streamkeys",
-    "default_popup": "html/popup.html"
+    "default_popup": "html/popup.html",
+    "default_icon": "icon38.png"
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": ["js/contentscript.js"]
+    },
+    {
+      "matches": ["*://*.streamkeys.com/*"],
+      "js": ["js/sksite_inject.js"]
     }
   ],
   "web_accessible_resources": ["js/seesu_inject.js", "js/controllers/*"],

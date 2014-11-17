@@ -194,11 +194,12 @@
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
-        value = !is_disabled;
+        value = !is_disabled,
+        that = this;
     if(site_name) {
       this.sites[site_name].enabled = value;
       this.setStorage(site_name, value).then(function() {
-        this.setSiteTabIcons(url);
+        that.setSiteTabIcons(url);
       }, function(err) {
         console.log(err);
       });

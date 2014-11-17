@@ -2,7 +2,7 @@
 
 Chrome extension to send "global" (ie. across the browser) hotkeys to various online media players.
 
-It is available on the Chrome Store at the following location:
+It is available on the Chrome Store:
 
 https://chrome.google.com/webstore/detail/streamkeys/ekpipjofdicppbepocohdlgenahaneen?hl=en
 
@@ -69,22 +69,24 @@ Filename: FooplayerController.js
 
 #### 2. Add site to sitelist
 
-Next, add the site to the Sitelist object in `code/js/modules/Sitelist.js`. It is important that the url is correct, and that the object's name is contained in the URL.
+Next, add the site to the Sitelist object in `code/js/modules/Sitelist.js`.
 
 ```javascript
 "fooplay": {name: "Fooplay", url: "http://www.fooplayer.com", enabled: true, url_regex: null}
 ```
 
-#### 3. Add controller to manifest
+The object key name is very important. It serves two purposes: constructs the site's controller name as well as builds the regular expression which will be used to check URLs to inject the controller into. It is important that the url is correct, and that the object's key name is contained in the URL.
 
-Finally, add your new controller to the `content_scripts` array in the manifest file. Ensuring to correctly set the matching site.
+If it is not possible for the object's key name to be part of the sites URL then you can add the optional `alias` array field to the object which will add the array's contents into the regular expression to match URLs. For example, for lastFM:
 
 ```javascript
-{
-  "matches": ["*://*.fooplayer.com/*"],
-  "js": ["js/controllers/FooplayerController.js"]
-}
+"last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true, url_regex: null, alias: ["lastfm"]}
 ```
+the alias here will match URLs: last.* AND lastfm.*
+
+The logic to construct the controller name is: Capitalized object key + "Controller". So, using the above example we should name our LastFM controller: "LastController" based on that key name.
+
+If it is not possible for the controller file to be named according to that scheme then add the optional `controller` property to the site object and put the FULL controller name there, for example: "SonyMusicUnlimitedController.js"
 
 ## Tests
 

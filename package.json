@@ -1,6 +1,6 @@
 {
   "name": "Streamkeys",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Global hotkeys for online music players including support for media keys.",
   "browser": {
     "jquery": "./code/js/lib/jquery-1.11.1.min.js",

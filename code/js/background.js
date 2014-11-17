@@ -15,7 +15,7 @@
   };
 
   var setIcon = function(isDisabled, tabId) {
-    var iconPath = isDisabled ? "icon48_disabled.png" : "icon48.png";
+    var iconPath = isDisabled ? "icon38_disabled.png" : "icon38.png";
     chrome.browserAction.setIcon({
       path: chrome.runtime.getURL(iconPath),
       tabId: tabId
@@ -63,7 +63,7 @@
     if(request.action === "check_music_site") {
       // A tab index of -1 means that the tab is "embedded" in a page
       // We should only inject into actual tabs
-      if(sender.tab.index === -1) return response(false);
+      if(sender.tab.index === -1) return response("no_inject");
       response(window.sk_sites.checkMusicSite(sender.tab.url));
     }
     if(request.action === "get_commands") response(window.coms);

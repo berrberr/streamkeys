@@ -1,6 +1,9 @@
 // Missing Tests:
 // Amazon (need US ip)
+// disco.io
+// oplayer.org
 // Pandora (need US ip)
+// pocketcasts
 // Plex
 // Seesu
 // Spotify
@@ -19,6 +22,7 @@ var baseSites = [
   {name: "Ambientsleepingpill", url: "http://ambientsleepingpill.com"},
   {name: "bandcamp", url: "http://www.bandcamp.com"},
   {name: "bop.fm", url: "http://www.bop.fm"},
+  {name: "cubic.fm", url: "http://www.cubic.fm"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},
   {name: "edge player", url: "http://player.edge.ca"},
   {name: "grooveshark", url: "http://www.grooveshark.com"},
@@ -27,6 +31,7 @@ var baseSites = [
   {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
+  {name: "rainwave.cc", url: "http://www.rainwave.cc"},
   {name: "slacker", url: "http://www.slacker.com"},
   {name: "tunein", url: "http://tunein.com/radio/Music-g1/"},
   {name: "youarelisteningto", url: "http://www.youarelistening.to"}
@@ -109,17 +114,6 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
-  // @depends: a.yt-uix-tile-link
-  describe("youtube", function() {
-    before(function(done) {
-      helpers.getAndWait(driver, "http://www.youtube.com/watch?v=BcL---4xQYA&list=RDBcL---4xQYA&index=1");
-      // helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
-      done();
-    });
-
-    shared.shouldBehaveLikeAMusicSite(driver, false);
-  });
-
   // @depends: .station_anchor
   describe("jango", function() {
     before(function(done) {
@@ -133,6 +127,17 @@ describe("Streamkeys suite", function() {
       driver.sleep(5000).then(function() {
         done();
       });
+    });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
+  // @depends: a.yt-uix-tile-link
+  describe("youtube", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "https://www.youtube.com/watch?v=krGDNbT4CSE&list=TLFzXTN2fm5js");
+      // helpers.waitAndClick(driver, {css: "a.yt-uix-tile-link"});
+      done();
     });
 
     shared.shouldBehaveLikeAMusicSite(driver, false);

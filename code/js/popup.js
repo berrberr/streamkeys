@@ -15,7 +15,7 @@
       };
 
   var toggleEnableBtn = function(ele, text, is_disabled) {
-    var icon = is_disabled ? "icon48_disabled.png" : "icon48.png";
+    var icon = is_disabled ? "icon38_disabled.png" : "icon38.png";
     chrome.browserAction.setIcon({
       path: chrome.runtime.getURL(icon),
       tabId: tab_id
