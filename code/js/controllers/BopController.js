@@ -2,10 +2,9 @@
   "use strict";
 
   require("BaseController").init({
-    playPause: "[data-player=play-pause]",
-    playNext: "[data-player=next]",
-    playPrev: "[data-player=previous]",
-    mute: ".vol-icon-wrapper",
-    like: "[data-song=toggle-favorite]"
+    playPause: "[data-action=play-pause]",
+    playNext: "[data-action=next]",
+    playPrev: "[data-action=previous]",
+    like: "[data-action=toggle-favorite]"
   });
 })();

@@ -21,7 +21,6 @@ var baseSites = [
   {name: "7digital", url: "http://www.7digital.com"},
   {name: "Ambientsleepingpill", url: "http://ambientsleepingpill.com"},
   {name: "bandcamp", url: "http://www.bandcamp.com"},
-  {name: "bop.fm", url: "http://www.bop.fm"},
   {name: "cubic.fm", url: "http://www.cubic.fm"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},
   {name: "edge player", url: "http://player.edge.ca"},
@@ -52,10 +51,21 @@ describe("Streamkeys suite", function() {
     driver.quit();
   });
 
-  baseSites.forEach(function(site) {
-    describe(site.name, function() {
-      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+  // baseSites.forEach(function(site) {
+  //   describe(site.name, function() {
+  //     shared.shouldBehaveLikeAMusicSite(driver, site.url);
+  //   });
+  // });
+
+  // @depends: a.guest-login
+  describe("bop.fm", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.bop.fm");
+      helpers.waitAndClick(driver, {css: "div.artwork"});
+      done();
     });
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
   // @depends: a.guest-login
