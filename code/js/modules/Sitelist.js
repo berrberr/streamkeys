@@ -25,6 +25,7 @@
       "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com",
           enabled: true, url_regex: null},
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true, url_regex: null},
+      "beatsmusic": {name: "Beats Web Player", url: "https://listen.beatsmusic.com/", enabled: true, url_regex: null},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true, url_regex: null},
       "cubic": {name: "Cubic.fm", url: "http://www.cubic.fm", enabled: true, url_regex: null},
       "deezer": {name: "Deezer", url: "http://www.deezer.com", enabled: true, url_regex: null},
