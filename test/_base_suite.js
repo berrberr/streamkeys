@@ -51,13 +51,13 @@ describe("Streamkeys suite", function() {
     driver.quit();
   });
 
-  // baseSites.forEach(function(site) {
-  //   describe(site.name, function() {
-  //     shared.shouldBehaveLikeAMusicSite(driver, site.url);
-  //   });
-  // });
+  baseSites.forEach(function(site) {
+    describe(site.name, function() {
+      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+    });
+  });
 
-  // @depends: a.guest-login
+  // @depends: div.artwork
   describe("bop.fm", function() {
     before(function(done) {
       helpers.getAndWait(driver, "http://www.bop.fm");
