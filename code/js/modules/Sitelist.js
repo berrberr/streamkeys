@@ -8,7 +8,7 @@
    */
   var URL_check = function(domain, alias) {
     var inner = alias ? domain + "|www." + domain + "|" + alias.join("|") : domain + "|www." + domain;
-    return (new RegExp("^(http|https)*(:\/\/)*(.*\\.)*(" + inner + ")+\\."));
+    return (new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")+\\."));
   };
 
   /**
