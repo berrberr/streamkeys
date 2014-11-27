@@ -1,5 +1,6 @@
 // Missing Tests:
 // Amazon (need US ip)
+// Beats music
 // disco.io
 // oplayer.org
 // Pandora (need US ip)
@@ -19,7 +20,7 @@ const WAIT_TIMEOUT = 120000;
 
 var baseSites = [
   {name: "7digital", url: "http://www.7digital.com"},
-  {name: "Ambientsleepingpill", url: "http://ambientsleepingpill.com"},
+  {name: "ambientsleepingpill", url: "http://ambientsleepingpill.com"},
   {name: "bandcamp", url: "http://www.bandcamp.com"},
   {name: "cubic.fm", url: "http://www.cubic.fm"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},
@@ -30,6 +31,7 @@ var baseSites = [
   {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
+  {name: "radioswissjazz", url: "http://www.radioswissjazz.ch"},
   {name: "rainwave.cc", url: "http://www.rainwave.cc"},
   {name: "slacker", url: "http://www.slacker.com"},
   {name: "tunein", url: "http://tunein.com/radio/Music-g1/"},
@@ -230,6 +232,29 @@ describe("Streamkeys suite", function() {
   });
 
   if(secrets) {
+    // @depends: #session_email, #session_password, [name=commit], .controls
+    describe("discoio", function() {
+      before(function(done) {
+        console.log("in before");
+        helpers.getAndWait(driver, "http://www.disco.io/session");
+        driver.wait(function() {
+          return (driver.isElementPresent({id: "session_email"}) &&
+                  driver.isElementPresent({id: "session_password"}) &&
+                  driver.isElementPresent({css: "[name=commit]"}));
+        }, WAIT_TIMEOUT);
+        driver.findElement({id: "session_email"}).sendKeys(secrets.disco.username);
+        driver.findElement({id: "session_password"}).sendKeys(secrets.disco.password);
+        driver.findElement({css: "[name=commit]"}).click();
+        driver.wait(function() {
+          return (driver.isElementPresent({className: "controls"}));
+        }, WAIT_TIMEOUT);
+
+        done();
+      });
+
+      shared.shouldBehaveLikeAMusicSite(driver, false);
+    });
+
     // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
     describe("deezer", function() {
       before(function(done) {

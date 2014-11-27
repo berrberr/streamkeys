@@ -52,6 +52,7 @@
       "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com", enabled: true, url_regex: null},
       "play.google": {name: "Google Music", url: "http://play.google.com", controller: "GoogleMusicController.js",
           enabled: true, url_regex: null},
+      "radioswissjazz": {name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch", enabled: true, url_regex: null},
       "rainwave": {name: "Rainwave.cc", url: "http://www.rainwave.cc", enabled: true, url_regex: null},
       "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true, url_regex: null},
       "rdio": {name: "Rdio", url: "http://www.rdio.com", enabled: true, url_regex: null},

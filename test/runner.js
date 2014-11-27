@@ -1,6 +1,7 @@
 var Mocha = require("mocha"),
     getPath = require("./shared/helpers.js").getPath;
 
+// To run specific tests add to Mocha object: grep: /{PATTERN}/
 var mocha = new Mocha({
   timeout: 120000,
   title: "Streamkeys tests",
