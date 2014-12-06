@@ -2,10 +2,10 @@
   "use strict";
 
   require("BaseController").init({
-    playPause: ".playerControl.play",
-    play: ".playerControl.play",
-    pause: ".playerControl.pause",
-    playNext: ".playerControl.next",
-    playPrev: ".playerControl.previous"
+    playPause: ".control.play",
+    play: ".control.play",
+    pause: ".control.pause",
+    playNext: ".control.next",
+    playPrev: ".control.previous"
   });
 })();

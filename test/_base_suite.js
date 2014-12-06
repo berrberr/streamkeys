@@ -22,7 +22,7 @@ var baseSites = [
   {name: "7digital", url: "http://www.7digital.com"},
   {name: "ambientsleepingpill", url: "http://ambientsleepingpill.com"},
   {name: "bandcamp", url: "http://www.bandcamp.com"},
-  {name: "cubic.fm", url: "http://www.cubic.fm"},
+  {name: "cubic.fm", url: "http://cubic.fm/#!home"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},
   {name: "edge player", url: "http://player.edge.ca"},
   {name: "grooveshark", url: "http://www.grooveshark.com"},
