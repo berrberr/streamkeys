@@ -9,7 +9,6 @@
     pause: "#pause",
     playNext: "#fwd",
     playPrev: "#rew",
-    mute: "#mute",
-    buttonSwitch: false
+    mute: "#mute"
   });
 })();
