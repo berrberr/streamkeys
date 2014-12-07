@@ -70,7 +70,8 @@
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to",
           controller: "YouarelisteningtoController.js", enabled: true, url_regex: null},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, url_regex: null},
-      "saavn": {name: "Saavn", url: "http://www.saavn.com", enabled: true, url_regex: null}
+      "saavn": {name: "Saavn", url: "http://www.saavn.com", enabled: true, url_regex: null},
+      "gaana": {name: "Saavn", url: "http://www.gaana.com", enabled: true, url_regex: null}
     };
     this.disabledTabs = [];
   };
