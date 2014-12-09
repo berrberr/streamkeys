@@ -5,7 +5,7 @@
     playPause: "[data-id=play-pause]",
     playNext: "[data-id=forward]",
     playPrev: "[data-id=rewind]",
-    like: "[data-rating=5]",
-    dislike: "[data-rating=1]"
+    like: "#player-right-wrapper li[data-rating='5']",
+    dislike: "#player-right-wrapper li[data-rating='1']"
   });
 })();
