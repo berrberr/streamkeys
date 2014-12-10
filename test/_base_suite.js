@@ -33,7 +33,7 @@ var baseSites = [
   {name: "radio paradise", url: "http://www.radioparadise.com"},
   {name: "radioswissjazz", url: "http://www.radioswissjazz.ch"},
   {name: "rainwave.cc", url: "http://www.rainwave.cc"},
-  {name: "slacker", url: "http://www.slacker.com"},
+  {name: "slacker", url: "http://www.slacker.com/clear-v6cookie"},
   {name: "tunein", url: "http://tunein.com/radio/Music-g1/"},
   {name: "youarelisteningto", url: "http://www.youarelistening.to"}
 ];
