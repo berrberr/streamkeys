@@ -40,6 +40,7 @@
       "jango": {name: "Jango", url: "http://www.jango.com", enabled: true, url_regex: null},
       "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true,
           url_regex: null, alias: ["lastfm"]},
+      "laracasts": {name: "Laracasts", url: "http://www.laracasts.com", enabled: true, url_regex: null},
       "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true, url_regex: null},
       "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com",
           controller: "SonyMusicUnlimitedController.js", enabled: true, url_regex: null},

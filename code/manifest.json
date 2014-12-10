@@ -18,10 +18,10 @@
     },
     {
       "matches": ["*://*.streamkeys.com/*"],
-      "js": ["js/sksite_inject.js"]
+      "js": ["js/inject/sksite_inject.js"]
     }
   ],
-  "web_accessible_resources": ["js/seesu_inject.js", "js/controllers/*"],
+  "web_accessible_resources": ["js/inject/seesu_inject.js", "js/inject/laracasts_inject.js", "js/controllers/*"],
   "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
   "commands": {
     "playPause": {

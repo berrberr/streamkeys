@@ -19,6 +19,6 @@
     document.dispatchEvent(new CustomEvent("streamkeys-cmd", {"detail": "prev"}));
   };
 
-  /* */
-  controller.injectScript({url: "/js/seesu_inject.js"});
+  /* Inject script to interact with parent DOM */
+  controller.injectScript({url: "/js/inject/seesu_inject.js"});
 })();
