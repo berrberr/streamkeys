@@ -14,6 +14,8 @@
     this.selector_playNext = options.playNext || null;
     this.selector_playPrev = options.playPrev || null;
     this.selector_mute = options.mute || null;
+    this.selector_like = options.like || null;
+    this.selector_dislike = options.dislike || null;
     this.selector_iframe = options.iframe || null;
 
     // Optional. Style of play and pause buttons when they are NOT in use
@@ -129,17 +131,27 @@
     this.click({action: "mute", selectorButton: this.selector_mute, selectorFrame: this.selector_iframe});
   };
 
+  BaseController.prototype.like = function() {
+    this.click({action: "like", selectorButton: this.selector_like, selectorFrame: this.selector_iframe});
+  };
+
+  BaseController.prototype.dislike = function() {
+    this.click({action: "dislike", selectorButton: this.selector_dislike, selectorFrame: this.selector_iframe});
+  };
+
   BaseController.prototype.doRequest = function(request) {
     if(typeof request !== "undefined") {
       if(request.action === "playPause") this.playPause();
       if(request.action === "playNext") this.playNext();
       if(request.action === "playPrev") this.playPrev();
       if(request.action === "mute") this.mute();
+      if(request.action === "like") this.like();
+      if(request.action === "dislike") this.dislike();
     }
   };
 
   BaseController.prototype.doTestRequest = function(e) {
-    if(e.detail && (e.detail == "playPause" || e.detail == "playNext" || e.detail == "playPrev" || e.detail == "mute")) {
+    if(e.detail && (e.detail == "playPause" || e.detail == "playNext" || e.detail == "playPrev" || e.detail == "mute"|| e.detail == "like"|| e.detail == "dislike")) {
       this.doRequest({action: e.detail});
     }
   };

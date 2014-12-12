@@ -52,6 +52,22 @@
       },
       "global": true,
       "description": "Toggle mute"
+    },
+    "like": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+3",
+        "mac": "MacCtrl+Shift+3"
+      },
+      "global": true,
+      "description": "Toggle like"
+    },
+    "dislike": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+4",
+        "mac": "MacCtrl+Shift+4"
+      },
+      "global": true,
+      "description": "Toggle dislike"
     }
   }
 }
