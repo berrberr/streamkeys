@@ -5,6 +5,7 @@
     playPause: "#play-pause",
     playNext: "#play-next",
     playPrev: "#play-prev",
-    mute: "#volume"
+    mute: "#volume",
+    like: "#np-fav"
   });
 })();

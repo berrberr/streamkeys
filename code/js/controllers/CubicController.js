@@ -6,6 +6,8 @@
     play: ".control.play",
     pause: ".control.pause",
     playNext: ".control.next",
-    playPrev: ".control.previous"
+    playPrev: ".control.previous",
+    like: ".radio > .action.like",
+    dislike: ".radio > .action.like"
   });
 })();

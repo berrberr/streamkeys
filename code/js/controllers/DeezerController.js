@@ -12,6 +12,8 @@
     playNext: ".control.control-next",
     playPrev: ".control.control-prev",
     mute: ".icon-volume-off",
+    like: ".icon-love-circle",
+    dislike: ".icon-unlove-circle",
     buttonSwitch: isNew
   });
 
