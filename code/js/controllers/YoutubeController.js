@@ -11,6 +11,8 @@
     playNext: ".ytp-button-next",
     playPrev: ".ytp-button-prev",
     mute: ".ytp-button-volume",
+    like: "#watch-like",
+    dislike: "#watch-dislike",
     buttonSwitch: true
   });
 

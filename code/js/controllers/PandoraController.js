@@ -5,6 +5,8 @@
     playPause: ".playButton",
     play: ".playButton",
     pause: ".pauseButton",
-    playNext: ".skipButton"
+    playNext: ".skipButton",
+    like: ".thumbUpButton > a",
+    dislike: ".thumbDownButton > a"
   });
 })();
