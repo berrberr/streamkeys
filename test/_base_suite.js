@@ -1,7 +1,6 @@
 // Missing Tests:
 // Amazon (need US ip)
 // Beats music
-// disco.io
 // oplayer.org
 // Pandora (need US ip)
 // pocketcasts
@@ -25,16 +24,18 @@ var baseSites = [
   {name: "cubic.fm", url: "http://cubic.fm/#!home"},
   {name: "di.fm", url: "http://www.di.fm/ambient"},
   {name: "edge player", url: "http://player.edge.ca"},
+  {name: "gaana", url: "http://www.gaana.com"},
   {name: "grooveshark", url: "http://www.grooveshark.com"},
   {name: "hypemachine", url: "http://www.hypem.com"},
+  {name: "hypster", url: "http://hypster.com/playlists/station/Electronic?rtg=4352"},
   {name: "myspace", url: "http://music.myspace.com"},
   {name: "mixcloud", url: "http://www.mixcloud.com"},
   {name: "pleer", url: "http://www.pleer.com"},
   {name: "radio paradise", url: "http://www.radioparadise.com"},
   {name: "radioswissjazz", url: "http://www.radioswissjazz.ch"},
   {name: "rainwave.cc", url: "http://www.rainwave.cc"},
-  {name: "slacker", url: "http://www.slacker.com/clear-v6cookie"},
   {name: "tunein", url: "http://tunein.com/radio/Music-g1/"},
+  {name: "xbox music", url: "http://music.xbox.com"},
   {name: "youarelisteningto", url: "http://www.youarelistening.to"}
 ];
 
@@ -231,11 +232,21 @@ describe("Streamkeys suite", function() {
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });
 
+  // @depends: a.mix_name, a#play_overlay
+  describe("saavn", function() {
+    before(function(done) {
+      helpers.getAndWait(driver, "http://www.saavn.com");
+      helpers.waitAndClick(driver, {id: "kuchbhi"});
+      done();
+    })
+
+    shared.shouldBehaveLikeAMusicSite(driver, false);
+  });
+
   if(secrets) {
     // @depends: #session_email, #session_password, [name=commit], .controls
     describe("discoio", function() {
       before(function(done) {
-        console.log("in before");
         helpers.getAndWait(driver, "http://www.disco.io/session");
         driver.wait(function() {
           return (driver.isElementPresent({id: "session_email"}) &&
@@ -250,6 +261,34 @@ describe("Streamkeys suite", function() {
         }, WAIT_TIMEOUT);
 
         done();
+      });
+
+      shared.shouldBehaveLikeAMusicSite(driver, false);
+    });
+
+    // @depends .loginBtn, .menuitems, #username, #password, button[type=submit], #
+    describe("slacker", function() {
+      before(function(done) {
+        helpers.getAndWait(driver, "http://www.slacker.com");
+        helpers.promiseClick(driver, {css: ".loginBtn"}).then(function() {
+          helpers.promiseClick(driver, {css: ".menuitems > ul > li"}).then(function() {
+            driver.wait(function() {
+              return (driver.isElementPresent({id: "username"}) &&
+                      driver.isElementPresent({id: "password"}) &&
+                      driver.isElementPresent({css: "button[type=submit]"}));
+            }, WAIT_TIMEOUT);
+            driver.findElement({id: "username"}).sendKeys(secrets.slacker.username);
+            driver.findElement({id: "password"}).sendKeys(secrets.slacker.password);
+            driver.findElement({css: "button[type=submit]"}).click();
+            //helpers.waitAndClick(driver, {css: "button.play"});
+            driver.wait(function() {
+              console.log("waiting for bar");
+              return (driver.isElementPresent({css: "#bar"}));
+            }, WAIT_TIMEOUT).then(function() {
+              done();
+            });
+          });
+        })
       });
 
       shared.shouldBehaveLikeAMusicSite(driver, false);

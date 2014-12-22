@@ -72,7 +72,9 @@
           controller: "YouarelisteningtoController.js", enabled: true, url_regex: null},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true, url_regex: null},
       "saavn": {name: "Saavn", url: "http://www.saavn.com", enabled: true, url_regex: null},
-      "gaana": {name: "Saavn", url: "http://www.gaana.com", enabled: true, url_regex: null}
+      "gaana": {name: "Saavn", url: "http://www.gaana.com", enabled: true, url_regex: null},
+      "xbox": {name: "Xbox Music", url: "http://music.xbox.com", enabled: true, url_regex: null},
+      "hypster": {name: "Hypster", url: "http://www.hypster.com", enabled: true, url_regex: null}
     };
     this.disabledTabs = [];
   };

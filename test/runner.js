@@ -5,7 +5,8 @@ var Mocha = require("mocha"),
 var mocha = new Mocha({
   timeout: 120000,
   title: "Streamkeys tests",
-  ui: "mocha-retry"
+  ui: "mocha-retry",
+  grep: /.*/
 });
 
 mocha.addFile(getPath(__filename, "/_base_suite.js"));

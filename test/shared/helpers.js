@@ -167,7 +167,6 @@ exports.waitForSelector = function(driver, selector, timeout) {
  * Waits for an element to be visible and then clicks it
  * @param selector [obj] webdriver locator object
  * @param timeout [int] optional timeout
- * @return promise
  */
 exports.waitAndClick = function(driver, selector, timeout) {
   timeout = timeout || WAIT_TIMEOUT;
@@ -180,6 +179,27 @@ exports.waitAndClick = function(driver, selector, timeout) {
     return driver.findElement(selector).click();
   });
 };
+
+/**
+ * Same as waitAndClick except returns a promise
+ * @return promise
+ */
+exports.promiseClick = function(driver, selector, timeout) {
+  var def = webdriver.promise.defer();
+  timeout = timeout || WAIT_TIMEOUT;
+
+  driver.wait(function() {
+    console.log("Waiting on click...", selector);
+    return (driver.isElementPresent(selector));
+  }, 10000).then(function() {
+    console.log("Waiting for click done");
+    driver.findElement(selector).click().then(function() {
+      def.fulfill(null);
+    });
+  });
+
+  return def.promise;
+}
 
 /**
  * Get a site, dismiss alerts and wait for document load
