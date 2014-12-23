@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  width: 200px;
+  width: 220px;
   padding: 0px;
 }
 
@@ -43,7 +43,7 @@ div a, div a:hover, div a:visited {
 
 .player-row span {
   display: inline-block;
-  width: 20px;
+  font-size: 12px;
 }
 
 .player-row span:hover {
@@ -129,82 +129,3 @@ div a, div a:hover, div a:visited {
   border: 1px solid red;
   color: red;
 }
-
-/*
-$main: #036564;
-
-html {
-  padding: 0;
-  margin: 0;
-  min-height: 100px;
-  max-height: 200px;
-}
-body {
-  width: 180px;
-  padding: 0;
-  margin: 0;
-}
-a, a:hover, a:visited {
-  text-decoration: none;
-}
-
-.header {
-  background-color: $main;
-  padding: 4px;
-  a, a:active, a:visited {
-    color: #FFFFFF;
-    text-decoration: none;
-  }
-}
-
-.player-row {
-  margin: 10px 0 10px 0;
-  text-align: center;
-  span {
-    display: inline-block;
-    width: 20px;
-  }
-  span:hover {
-    opacity: 0.7;
-  }
-}
-
-.button-row {
-  text-align: center;
-  button {
-    margin-bottom: 5px;
-    width: 170px;
-    span {
-      margin: 0 10px 0 -10px;
-    }
-  }
-}
-
-.options-row {
-  background-color: $main;
-  border-top: 1px solid #DDDDDD;
-  padding: 4px;
-  position: fixed;
-  display: block;
-  bottom: 0px;
-  width: 100%;
-  a, a:hover, a:visited {
-    color: #FFFFFF;
-  }
-  #help-link {
-    float: right;
-    padding-right: 2px;
-  }
-}
-
-.toggle {
-  display: inline-block;
-  visibility: hidden;
-  vertical-align: middle;
-}
-
-#fail-message {
-  padding: 5px;
-  display: none;
-}
-*/
