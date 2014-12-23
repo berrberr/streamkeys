@@ -6,6 +6,8 @@
     play: "#player_play_button",
     pause: "#player_pause_button",
     playNext: "#player_skip_button",
-    mute: ".volume-mute"
+    mute: ".volume-mute",
+    like: ".mix-like.inactive",
+    dislike: ".mix-like.active",
   });
 })();

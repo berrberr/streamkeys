@@ -6,7 +6,8 @@
 
   controller.init({
     playPause: "[m-player-play-button]",
-    mute: ".player-volume-percent"
+    mute: ".player-volume-percent",
+    like: ".icon-favorite-inner:not(.ng-hide)"
   });
 
   controller.mute = function() {
