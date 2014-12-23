@@ -7,6 +7,7 @@
 // Plex
 // Seesu
 // Spotify
+// Slacker
 // Yandex (need RU ip)
 
 var base = require("./_base_test.js"),
@@ -266,33 +267,33 @@ describe("Streamkeys suite", function() {
       shared.shouldBehaveLikeAMusicSite(driver, false);
     });
 
-    // @depends .loginBtn, .menuitems, #username, #password, button[type=submit], #
-    describe("slacker", function() {
-      before(function(done) {
-        helpers.getAndWait(driver, "http://www.slacker.com");
-        helpers.promiseClick(driver, {css: "span.menu"}).then(function() {
-          helpers.promiseClick(driver, {css: ".menuitems > ul > li"}).then(function() {
-            driver.wait(function() {
-              return (driver.isElementPresent({id: "username"}) &&
-                      driver.isElementPresent({id: "password"}) &&
-                      driver.isElementPresent({css: "button[type=submit]"}));
-            }, WAIT_TIMEOUT);
-            driver.findElement({id: "username"}).sendKeys(secrets.slacker.username);
-            driver.findElement({id: "password"}).sendKeys(secrets.slacker.password);
-            driver.findElement({css: "button[type=submit]"}).click();
-            //helpers.waitAndClick(driver, {css: "button.play"});
-            driver.wait(function() {
-              console.log("waiting for bar");
-              return (driver.isElementPresent({css: "#bar"}));
-            }, WAIT_TIMEOUT).then(function() {
-              done();
-            });
-          });
-        })
-      });
+    // // @depends .loginBtn, .menuitems, #username, #password, button[type=submit], #
+    // describe("slacker", function() {
+    //   before(function(done) {
+    //     helpers.getAndWait(driver, "http://www.slacker.com");
+    //     helpers.promiseClick(driver, {css: "span.menu"}).then(function() {
+    //       helpers.promiseClick(driver, {css: ".menuitems > ul > li"}).then(function() {
+    //         driver.wait(function() {
+    //           return (driver.isElementPresent({id: "username"}) &&
+    //                   driver.isElementPresent({id: "password"}) &&
+    //                   driver.isElementPresent({css: "button[type=submit]"}));
+    //         }, WAIT_TIMEOUT);
+    //         driver.findElement({id: "username"}).sendKeys(secrets.slacker.username);
+    //         driver.findElement({id: "password"}).sendKeys(secrets.slacker.password);
+    //         driver.findElement({css: "button[type=submit]"}).click();
+    //         //helpers.waitAndClick(driver, {css: "button.play"});
+    //         driver.wait(function() {
+    //           console.log("waiting for bar");
+    //           return (driver.isElementPresent({css: "#bar"}));
+    //         }, WAIT_TIMEOUT).then(function() {
+    //           done();
+    //         });
+    //       });
+    //     })
+    //   });
 
-      shared.shouldBehaveLikeAMusicSite(driver, false);
-    });
+    //   shared.shouldBehaveLikeAMusicSite(driver, false);
+    // });
 
     // @depends: .login_btn, .login_mail, .login_password, .login_form_submit, .player-controls
     describe("deezer", function() {
