@@ -3,7 +3,7 @@
 
   var $ = require("jquery");
   require("./lib/jquery.loadTemplate-1.4.4.min.js");
-  var disabledBtnClass = "btn-danger",
+  var disabledBtnClass = "btn-error-border",
       disabledSpanClass = "glyphicon-remove",
       enabledBtnClass = "btn-success",
       enabledSpanClass = "glyphicon-ok";

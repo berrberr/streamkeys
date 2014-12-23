@@ -270,7 +270,7 @@ describe("Streamkeys suite", function() {
     describe("slacker", function() {
       before(function(done) {
         helpers.getAndWait(driver, "http://www.slacker.com");
-        helpers.promiseClick(driver, {css: ".loginBtn"}).then(function() {
+        helpers.promiseClick(driver, {css: "span.menu"}).then(function() {
           helpers.promiseClick(driver, {css: ".menuitems > ul > li"}).then(function() {
             driver.wait(function() {
               return (driver.isElementPresent({id: "username"}) &&

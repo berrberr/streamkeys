@@ -1,3 +1,136 @@
+html {
+  padding: 0px;
+  margin: 0px;
+  min-height: 100px;
+  max-height: 300px;
+}
+
+body {
+  width: 200px;
+  padding: 0px;
+}
+
+div a, div a:hover, div a:visited {
+  text-decoration: none;
+}
+
+.header {
+  background-color: #2880C7;
+  border-top: 1px solid #2880C7;
+  border-left: 1px solid #2880C7;
+  border-right: 1px solid #2880C7;
+  text-align: center;
+  padding: 8px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.header a, .header a:active, .header a:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.player-row {
+  /*margin: 10px 0 10px 0;*/
+  padding: 10px 0;
+  text-align: center;
+  border-left: 1px solid #2880C7;
+  border-right: 1px solid #2880C7;
+}
+
+.player-row span {
+  display: inline-block;
+  width: 20px;
+}
+
+.player-row span:hover {
+  opacity: 0.7;
+}
+
+.button-row {
+  text-align: center;
+  border-left: 1px solid #2880C7;
+  border-right: 1px solid #2880C7;
+}
+
+.button-row button {
+  margin-bottom: 8px;
+  width: 146px;
+}
+
+.button-row button span {
+  margin: 0 10px 0 -10px;
+}
+
+.options-row {
+  background-color: #2880C7;
+  /*position: fixed;*/
+  display: block;
+  /*bottom: 0px;*/
+  width: 100%;
+  padding: 10px 27px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom: 2px solid #2880C7;
+  border-left: 2px solid #2880C7;
+  border-right: 2px solid #2880C7;
+}
+
+.options-row a, .options-row a:hover, .options-row a:visited {
+  color: #FFFFFF;
+}
+
+.options-row #help-link {
+  float: right;
+  padding-right: 2px;
+}
+
+.toggle {
+  display: inline-block;
+  visibility: hidden;
+  vertical-align: middle;
+}
+
+#fail-message {
+  padding: 0 0 10px 0;
+  display: none;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  border-bottom: 1px solid #2880C7;
+  border-left: 1px solid #2880C7;
+  border-right: 1px solid #2880C7;
+}
+
+.btn-success#enable-site{
+  color: #1E824C;
+  border: 1px solid #1E824C;
+  background-color: #fff;
+  padding-right: 5px;
+}
+.btn-success#enable-tab{
+  color: #1E824C;
+  border: 1px solid #1E824C;
+  background-color: #fff;
+  padding-right: 5px;
+}
+
+.btn-error-border#enable-site {
+  border: 1px solid red;
+  color: red;
+}
+.btn-error-border#enable-tab {
+  border: 1px solid red;
+  color: red;
+}
+
+/*
 $main: #036564;
 
 html {
@@ -74,3 +207,4 @@ a, a:hover, a:visited {
   padding: 5px;
   display: none;
 }
+*/

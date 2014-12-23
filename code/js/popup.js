@@ -4,7 +4,7 @@
   var $ = require("jquery"),
       tab_url = "",
       tab_id = null,
-      disabledBtnClass = "btn-danger",
+      disabledBtnClass = "btn-error-border",
       enableSiteBtn = "#enable-site",
       enableSiteBtnText = {enable: "Enabled for this site", disable: "Disabled for this site"},
       enableTabBtn = "#enable-tab",

@@ -21,7 +21,7 @@
 }
 
 .header {
-  background-color: #036564;
+  background-color: #2880C7;
   color: #FFFFFF;
   width: 100%;
   height: 100px;
@@ -48,7 +48,7 @@
 }
 
 .btn-header {
-  color: #036564;
+  color: #000000;
   background-color: #FFFFFF;
   border-color: #034746;
 }
@@ -58,7 +58,7 @@
 .btn-header:active,
 .btn-header.active,
 .open .dropdown-toggle.btn-header {
-  color: #036564;
+  color: #000000;
   background-color: #B4C2C2;
   border-color: #034746;
 }
@@ -91,4 +91,26 @@ fieldset[disabled] .btn-header.active {
 .btn-header .badge {
   color: #FFFFFF;
   background-color: #036564;
+}
+
+.btn-success {
+  color: #1E824C;
+  border: 1px solid #1E824C;
+  background-color: #FFFFFF;
+  padding-right: 5px;
+  &:hover, &:active, &:focus {
+    color: #1E824C !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid red;
+  }
+}
+.btn-error-border {
+  border: 1px solid red;
+  color: red;
+  background: #FFF;
+  &:hover, &:active, &:focus {
+    color: red !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #1E824C;
+  }
 }
