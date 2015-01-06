@@ -2,7 +2,7 @@
   "use strict";
 
   var controller = require("BaseController"),
-      sk_log = require("../modules/sk_log.js");
+      sk_log = require("../modules/SKLog.js");
 
   controller.init({
     playPause: "[m-player-play-button]",

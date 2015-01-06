@@ -92,9 +92,10 @@
     });
 
     $(".sk-playcontrols").click(function(el) {
-      console.log(el);
-      console.log($(el));
-      console.log($(el).attr("id"));
+      chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
+    });
+
+    $(".test-btn").click(function(el) {
       chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
     });
 

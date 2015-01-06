@@ -2,7 +2,7 @@
   "use strict";
 
   var controller = require("BaseController");
-  var sk_log = require("../modules/sk_log.js");
+  var sk_log = require("../modules/SKLog.js");
 
   controller.init({playPause: "#override"});
   controller.playPause = function() {

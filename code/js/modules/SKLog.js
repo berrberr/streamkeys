@@ -1,6 +1,13 @@
 ;(function() {
   "use strict";
 
+  /**
+   * Log messages to console with prepended message. Also dispatches a JS event
+   * to interact with tests.
+   * @param msg [str] message to log
+   * @param obj [obj] OPTIONAL object to dump with message
+   * @param err [bool] OPTIONAL TRUE if the message is an error
+   */
   module.exports = function(msg, obj, err) {
     if(msg) {
       obj = obj || "";
@@ -10,7 +17,6 @@
       }
       else { console.log("STREAMKEYS-INFO: " + msg, obj); }
 
-      console.log("DISPATCHING EVENT: " + msg);
       document.dispatchEvent(new CustomEvent("streamkeys-test-response", {detail: msg}));
     }
   };
