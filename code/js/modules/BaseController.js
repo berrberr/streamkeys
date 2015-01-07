@@ -23,6 +23,9 @@
       playState: (options.playState || null),
       pauseState: (options.pauseState || null),
 
+      // ** Song Change Observer **//
+      songChange: (options.songChange || null),
+
       //** Song Info **//
       song: (options.song || null),
       artist: (options.artist || null)
@@ -153,8 +156,6 @@
   };
 
   BaseController.prototype.getSong = function() {
-    this.attachSongListeners();
-
     if(this.selectors.song) {
       var songEl = document.querySelector(this.selectors.song);
       if(songEl && songEl.textContent) {
@@ -200,22 +201,34 @@
     document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
 
     sk_log("Attached listener for ", this);
+    this.attachSongListeners();
   };
 
-  BaseController.prototype.attachSongListeners = function() {
-    if(this.selectors.song && !this.observers.song) {
-      var songEl = document.querySelector(this.selectors.song);
-      if(songEl) {
-        this.observers.song = new MutationObserver(function(mutations, observer) {
-          sk_log("Song name: ", this.getSong());
-          sk_log("mutations: ", mutations);
-          sk_log("observer: ", observer);
-        });
+  BaseController.prototype.attachSongListeners = function(_attempts) {
+    sk_log("Attempting to attach song listener...");
+    var attempts = _attempts || 0;
+    if(this.observers.songChange || attempts > 10) return;
 
-        this.observers.song.observe(songEl, { characterData: true, childList: true, attributes: true, subtree: true });
-        sk_log("observer: ", this.observers.song);
-        sk_log("element: ", songEl);
+    var mutationCallback = function(mutations, observer) {
+      sk_log("Song name: ", this.getSong());
+      sk_log("mutations: ", mutations);
+      sk_log("observer: ", observer);
+    };
+
+    if(this.selectors.songChange) {
+      var songChangeEl = document.querySelector(this.selectors.songChange);
+
+      if(songChangeEl) {
+        this.observers.songChange = new MutationObserver(mutationCallback.bind(this));
+
+        this.observers.songChange.observe(songChangeEl, { characterData: true, childList: true, attributes: true, subtree: true });
+        sk_log("observer: ", this.observers.songChange);
+        sk_log("element: ", songChangeEl);
         sk_log("obs setup");
+
+        return;
+      } else {
+        window.setTimeout(this.attachSongListeners, 5000, attempts + 1);
       }
     }
   };
