@@ -1,8 +1,11 @@
-(function() {
-  "use strict";
+"use strict";
 
-  var $ = require("jquery"),
-      tab_url = "",
+var Popup = function() {
+
+  var $ = require("jquery");
+  require("./lib/jquery.marquee.min.js");
+
+  var tab_url = "",
       tab_id = null,
       disabledBtnClass = "btn-error-border",
       enableSiteBtn = "#enable-site",
@@ -43,21 +46,62 @@
     }
   };
 
-  var updateState = function(stateData, tabId) {
+  this.updateState = function(stateData, tab) {
+    stateData = stateData || {song: "test"};
     console.log("update state called", stateData);
-    console.log("from: ", tabId);
-    if(stateData.song && stateData.artist) {
-      $(".js-song-data").text(stateData.song + " - " + stateData.artist);
+    console.log("from: ", tab.id);
+
+    // Get the site's container div by tab id
+    var siteContainer = $("#site-" + tab.id);
+    if(siteContainer.length === 0) {
+      var site_id = "site-" + tab.id;
+      $(".js-player-row")
+        .append($("<div>", { id: site_id })
+        .append($("<span>", { "class": "site-data" }))
+        .append($("<div>", { "class": "song-data js-song-data" })));
+      siteContainer = $("#site-" + tab.id);
     }
+
+    if(stateData.song) {
+      //var songText = (stateData.artist) ? stateData.artist + " - " + stateData.song : stateData.song;
+      var songText = "THIS IS A LONG STRING THAT SHOULD HAVE TO SCROLL CUZ ITS LONG";
+      var $songEl = siteContainer.find(".js-song-data");
+      $songEl.text(songText);
+      if($songEl.prop("scrollHeight") > ($songEl.prop("clientHeight") + parseInt($songEl.css("padding")))) {
+        var duration = 5000;
+        $songEl.marquee({
+          duration: duration,
+          delayBeforeStart: duration
+        });
+
+        //var $tmpMarquee = $("<div>", { "class": "tmp-marquee" });
+        //$tmpMarquee.text(songText);
+        //
+        //$songEl.prepend($tmpMarquee);
+        //console.log($tmpMarquee.width());
+        //console.log($tmpMarquee.prop("scrollWidth"));
+        //console.log($tmpMarquee.prop("clientWidth"));
+        //$tmpMarquee.animate({
+        //  marginLeft: "-" + $tmpMarquee.width()
+        //}, 5000, function() { console.log($tmpMarquee); });
+      }
+
+      //$(".js-song-data").text(stateData.song + " - " + stateData.artist);
+    }
+
+    if(tab.favIconUrl) {
+      siteContainer.find(".site-data").append($("<img>", { src: tab.favIconUrl, "class": "site-favicon" }));
+    }
+    siteContainer.find(".site-data").append($("<p>", { text: stateData.siteName, "class": "site-title" }));
 
     console.log(stateData.isPlaying);
     if(stateData.isPlaying) {
       $("#playPause").html("<span class=\"glyphicon player-glyphicon glyphicon-pause\"></span>");
-      $(".js-player-row").show();
+      //$(".js-player-row").show();
     }
     else {
       $("#playPause").html("<span class=\"glyphicon player-glyphicon glyphicon-play\"></span>");
-      $(".js-player-row").hide();
+      //$(".js-player-row").hide();
     }
   };
 
@@ -66,44 +110,14 @@
     console.log("SCOPE: ", this);
     var that = this;
     tabs.forEach(function(tab) {
-      chrome.tabs.sendMessage(tab.id, "getPlayerState", function(playerState) {
-        console.log("SCOPE2: ", this);
-        that.updateState(playerState, tab.id);
+      chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, function(playerState) {
+        console.log("state: ", playerState);
+        that.updateState(playerState, tab);
       });
     });
   };
 
-  var onLoad = function() {
-    var music_controls = $("#music-site");
-
-    $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
-
-    // Checks if the active tab is a music site to show enable/disable buttons
-    chrome.tabs.query({ active: true }, function(tab) {
-      tab_url = tab[0].url;
-      tab_id = tab[0].id;
-
-      var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
-      var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
-      var is_music_site = chrome.extension.getBackgroundPage().window.sk_sites.checkMusicSite(tab_url);
-
-      if(!is_music_site) {
-        music_controls.css("display", "none");
-      }
-      else {
-        toggleTabBtn(is_disabled);
-      }
-
-      toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
-      toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
-    });
-
-    // Send a request to get the player state of every active music site tab
-    chrome.runtime.sendMessage({action: "get_active_tabs"}, getTabStates.bind(this));
-  };
-
-  document.addEventListener("DOMContentLoaded", function() {
-
+  this.setupListeners = function() {
     // Toggle controls for a site
     $(enableSiteBtn).click(function() {
       var disabled = !$(enableSiteBtn).hasClass(disabledBtnClass);
@@ -132,11 +146,50 @@
     $(".test-btn").click(function(el) {
       chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
     });
+  };
 
-    chrome.runtime.onMessage.addListener(function(request) {
-      if(request.action === "update_popup_state" && request.stateData) updateState(request.stateData);
+  this.onLoad = function() {
+    // Setup all element click listeners
+    this.setupListeners();
+
+    var music_controls = $("#music-site");
+
+    // Set the options link to the options page
+    $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
+
+    // Checks if the active tab is a music site to show enable/disable buttons
+    chrome.tabs.query({ active: true }, function(tab) {
+      tab_url = tab[0].url;
+      tab_id = tab[0].id;
+
+      var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
+      var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
+      var is_music_site = chrome.extension.getBackgroundPage().window.sk_sites.checkMusicSite(tab_url);
+
+      if(!is_music_site) {
+        music_controls.css("display", "none");
+      }
+      else {
+        toggleTabBtn(is_disabled);
+      }
+
+      toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
+      toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
     });
 
-    onLoad();
-  });
-}).call(this);
+    // Send a request to get the player state of every active music site tab
+    chrome.runtime.sendMessage({ action: "get_active_tabs" }, getTabStates.bind(this));
+
+    // Setup listener for updating the popup state
+    chrome.runtime.onMessage.addListener(function(request, sender) {
+      if(request.action === "update_popup_state" && request.stateData) this.updateState(request.stateData, sender);
+    });
+  };
+
+  console.log("Enclosing scope: ", this);
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+  window.popup = new Popup();
+  window.popup.onLoad();
+});

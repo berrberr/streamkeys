@@ -79,7 +79,9 @@
     this.disabledTabs = [];
   };
 
-  // Get site enabled settings from localstorage
+  /**
+   * Get site enabled settings from localstorage
+   */
   Sitelist.prototype.loadSettings = function() {
     var that = this;
     if(!this.sites) this.init();
@@ -97,7 +99,12 @@
     });
   };
 
-  // Set site enabled settings in localstorage
+  /**
+   * Set site enabled settings in localstorage
+   * @param key {String} name of the hotkey-sites key in localstorage
+   * @param value {Object} value to set
+   * @returns {Promise}
+   */
   Sitelist.prototype.setStorage = function(key, value) {
     var promise = new Promise(function(resolve, reject) {
       chrome.storage.local.get(function(obj) {
@@ -124,8 +131,8 @@
 
   /**
    * Returns the sitelist key of a url if it is matched to a music site
-   * @param url {str} url to check
-   * @returns {str} sitelist key if found, null otherwise
+   * @param url {String} url to check
+   * @returns {String} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
     var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
@@ -162,8 +169,8 @@
   };
 
   /**
-   * @param url {str} url of site to check for
-   * @returns {bool} true if url matches an enabled site
+   * @param url {String} url of site to check for
+   * @returns {Boolean} true if url matches an enabled site
    */
   Sitelist.prototype.checkEnabled = function(url) {
     var _sites = this.sites;
@@ -174,8 +181,8 @@
   };
 
   /**
-   * @param url {str} url of site to check for
-   * @returns {bool} true if url matches a music site
+   * @param url {String} url of site to check for
+   * @returns {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
     var sites_regex = $.map(this.sites, function(el) { return el.url_regex; });
@@ -197,8 +204,8 @@
 
   /**
    * Set the disabled value of a music site and store results in localstorage
-   * @param url {str} url of site to mark as disabled
-   * @param is_disabled {bool} disable site if true, enable site if false
+   * @param url {String} url of site to mark as disabled
+   * @param is_disabled {Boolean} disable site if true, enable site if false
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
@@ -216,16 +223,16 @@
 
   /**
    * Checks if a tab has been temp disabled
-   * @param tabId {int} id of tab to check
-   * @returns {bool} true if tab is enabled
+   * @param tabId {Number} id of tab to check
+   * @returns {Boolean} true if tab is enabled
    */
   Sitelist.prototype.checkTabEnabled = function(tabId) {
     return (tabId && this.disabledTabs.indexOf(tabId) === -1);
   };
 
   /**
-   * @param tabId {int} id of tab to temp disable
-   * @param is_disabled {bool} disable tab if true, enable tab if false
+   * @param tabId {Number} id of tab to temp disable
+   * @param is_disabled {Boolean} disable tab if true, enable tab if false
    */
   Sitelist.prototype.markTabAsDisabled = function(tabId, is_disabled) {
     if(is_disabled)
@@ -236,8 +243,8 @@
 
   /**
    * Gets the filename of a sites controller
-   * @param url {string} URL to get controller for
-   * @returns {string} controller filename if found
+   * @param url {String} URL to get controller for
+   * @returns {String} controller filename if found
    */
   Sitelist.prototype.getController = function(url) {
     var site_name = this.getSitelistName(url);

@@ -33,6 +33,35 @@ div a, div a:hover, div a:visited {
   text-decoration: none;
 }
 
+.tmp-marquee {
+  overflow: auto;
+  width: 220px;
+}
+
+.song-data {
+  height: 24px;
+  display: block;
+  overflow: hidden;
+  width: 220px;
+}
+.site-data {
+  height: 24px;
+  padding: 4px;
+  display: block;
+}
+
+.site-favicon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  display: inline-block;
+}
+
+.site-title {
+  font-size: 14px;
+  display: inline-block;
+}
+
 .player-row {
   padding: 5px 0 0 0;
   text-align: center;
@@ -40,12 +69,12 @@ div a, div a:hover, div a:visited {
   border-right: 1px solid #2880C7;
 }
 
-.player-row span {
+.player-row span.glyphicon {
   display: inline-block;
   font-size: 12px;
 }
 
-.player-row span:hover {
+.player-row span.glyphicon:hover {
   opacity: 0.7;
 }
 

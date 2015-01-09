@@ -59,8 +59,8 @@
 
   /**
    * Inject a script into the current document
-   * @param file.url [str] /relative/path/to/script
-   * @param file.script [str] plaintext script as a string
+   * @param file.url {String} /relative/path/to/script
+   * @param file.script {String} plaintext script as a string
    */
   BaseController.prototype.injectScript = function(file) {
     var script = document.createElement("script");
@@ -102,9 +102,9 @@
 
   /**
    * Click inside document
-   * @param opts.selectorButton [str] css selector for button to click
-   * @param opts.action [str] name of action to log to console for debugging purposes
-   * @param opts.selectorFrame [str] OPTIONAL css selector for iframe to send clicks to
+   * @param opts.selectorButton {String} css selector for button to click
+   * @param opts.action {String} name of action to log to console for debugging purposes
+   * @param opts.selectorFrame {String} OPTIONAL css selector for iframe to send clicks to
    */
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
@@ -159,7 +159,7 @@
   /**
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
-  BaseController.prototype.getPlayerState = function() {
+  BaseController.prototype.updatePlayerState = function() {
     chrome.runtime.sendMessage({
       action: "update_player_state",
       stateData: {
@@ -189,7 +189,9 @@
     return null;
   };
 
-  BaseController.prototype.doRequest = function(request) {
+  BaseController.prototype.doRequest = function(request, sender, response) {
+    console.log(sender);
+    console.log(response);
     if(typeof request !== "undefined") {
       if(request.action === "playPause") this.playPause();
       if(request.action === "playNext") this.playNext();
@@ -197,7 +199,14 @@
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
-      if(request.action === "getPlayerState") this.getPlayerState();
+      if(request.action === "getPlayerState") {
+        response({
+          song: this.getSongData(this.selectors.song),
+          artist: this.getSongData(this.selectors.artist),
+          isPlaying: this.isPlaying(),
+          siteName: "Grooveshark"
+        });
+      }
     }
   };
 
@@ -223,10 +232,10 @@
     if(this.observers.songChange || attempts > 10) return;
 
     /**
-     * On a change of the song element call getPlayerState which will send the updated song data to the background page
+     * On a change of the song element call updatePlayerState which will send the updated song data to the background page
      */
     var mutationCallback = function() {
-      this.getPlayerState();
+      this.updatePlayerState();
     };
 
     if(this.selectors.songChange) {
