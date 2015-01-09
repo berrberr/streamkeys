@@ -6,8 +6,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
   describe("music site behaviour", function() {
 
     it(NUM_RETRY, "should load", function(done) {
-      var self = this,
-          pageLoad = true;
+      var pageLoad = true;
 
       if(url) {
         pageLoad = false;

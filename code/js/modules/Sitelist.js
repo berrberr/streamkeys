@@ -4,7 +4,7 @@
   var $ = require("jquery");
 
   /**
-   * @return [RegExp] a regex that matches where the string is in a url's (domain) name
+   * @returns {RegExp} a regex that matches where the string is in a url's (domain) name
    */
   var URL_check = function(domain, alias) {
     var inner = alias ? domain + "|www." + domain + "|" + alias.join("|") : domain + "|www." + domain;
@@ -115,7 +115,7 @@
     return promise;
   };
 
-  // @return [arr] enabled sites
+  // @returns [arr] enabled sites
   Sitelist.prototype.getEnabled = function() {
     return $.map(this.sites, function(val, key) {
       if(val.enabled) return key;
@@ -124,8 +124,8 @@
 
   /**
    * Returns the sitelist key of a url if it is matched to a music site
-   * @param url [str] url to check
-   * @return [str] sitelist key if found, null otherwise
+   * @param url {str} url to check
+   * @returns {str} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
     var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
@@ -139,6 +139,7 @@
 
   /**
    * Gets all of the tabId's of a music site
+   * @returns {Promise}
    */
   Sitelist.prototype.getMusicTabsByUrl = function(url) {
     var sitelist_name = this.getSitelistName(url),
@@ -161,8 +162,8 @@
   };
 
   /**
-   * @param url [str] url of site to check for
-   * @return [bool] true if url matches an enabled site
+   * @param url {str} url of site to check for
+   * @returns {bool} true if url matches an enabled site
    */
   Sitelist.prototype.checkEnabled = function(url) {
     var _sites = this.sites;
@@ -173,8 +174,8 @@
   };
 
   /**
-   * @param url [str] url of site to check for
-   * @return [bool] true if url matches a music site
+   * @param url {str} url of site to check for
+   * @returns {bool} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
     var sites_regex = $.map(this.sites, function(el) { return el.url_regex; });
@@ -196,8 +197,8 @@
 
   /**
    * Set the disabled value of a music site and store results in localstorage
-   * @param url [str] url of site to mark as disabled
-   * @param is_disabled [bool] disable site if true, enable site if false
+   * @param url {str} url of site to mark as disabled
+   * @param is_disabled {bool} disable site if true, enable site if false
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
@@ -215,16 +216,16 @@
 
   /**
    * Checks if a tab has been temp disabled
-   * @param tabId [int] id of tab to check
-   * @return [bool] true if tab is enabled
+   * @param tabId {int} id of tab to check
+   * @returns {bool} true if tab is enabled
    */
   Sitelist.prototype.checkTabEnabled = function(tabId) {
     return (tabId && this.disabledTabs.indexOf(tabId) === -1);
   };
 
   /**
-   * @param tabId [int] id of tab to temp disable
-   * @param is_disabled [bool] disable tab if true, enable tab if false
+   * @param tabId {int} id of tab to temp disable
+   * @param is_disabled {bool} disable tab if true, enable tab if false
    */
   Sitelist.prototype.markTabAsDisabled = function(tabId, is_disabled) {
     if(is_disabled)
@@ -233,6 +234,11 @@
       this.disabledTabs = this.disabledTabs.filter(function(el) { return el !== tabId; });
   };
 
+  /**
+   * Gets the filename of a sites controller
+   * @param url {string} URL to get controller for
+   * @returns {string} controller filename if found
+   */
   Sitelist.prototype.getController = function(url) {
     var site_name = this.getSitelistName(url);
     if(site_name) {
@@ -243,6 +249,26 @@
     }
 
     return null;
+  };
+
+  /**
+   * Gets an array of all active and enabled music tabs
+   * @returns {Promise}
+   */
+  Sitelist.prototype.getActiveMusicTabs = function() {
+    var that = this;
+    var promise = new Promise(function(resolve) {
+      var music_tabs = [];
+      chrome.tabs.query({}, function (tabs) {
+        tabs.forEach(function (tab) {
+          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) music_tabs.push(tab);
+        });
+
+        resolve(music_tabs);
+      });
+    });
+
+    return promise;
   };
 
   /**

@@ -43,26 +43,42 @@
     }
   };
 
-  var updateState = function(stateData) {
+  var updateState = function(stateData, tabId) {
     console.log("update state called", stateData);
+    console.log("from: ", tabId);
     if(stateData.song && stateData.artist) {
       $(".js-song-data").text(stateData.song + " - " + stateData.artist);
     }
 
+    console.log(stateData.isPlaying);
     if(stateData.isPlaying) {
       $("#playPause").html("<span class=\"glyphicon player-glyphicon glyphicon-pause\"></span>");
+      $(".js-player-row").show();
     }
     else {
       $("#playPause").html("<span class=\"glyphicon player-glyphicon glyphicon-play\"></span>");
+      $(".js-player-row").hide();
     }
   };
 
+  var getTabStates = function(tabs) {
+    console.log("ACTIVE TABS: ", tabs);
+    console.log("SCOPE: ", this);
+    var that = this;
+    tabs.forEach(function(tab) {
+      chrome.tabs.sendMessage(tab.id, "getPlayerState", function(playerState) {
+        console.log("SCOPE2: ", this);
+        that.updateState(playerState, tab.id);
+      });
+    });
+  };
+
   var onLoad = function() {
+    var music_controls = $("#music-site");
+
     $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
 
-    var music_controls = $("#music-site"),
-        fail_message = $("#fail-message");
-
+    // Checks if the active tab is a music site to show enable/disable buttons
     chrome.tabs.query({ active: true }, function(tab) {
       tab_url = tab[0].url;
       tab_id = tab[0].id;
@@ -73,7 +89,6 @@
 
       if(!is_music_site) {
         music_controls.css("display", "none");
-        fail_message.css("display", "block");
       }
       else {
         toggleTabBtn(is_disabled);
@@ -83,9 +98,8 @@
       toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
     });
 
-    // Make a request to get the site's player state
-    // This will then trigger a message to update the popup contents
-    chrome.runtime.sendMessage({action: "command", command: "getPlayerState"});
+    // Send a request to get the player state of every active music site tab
+    chrome.runtime.sendMessage({action: "get_active_tabs"}, getTabStates.bind(this));
   };
 
   document.addEventListener("DOMContentLoaded", function() {
