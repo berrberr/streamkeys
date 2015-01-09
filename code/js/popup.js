@@ -25,7 +25,8 @@
       ele.addClass(disabledBtnClass);
       ele.html(
         "<span class=\"glyphicon glyphicon-remove\"></span>" + text.disable);
-    } else {
+    }
+    else {
       ele.removeClass(disabledBtnClass);
       ele.html(
         "<span class=\"glyphicon glyphicon-ok\"></span>" + text.enable);
@@ -42,15 +43,29 @@
     }
   };
 
+  var updateState = function(stateData) {
+    console.log("update state called", stateData);
+    if(stateData.song && stateData.artist) {
+      $(".js-song-data").text(stateData.song + " - " + stateData.artist);
+    }
+
+    if(stateData.isPlaying) {
+      $("#playPause").html("<span class=\"glyphicon player-glyphicon glyphicon-pause\"></span>");
+    }
+    else {
+      $("#playPause").html("<span class=\"glyphicon player-glyphicon glyphicon-play\"></span>");
+    }
+  };
+
   var onLoad = function() {
     $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
 
     var music_controls = $("#music-site"),
         fail_message = $("#fail-message");
 
-    chrome.tabs.getSelected(null, function(tab) {
-      tab_url = tab.url;
-      tab_id = tab.id;
+    chrome.tabs.query({ active: true }, function(tab) {
+      tab_url = tab[0].url;
+      tab_id = tab[0].id;
 
       var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
       var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
@@ -59,13 +74,18 @@
       if(!is_music_site) {
         music_controls.css("display", "none");
         fail_message.css("display", "block");
-      } else {
+      }
+      else {
         toggleTabBtn(is_disabled);
       }
 
       toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
       toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
     });
+
+    // Make a request to get the site's player state
+    // This will then trigger a message to update the popup contents
+    chrome.runtime.sendMessage({action: "command", command: "getPlayerState"});
   };
 
   document.addEventListener("DOMContentLoaded", function() {
@@ -99,7 +119,10 @@
       chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
     });
 
+    chrome.runtime.onMessage.addListener(function(request) {
+      if(request.action === "update_popup_state" && request.stateData) updateState(request.stateData);
+    });
+
     onLoad();
   });
-
 }).call(this);

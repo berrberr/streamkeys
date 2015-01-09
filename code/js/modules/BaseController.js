@@ -85,12 +85,14 @@
         isPlaying = playEl.classList.contains(this.playStyle);
       } else {
         // Hack to get around sometimes not being able to read css properties that are not inline
-        if (playEl.currentStyle) {
-          displayStyle = playEl.currentStyle.display;
-        } else if (window.getComputedStyle) {
-          displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+        if(playEl) {
+          if (playEl.currentStyle) {
+            displayStyle = playEl.currentStyle.display;
+          } else if (window.getComputedStyle) {
+            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+          }
+          isPlaying = (displayStyle == "none");
         }
-        isPlaying = (displayStyle == "none");
       }
     }
 
@@ -122,7 +124,6 @@
     }
   };
 
-  // TODO: make isPlaying work with iframes
   BaseController.prototype.playPause = function() {
     if(this.selectors.play !== null && this.selectors.pause !== null) {
       if(this.isPlaying()) {
@@ -155,24 +156,37 @@
     this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
   };
 
-  BaseController.prototype.getSong = function() {
-    if(this.selectors.song) {
-      var songEl = document.querySelector(this.selectors.song);
-      if(songEl && songEl.textContent) {
-        sk_log("Song found: ", songEl.textContent);
-        return songEl.textContent;
+  /**
+   * Gets the current state of the music player and passes data to background page (and eventually popup)
+   */
+  BaseController.prototype.getPlayerState = function() {
+    chrome.runtime.sendMessage({
+      action: "update_player_state",
+      stateData: {
+        song: this.getSongData(this.selectors.song),
+        artist: this.getSongData(this.selectors.artist),
+        isPlaying: this.isPlaying()
       }
+    });
+  };
 
-      sk_log("Song element not found", songEl, true);
+  BaseController.prototype.getSongData = function(selector) {
+    if(!selector) {
+      sk_log("Missing selector");
       return null;
     }
 
-    sk_log("No song selector defined");
+    // If a call to get song data is made and we are not listening for song changes then attach a listener
+    if(!this.observers.songChange) this.attachSongListeners();
+
+    var dataEl = document.querySelector(selector);
+    if(dataEl && dataEl.textContent) {
+      sk_log("Song data found: ", dataEl.textContent);
+      return dataEl.textContent;
+    }
+
+    sk_log("Song element not found", dataEl, true);
     return null;
-  };
-
-  BaseController.prototype.getArtist = function() {
-
   };
 
   BaseController.prototype.doRequest = function(request) {
@@ -183,8 +197,7 @@
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
-      if(request.action === "getSong") this.getSong();
-      if(request.action === "getArtist") this.getArtist();
+      if(request.action === "getPlayerState") this.getPlayerState();
     }
   };
 
@@ -209,10 +222,11 @@
     var attempts = _attempts || 0;
     if(this.observers.songChange || attempts > 10) return;
 
-    var mutationCallback = function(mutations, observer) {
-      sk_log("Song name: ", this.getSong());
-      sk_log("mutations: ", mutations);
-      sk_log("observer: ", observer);
+    /**
+     * On a change of the song element call getPlayerState which will send the updated song data to the background page
+     */
+    var mutationCallback = function() {
+      this.getPlayerState();
     };
 
     if(this.selectors.songChange) {
@@ -225,14 +239,11 @@
         sk_log("observer: ", this.observers.songChange);
         sk_log("element: ", songChangeEl);
         sk_log("obs setup");
-
-        return;
       } else {
         window.setTimeout(this.attachSongListeners, 5000, attempts + 1);
       }
     }
   };
 
-  var singleton = new BaseController();
-  module.exports = singleton;
+  module.exports = new BaseController();
 })();

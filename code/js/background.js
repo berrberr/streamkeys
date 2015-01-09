@@ -67,7 +67,13 @@
       response(window.sk_sites.checkMusicSite(sender.tab.url));
     }
     if(request.action === "get_commands") response(window.coms);
-    if(request.action == "command") sendAction(request.command);
+    if(request.action === "command") sendAction(request.command);
+    if(request.action === "update_player_state") {
+      chrome.runtime.sendMessage({
+        action: "update_popup_state",
+        stateData: request.stateData
+      });
+    }
   });
 
   /**
