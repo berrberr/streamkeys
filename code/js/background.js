@@ -79,7 +79,8 @@
     if(request.action === "update_player_state") {
       chrome.runtime.sendMessage({
         action: "update_popup_state",
-        stateData: request.stateData
+        stateData: request.stateData,
+        fromTab: sender.tab
       });
     }
     if(request.action === "get_active_tabs") {

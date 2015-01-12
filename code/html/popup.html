@@ -22,9 +22,6 @@
       </div>
     </div>
 
-    <button type="button" class="btn btn-default test-btn" id="getPlayerState" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>
-
-
     <div id="music-site">
       <div class="button-row">
         <button type="button" id="enable-site" class="btn btn-sm btn-success" tabindex="-1">
@@ -43,5 +40,14 @@
       </div>
     </div>
 
+    <script type="text/html" id="template-site-player">
+      <div data-id="tab_id">
+        <div class="site-data js-site-data">
+          <img class="site-favicon js-site-favicon" />
+          <span class="site-title js-site-title"></span>
+        </div>
+        <div class="song-data js-song-data"></div>
+      </div>
+    </script>
   </body>
 </html>

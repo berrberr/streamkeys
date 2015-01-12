@@ -1,3 +1,5 @@
+$popup-width: 220px;
+
 html {
   padding: 0px;
   margin: 0px;
@@ -6,7 +8,7 @@ html {
 }
 
 body {
-  width: 220px;
+  width: $popup-width;
   padding: 0px;
 }
 
@@ -33,33 +35,29 @@ div a, div a:hover, div a:visited {
   text-decoration: none;
 }
 
-.tmp-marquee {
-  overflow: auto;
-  width: 220px;
-}
-
 .song-data {
   height: 24px;
   display: block;
   overflow: hidden;
-  width: 220px;
+  width: $popup-width;
 }
+
 .site-data {
   height: 24px;
   padding: 4px;
-  display: block;
 }
 
 .site-favicon {
   width: 16px;
   height: 16px;
-  margin-right: 4px;
-  display: inline-block;
+  vertical-align: middle;
+  //display: inline-block;
 }
 
 .site-title {
   font-size: 14px;
-  display: inline-block;
+  vertical-align: middle;
+  //display: inline-block;
 }
 
 .player-row {

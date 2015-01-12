@@ -6,6 +6,7 @@
 
   BaseController.prototype.init = function(options) {
     this.name = document.location.hostname;
+    this.siteName = options.siteName || null;
 
     this.selectors = {
       //** Properties **//
@@ -70,36 +71,6 @@
     (document.head || document.documentElement).appendChild(script);
   };
 
-  BaseController.prototype.isPlaying = function() {
-    var playEl = document.querySelector(this.selectors.play),
-        displayStyle = "none",
-        isPlaying = false;
-
-    if(this.buttonSwitch) {
-      // If playEl does not exist then it is currently playing
-      isPlaying = (playEl === null);
-    } else {
-      // Check for play/pause style overrides
-      if(this.playStyle && this.pauseStyle) {
-        // Check if the class list contains the class that is only active when play button is playing
-        isPlaying = playEl.classList.contains(this.playStyle);
-      } else {
-        // Hack to get around sometimes not being able to read css properties that are not inline
-        if(playEl) {
-          if (playEl.currentStyle) {
-            displayStyle = playEl.currentStyle.display;
-          } else if (window.getComputedStyle) {
-            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
-          }
-          isPlaying = (displayStyle == "none");
-        }
-      }
-    }
-
-    sk_log("IsPlaying: " + isPlaying);
-    return isPlaying;
-  };
-
   /**
    * Click inside document
    * @param opts.selectorButton {String} css selector for button to click
@@ -156,18 +127,56 @@
     this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
   };
 
+  BaseController.prototype.isPlaying = function() {
+    var playEl = document.querySelector(this.selectors.play),
+      displayStyle = "none",
+      isPlaying = false;
+
+    if(this.buttonSwitch) {
+      // If playEl does not exist then it is currently playing
+      isPlaying = (playEl === null);
+    } else {
+      // Check for play/pause style overrides
+      if(this.playStyle && this.pauseStyle) {
+        // Check if the class list contains the class that is only active when play button is playing
+        isPlaying = playEl.classList.contains(this.playStyle);
+      } else {
+        // Hack to get around sometimes not being able to read css properties that are not inline
+        if(playEl) {
+          if (playEl.currentStyle) {
+            displayStyle = playEl.currentStyle.display;
+          } else if (window.getComputedStyle) {
+            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+          }
+          isPlaying = (displayStyle == "none");
+        }
+      }
+    }
+
+    sk_log("IsPlaying: " + isPlaying);
+    return isPlaying;
+  };
   /**
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
   BaseController.prototype.updatePlayerState = function() {
     chrome.runtime.sendMessage({
       action: "update_player_state",
-      stateData: {
-        song: this.getSongData(this.selectors.song),
-        artist: this.getSongData(this.selectors.artist),
-        isPlaying: this.isPlaying()
-      }
+      stateData: this.getStateData()
     });
+  };
+
+  /**
+   * Gets an object containing the current player state data
+   * @returns {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
+   */
+  BaseController.prototype.getStateData = function() {
+    return {
+      song: this.getSongData(this.selectors.song),
+      artist: this.getSongData(this.selectors.artist),
+      isPlaying: this.isPlaying(),
+      siteName: this.siteName
+    };
   };
 
   BaseController.prototype.getSongData = function(selector) {
@@ -190,8 +199,6 @@
   };
 
   BaseController.prototype.doRequest = function(request, sender, response) {
-    console.log(sender);
-    console.log(response);
     if(typeof request !== "undefined") {
       if(request.action === "playPause") this.playPause();
       if(request.action === "playNext") this.playNext();
@@ -200,12 +207,7 @@
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
       if(request.action === "getPlayerState") {
-        response({
-          song: this.getSongData(this.selectors.song),
-          artist: this.getSongData(this.selectors.artist),
-          isPlaying: this.isPlaying(),
-          siteName: "Grooveshark"
-        });
+        response(this.getStateData());
       }
     }
   };
@@ -244,7 +246,7 @@
       if(songChangeEl) {
         this.observers.songChange = new MutationObserver(mutationCallback.bind(this));
 
-        this.observers.songChange.observe(songChangeEl, { characterData: true, childList: true, attributes: true, subtree: true });
+        this.observers.songChange.observe(songChangeEl, { characterData: true, childList: true, attributes: true });
         sk_log("observer: ", this.observers.songChange);
         sk_log("element: ", songChangeEl);
         sk_log("obs setup");

@@ -2,6 +2,8 @@
   "use strict";
 
   require("BaseController").init({
+    siteName: "Grooveshark",
+
     playPause: "#play-pause",
     playNext: "#play-next",
     playPrev: "#play-prev",
