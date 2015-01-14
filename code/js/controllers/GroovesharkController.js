@@ -10,7 +10,6 @@
     mute: "#volume",
     like: "#np-fav",
 
-    playState: ".player-btn.playing",
     pauseState: ".player-btn.paused",
 
     songChange: "#now-playing-metadata",

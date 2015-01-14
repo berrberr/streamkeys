@@ -97,7 +97,11 @@ var Popup = function() {
 
     // Set the site favicon
     if(tab.favIconUrl) {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
       $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
+    }
+    else {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
     }
 
     // Set the site name

@@ -127,29 +127,39 @@
     this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
   };
 
+  /**
+   * Attempts to check if the site is playing anything
+   * @returns {Boolean} true if site is currently playing
+   */
   BaseController.prototype.isPlaying = function() {
     var playEl = document.querySelector(this.selectors.play),
-      displayStyle = "none",
-      isPlaying = false;
+        isPlaying = false;
 
     if(this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
-    } else {
+    }
+    else {
       // Check for play/pause style overrides
       if(this.playStyle && this.pauseStyle) {
         // Check if the class list contains the class that is only active when play button is playing
         isPlaying = playEl.classList.contains(this.playStyle);
-      } else {
-        // Hack to get around sometimes not being able to read css properties that are not inline
-        if(playEl) {
-          if (playEl.currentStyle) {
-            displayStyle = playEl.currentStyle.display;
-          } else if (window.getComputedStyle) {
-            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
-          }
-          isPlaying = (displayStyle == "none");
+      }
+      else {
+        // Check if the pause element exists
+        if(this.pauseState) {
+          isPlaying = (document.querySelector(this.pauseState) !== null);
         }
+        //// Hack to get around sometimes not being able to read css properties that are not inline
+        //var displayStyle = "none";
+        //if(playEl) {
+        //  if (playEl.currentStyle) {
+        //    displayStyle = playEl.currentStyle.display;
+        //  } else if (window.getComputedStyle) {
+        //    displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+        //  }
+        //  isPlaying = (displayStyle == "none");
+        //}
       }
     }
 
