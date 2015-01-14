@@ -74,12 +74,17 @@ var Popup = function() {
         $("#template-site-player"),
         {
           "tab_id": tab_id,
-          "tab_target": tab_id
+          "tab_target": tab.id
         },
         { append: true }
       );
       $siteContainer = $("#site-" + tab.id);
-    }
+
+      // Setup player controls listeners
+      $("[tab-target=" + tab.id +"]").click(function() {
+        chrome.runtime.sendMessage({action: "command", command: this.id, tab_target: this.getAttribute("tab-target")});
+      });
+  }
 
     // Get the song name element and add data to it if defined
     var $songEl = $siteContainer.find(".js-song-data");
@@ -136,6 +141,11 @@ var Popup = function() {
     });
   };
 
+  this.playerButtonClick = function(el) {
+    console.log(el);
+    chrome.runtime.sendMessage({action: "command", command: el.id, tab_target: el.attr("tab-target")});
+  };
+
   this.setupListeners = function() {
     // Toggle controls for a site
     $(enableSiteBtn).click(function() {
@@ -155,10 +165,6 @@ var Popup = function() {
       var disabled = !$(enableTabBtn).hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tab_id, disabled);
       toggleEnableBtn($(enableTabBtn), enableTabBtnText, disabled);
-    });
-
-    $(".sk-playcontrols").click(function(el) {
-      chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
     });
   };
 

@@ -4,8 +4,9 @@
   var sendAction = function(command) {
     var active_tabs = window.sk_sites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
+      // Send the command to every music tab
       tabs.forEach(function(tab) {
-        chrome.tabs.sendMessage(tab.id, {"action": command});
+        chrome.tabs.sendMessage(tab.id, { "action": command });
         console.log("Sent: " + command + " To: " + tab.url);
       });
     });
@@ -19,15 +20,18 @@
     });
   };
 
+  /**
+   * Process a command sent from somewhere (popup or content script) in the extension
+   * @param request {Object} Chrome request object from runtime.onMessage
+   */
   var processCommand = function(request) {
-    var active_tabs = window.sk_sites.getActiveMusicTabs();
-    active_tabs.then(function(tabs) {
-      // Send the command to every music tab
-      tabs.forEach(function(tab) {
-        chrome.tabs.sendMessage(tab.id, {"action": request.command});
-        console.log("Sent: " + request.command + " To: " + tab.url);
-      });
-    });
+    if(request.tab_target && parseInt(request.tab_target)) {
+      chrome.tabs.sendMessage(parseInt(request.tab_target), { "action": request.command });
+      console.log("Single tab request. Sent: " + request.command + " To: " + request.tab_target);
+    }
+    else {
+      sendAction(request.command);
+    }
   };
 
   /**
