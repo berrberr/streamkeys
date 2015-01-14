@@ -70,9 +70,12 @@ var Popup = function() {
     var $siteContainer = $("#site-" + tab.id);
     if($siteContainer.length === 0) {
       var tab_id = "site-" + tab.id;
-      $(".js-player-row").loadTemplate(
+      $("#player").loadTemplate(
         $("#template-site-player"),
-        { "tab_id": tab_id },
+        {
+          "tab_id": tab_id,
+          "tab_target": tab_id
+        },
         { append: true }
       );
       $siteContainer = $("#site-" + tab.id);
@@ -155,10 +158,6 @@ var Popup = function() {
     });
 
     $(".sk-playcontrols").click(function(el) {
-      chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
-    });
-
-    $(".test-btn").click(function(el) {
       chrome.runtime.sendMessage({action: "command", command: el.currentTarget.id});
     });
   };

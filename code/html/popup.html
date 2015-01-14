@@ -11,15 +11,6 @@
     </div>
 
     <div id="player">
-      <div class="player-row js-player-row">
-      </div>
-      <div class="player-controls-row">
-        <button type="button" class="btn btn-default sk-playcontrols" id="dislike" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>
-        <button type="button" class="btn btn-default sk-playcontrols" id="playPrev" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-backward"></span></button>
-        <button type="button" class="btn btn-default sk-playcontrols" id="playPause" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-play"></span></button>
-        <button type="button" class="btn btn-default sk-playcontrols" id="playNext" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-forward"></span></button>
-        <button type="button" class="btn btn-default sk-playcontrols" id="like" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart"></span></button>
-      </div>
     </div>
 
     <div id="music-site">
@@ -42,11 +33,20 @@
 
     <script type="text/html" id="template-site-player">
       <div data-id="tab_id">
-        <div class="site-data js-site-data">
-          <img class="site-favicon js-site-favicon" />
-          <span class="site-title js-site-title"></span>
+        <div class="player-row js-player-row">
+          <div class="site-data js-site-data">
+            <img class="site-favicon js-site-favicon" />
+            <span class="site-title js-site-title"></span>
+          </div>
+          <div class="song-data js-song-data"></div>
         </div>
-        <div class="song-data js-song-data"></div>
+        <div class="player-controls-row">
+          <button type="button" data-template-bind='{"attribute": "tab_target", "value": "0"}' class="btn btn-default sk-playcontrols" id="dislike" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab_target", "value": "0"}' class="btn btn-default sk-playcontrols" id="playPrev" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-backward"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab_target", "value": "0"}' class="btn btn-default sk-playcontrols" id="playPause" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-play"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab_target", "value": "0"}' class="btn btn-default sk-playcontrols" id="playNext" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-forward"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab_target", "value": "0"}' class="btn btn-default sk-playcontrols" id="like" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart"></span></button>
+        </div>
       </div>
     </script>
   </body>
