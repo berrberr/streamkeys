@@ -44,17 +44,20 @@
     // Observers for song and title changes will be set in this obj
     this.observers = {};
 
+    // Enable debug console log messages
+    this.debug = false;
+
     // Default listener sends actions to main document
     this.attachListeners();
 
     chrome.runtime.sendMessage({created: true}, function() {
-      sk_log("Told BG we are created");
+      this.log("Told BG we are created");
     });
 
-    sk_log("SK content script loaded");
+    this.log("SK content script loaded");
 
     document.addEventListener("streamkeys-test-loaded", function() {
-      sk_log("loaded");
+      this.log("loaded");
     });
   };
 
@@ -80,7 +83,7 @@
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
     if(opts.selectorButton === null) {
-      sk_log("disabled", opts.action);
+      this.log("disabled", opts.action);
       return;
     }
 
@@ -89,10 +92,13 @@
 
     try {
       doc.querySelector(opts.selectorButton).click();
-      sk_log(opts.action);
+      this.log(opts.action);
     } catch(e) {
-      sk_log("Element not found for click.", opts.selectorButton, true);
+      this.log("Element not found for click.", opts.selectorButton, true);
     }
+
+    // Update the player state after a click
+    this.updatePlayerState();
   };
 
   BaseController.prototype.playPause = function() {
@@ -133,6 +139,7 @@
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = document.querySelector(this.selectors.play),
+        playPauseEl = document.querySelector(this.selectors.playPause),
         isPlaying = false;
 
     if(this.buttonSwitch) {
@@ -141,14 +148,15 @@
     }
     else {
       // Check for play/pause style overrides
-      if(this.playStyle && this.pauseStyle) {
+      if(this.playStyle) {
         // Check if the class list contains the class that is only active when play button is playing
-        isPlaying = playEl.classList.contains(this.playStyle);
+        isPlaying = playPauseEl.classList.contains(this.playStyle);
       }
       else {
         // Check if the pause element exists
-        if(this.pauseState) {
-          isPlaying = (document.querySelector(this.pauseState) !== null);
+        if(this.selectors.pauseState && this.selectors.playState) {
+          isPlaying = ((document.querySelector(this.selectors.pauseState) === null) &&
+          (document.querySelector(this.selectors.playState) !== null));
         }
         //// Hack to get around sometimes not being able to read css properties that are not inline
         //var displayStyle = "none";
@@ -163,7 +171,7 @@
       }
     }
 
-    sk_log("IsPlaying: " + isPlaying);
+    this.log("IsPlaying: " + isPlaying);
     return isPlaying;
   };
   /**
@@ -191,7 +199,7 @@
 
   BaseController.prototype.getSongData = function(selector) {
     if(!selector) {
-      sk_log("Missing selector");
+      this.log("Missing selector");
       return null;
     }
 
@@ -200,11 +208,11 @@
 
     var dataEl = document.querySelector(selector);
     if(dataEl && dataEl.textContent) {
-      sk_log("Song data found: ", dataEl.textContent);
+      this.log("Song data found: ", dataEl.textContent);
       return dataEl.textContent;
     }
 
-    sk_log("Song element not found", dataEl, true);
+    this.log("Song element not found", dataEl, true);
     return null;
   };
 
@@ -224,6 +232,7 @@
 
   BaseController.prototype.doTestRequest = function(e) {
     if(e.detail && (e.detail == "playPause" || e.detail == "playNext" || e.detail == "playPrev" || e.detail == "mute"|| e.detail == "like"|| e.detail == "dislike")) {
+      this.debug = true;
       this.doRequest({action: e.detail});
     }
   };
@@ -234,12 +243,15 @@
     // Test event handler to simulate command presses
     document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
 
-    sk_log("Attached listener for ", this);
+    this.log("Attached listener for ", this);
     this.attachSongListeners();
+
+    // Update the popup player state intermittently
+    setInterval(this.updatePlayerState.bind(this), 500);
   };
 
   BaseController.prototype.attachSongListeners = function(_attempts) {
-    sk_log("Attempting to attach song listener...");
+    this.log("Attempting to attach song listener...");
     var attempts = _attempts || 0;
     if(this.observers.songChange || attempts > 10) return;
 
@@ -257,12 +269,18 @@
         this.observers.songChange = new MutationObserver(mutationCallback.bind(this));
 
         this.observers.songChange.observe(songChangeEl, { characterData: true, childList: true, attributes: true });
-        sk_log("observer: ", this.observers.songChange);
-        sk_log("element: ", songChangeEl);
-        sk_log("obs setup");
+        this.log("observer: ", this.observers.songChange);
+        this.log("element: ", songChangeEl);
+        this.log("obs setup");
       } else {
         window.setTimeout(this.attachSongListeners, 5000, attempts + 1);
       }
+    }
+  };
+
+  BaseController.prototype.log = function(msg, obj, err) {
+    if(this.debug) {
+      sk_log(msg, obj, err);
     }
   };
 
