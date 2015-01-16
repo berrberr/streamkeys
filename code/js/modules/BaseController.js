@@ -158,16 +158,16 @@
           isPlaying = ((document.querySelector(this.selectors.pauseState) === null) &&
           (document.querySelector(this.selectors.playState) !== null));
         }
-        //// Hack to get around sometimes not being able to read css properties that are not inline
-        //var displayStyle = "none";
-        //if(playEl) {
-        //  if (playEl.currentStyle) {
-        //    displayStyle = playEl.currentStyle.display;
-        //  } else if (window.getComputedStyle) {
-        //    displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
-        //  }
-        //  isPlaying = (displayStyle == "none");
-        //}
+        // Hack to get around sometimes not being able to read css properties that are not inline
+        else if(playEl) {
+          var displayStyle = "none";
+          if (playEl.currentStyle) {
+            displayStyle = playEl.currentStyle.display;
+          } else if (window.getComputedStyle) {
+            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
+          }
+          isPlaying = (displayStyle == "none");
+        }
       }
     }
 

@@ -118,10 +118,10 @@ var Popup = function() {
     // Set the player row buttons
     console.log(stateData.isPlaying);
     if(stateData.isPlaying) {
-      $("#playPause > span").removeClass("glyphicon-play").addClass("glyphicon-pause");
+      $siteContainer.find("#playPause > span").removeClass("glyphicon-play").addClass("glyphicon-pause");
     }
     else {
-      $("#playPause > span").removeClass("glyphicon-pause").addClass("glyphicon-play");
+      $siteContainer.find("#playPause > span").removeClass("glyphicon-pause").addClass("glyphicon-play");
     }
   };
 
@@ -131,19 +131,15 @@ var Popup = function() {
    */
   var getTabStates = function(tabs) {
     console.log("ACTIVE TABS: ", tabs);
-    console.log("SCOPE: ", this);
     var that = this;
-    tabs.forEach(function(tab) {
+    tabs.sort(function(a, b) {
+      return a.id - b.id;
+    }).forEach(function(tab) {
       chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, function(playerState) {
         console.log("state: ", playerState);
         that.updateState(playerState, tab);
       });
     });
-  };
-
-  this.playerButtonClick = function(el) {
-    console.log(el);
-    chrome.runtime.sendMessage({action: "command", command: el.id, tab_target: el.attr("tab-target")});
   };
 
   this.setupListeners = function() {
