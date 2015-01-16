@@ -38,6 +38,14 @@
     this.playStyle = options.playStyle || null;
     this.pauseStyle = options.pauseStyle || null;
 
+    // Previous player state, used to check vs current player state to see if anything changed
+    this.oldState = {
+      song: null,
+      artist: null,
+      isPlaying: null,
+      siteName: null
+    };
+
     // Set to true if the play/pause buttons share the same element
     this.buttonSwitch = options.buttonSwitch || false;
 
@@ -178,10 +186,15 @@
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
   BaseController.prototype.updatePlayerState = function() {
-    chrome.runtime.sendMessage({
-      action: "update_player_state",
-      stateData: this.getStateData()
-    });
+    var newState = this.getStateData();
+    if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
+      console.log("state change!");
+      this.oldState = newState;
+      chrome.runtime.sendMessage({
+        action: "update_player_state",
+        stateData: newState
+      });
+    }
   };
 
   /**
@@ -225,7 +238,9 @@
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
       if(request.action === "getPlayerState") {
-        response(this.getStateData());
+        var newState = this.getStateData();
+        this.oldState = newState;
+        response(newState);
       }
     }
   };

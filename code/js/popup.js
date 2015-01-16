@@ -69,21 +69,30 @@ var Popup = function() {
     // Get the site's container div by tab id
     var $siteContainer = $("#site-" + tab.id);
     if($siteContainer.length === 0) {
-      var tab_id = "site-" + tab.id;
-      $("#player").loadTemplate(
+      var div_id = "site-" + tab.id;
+      var $playerContainer = $("<div>", { id: tab.id, classList: "js-site-player" });
+      $playerContainer.loadTemplate(
         $("#template-site-player"),
         {
-          "tab_id": tab_id,
+          "tab_id": div_id,
+          "data-tab-id": tab.id,
           "tab_target": tab.id
-        },
-        { append: true }
+        }
       );
-      $siteContainer = $("#site-" + tab.id);
+
+      var $sibling = $("div.js-site-player").filter(function() {
+        return $(this).data("tab-id") < tab.id;
+      });
+      if($sibling.length > 0) $sibling.after($playerContainer);
+      else $("#player").append($playerContainer);
 
       // Setup player controls listeners
       $("[tab-target=" + tab.id +"]").click(function() {
         chrome.runtime.sendMessage({action: "command", command: this.id, tab_target: this.getAttribute("tab-target")});
       });
+
+      // Update the siteContainer to the new div for use later
+      $siteContainer = $("#site-" + tab.id);
   }
 
     // Get the song name element and add data to it if defined
@@ -91,12 +100,15 @@ var Popup = function() {
     if(stateData.song) {
       var songText = (stateData.artist) ? stateData.artist + " - " + stateData.song : stateData.song;
       $songEl.css("display", "inline-block");
-      $songEl.text(songText);
-      if($songEl.prop("scrollHeight") > ($songEl.prop("clientHeight") + parseInt($songEl.css("padding")))) {
-        $songEl.marquee({
-          duration: 3000,
-          delayBeforeStart: 3000
-        });
+      // Only update if song data has changed
+      if($songEl.text() !== songText) {
+        $songEl.text(songText);
+        if($songEl.prop("scrollHeight") > ($songEl.prop("clientHeight") + parseInt($songEl.css("padding")))) {
+          $songEl.marquee({
+            duration: 3000,
+            delayBeforeStart: 3000
+          });
+        }
       }
     }
     else {
@@ -130,11 +142,12 @@ var Popup = function() {
    * @param tabs {Array} array of active music tabs
    */
   var getTabStates = function(tabs) {
-    console.log("ACTIVE TABS: ", tabs);
     var that = this;
-    tabs.sort(function(a, b) {
-      return a.id - b.id;
-    }).forEach(function(tab) {
+
+    tabs.forEach(function(tab) {
+      // Call update state before we get response from content script
+      // This lets us create the container divs before we get a response, meaning less "flicker" when popup loaded
+      that.updateState({}, tab);
       chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, function(playerState) {
         console.log("state: ", playerState);
         that.updateState(playerState, tab);
