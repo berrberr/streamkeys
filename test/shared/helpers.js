@@ -10,9 +10,9 @@ const PLAYER_WAIT_COUNT = 4;
 
 /**
  * Joins two paths based on first path directory name
- * @param base [str] should be __filename called from
- * @param filePath [str] path to second file or directory, relative to base
- * @return [str] joined path
+ * @param base {String} should be __filename called from
+ * @param filePath {String} path to second file or directory, relative to base
+ * @return {String} joined path
  */
 exports.getPath = function(base, filePath) {
   return path.join(path.dirname(base), filePath);
@@ -20,13 +20,16 @@ exports.getPath = function(base, filePath) {
 
 /**
  * Create a custom event containing a streamkeys test action
- * @param action [str] name of streamkeys-test action to perform
- * @return [str] the js as a string
+ * @param action {String} name of streamkeys-test action to perform
+ * @return {String} the js as a string
  */
 var eventScript = exports.eventScript = function(action) {
   return "document.dispatchEvent(new CustomEvent('streamkeys-test', {detail: '" + action + "'}));";
 };
 
+/**
+ * Setup listener for test response from extension
+ */
 var injectTestCapture = exports.injectTestCapture = function(driver) {
   return driver.executeScript(function() {
     window.sk_actionStack = window.sk_actionStack || [];
@@ -40,7 +43,7 @@ var injectTestCapture = exports.injectTestCapture = function(driver) {
 
 /**
  * Parses a log array looking for a streamkeys action or disabled message
- * @return [bool] true if action is found in log messages
+ * @return {Boolean} true if action is found in log messages
  */
 var parseLog = exports.parseLog = function(log, action) {
   console.log(log);
@@ -52,12 +55,16 @@ var parseLog = exports.parseLog = function(log, action) {
   });
 };
 
+/**
+ * Wait to receive the extension loaded message. Trys a maximum of 30 times before failing
+ * @return {Promise}
+ */
 var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts) {
   console.log("waitForExtensionLoad called..." + opts.count);
   var def = opts.promise || webdriver.promise.defer();
   opts.count = opts.count || 0;
 
-  if(opts.count > 30) return def.reject("Extension load timeout!!!");
+  if(opts.count > 30) return def.reject("Extension load timeout!");
 
   driver.executeScript(function() {
     document.dispatchEvent(new CustomEvent("streamkeys-test-loaded"));
@@ -76,6 +83,11 @@ var waitForExtensionLoad = exports.waitForExtensionLoad = function(driver, opts)
   return def.promise;
 };
 
+/**
+ * Wait to receive success message from extension after request for an action. Will try a maximum
+ * of WAIT_COUNT times before failing
+ * @return {Promise}
+ */
 var waitForAction = exports.waitForAction = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
   opts.count = opts.count || 0;
@@ -102,10 +114,13 @@ var waitForAction = exports.waitForAction = function(driver, opts) {
   return def.promise;
 };
 
+/**
+ * Executes a player action and waits for success. Will try a maximum of PLAYER_WAIT_COUNT times before failing
+ * @return {Promise}
+ */
 var playerAction = exports.playerAction = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
   opts.count = opts.count || 0;
-  //console.log("Checking player action: " + opts.action + " run " + opts.count);
 
   if(opts.count > PLAYER_WAIT_COUNT) return def.fulfill(false);
 
@@ -122,14 +137,14 @@ var playerAction = exports.playerAction = function(driver, opts) {
   });
 
   return def.promise;
-}
+};
 
 /**
  * Waits for the log to contain a given value
- * @param opts.action [str] string to search log for
- * @param opts.count [int] how many times has check has been performed
- * @param opts.promise [promise] promise to resolve on success/fail
- * @return promise
+ * @param opts.action {String} string to search log for
+ * @param opts.count {Number} how many times has check has been performed
+ * @param opts.promise {Promise} promise to resolve on success/fail
+ * @return {Promise}
  */
 var waitForLog = exports.waitForLog = function(driver, opts) {
   var def = opts.promise || webdriver.promise.defer();
@@ -151,9 +166,9 @@ var waitForLog = exports.waitForLog = function(driver, opts) {
 
 /**
  * Waits until an element is visible
- * @param selector [obj] webdriver locator object
- * @param timeout [int] optional timeout
- * @return promise
+ * @param selector {Object} webdriver locator object
+ * @param timeout {Number} optional timeout
+ * @return {Promise}
  */
 exports.waitForSelector = function(driver, selector, timeout) {
   timeout = timeout || WAIT_TIMEOUT;
@@ -165,8 +180,8 @@ exports.waitForSelector = function(driver, selector, timeout) {
 
 /**
  * Waits for an element to be visible and then clicks it
- * @param selector [obj] webdriver locator object
- * @param timeout [int] optional timeout
+ * @param selector {Object} webdriver locator object
+ * @param timeout {Number} optional timeout
  */
 exports.waitAndClick = function(driver, selector, timeout) {
   timeout = timeout || WAIT_TIMEOUT;
@@ -182,7 +197,7 @@ exports.waitAndClick = function(driver, selector, timeout) {
 
 /**
  * Same as waitAndClick except returns a promise
- * @return promise
+ * @return {Promise}
  */
 exports.promiseClick = function(driver, selector, timeout) {
   var def = webdriver.promise.defer();
@@ -203,7 +218,7 @@ exports.promiseClick = function(driver, selector, timeout) {
 
 /**
  * Get a site, dismiss alerts and wait for document load
- * @return promise
+ * @return {Promise}
  */
 exports.getAndWait = function(driver, url) {
   var def = webdriver.promise.defer();
@@ -234,7 +249,7 @@ exports.getAndWait = function(driver, url) {
 
 /**
  * Attempts to override alerts an unload events on a page
- * @return promise
+ * @return {Promise}
  */
 var overrideAlerts = exports.overrideAlerts = function(driver) {
   return driver.executeScript("window.onunload=null;window.onbeforeunload=null;window.alert=null;window.confirm=null;");
@@ -242,7 +257,7 @@ var overrideAlerts = exports.overrideAlerts = function(driver) {
 
 /**
  * Accept an alert if visible
- * @return promise
+ * @return {Promise}
  */
 var alertCheck = exports.alertCheck = function(driver) {
   var def = webdriver.promise.defer();
@@ -270,7 +285,7 @@ var alertCheck = exports.alertCheck = function(driver) {
 
 /**
  * Block until document.readyState is complete
- * @return promise
+ * @return {Promise}
  */
 var waitForLoad = exports.waitForLoad = function(driver) {
   return driver.wait(function() {

@@ -4,7 +4,7 @@
   var $ = require("jquery");
 
   /**
-   * @returns {RegExp} a regex that matches where the string is in a url's (domain) name
+   * @return {RegExp} a regex that matches where the string is in a url's (domain) name
    */
   var URL_check = function(domain, alias) {
     var inner = alias ? domain + "|www." + domain + "|" + alias.join("|") : domain + "|www." + domain;
@@ -103,7 +103,7 @@
    * Set site enabled settings in localstorage
    * @param key {String} name of the hotkey-sites key in localstorage
    * @param value {Object} value to set
-   * @returns {Promise}
+   * @return {Promise}
    */
   Sitelist.prototype.setStorage = function(key, value) {
     var promise = new Promise(function(resolve, reject) {
@@ -122,7 +122,7 @@
     return promise;
   };
 
-  // @returns [arr] enabled sites
+  // @return [arr] enabled sites
   Sitelist.prototype.getEnabled = function() {
     return $.map(this.sites, function(val, key) {
       if(val.enabled) return key;
@@ -132,7 +132,7 @@
   /**
    * Returns the sitelist key of a url if it is matched to a music site
    * @param url {String} url to check
-   * @returns {String} sitelist key if found, null otherwise
+   * @return {String} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
     var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
@@ -146,7 +146,7 @@
 
   /**
    * Gets all of the tabId's of a music site
-   * @returns {Promise}
+   * @return {Promise}
    */
   Sitelist.prototype.getMusicTabsByUrl = function(url) {
     var sitelist_name = this.getSitelistName(url),
@@ -170,7 +170,7 @@
 
   /**
    * @param url {String} url of site to check for
-   * @returns {Boolean} true if url matches an enabled site
+   * @return {Boolean} true if url matches an enabled site
    */
   Sitelist.prototype.checkEnabled = function(url) {
     var _sites = this.sites;
@@ -182,7 +182,7 @@
 
   /**
    * @param url {String} url of site to check for
-   * @returns {Boolean} true if url matches a music site
+   * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
     var sites_regex = $.map(this.sites, function(el) { return el.url_regex; });
@@ -224,7 +224,7 @@
   /**
    * Checks if a tab has been temp disabled
    * @param tabId {Number} id of tab to check
-   * @returns {Boolean} true if tab is enabled
+   * @return {Boolean} true if tab is enabled
    */
   Sitelist.prototype.checkTabEnabled = function(tabId) {
     return (tabId && this.disabledTabs.indexOf(tabId) === -1);
@@ -244,7 +244,7 @@
   /**
    * Gets the filename of a sites controller
    * @param url {String} URL to get controller for
-   * @returns {String} controller filename if found
+   * @return {String} controller filename if found
    */
   Sitelist.prototype.getController = function(url) {
     var site_name = this.getSitelistName(url);
@@ -260,7 +260,7 @@
 
   /**
    * Gets an array of all active and enabled music tabs
-   * @returns {Promise}
+   * @return {Promise}
    */
   Sitelist.prototype.getActiveMusicTabs = function() {
     var that = this;

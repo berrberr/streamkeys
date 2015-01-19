@@ -22,4 +22,4 @@ module.exports = {
   loadSite: function(driver, url, callback) {
     driver.get(url).then(function() { callback(); } );
   }
-}
+};

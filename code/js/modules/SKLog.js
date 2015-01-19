@@ -3,10 +3,10 @@
 
   /**
    * Log messages to console with prepended message. Also dispatches a JS event
-   * to interact with tests.
-   * @param msg [str] message to log
-   * @param obj [obj] OPTIONAL object to dump with message
-   * @param err [bool] OPTIONAL TRUE if the message is an error
+   * to interact with tests
+   * @param msg {String} message to log
+   * @param [obj] {Object} object to dump with message
+   * @param [err] {Boolean} TRUE if the message is an error
    */
   module.exports = function(msg, obj, err) {
     if(msg) {

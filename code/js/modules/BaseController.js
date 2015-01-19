@@ -59,13 +59,13 @@
     this.attachListeners();
 
     chrome.runtime.sendMessage({created: true}, function() {
-      this.log("Told BG we are created");
+      sk_log("Told BG we are created");
     });
 
-    this.log("SK content script loaded");
+    sk_log("SK content script loaded");
 
     document.addEventListener("streamkeys-test-loaded", function() {
-      this.log("loaded");
+      sk_log("loaded");
     });
   };
 
@@ -91,7 +91,7 @@
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
     if(opts.selectorButton === null) {
-      this.log("disabled", opts.action);
+      sk_log("disabled", opts.action);
       return;
     }
 
@@ -100,9 +100,9 @@
 
     try {
       doc.querySelector(opts.selectorButton).click();
-      this.log(opts.action);
+      sk_log(opts.action);
     } catch(e) {
-      this.log("Element not found for click.", opts.selectorButton, true);
+      sk_log("Element not found for click.", opts.selectorButton, true);
     }
 
     // Update the player state after a click
@@ -143,7 +143,7 @@
 
   /**
    * Attempts to check if the site is playing anything
-   * @returns {Boolean} true if site is currently playing
+   * @return {Boolean} true if site is currently playing
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = document.querySelector(this.selectors.play),
@@ -177,12 +177,12 @@
           isPlaying = (displayStyle == "none");
         }
         else {
-          this.log("Something went wrong with checking for playstate.", this, true);
+          return null;
         }
       }
     }
 
-    this.log("IsPlaying: " + isPlaying);
+    // sk_log("IsPlaying: " + isPlaying);
     return isPlaying;
   };
   /**
@@ -202,7 +202,7 @@
 
   /**
    * Gets an object containing the current player state data
-   * @returns {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
+   * @return {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
    */
   BaseController.prototype.getStateData = function() {
     return {
@@ -213,9 +213,13 @@
     };
   };
 
+  /**
+   * Gets the text value from a song data selector
+   * @param selector {String} selector for song data
+   * @return {*} song data if element is found, null otherwise
+   */
   BaseController.prototype.getSongData = function(selector) {
     if(!selector) {
-      this.log("Missing selector");
       return null;
     }
 
@@ -224,11 +228,9 @@
 
     var dataEl = document.querySelector(selector);
     if(dataEl && dataEl.textContent) {
-      this.log("Song data found: ", dataEl.textContent);
       return dataEl.textContent;
     }
 
-    this.log("Song element not found", dataEl, true);
     return null;
   };
 
@@ -237,8 +239,8 @@
    * @param property {String} name of property to check for
    */
   BaseController.prototype.getProperty = function(property) {
-    if(this[property]) this.log("Property: ", this[property]);
-    else this.log("Property not found.", property, true);
+    if(this[property]) sk_log("Property: ", this[property]);
+    else sk_log("Property not found.", property, true);
   };
 
   BaseController.prototype.doRequest = function(request, sender, response) {
@@ -265,10 +267,24 @@
         this.doRequest({action: e.detail});
       }
 
-      if(e.detail == "songName") this.getSongData(this.selectors.song);
-      if(e.detail == "artistName") this.getSongData(this.selectors.artist);
+      if(e.detail == "songName") this.test_getSongData(this.selectors.song);
+      if(e.detail == "artistName") this.test_getSongData(this.selectors.artist);
       if(e.detail == "siteName") this.getProperty("siteName");
       if(e.detail == "isPlaying") this.isPlaying();
+    }
+  };
+
+  /**
+   * Process a test request to get song data
+   * @param selector {String} query selector for song data text
+   */
+  BaseController.prototype.test_getSongData = function(selector) {
+    var songData = this.getSongData(selector);
+    if(songData) {
+      sk_log("Song data: ", songData);
+    }
+    else {
+      sk_log("Song data not found.", {}, true);
     }
   };
 
@@ -284,11 +300,11 @@
     // Update the popup player state intermittently
     setInterval(this.updatePlayerState.bind(this), 200);
 
-    this.log("Attached listener for ", this);
+    sk_log("Attached listener for ", this);
   };
 
   BaseController.prototype.attachSongListeners = function(_attempts) {
-    this.log("Attempting to attach song listener...");
+    sk_log("Attempting to attach song listener...");
     var attempts = _attempts || 0;
     if(this.observers.songChange || attempts > 10) return;
 
@@ -306,9 +322,9 @@
         this.observers.songChange = new MutationObserver(mutationCallback.bind(this));
 
         this.observers.songChange.observe(songChangeEl, { characterData: true, childList: true, attributes: true });
-        this.log("observer: ", this.observers.songChange);
-        this.log("element: ", songChangeEl);
-        this.log("obs setup");
+        sk_log("observer: ", this.observers.songChange);
+        sk_log("element: ", songChangeEl);
+        sk_log("obs setup");
       } else {
         window.setTimeout(this.attachSongListeners, 5000, attempts + 1);
       }
