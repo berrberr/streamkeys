@@ -176,6 +176,9 @@
           }
           isPlaying = (displayStyle == "none");
         }
+        else {
+          this.log("Something went wrong with checking for playstate.", this, true);
+        }
       }
     }
 
@@ -217,7 +220,7 @@
     }
 
     // If a call to get song data is made and we are not listening for song changes then attach a listener
-    if(!this.observers.songChange) this.attachSongListeners();
+    // if(!this.observers.songChange) this.attachSongListeners();
 
     var dataEl = document.querySelector(selector);
     if(dataEl && dataEl.textContent) {
@@ -227,6 +230,15 @@
 
     this.log("Song element not found", dataEl, true);
     return null;
+  };
+
+  /**
+   * Checks if a BaseController property is set. Used for testing.
+   * @param property {String} name of property to check for
+   */
+  BaseController.prototype.getProperty = function(property) {
+    if(this[property]) this.log("Property: ", this[property]);
+    else this.log("Property not found.", property, true);
   };
 
   BaseController.prototype.doRequest = function(request, sender, response) {
@@ -246,23 +258,33 @@
   };
 
   BaseController.prototype.doTestRequest = function(e) {
-    if(e.detail && (e.detail == "playPause" || e.detail == "playNext" || e.detail == "playPrev" || e.detail == "mute"|| e.detail == "like"|| e.detail == "dislike")) {
+    if(e.detail) {
       this.debug = true;
-      this.doRequest({action: e.detail});
+
+      if(e.detail === "playPause" || e.detail === "playNext" || e.detail === "playPrev" || e.detail === "mute" || e.detail === "like"|| e.detail === "dislike" ) {
+        this.doRequest({action: e.detail});
+      }
+
+      if(e.detail == "songName") this.getSongData(this.selectors.song);
+      if(e.detail == "artistName") this.getSongData(this.selectors.artist);
+      if(e.detail == "siteName") this.getProperty("siteName");
+      if(e.detail == "isPlaying") this.isPlaying();
     }
   };
 
   BaseController.prototype.attachListeners = function() {
+    // Listener for requests from background page
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
 
-    // Test event handler to simulate command presses
+    // Listener for requests from tests
     document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
 
-    this.log("Attached listener for ", this);
-    this.attachSongListeners();
+    //this.attachSongListeners();
 
     // Update the popup player state intermittently
-    setInterval(this.updatePlayerState.bind(this), 500);
+    setInterval(this.updatePlayerState.bind(this), 200);
+
+    this.log("Attached listener for ", this);
   };
 
   BaseController.prototype.attachSongListeners = function(_attempts) {
@@ -293,9 +315,15 @@
     }
   };
 
-  BaseController.prototype.log = function(msg, obj, err) {
+  /**
+   * Wrapper for log function call, checks if debug option is set before logging.
+   * @param message {String} message to log
+   * @param obj {Object} object to log with message
+   * @param isError {Boolean} true if log message should be an error
+   */
+  BaseController.prototype.log = function(message, obj, isError) {
     if(this.debug) {
-      sk_log(msg, obj, err);
+      sk_log(message, obj, isError);
     }
   };
 
