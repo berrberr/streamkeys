@@ -4,7 +4,13 @@
   var controller = require("BaseController");
   var sk_log = require("../modules/SKLog.js");
 
-  controller.init({playPause: "#override"});
+  controller.init({
+    siteName: "RadioParadise",
+    playPause: "#override",
+    song: "#nowplaying_title"
+  });
+
+  /** Overrides **/
   controller.playPause = function() {
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
     try {
@@ -27,5 +33,19 @@
     } catch (e) {
       sk_log("Element not found for click.", e, true);
     }
+  };
+
+  controller.isPlaying = function() {
+    var doc = document.querySelectorAll("iframe")[0].contentDocument;
+    var playButton = doc.querySelector("#play_button");
+
+    return (playButton && playButton.classList.contains("button_active"));
+  };
+
+  controller.getSongData = function() {
+    var doc = document.querySelectorAll("iframe")[0].contentDocument;
+    if(doc.querySelector("#nowplaying_title")) return doc.querySelector("#nowplaying_title").textContent;
+
+    return null;
   };
 })();

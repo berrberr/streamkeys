@@ -57,7 +57,7 @@ describe("Streamkeys suite", function() {
 
   baseSites.forEach(function(site) {
     describe(site.name, function() {
-      shared.shouldBehaveLikeAMusicSite(driver, site.url);
+      shared.shouldBehaveLikeAMusicSite(driver, site.url, site.skipPlayState);
     });
   });
 
@@ -228,7 +228,7 @@ describe("Streamkeys suite", function() {
       helpers.waitAndClick(driver, {css: "a.mix_name"});
       helpers.waitAndClick(driver, {css: "a#play_overlay"});
       done();
-    })
+    });
 
     shared.shouldBehaveLikeAMusicSite(driver, false);
   });

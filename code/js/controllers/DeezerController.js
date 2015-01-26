@@ -6,6 +6,7 @@
   var isNew = document.querySelector("#loading_bar") !== null;
 
   controller.init({
+    siteName: "Deezer",
     playPause: ".control.control-play",
     play: ".control.control-play",
     pause: ".control.control-pause",
@@ -14,7 +15,10 @@
     mute: ".icon-volume-off",
     like: ".icon-love-circle",
     dislike: ".icon-unlove-circle",
-    buttonSwitch: isNew
+    buttonSwitch: isNew,
+
+    song: ".player-track-title > span",
+    artist: ".player-track-artist > span.player-track-link"
   });
 
 })();

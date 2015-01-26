@@ -49,12 +49,6 @@
     // Set to true if the play/pause buttons share the same element
     this.buttonSwitch = options.buttonSwitch || false;
 
-    // Observers for song and title changes will be set in this obj
-    this.observers = {};
-
-    // Enable debug console log messages
-    this.debug = false;
-
     // Default listener sends actions to main document
     this.attachListeners();
 
@@ -146,8 +140,11 @@
    * @return {Boolean} true if site is currently playing
    */
   BaseController.prototype.isPlaying = function() {
-    var playEl = document.querySelector(this.selectors.play),
-        playPauseEl = document.querySelector(this.selectors.playPause),
+    // Check for player iFrame
+    var doc = (this.selectors.iframe) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
+
+    var playEl = doc.querySelector(this.selectors.play),
+        playPauseEl = doc.querySelector(this.selectors.playPause),
         isPlaying = false;
 
     if(this.buttonSwitch) {
@@ -162,9 +159,8 @@
       }
       else {
         // Check if the pause element exists
-        if(this.selectors.pauseState && this.selectors.playState) {
-          isPlaying = ((document.querySelector(this.selectors.pauseState) === null) &&
-          (document.querySelector(this.selectors.playState) !== null));
+        if(this.selectors.playState) {
+          isPlaying = (doc.querySelector(this.selectors.playState) !== null);
         }
         // Hack to get around sometimes not being able to read css properties that are not inline
         else if(playEl) {
@@ -219,14 +215,12 @@
    * @return {*} song data if element is found, null otherwise
    */
   BaseController.prototype.getSongData = function(selector) {
-    if(!selector) {
-      return null;
-    }
+    if(!selector) return null;
 
-    // If a call to get song data is made and we are not listening for song changes then attach a listener
-    // if(!this.observers.songChange) this.attachSongListeners();
+    // Check for player iFrame
+    var doc = (this.selectors.iframe) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
 
-    var dataEl = document.querySelector(selector);
+    var dataEl = doc.querySelector(selector);
     if(dataEl && dataEl.textContent) {
       return dataEl.textContent;
     }
@@ -239,10 +233,13 @@
    * @param property {String} name of property to check for
    */
   BaseController.prototype.getProperty = function(property) {
-    if(this[property]) sk_log("Property: ", this[property]);
+    if(this[property]) sk_log(property);
     else sk_log("Property not found.", property, true);
   };
 
+  /**
+   * Callback for request from background page
+   */
   BaseController.prototype.doRequest = function(request, sender, response) {
     if(typeof request !== "undefined") {
       if(request.action === "playPause") this.playPause();
@@ -259,9 +256,11 @@
     }
   };
 
+  /**
+   * Callback for request from tester
+   */
   BaseController.prototype.doTestRequest = function(e) {
     if(e.detail) {
-      this.debug = true;
 
       if(e.detail === "playPause" || e.detail === "playNext" || e.detail === "playPrev" || e.detail === "mute" || e.detail === "like"|| e.detail === "dislike" ) {
         this.doRequest({action: e.detail});
@@ -288,6 +287,9 @@
     }
   };
 
+  /**
+   * Setup listeners for extension messages and test requests. Initialize the playerState interval
+   */
   BaseController.prototype.attachListeners = function() {
     // Listener for requests from background page
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
@@ -295,52 +297,10 @@
     // Listener for requests from tests
     document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
 
-    //this.attachSongListeners();
-
     // Update the popup player state intermittently
     setInterval(this.updatePlayerState.bind(this), 200);
 
     sk_log("Attached listener for ", this);
-  };
-
-  BaseController.prototype.attachSongListeners = function(_attempts) {
-    sk_log("Attempting to attach song listener...");
-    var attempts = _attempts || 0;
-    if(this.observers.songChange || attempts > 10) return;
-
-    /**
-     * On a change of the song element call updatePlayerState which will send the updated song data to the background page
-     */
-    var mutationCallback = function() {
-      this.updatePlayerState();
-    };
-
-    if(this.selectors.songChange) {
-      var songChangeEl = document.querySelector(this.selectors.songChange);
-
-      if(songChangeEl) {
-        this.observers.songChange = new MutationObserver(mutationCallback.bind(this));
-
-        this.observers.songChange.observe(songChangeEl, { characterData: true, childList: true, attributes: true });
-        sk_log("observer: ", this.observers.songChange);
-        sk_log("element: ", songChangeEl);
-        sk_log("obs setup");
-      } else {
-        window.setTimeout(this.attachSongListeners, 5000, attempts + 1);
-      }
-    }
-  };
-
-  /**
-   * Wrapper for log function call, checks if debug option is set before logging.
-   * @param message {String} message to log
-   * @param obj {Object} object to log with message
-   * @param isError {Boolean} true if log message should be an error
-   */
-  BaseController.prototype.log = function(message, obj, isError) {
-    if(this.debug) {
-      sk_log(message, obj, isError);
-    }
   };
 
   module.exports = new BaseController();

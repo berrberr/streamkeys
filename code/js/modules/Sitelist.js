@@ -67,7 +67,7 @@
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true},
       "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true},
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true},
-      "yandex": {name: "Yandex", url: "http://music.yandex.ru", enabled: true},
+      "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", enabled: true},
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to",
           controller: "YouarelisteningtoController.js", enabled: true},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true},

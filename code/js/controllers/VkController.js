@@ -18,6 +18,7 @@
   });
 
   controller.init({
+    siteName: "VK",
     playPause: "#pd_play",
     playNext: "#pd_next",
     playPrev: "#pd_prev"

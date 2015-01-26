@@ -8,7 +8,11 @@
     siteName: "Mixcloud",
     playPause: "[m-player-play-button]",
     mute: ".player-volume-percent",
-    like: ".icon-favorite-inner:not(.ng-hide)"
+    like: ".icon-favorite-inner:not(.ng-hide)",
+
+    playState: ".player-control.pause-state",
+    song: ".current-track",
+    artist: ".current-artist > span"
   });
 
   controller.mute = function() {

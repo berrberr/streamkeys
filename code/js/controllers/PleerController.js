@@ -2,8 +2,11 @@
   "use strict";
 
   require("BaseController").init({
+    siteName: "Pleer",
     playPause: "#play",
     playNext: "#fw",
-    playPrev: "#rw"
+    playPrev: "#rw",
+
+    playState: "#play.pause"
   });
 })();

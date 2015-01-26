@@ -3,6 +3,7 @@
 
   var controller = require("BaseController");
   controller.init({
+    siteName: "Seesu",
     playPause: "#override",
     playNext: "#override",
     playPrev: "#override"

@@ -16,8 +16,6 @@
     dislike: "#watch-dislike",
 
     playState: ".ytp-button-pause",
-    pauseState: ".ytp-button-pause",
-    songChange: ".watch-title",
     song: ".watch-title",
     buttonSwitch: true
   });

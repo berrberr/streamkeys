@@ -105,9 +105,10 @@ var Popup = function() {
         $songEl.text(songText);
         if($songEl.prop("scrollHeight") > ($songEl.prop("clientHeight") + parseInt($songEl.css("padding")))) {
           $songEl.marquee({
+            allowCss3Support: false,
             duration: 3000,
             delayBeforeStart: 3000,
-            pauseOnCycle: 3000
+            pauseOnCycle: true
           });
         }
       }
