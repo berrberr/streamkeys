@@ -123,6 +123,10 @@
     this.click({action: "playPrev", selectorButton: this.selectors.playPrev, selectorFrame: this.selectors.iframe});
   };
 
+  BaseController.prototype.stop = function() {
+    if(this.isPlaying()) this.playPause();
+  };
+
   BaseController.prototype.mute = function() {
     this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
   };
@@ -245,6 +249,7 @@
       if(request.action === "playPause") this.playPause();
       if(request.action === "playNext") this.playNext();
       if(request.action === "playPrev") this.playPrev();
+      if(request.action === "stop") this.stop();
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
@@ -262,7 +267,7 @@
   BaseController.prototype.doTestRequest = function(e) {
     if(e.detail) {
 
-      if(e.detail === "playPause" || e.detail === "playNext" || e.detail === "playPrev" || e.detail === "mute" || e.detail === "like"|| e.detail === "dislike" ) {
+      if(e.detail === "playPause" || e.detail === "playNext" || e.detail === "playPrev" || e.detail === "stop" || e.detail === "mute" || e.detail === "like"|| e.detail === "dislike" ) {
         this.doRequest({action: e.detail});
       }
 
