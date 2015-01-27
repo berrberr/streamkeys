@@ -1,3 +1,6 @@
+$popup-width: 220px;
+$main-color: #2880C7;
+
 html {
   padding: 0px;
   margin: 0px;
@@ -6,22 +9,27 @@ html {
 }
 
 body {
-  width: 220px;
+  width: $popup-width;
   padding: 0px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 div a, div a:hover, div a:visited {
   text-decoration: none;
 }
 
+.player-div-border {
+  border-left: 1px solid $main-color;
+  border-right: 1px solid $main-color;
+}
+
 .header {
-  background-color: #2880C7;
-  border-top: 1px solid #2880C7;
-  border-left: 1px solid #2880C7;
-  border-right: 1px solid #2880C7;
+  background-color: $main-color;
+  border-top: 1px solid $main-color;
+  border-left: 1px solid $main-color;
+  border-right: 1px solid $main-color;
   text-align: center;
   padding: 8px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   letter-spacing: 1.5px;
   border-top-right-radius: 5px;
@@ -33,53 +41,75 @@ div a, div a:hover, div a:visited {
   text-decoration: none;
 }
 
-.player-row {
-  /*margin: 10px 0 10px 0;*/
-  padding: 10px 0;
+.song-data {
+  overflow: hidden;
+  padding-left: 4px;
+  height: 20px;
+  width: $popup-width;
+}
+
+.site-data {
+  overflow: hidden;
+  height: 20px;
+  width: $popup-width;
+}
+
+.site-favicon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.site-title {
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+#player {
+  @extend .player-div-border;
+  padding-bottom: 10px;
   text-align: center;
-  border-left: 1px solid #2880C7;
-  border-right: 1px solid #2880C7;
 }
 
-.player-row span {
-  display: inline-block;
-  font-size: 12px;
+.player-row {
+  padding: 5px 0 0 0;
 }
 
-.player-row span:hover {
-  opacity: 0.7;
+.player-controls-row {
+  span.glyphicon {
+    display: inline-block;
+    font-size: 12px;
+  }
+  span.glyphicon:hover {
+    opacity: 0.7;
+  }
 }
 
 .button-row {
+  @extend .player-div-border;
   text-align: center;
-  border-left: 1px solid #2880C7;
-  border-right: 1px solid #2880C7;
-}
 
-.button-row button {
-  margin-bottom: 8px;
-  width: 146px;
-}
-
-.button-row button span {
-  margin: 0 10px 0 -10px;
+  button {
+    margin-bottom: 8px;
+    width: 146px;
+  }
+  button span {
+    margin: 0 10px 0 -10px;
+  }
 }
 
 .options-row {
-  background-color: #2880C7;
-  /*position: fixed;*/
+  background-color: $main-color;
   display: block;
-  /*bottom: 0px;*/
   width: 100%;
   padding: 10px 27px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   letter-spacing: 1.5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  border-bottom: 2px solid #2880C7;
-  border-left: 2px solid #2880C7;
-  border-right: 2px solid #2880C7;
+  border-bottom: 2px solid $main-color;
+  border-left: 2px solid $main-color;
+  border-right: 2px solid $main-color;
 }
 
 .options-row a, .options-row a:hover, .options-row a:visited {
@@ -97,15 +127,8 @@ div a, div a:hover, div a:visited {
   vertical-align: middle;
 }
 
-#fail-message {
-  padding: 0 0 10px 0;
-  display: none;
-  text-align: center;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  border-bottom: 1px solid #2880C7;
-  border-left: 1px solid #2880C7;
-  border-right: 1px solid #2880C7;
+.no-sites {
+  padding-top: 10px;
 }
 
 .btn-success#enable-site{

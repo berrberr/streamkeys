@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  var sk_log = require("../modules/sk_log.js"),
+  var sk_log = require("../modules/SKLog.js"),
       player = window.sublime.player("laracasts-video"),
       _skPlayerState = "paused";
 

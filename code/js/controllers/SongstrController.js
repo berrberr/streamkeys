@@ -2,6 +2,11 @@
   "use strict";
 
   require("BaseController").init({
-    playPause: "#playing_control"
+    siteName: "Songstr",
+    playPause: "#playing_control",
+
+    playState: ".player_stop",
+    song: "#playing_title",
+    artist: "#playing_artist"
   });
 })();

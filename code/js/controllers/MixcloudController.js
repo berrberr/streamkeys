@@ -2,17 +2,22 @@
   "use strict";
 
   var controller = require("BaseController"),
-      sk_log = require("../modules/sk_log.js");
+      sk_log = require("../modules/SKLog.js");
 
   controller.init({
+    siteName: "Mixcloud",
     playPause: "[m-player-play-button]",
     mute: ".player-volume-percent",
-    like: ".icon-favorite-inner:not(.ng-hide)"
+    like: ".icon-favorite-inner:not(.ng-hide)",
+
+    playState: ".player-control.pause-state",
+    song: ".current-track",
+    artist: ".current-artist > span"
   });
 
   controller.mute = function() {
     sk_log("mute");
-    var muteSlider = document.querySelector(this.selector_mute);
+    var muteSlider = document.querySelector(this.selectors.mute);
     muteSlider.style.height = (muteSlider.style.height === "0px") ? "100%": "0";
   };
 })();

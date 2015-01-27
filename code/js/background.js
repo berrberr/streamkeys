@@ -2,14 +2,12 @@
   "use strict";
 
   var sendAction = function(command) {
-    chrome.tabs.query({}, function(tabs) {
+    var active_tabs = window.sk_sites.getActiveMusicTabs();
+    active_tabs.then(function(tabs) {
+      // Send the command to every music tab
       tabs.forEach(function(tab) {
-        var is_enabled = window.sk_sites.checkEnabled(tab.url);
-        var is_tab_enabled = window.sk_sites.checkTabEnabled(tab.id);
-        if(is_enabled && is_tab_enabled) {
-          chrome.tabs.sendMessage(tab.id, {"action": command});
-          console.log("Sent: " + command + " To: " + tab.url);
-        }
+        chrome.tabs.sendMessage(tab.id, { "action": command });
+        console.log("Sent: " + command + " To: " + tab.url);
       });
     });
   };
@@ -20,6 +18,20 @@
       path: chrome.runtime.getURL(iconPath),
       tabId: tabId
     });
+  };
+
+  /**
+   * Process a command sent from somewhere (popup or content script) in the extension
+   * @param request {Object} Chrome request object from runtime.onMessage
+   */
+  var processCommand = function(request) {
+    if(request.tab_target && parseInt(request.tab_target)) {
+      chrome.tabs.sendMessage(parseInt(request.tab_target), { "action": request.command });
+      console.log("Single tab request. Sent: " + request.command + " To: " + request.tab_target);
+    }
+    else {
+      sendAction(request.command);
+    }
   };
 
   /**
@@ -67,7 +79,23 @@
       response(window.sk_sites.checkMusicSite(sender.tab.url));
     }
     if(request.action === "get_commands") response(window.coms);
-    if(request.action == "command") sendAction(request.command);
+    if(request.action === "command") processCommand(request);
+    if(request.action === "update_player_state") {
+      chrome.runtime.sendMessage({
+        action: "update_popup_state",
+        stateData: request.stateData,
+        fromTab: sender.tab
+      });
+    }
+    if(request.action === "get_active_tabs") {
+      var active_tabs = window.sk_sites.getActiveMusicTabs();
+      active_tabs.then(function(tabs) {
+        console.log("Active tabs: ", tabs);
+        response(tabs);
+      });
+
+      return true;
+    }
   });
 
   /**

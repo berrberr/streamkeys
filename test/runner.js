@@ -6,7 +6,7 @@ var mocha = new Mocha({
   timeout: 120000,
   title: "Streamkeys tests",
   ui: "mocha-retry",
-  grep: /.*/
+  grep: /.*8tracks.*/
 });
 
 mocha.addFile(getPath(__filename, "/_base_suite.js"));

@@ -6,8 +6,7 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
   describe("music site behaviour", function() {
 
     it(NUM_RETRY, "should load", function(done) {
-      var self = this,
-          pageLoad = true;
+      var pageLoad = true;
 
       if(url) {
         pageLoad = false;
@@ -90,6 +89,40 @@ exports.shouldBehaveLikeAMusicSite = function(driver, url) {
         done();
       });
     });
+
+    it(NUM_RETRY, "should get site name", function(done) {
+      helpers.playerAction(driver, {action: "siteName"})
+        .then(function(result) {
+          if(!result) return done(new Error("Site name request failed!"));
+          done();
+        });
+    });
+
+    //if(!skipPlayState) {
+    //  it(NUM_RETRY, "should get song name", function (done) {
+    //    helpers.playerAction(driver, {action: "songName"})
+    //      .then(function (result) {
+    //        if (!result) return done(new Error("Song name request failed!"));
+    //        done();
+    //      });
+    //  });
+    //
+    //  it(NUM_RETRY, "should get artist name", function (done) {
+    //    helpers.playerAction(driver, {action: "artistName"})
+    //      .then(function (result) {
+    //        if (!result) return done(new Error("Artist name request failed!"));
+    //        done();
+    //      });
+    //  });
+    //
+    //  it(NUM_RETRY, "should get playing state", function (done) {
+    //    helpers.playerAction(driver, {action: "isPlaying"})
+    //      .then(function (result) {
+    //        if (!result) return done(new Error("Playing state request failed!"));
+    //        done();
+    //      });
+    //  });
+    //}
 
   });
 };
