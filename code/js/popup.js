@@ -100,21 +100,22 @@ var Popup = function() {
     if(stateData.song) {
       var songText = (stateData.artist) ? stateData.artist + " - " + stateData.song : stateData.song;
       $songEl.css("display", "inline-block");
+      $siteContainer.find(".js-site-data").css("margin-bottom", "0");
       // Only update if song data has changed
       if($songEl.text() !== songText) {
         $songEl.text(songText);
         if($songEl.prop("scrollHeight") > ($songEl.prop("clientHeight") + parseInt($songEl.css("padding")))) {
           $songEl.marquee({
             allowCss3Support: false,
-            duration: 3000,
-            delayBeforeStart: 3000,
-            pauseOnCycle: true
+            duration: 4000,
+            delayBeforeStart: 4000
           });
         }
       }
     }
     else {
       $songEl.css("display", "none");
+      $siteContainer.find(".js-site-data").css("margin-bottom", "5px");
     }
 
     // Set the site favicon
@@ -145,6 +146,12 @@ var Popup = function() {
    */
   var getTabStates = function(tabs) {
     var that = this;
+    if(!tabs.length || tabs.length === 0) {
+      $(".js-no-sites").show();
+    }
+    else {
+      $(".js-no-sites").hide();
+    }
 
     tabs.forEach(function(tab) {
       // Call update state before we get response from content script

@@ -43,7 +43,7 @@ div a, div a:hover, div a:visited {
 
 .song-data {
   overflow: hidden;
-  //padding-left: 4px;
+  padding-left: 4px;
   height: 20px;
   width: $popup-width;
 }
@@ -72,7 +72,7 @@ div a, div a:hover, div a:visited {
 }
 
 .player-row {
-  padding: 5px 0 5px 0;
+  padding: 5px 0 0 0;
 }
 
 .player-controls-row {
@@ -125,6 +125,10 @@ div a, div a:hover, div a:visited {
   display: inline-block;
   visibility: hidden;
   vertical-align: middle;
+}
+
+.no-sites {
+  padding-top: 10px;
 }
 
 .btn-success#enable-site{
