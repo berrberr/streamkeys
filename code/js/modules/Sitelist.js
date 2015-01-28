@@ -47,6 +47,7 @@
       "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true},
       "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true},
       "oplayer": {name: "oPlayer", url: "http://oplayer.org", enabled: true},
+      "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com", enabled: true},
       "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true},
       "pleer": {name: "Pleer.com", url: "http://pleer.com", enabled: true},
       "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true},
