@@ -1,0 +1,700 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Conta",
+				"ContactManager"
+			],
+			[
+				"$e",
+				"$errorEl"
+			],
+			[
+				"ent",
+				"entityPrototype"
+			],
+			[
+				"conta",
+				"contact-list-item"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "code/html/popup.html",
+			"settings":
+			{
+				"buffer_size": 2974,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"jshi",
+				"JSHint: Set Linting Preferences"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"syn html",
+				"Set Syntax: HTML (Underscore)"
+			],
+			[
+				"sy cof",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"packa list",
+				"Package Control: List Packages"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack lis",
+				"Package Control: List Packages"
+			],
+			[
+				"package instal",
+				"Package Control: Install Package"
+			],
+			[
+				"package list",
+				"Package Control: List Packages"
+			],
+			[
+				"intall",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 353.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/alex/streamkeys",
+		"/Users/alex/streamkeys/code"
+	],
+	"file_history":
+	[
+		"/Users/alex/streamkeys/build/unpacked-dev/html/popup.html",
+		"/Users/alex/streamkeys/test/streamkeys-ext/html/popup.html",
+		"/Users/alex/streamkeys/code/html/popup.html",
+		"/Users/alex/streamkeys/.sass-cache/80f9449932f6cc13bbfd1976b6f49011a3caa4eb/popup.scssc",
+		"/Users/alex/streamkeys/node_modules/browserify/node_modules/url/node_modules/punycode/vendor/requirejs/tests/packages/optimizing/optimizing-built.html",
+		"/Users/alex/streamkeys/node_modules/selenium-webdriver/lib/test/data/pageWithOnLoad.html",
+		"/Users/alex/streamkeys/package.json",
+		"/Users/alex/Library/Application Support/Sublime Text 3/Packages/JSHint Gutter/.jshintrc",
+		"/Users/alex/courses-app/code/assets/js/apps/about/about_view.js",
+		"/Users/alex/courses-app/code/assets/js/apps/about/about_controller.js",
+		"/Users/alex/Library/Application Support/Sublime Text 3/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
+		"/Users/alex/courses-app/code/assets/js/apps/contacts/new/new_view.js",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/array/lastIndexOf.js",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/lang/isObject.js",
+		"/Users/alex/courses-app/bower_components/backbone/LICENSE",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/lang/isString.js",
+		"/Users/alex/courses-app/node_modules/grunt-lintspaces/tests/files/indentation_spaces.txt",
+		"/Users/alex/courses-app/node_modules/grunt-contrib-clean/docs/clean-options.md",
+		"/Users/alex/courses-app/bower_components/backbone/CNAME",
+		"/Users/alex/courses-app/code/assets/js/common/views.js",
+		"/Users/alex/courses-app/code/assets/js/apps/contacts/contacts_app.js",
+		"/Users/alex/courses-app/code/assets/js/apps/edit/edit_view.js",
+		"/Users/alex/courses-app/code/assets/js/apps/edit/edit_controller.js",
+		"/Users/alex/courses-app/code/index.html",
+		"/Users/alex/courses-app/bower_components/marionette/src/marionette.bindEntityEvents.js",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/insight/node_modules/os-name/node_modules/minimist/test/dash.js",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/insight/node_modules/.bin/os-name",
+		"/Users/alex/courses-app/bower_components/jquery/src/var/indexOf.js",
+		"/Users/alex/courses-app/code/assets/css/vendor/jquery-ui-1.10.0.custom.css",
+		"/Users/alex/courses-app/code/assets/css/vendor/jquery-ui-1.10.3.css",
+		"/Users/alex/courses-app/code/assets/js/vendor/backbone.syphon",
+		"/Users/alex/courses-app/bower_components/bootstrap-sass-official/sache.json",
+		"/Users/alex/courses-app/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_pager.scss",
+		"/Users/alex/courses-app/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_alerts.scss",
+		"/Users/alex/courses-app/node_modules/.bin/_mocha",
+		"/Users/alex/courses-app/code/assets/js/apps/contacts/show/show_controller.js",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/lang/isNull.js",
+		"/Users/alex/courses-app/bower_components/marionette/api/view.jsdoc",
+		"/Users/alex/courses-app/node_modules/grunt-bower-concat/node_modules/bower/node_modules/inquirer/node_modules/cli-color/node_modules/es5-ext/node_modules/es6-iterator/valid-iterable.js",
+		"/Users/alexg/Documents/backbone/build/assets/js/apps/contacts/list/list_controller.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/array/lastIndexOf.js",
+		"/Users/alexg/Documents/backbone/bower_components/backbone/LICENSE",
+		"/Users/alexg/Documents/backbone/build/assets/js/apps/contacts/show/show_controller.js",
+		"/Users/alexg/Documents/backbone/bower_components/bootstrap-sass-official/sache.json",
+		"/Users/alexg/Documents/backbone/build/assets/js/entities/contact.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-contrib-clean/docs/clean-options.md",
+		"/Users/alexg/Documents/backbone/bower_components/backbone/CNAME",
+		"/Users/alexg/Documents/backbone/node_modules/mocha/lib/reporters/list.js",
+		"/Users/alexg/Documents/backbone/node_modules/chai/lib/chai/interface/should.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/string/stripHtmlTags.js",
+		"/Users/alexg/Documents/backbone/bower_components/Backbone.localStorage/backbone.localStorage.js",
+		"/Users/alexg/Documents/backbone/bower_components/Backbone.localStorage/spec/localStorage_spec.js",
+		"/Users/alexg/Documents/backbone/package.json",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-bower-concat/node_modules/bower/lib/core/resolvers/GitResolver.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-bower-concat/node_modules/bower/node_modules/mout/string/lowerCase.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-contrib-uglify/node_modules/uglify-js/node_modules/optimist/example/line_count_options.js",
+		"/Users/alexg/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/alexg/Documents/backbone/build/assets/js/app.js",
+		"/Users/alexg/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/alexg/Documents/backbone/bower_components/backbone/CONTRIBUTING.md",
+		"/Users/alexg/Documents/backbone/build/assets/js/main.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt/appveyor.yml",
+		"/Users/alexg/Documents/backbone/node_modules/chai/lib/chai/utils/addProperty.js",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-contrib-clean/AUTHORS",
+		"/Users/alexg/Documents/backbone/.sass-cache/c16b267226db839e3b873fadc411d72f4bdf0793/main.scssc",
+		"/Users/alexg/Documents/backbone/node_modules/grunt-contrib-uglify/node_modules/uglify-js/lib/mozilla-ast.js",
+		"/Users/alexg/Documents/backbone/node_modules/.bin/mocha",
+		"/Users/alexg/nna/nna-apache-configs-shared/Nissan/Mobile/vhosts/301_ncv-mobile.conf",
+		"/Users/alexg/nna/nna-apache-configs-shared/Infiniti/Mainsite/vhosts/301_redirects.conf",
+		"/Users/alexg/Documents/psh/kiln-repair-directory.php",
+		"/Users/alexg/Documents/psh/views/checkout.html.twig",
+		"/Users/alexg/nna/nna-nissan-mobile-konyapp/services/xml/split_services/ListVehicleExteriorGallery.split",
+		"/Users/alexg/nna/nna-nissan-mobile-konyapp/modules/lua/vehicles.lua",
+		"/Users/alexg/nna/nna-mobile-tests/bin/casperjs/docs/modules/casper.rst",
+		"/Users/alexg/nna/nna-mobile-tests/bin/casperjs/modules/casper.js",
+		"/Users/alexg/nna/nna-mobile-tests/config_infiniti.coffee",
+		"/Users/alexg/nna/nna-mobile-tests/config_data.json",
+		"/Users/alexg/nna/nna-mobile-tests/config_nissan.coffee",
+		"/Users/alexg/nna/nna-mobile-tests/bin/casperjs/tests/sample_modules/config.json",
+		"/Users/alexg/nna/nna-mobile-tests/bin/casperjs/tests/suites/tester/begin-config.js",
+		"/Users/alexg/nna/nna-mobile-tests/.editorconfig",
+		"/Users/alexg/nna/nna-mobile-tests/bin/casperjs/tests/clitests/tester/casper-instance-override.js",
+		"/Users/alexg/nna/nna-mobile-tests/tests/base/router.js",
+		"/Users/alexg/nna/nna-mobile-tests/README.md",
+		"/Users/alexg/nna/nna-mobile-tests/node_modules/node.extend/.travis.yml",
+		"/Users/alexg/nna/nna-mobile-tests/resources/infiniti/Live.json",
+		"/Users/alexg/nna/nna-mobile-tests/bin/casperjs/tests/clitests/modules/test_patched_require.js",
+		"/Users/alexg/nna/nna-mobile-tests/package.json",
+		"/Users/alexg/nna/nna-apache-configs-shared/readme.md",
+		"/Users/alexg/Downloads/301_nissan-mobile-1.conf",
+		"/Users/alexg/Documents/scripts/streamkeys/build/unpacked-dev/js/background.js",
+		"/Users/alexg/Documents/scripts/streamkeys/node_modules/grunt-contrib-clean/docs/clean-options.md",
+		"/Users/alexg/Documents/scripts/streamkeys/node_modules/grunt-contrib-clean/CHANGELOG",
+		"/Users/alexg/Documents/scripts/streamkeys/code/js/seesu_inject.js",
+		"/Users/alexg/Documents/scripts/streamkeys/secrets.json.enc",
+		"/Users/alexg/Documents/scripts/streamkeys/code/js/modules/BaseController.js",
+		"/Users/alexg/Documents/scripts/streamkeys/node_modules/selenium-webdriver/lib/test/data/booleanAttributes.html",
+		"/Users/alexg/Documents/scripts/streamkeys/node_modules/.bin/browserify",
+		"/Users/alexg/nna/nna-nissan-mobile-konyapp/modules/js/gallery.js",
+		"/Users/alexg/nna/nna-nissan-mobile-konyapp/forms/mobile/frmDealerEnterLocation.kl",
+		"/Users/alexg/nna/nna-nissan-mobile-konyapp/modules/lua/dealers.lua",
+		"/Users/alexg/Documents/scripts/mean/node_modules/grunt/node_modules/grunt-legacy-util/test/fixtures/Gruntfile-execArgv-child.js",
+		"/Users/alexg/Documents/scripts/mean/gruntfile.js",
+		"/Users/alexg/Documents/scripts/mean/node_modules/bower/lib/core/resolvers/GitResolver.js"
+	],
+	"find":
+	{
+		"height": 30.0
+	},
+	"find_in_files":
+	{
+		"height": 95.0,
+		"where_history":
+		[
+			"-build/,-bower_components/*",
+			"-build/,-bower_components",
+			"-build/",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"aboutView",
+			"AboutApp",
+			"ContactsApp",
+			"loadingView",
+			"List",
+			"message",
+			"list",
+			"contacts",
+			"contactListLayout",
+			"contactsListLayout",
+			"onFormDataInvalid",
+			"form:data:invalid",
+			"button",
+			"contact:edit",
+			"input",
+			"class=\"control-label\"",
+			"control-group",
+			"getoptions",
+			"show",
+			"undefined",
+			"entity",
+			"entitiy",
+			"contact-list-item",
+			"app",
+			"<<<<<",
+			"paymentr",
+			"500err",
+			"findDealersByZipCode",
+			"gWebServiceContextURL",
+			"inputvar",
+			"parseURL",
+			"dcp",
+			"2015",
+			"function getConfig",
+			"gWebServiceContextURL",
+			"whyNissanTable",
+			"thenOpen = ",
+			"thenOpen",
+			"checkFn",
+			"opening url:",
+			"crossoverSUV_models",
+			"waitfor() with",
+			"Wait for #frmVehicleLanding",
+			"Waiting for Vehicle List",
+			"$KI",
+			"^/",
+			"buildyournissan/zipcode",
+			"NC",
+			"nc",
+			"NC",
+			"URL_check",
+			".some",
+			"inject_controller",
+			"getController",
+			"check_music_site",
+			"Home_Page_PFA_Sentra",
+			"string.upper",
+			"getVehicleCodeByName",
+			"$",
+			"$1",
+			"NATIVE_getFlodlightIframe",
+			"nodemon",
+			"getDartTags",
+			"doubleClickUrl",
+			"getDartTags",
+			"gblDartUrls",
+			"app.headers[\"hbox15910744468633\"][\"imgDart\"][\"src\"]",
+			"hbox15910744468633",
+			"function cleardart",
+			"darturl"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "code/html/popup.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2974,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								456,
+								456
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content"
+							],
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Jekyll/Syntaxes/HTML (Jekyll).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "streamkeys.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"popup.ht",
+				"code/html/popup.html"
+			],
+			[
+				"index",
+				"code/index.html"
+			],
+			[
+				"list_con",
+				"code/assets/js/apps/contacts/list/list_controller.js"
+			],
+			[
+				"inde",
+				"code/index.html"
+			],
+			[
+				"",
+				"code/assets/js/apps/contacts/common/views.js"
+			],
+			[
+				"ist_view",
+				"code/assets/js/apps/contacts/list/list_view.js"
+			],
+			[
+				"contacts_app",
+				"code/assets/js/apps/contacts/contacts_app.js"
+			],
+			[
+				"list_view",
+				"code/assets/js/apps/contacts/list/list_view.js"
+			],
+			[
+				"index.",
+				"code/index.html"
+			],
+			[
+				"contat_app",
+				"code/assets/js/apps/contacts/contacts_app.js"
+			],
+			[
+				"contact",
+				"code/assets/js/entities/contact.js"
+			],
+			[
+				"list_vi",
+				"code/assets/js/apps/contacts/list/list_view.js"
+			],
+			[
+				"index.ht",
+				"code/index.html"
+			],
+			[
+				"iondex",
+				"node_modules/grunt-bower-concat/node_modules/bower/node_modules/insight/node_modules/object-assign/index.js"
+			],
+			[
+				"grunt",
+				"Gruntfile.js"
+			],
+			[
+				"list_conr",
+				"code/assets/js/apps/contacts/list/list_controller.js"
+			],
+			[
+				"bower.",
+				"bower.json"
+			],
+			[
+				"contact.js",
+				"code/assets/js/entities/contact.js"
+			],
+			[
+				"bower",
+				"bower.json"
+			],
+			[
+				"show_co",
+				"code/assets/js/apps/contacts/show/show_controller.js"
+			],
+			[
+				"contact_view",
+				"code/assets/js/apps/contacts/show/show_view.js"
+			],
+			[
+				"_app",
+				"code/assets/js/apps/contacts/contacts_app.js"
+			],
+			[
+				"views",
+				"code/assets/js/common/views.js"
+			],
+			[
+				"list_control",
+				"code/assets/js/apps/contacts/list/list_controller.js"
+			],
+			[
+				"show_con",
+				"code/assets/js/apps/contacts/show/show_controller.js"
+			],
+			[
+				"list_c",
+				"build/assets/js/apps/contacts/list/list_controller.js"
+			],
+			[
+				"show",
+				"build/assets/js/apps/contacts/show/show_controller.js"
+			],
+			[
+				"localstorage.js",
+				"code/assets/js/apps/config/storage/localstorage.js"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"locals",
+				"code/assets/js/apps/config/storage/localstorage.js"
+			],
+			[
+				"app.js",
+				"build/assets/js/app.js"
+			],
+			[
+				"main.js",
+				"build/assets/js/main.js"
+			],
+			[
+				"301_nis",
+				"Nissan/Mobile/vhosts/301_nissan-mobile.conf"
+			],
+			[
+				"router",
+				"modules/js/router.js"
+			],
+			[
+				"vehicle.",
+				"modules/lua/vehicles.lua"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"helpers",
+				"helpers.coffee"
+			],
+			[
+				"readme",
+				"README.md"
+			],
+			[
+				"config",
+				"config_nissan.coffee"
+			],
+			[
+				"route",
+				"tests/base/router.js"
+			],
+			[
+				"pri",
+				"tests/infiniti/pricing.coffee"
+			],
+			[
+				"contentsc",
+				"code/js/contentscript.js"
+			],
+			[
+				"site",
+				"code/js/modules/Sitelist.js"
+			],
+			[
+				"background",
+				"code/js/background.js"
+			],
+			[
+				"getde",
+				"modules/lua/getDeeplinkData.lua"
+			],
+			[
+				"router.js",
+				"modules/js/router.js"
+			],
+			[
+				"native",
+				"modules/js/native.js"
+			],
+			[
+				"deeplink",
+				"modules/lua/getDeeplinkData.lua"
+			],
+			[
+				"native.",
+				"modules/js/native.js"
+			],
+			[
+				"native.js",
+				"modules/js/native.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 239.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

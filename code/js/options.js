@@ -8,9 +8,12 @@
       enabledBtnClass = "btn-success",
       enabledSpanClass = "glyphicon-ok";
 
-  // @param id [str] id of site, used as key in settings object
-  // @param name [str] full name of site, displayed in button
-  // @param is_enabled [bool] BOOLEAN if button is enabled or not
+  /**
+   * Renders the site enabled/disable button
+   * @param id {String} id of site, used as key in settings object
+   * @param name {String} full name of site, displayed in button
+   * @param is_enabled {Boolean} is button enabled
+   */
   var renderSiteButton = function(id, name, is_enabled) {
     var template_name = is_enabled ? "#template-enabled" : "#template-disabled";
     $("#sitelist").loadTemplate(
@@ -24,8 +27,11 @@
     );
   };
 
-  // @param selector [str] CSS selector for button to toggle
-  // @param is_disabled [str] STRING representation of BOOLEAN
+  /**
+   * Toggles the style of a site button to enabled/disabled
+   * @param selector {String} CSS selector for button to toggle
+   * @param is_disabled {String} String representation of boolean (from element attribute)
+   */
   var toggleSiteButton = function(selector, is_disabled) {
     var el = $(selector),
         span = $($(selector).children("span")[0]);
@@ -41,7 +47,7 @@
       renderSiteButton(key, val.name, val.enabled);
     });
 
-    //On clicking a site name checkbox
+    // On clicking a site name checkbox
     $(".btn-site-enable").click(function(el) {
       var sites = {},
           site_id = el.currentTarget.id,

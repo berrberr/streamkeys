@@ -283,6 +283,5 @@
    * When Sitelist is required create a new singleton and return that
    * Note: This makes all methods/properties of Sitelist publicly exposed
    */
-  var singleton = new Sitelist();
-  module.exports = singleton;
+  module.exports = new Sitelist();
 })();

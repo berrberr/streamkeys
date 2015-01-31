@@ -24,10 +24,9 @@ div a, div a:hover, div a:visited {
 }
 
 .header {
+  @extend .player-div-border;
   background-color: $main-color;
   border-top: 1px solid $main-color;
-  border-left: 1px solid $main-color;
-  border-right: 1px solid $main-color;
   text-align: center;
   padding: 8px;
   font-size: 18px;
@@ -41,23 +40,44 @@ div a, div a:hover, div a:visited {
   text-decoration: none;
 }
 
+.disabled {
+  opacity: .6;
+  .player-controls-row {
+    pointer-events: none;
+  }
+}
+
 .song-data {
   overflow: hidden;
-  padding-left: 4px;
+  white-space: nowrap;
+  display: inline-block;
+  padding: 0 4px 0 4px;
   height: 20px;
-  width: $popup-width;
 }
 
 .site-data {
   overflow: hidden;
   height: 20px;
   width: $popup-width;
+  .settings {
+    float: right;
+    margin: 3px 6px 0 0;
+    width: 12px;
+    font-size: 12px;
+    opacity: .5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .settings-active {
+    opacity: 1;
+  }
 }
 
 .site-favicon {
   width: 16px;
   height: 16px;
-  vertical-align: middle;
+  margin-left: 12px;
 }
 
 .site-title {
@@ -75,30 +95,25 @@ div a, div a:hover, div a:visited {
   padding: 5px 0 0 0;
 }
 
+.site-tab-container {
+  a, a:hover, a:active, a:visited, a:focus {
+    text-decoration: none;
+    color: #000;
+  }
+}
+
 .player-controls-row {
   span.glyphicon {
     display: inline-block;
     font-size: 12px;
   }
   span.glyphicon:hover {
-    opacity: 0.7;
-  }
-}
-
-.button-row {
-  @extend .player-div-border;
-  text-align: center;
-
-  button {
-    margin-bottom: 8px;
-    width: 146px;
-  }
-  button span {
-    margin: 0 10px 0 -10px;
+    opacity: .7;
   }
 }
 
 .options-row {
+  @extend .player-div-border;
   background-color: $main-color;
   display: block;
   width: 100%;
@@ -108,17 +123,13 @@ div a, div a:hover, div a:visited {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom: 2px solid $main-color;
-  border-left: 2px solid $main-color;
-  border-right: 2px solid $main-color;
-}
-
-.options-row a, .options-row a:hover, .options-row a:visited {
-  color: #FFFFFF;
-}
-
-.options-row #help-link {
-  float: right;
-  padding-right: 2px;
+  a, a:hover, a:visited {
+    color: #FFFFFF;
+  }
+  #help-link {
+    float: right;
+    padding-right: 2px;
+  }
 }
 
 .toggle {
@@ -131,24 +142,40 @@ div a, div a:hover, div a:visited {
   padding-top: 10px;
 }
 
-.btn-success#enable-site{
-  color: #1E824C;
-  border: 1px solid #1E824C;
-  background-color: #fff;
-  padding-right: 5px;
-}
-.btn-success#enable-tab{
-  color: #1E824C;
-  border: 1px solid #1E824C;
-  background-color: #fff;
-  padding-right: 5px;
+
+.music-site-buttons {
+  padding-bottom: 5px;
 }
 
-.btn-error-border#enable-site {
-  border: 1px solid red;
-  color: red;
+.button-row {
+  text-align: center;
+  display: none;
+
+  button {
+    padding: 4px 6px 4px 6px;
+  }
+  button span {
+    margin-right: 5px;
+  }
+
+  .btn-enabled {
+    background-color: $main-color;
+    border-color: darken($main-color, 5%);
+    color: #FFFFFF;
+    &:hover, &:active, &:focus {
+      background-color: darken($main-color, 20%);
+      color: #FFFFFF;
+    }
+  }
+
+  .btn-disabled {
+    background-color: darken($main-color, 20%);;
+    border-color: darken($main-color, 5%);
+    color: #FFFFFF;
+    &:hover, &:active, &:focus {
+      background-color: $main-color, 20%;
+      color: #FFFFFF;
+    }
+  }
 }
-.btn-error-border#enable-tab {
-  border: 1px solid red;
-  color: red;
-}
+

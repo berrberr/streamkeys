@@ -16,17 +16,6 @@
       </div>
     </div>
 
-    <div id="music-site">
-      <div class="button-row">
-        <button type="button" id="enable-site" class="btn btn-sm btn-success" tabindex="-1">
-          <span class="glyphicon glyphicon-ok"></span>Enabled for this site
-        </button>
-        <button type="button" id="enable-tab" class="btn btn-sm btn-success" tabindex="-1">
-          <span class="glyphicon glyphicon-ok"></span>Enabled for this tab
-        </button>
-      </div>
-    </div>
-
     <div class="options-row">
       <div>
         <a href="#" id="options-link" target="_blank" tabindex="-1">Options</a>
@@ -35,13 +24,21 @@
     </div>
 
     <script type="text/html" id="template-site-player">
-      <div data-id="tab_id" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
+      <div data-id="tab_id" class="site-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
         <div class="player-row js-player-row">
           <div class="site-data js-site-data">
             <img class="site-favicon js-site-favicon" />
             <span class="site-title js-site-title"></span>
+            <a href="#" class="js-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
+              <span class="glyphicon glyphicon-cog settings"></span>
+            </a>
           </div>
           <div class="song-data js-song-data"></div>
+          <div class="music-site-buttons button-row">
+            <button type="button" id="enable-tab" class="btn btn-xs btn-enabled js-site-btn js-enable-tab-btn" tabindex="-1" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
+              <span class="glyphicon glyphicon-ok"></span>Enabled
+            </button>
+          </div>
         </div>
         <div class="player-controls-row">
           <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-default sk-playcontrols" id="dislike" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>

@@ -1,22 +1,16 @@
 "use strict";
 
+var $ = require("jquery");
+require("./lib/jquery.loadTemplate-1.4.4.min.js");
+require("./lib/jquery.marquee.js");
+
 var Popup = function() {
-
-  var $ = require("jquery");
-  require("./lib/jquery.marquee.min.js");
-  require("./lib/jquery.loadTemplate-1.4.4.min.js");
-
   var tab_url = "",
       tab_id = null,
-      disabledBtnClass = "btn-error-border",
-      enableSiteBtn = "#enable-site",
-      enableSiteBtnText = {enable: "Enabled for this site", disable: "Disabled for this site"},
-      enableTabBtn = "#enable-tab",
-      enableTabBtnText = {enable: "Enabled for this tab", disable: "Disabled for this tab"},
-      popupSize = {
-        musicSite: "185px",
-        disabledMusicSite: "155px"
-      };
+      disabledBtnClass = "btn-disabled",
+      enabledBtnClass = "btn-enabled",
+      enableSiteBtn = ".js-enabled-site-btn",
+      enableTabBtn = ".js-enable-tab-btn";
 
   /**
    * Toggles one of the buttons to enable/disable for a site or a tab
@@ -44,16 +38,14 @@ var Popup = function() {
 
   /**
    * Toggles the "Disable For Tab" button
-   * @param is_disabled {Boolean} true if button should be disabled
+   * @param {JQuery} $el The tab button element
    */
-  var toggleTabBtn = function(is_disabled) {
-    if(is_disabled) {
-      $(enableTabBtn).css("display", "none");
-      document.body.style.height = popupSize.disabledMusicSite;
-    } else {
-      $(enableTabBtn).css("display", "inline-block");
-      document.body.style.height = popupSize.musicSite;
-    }
+  var toggleTabBtn = function($el) {
+    var tabId = $el.attr("data-tab-id");
+    var disabled = !$el.hasClass(disabledBtnClass);
+    chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tabId, disabled);
+    $el.toggleClass(disabledBtnClass).toggleClass(enabledBtnClass);
+    $el.find("span").toggleClass("glyphicon-remove").toggleClass("glyphicon-ok");
   };
 
   /**
@@ -68,6 +60,8 @@ var Popup = function() {
 
     // Get the site's container div by tab id
     var $siteContainer = $("#site-" + tab.id);
+
+    // Create the elements and setup listeners for the new site's container
     if($siteContainer.length === 0) {
       var div_id = "site-" + tab.id;
       var $playerContainer = $("<div>", { id: tab.id, classList: "js-site-player" });
@@ -86,14 +80,24 @@ var Popup = function() {
       if($sibling.length > 0) $sibling.after($playerContainer);
       else $("#player").append($playerContainer);
 
-      // Setup player controls listeners
+      // Update the siteContainer to the new div for use later
+      $siteContainer = $("#site-" + tab.id);
+
+      // Click listener for player controls
       $("[tab-target=" + tab.id +"]").click(function() {
         chrome.runtime.sendMessage({action: "command", command: this.id, tab_target: this.getAttribute("tab-target")});
       });
 
-      // Update the siteContainer to the new div for use later
-      $siteContainer = $("#site-" + tab.id);
-  }
+      // Click listener for site settings
+      $siteContainer.find(".js-tab-container").click(function() {
+        $siteContainer.find(".music-site-buttons").fadeToggle(100);
+        $siteContainer.find(".settings").toggleClass("settings-active");
+      });
+
+      $siteContainer.find(".js-enable-tab-btn").click(function() {
+        toggleTabBtn($(this));
+      });
+    }
 
     // Get the song name element and add data to it if defined
     var $songEl = $siteContainer.find(".js-song-data");
@@ -103,12 +107,18 @@ var Popup = function() {
       $siteContainer.find(".js-site-data").css("margin-bottom", "0");
       // Only update if song data has changed
       if($songEl.text() !== songText) {
+        // Remove any old marquees
+        $songEl.marquee("destroy");
         $songEl.text(songText);
-        if($songEl.prop("scrollHeight") > ($songEl.prop("clientHeight") + parseInt($songEl.css("padding")))) {
-          $songEl.marquee({
+        if($songEl.outerWidth() > $("#player").width()) {
+          var scrollDuration = (parseInt($songEl.outerWidth()) * 15);
+          $songEl.bind("finished", function() {
+            $(this).find(".js-marquee-wrapper").css("margin-left", "0px");
+          }).marquee({
             allowCss3Support: false,
-            duration: 4000,
-            delayBeforeStart: 4000
+            delayBeforeStart: 2000,
+            duration: scrollDuration,
+            pauseOnCycle: true
           });
         }
       }
@@ -167,22 +177,22 @@ var Popup = function() {
   this.setupListeners = function() {
     // Toggle controls for a site
     $(enableSiteBtn).click(function() {
-      var disabled = !$(enableSiteBtn).hasClass(disabledBtnClass);
+      var disabled = !$(this).hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markSiteAsDisabled(tab_url, disabled);
-      toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, disabled);
+      toggleEnableBtn($(this), disabled);
       toggleTabBtn(disabled);
 
       // If we go from site disabled => enabled then the tab button won't update until clicked or popup reset
       // So instead toggle it if click is to enable site based on the tab's previous state
       var tabDisableStatus = !(!disabled && chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id));
-      toggleEnableBtn($(enableTabBtn), enableTabBtnText, tabDisableStatus);
+      toggleEnableBtn($(enableTabBtn), tabDisableStatus);
     });
 
     // Toggle controls for a specific tab
     $(enableTabBtn).click(function() {
       var disabled = !$(enableTabBtn).hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tab_id, disabled);
-      toggleEnableBtn($(enableTabBtn), enableTabBtnText, disabled);
+      toggleEnableBtn($(enableTabBtn), disabled);
     });
   };
 
@@ -190,31 +200,22 @@ var Popup = function() {
     // Setup all element click listeners
     this.setupListeners();
 
-    var music_controls = $("#music-site");
     var that = this;
 
     // Set the options link to the options page
     $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
 
-    // Checks if the active tab is a music site to show enable/disable buttons
-    chrome.tabs.query({ active: true }, function(tab) {
-      tab_url = tab[0].url;
-      tab_id = tab[0].id;
+    // // Checks if the active tab is a music site to show enable/disable buttons
+    // chrome.tabs.query({ active: true }, function(tab) {
+    //   tab_url = tab[0].url;
+    //   tab_id = tab[0].id;
 
-      var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
-      var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
-      var is_music_site = chrome.extension.getBackgroundPage().window.sk_sites.checkMusicSite(tab_url);
+    //   var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
+    //   var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
 
-      if(!is_music_site) {
-        music_controls.css("display", "none");
-      }
-      else {
-        toggleTabBtn(is_disabled);
-      }
-
-      toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
-      toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
-    });
+    //   toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
+    //   toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
+    // });
 
     // Send a request to get the player state of every active music site tab
     chrome.runtime.sendMessage({ action: "get_active_tabs" }, getTabStates.bind(this));
