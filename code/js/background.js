@@ -87,10 +87,10 @@
         fromTab: sender.tab
       });
     }
-    if(request.action === "get_active_tabs") {
-      var active_tabs = window.sk_sites.getActiveMusicTabs();
-      active_tabs.then(function(tabs) {
-        console.log("Active tabs: ", tabs);
+    if(request.action === "get_music_tabs") {
+      var music_tabs = window.sk_sites.getMusicTabs();
+      music_tabs.then(function(tabs) {
+        console.log("Music tabs: ", tabs);
         response(tabs);
       });
 

@@ -52,7 +52,7 @@ div a, div a:hover, div a:visited {
   white-space: nowrap;
   display: inline-block;
   padding: 0 4px 0 4px;
-  height: 20px;
+  height: 16px;
 }
 
 .site-data {
@@ -152,28 +152,31 @@ div a, div a:hover, div a:visited {
   display: none;
 
   button {
-    padding: 4px 6px 4px 6px;
+    padding: 1px 4px 1px 4px;
+    height: 20px;
+    width: 106px;
+    font-size: 12px;
   }
   button span {
     margin-right: 5px;
   }
 
-  .btn-enabled {
+  .btn-enabled, .btn-enabled:active, .btn-enabled:focus {
     background-color: $main-color;
     border-color: darken($main-color, 5%);
     color: #FFFFFF;
-    &:hover, &:active, &:focus {
-      background-color: darken($main-color, 20%);
+    &:hover {
+      background-color: darken($main-color, 25%);
       color: #FFFFFF;
     }
   }
 
-  .btn-disabled {
-    background-color: darken($main-color, 20%);;
+  .btn-disabled, .btn-disabled:active, .btn-disabled:focus {
+    background-color: darken($main-color, 25%);;
     border-color: darken($main-color, 5%);
     color: #FFFFFF;
-    &:hover, &:active, &:focus {
-      background-color: $main-color, 20%;
+    &:hover {
+      background-color: $main-color;
       color: #FFFFFF;
     }
   }

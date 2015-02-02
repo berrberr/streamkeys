@@ -182,6 +182,15 @@
   };
 
   /**
+   * Checks if a tab has been temp disabled
+   * @param tabId {Number} id of tab to check
+   * @return {Boolean} true if tab is enabled
+   */
+  Sitelist.prototype.checkTabEnabled = function(tabId) {
+    return (tabId && this.disabledTabs.indexOf(tabId) === -1);
+  };
+
+  /**
    * @param url {String} url of site to check for
    * @return {Boolean} true if url matches a music site
    */
@@ -223,23 +232,14 @@
   };
 
   /**
-   * Checks if a tab has been temp disabled
-   * @param tabId {Number} id of tab to check
-   * @return {Boolean} true if tab is enabled
-   */
-  Sitelist.prototype.checkTabEnabled = function(tabId) {
-    return (tabId && this.disabledTabs.indexOf(tabId) === -1);
-  };
-
-  /**
    * @param tabId {Number} id of tab to temp disable
    * @param is_disabled {Boolean} disable tab if true, enable tab if false
    */
   Sitelist.prototype.markTabAsDisabled = function(tabId, is_disabled) {
     if(is_disabled)
-      this.disabledTabs.push(tabId);
+      this.disabledTabs.push(parseInt(tabId));
     else
-      this.disabledTabs = this.disabledTabs.filter(function(el) { return el !== tabId; });
+      this.disabledTabs = this.disabledTabs.filter(function(tab) { return tab !== tabId; });
   };
 
   /**
@@ -270,6 +270,29 @@
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) music_tabs.push(tab);
+        });
+
+        resolve(music_tabs);
+      });
+    });
+
+    return promise;
+  };
+
+  /**
+   * Gets an array of all tabs that are music tabs, ignoring whether they are active
+   * @return {Promise}
+   */
+  Sitelist.prototype.getMusicTabs = function() {
+    var that = this;
+    var promise = new Promise(function(resolve) {
+      var music_tabs = [];
+      chrome.tabs.query({}, function (tabs) {
+        tabs.forEach(function (tab) {
+          if(that.checkEnabled(tab.url)) {
+            tab.streamkeysEnabled = that.checkTabEnabled(tab.id);
+            music_tabs.push(tab);
+          }
         });
 
         resolve(music_tabs);
