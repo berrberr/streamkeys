@@ -68,6 +68,7 @@
       "songstr": {name: "Songstr", url: "http://www.songstr.com", enabled: true},
       "songza": {name: "Songza", url: "http://www.songza.com", enabled: true},
       "soundcloud": {name: "Soundcloud", url: "http://www.soundcloud.com", enabled: true},
+      "spreaker": {name: "Spreaker", url: "http://www.spreaker.com", enabled: true},
       "spotify": {name: "Spotify Web Player", url: "http://www.spotify.com", enabled: true},
       "stitcher": {name: "Stitcher", url: "http://www.stitcher.com", enabled: true},
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true},
