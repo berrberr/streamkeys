@@ -18,7 +18,7 @@
     buttonSwitch: isNew,
 
     song: ".player-track-title > span",
-    artist: ".player-track-artist > span.player-track-link"
+    artist: ".heading-2-sub span.player-track-link"
   });
 
 })();

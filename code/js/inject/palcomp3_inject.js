@@ -10,7 +10,8 @@
       } catch (exception) {
         sk_log("playNext", exception, true);
       }
-    } else if(e.detail === "prev") {
+    }
+    else if(e.detail === "prev") {
       try {
         $(".p_voltar").mousedown().mouseup();
         sk_log("playPrev");

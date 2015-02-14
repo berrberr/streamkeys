@@ -1,6 +1,10 @@
 ;(function() {
   "use strict";
 
+  /**
+   * Send a player action to every active player tab
+   * @param {String} command - name of the command to pass to the players
+   */
   var sendAction = function(command) {
     var active_tabs = window.sk_sites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
@@ -12,17 +16,9 @@
     });
   };
 
-  var setIcon = function(isDisabled, tabId) {
-    var iconPath = isDisabled ? "icon38_disabled.png" : "icon38.png";
-    chrome.browserAction.setIcon({
-      path: chrome.runtime.getURL(iconPath),
-      tabId: tabId
-    });
-  };
-
   /**
    * Process a command sent from somewhere (popup or content script) in the extension
-   * @param request {Object} Chrome request object from runtime.onMessage
+   * @param {Object} request - Chrome request object from runtime.onMessage
    */
   var processCommand = function(request) {
     if(request.tab_target && parseInt(request.tab_target)) {
@@ -48,9 +44,6 @@
     if(request.action === "update_keys") {
       console.log("Options page has updated settings. Reloading..." + request.site_id);
       window.sk_sites.loadSettings();
-      // Get the site url based on the site_id key and pass that into setSiteTabIcons
-      if(request.site_id)
-        window.sk_sites.setSiteTabIcons(window.sk_sites.sites[request.site_id].url);
     }
     if(request.action === "get_sites") {
       console.log("Options page wants the sitelist.");
@@ -62,15 +55,6 @@
     if(request.action === "inject_controller") {
       console.log("Inject: " + request.file + " into: " + sender.tab.id);
       chrome.tabs.executeScript(sender.tab.id, {file: request.file});
-    }
-    if(request.action === "set_icon") {
-      var tab_id = request.tab_id || sender.tab.id,
-          url = request.url || sender.tab.url;
-      var is_disabled = !(window.sk_sites.checkEnabled(url) &&
-                  window.sk_sites.checkTabEnabled(tab_id));
-      console.log("Set icon - TabID: " + tab_id + " -- Disabled: " +
-        is_disabled + " -- Tabinfo: ", sender.tab);
-      setIcon(is_disabled, tab_id);
     }
     if(request.action === "check_music_site") {
       // A tab index of -1 means that the tab is "embedded" in a page

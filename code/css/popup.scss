@@ -23,26 +23,12 @@ div a, div a:hover, div a:visited {
   border-right: 1px solid $main-color;
 }
 
-.header {
-  @extend .player-div-border;
-  background-color: $main-color;
-  border-top: 1px solid $main-color;
-  text-align: center;
-  padding: 8px;
-  font-size: 18px;
-  letter-spacing: 1.5px;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-}
-
-.header a, .header a:active, .header a:visited {
-  color: #FFFFFF;
-  text-decoration: none;
-}
-
 .disabled {
-  opacity: .6;
+  .site-title, .site-favicon, .song-data {
+    opacity: .5;
+  }
   .player-controls-row {
+    opacity: .5;
     pointer-events: none;
   }
 }
@@ -52,7 +38,7 @@ div a, div a:hover, div a:visited {
   white-space: nowrap;
   display: inline-block;
   padding: 0 4px 0 4px;
-  height: 16px;
+  height: 18px;
 }
 
 .site-data {
@@ -78,6 +64,7 @@ div a, div a:hover, div a:visited {
   width: 16px;
   height: 16px;
   margin-left: 12px;
+  border: none;
 }
 
 .site-title {
@@ -107,28 +94,44 @@ div a, div a:hover, div a:visited {
     display: inline-block;
     font-size: 12px;
   }
-  span.glyphicon:hover {
-    opacity: .7;
+}
+
+.header {
+  @extend .player-div-border;
+  background-color: $main-color;
+  border-top: 1px solid $main-color;
+  text-align: center;
+  padding: 6px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  a, a:active, a:visited {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    text-decoration: none;
   }
 }
 
-.options-row {
+.options {
   @extend .player-div-border;
   background-color: $main-color;
   display: block;
   width: 100%;
-  padding: 10px 27px;
-  font-size: 15px;
-  letter-spacing: 1.5px;
+  padding: 6px 27px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom: 2px solid $main-color;
-  a, a:hover, a:visited {
-    color: #FFFFFF;
-  }
   #help-link {
     float: right;
     padding-right: 2px;
+  }
+  a, a:hover, a:visited {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    text-decoration: none;
   }
 }
 

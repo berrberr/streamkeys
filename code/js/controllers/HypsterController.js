@@ -6,6 +6,8 @@
     playPause: "#PlPs_btn",
     playNext: "#Next_btn",
     playPrev: "#Prev_btn",
-    mute: "#Mute_btn"
+    mute: "#Mute_btn",
+
+    song: "#plstNameCH"
   });
 })();

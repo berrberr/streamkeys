@@ -65,8 +65,8 @@
 
   /**
    * Inject a script into the current document
-   * @param file.url {String} /relative/path/to/script
-   * @param file.script {String} plaintext script as a string
+   * @param {String} file.url - /relative/path/to/script
+   * @param {String} file.script - plaintext script as a string
    */
   BaseController.prototype.injectScript = function(file) {
     var script = document.createElement("script");
@@ -78,9 +78,9 @@
 
   /**
    * Click inside document
-   * @param opts.selectorButton {String} css selector for button to click
-   * @param opts.action {String} name of action to log to console for debugging purposes
-   * @param opts.selectorFrame {String} OPTIONAL css selector for iframe to send clicks to
+   * @param {String} opts.selectorButton - css selector for button to click
+   * @param {String} opts.action - name of action to log to console for debugging purposes
+   * @param {String} [opts.selectorFrame] - css selector for iframe to send clicks to
    */
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
@@ -182,7 +182,6 @@
       }
     }
 
-    // sk_log("IsPlaying: " + isPlaying);
     return isPlaying;
   };
   /**
@@ -215,7 +214,7 @@
 
   /**
    * Gets the text value from a song data selector
-   * @param selector {String} selector for song data
+   * @param {String} selector - selector for song data
    * @return {*} song data if element is found, null otherwise
    */
   BaseController.prototype.getSongData = function(selector) {
@@ -234,7 +233,7 @@
 
   /**
    * Checks if a BaseController property is set. Used for testing.
-   * @param property {String} name of property to check for
+   * @param {String} property - name of property to check for
    */
   BaseController.prototype.getProperty = function(property) {
     if(this[property]) sk_log(property);
@@ -280,7 +279,7 @@
 
   /**
    * Process a test request to get song data
-   * @param selector {String} query selector for song data text
+   * @param {String} selector - query selector for song data text
    */
   BaseController.prototype.test_getSongData = function(selector) {
     var songData = this.getSongData(selector);

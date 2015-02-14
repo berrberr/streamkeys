@@ -9,7 +9,7 @@
   "browser_action": {
     "default_title": "Streamkeys",
     "default_popup": "html/popup.html",
-    "default_icon": "icon38_disabled.png"
+    "default_icon": "icon38.png"
   },
   "content_scripts": [
     {

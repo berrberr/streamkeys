@@ -5,55 +5,30 @@ require("./lib/jquery.loadTemplate-1.4.4.min.js");
 require("./lib/jquery.marquee.js");
 
 var Popup = function() {
-  var tab_url = "",
-      tab_id = null,
-      disabledBtnClass = "btn-disabled",
-      enableSiteBtn = ".js-enabled-site-btn",
-      enableTabBtn = ".js-enable-tab-btn";
-
-  /**
-   * Toggles one of the buttons to enable/disable for a site or a tab
-   * @param ele {Node} button element
-   * @param text {String} text to set the button to
-   * @param is_disabled {Boolean} true if button should be disabled
-   */
-  var toggleEnableBtn = function(ele, text, is_disabled) {
-    var icon = is_disabled ? "icon38_disabled.png" : "icon38.png";
-    chrome.browserAction.setIcon({
-      path: chrome.runtime.getURL(icon),
-      tabId: tab_id
-    });
-    if(is_disabled) {
-      ele.addClass(disabledBtnClass);
-      ele.html(
-        "<span class=\"glyphicon glyphicon-remove\"></span>" + text.disable);
-    }
-    else {
-      ele.removeClass(disabledBtnClass);
-      ele.html(
-        "<span class=\"glyphicon glyphicon-ok\"></span>" + text.enable);
-    }
-  };
+  var disabledBtnClass = "btn-disabled";
 
   /**
    * Toggles the "Disable For Tab" button
-   * @param {JQuery} $el The tab button element
+   * @param {JQuery} $el - The tab button element
+   * @param {Boolean} [enabled] - Should the tab button be enabled
    */
   this.toggleTabBtn = function($el, enabled) {
-    console.log("toggltab called", $el);
     var tabId = $el.attr("data-tab-id");
+    var $siteContainer = $("#" + tabId);
     if(typeof enabled === "undefined") {
       enabled = $el.hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tabId, !enabled);
     }
     console.log("enabled: ", enabled);
     if(enabled) {
-      $el.find(".btn-text").text("Site Enabled");
+      $siteContainer.removeClass("disabled");
+      $el.find(".btn-text").text("Tab Enabled");
       $el.removeClass(disabledBtnClass);
       $el.find(".glyphicon").addClass("glyphicon-ok").removeClass("glyphicon-remove");
     }
     else {
-      $el.find(".btn-text").text("Site Disabled");
+      $siteContainer.addClass("disabled");
+      $el.find(".btn-text").text("Tab Disabled");
       $el.addClass(disabledBtnClass);
       $el.find(".glyphicon").addClass("glyphicon-remove").removeClass("glyphicon-ok");
     }
@@ -61,8 +36,8 @@ var Popup = function() {
 
   /**
    * Update the song info in the popup
-   * @param stateData {Object} contains the current player state information
-   * @param tab {Object} tab info returned from Chrome API calls
+   * @param {Object} stateData - contains the current player state information
+   * @param {Object} tab - tab info returned from Chrome API calls
    */
   this.updateState = function(stateData, tab) {
     stateData = stateData || {};
@@ -76,7 +51,7 @@ var Popup = function() {
     // Create the elements and setup listeners for the new site's container
     if($siteContainer.length === 0) {
       var div_id = "site-" + tab.id;
-      var $playerContainer = $("<div>", { id: tab.id, classList: "js-site-player" });
+      var $playerContainer = $("<div>", { id: tab.id, "class": "js-site-player" });
       $playerContainer.loadTemplate(
         $("#template-site-player"),
         {
@@ -106,9 +81,14 @@ var Popup = function() {
         $siteContainer.find(".settings").toggleClass("settings-active");
       });
 
+      // Click listener for enabled/disable tab button
       $siteContainer.find(".js-enable-tab-btn").click(function() {
-        console.log("cliked");
         that.toggleTabBtn($(this));
+        $(this).parent().hide();
+      });
+
+      $siteContainer.find(".js-tab-link").click(function() {
+        chrome.tabs.update(parseInt($(this).attr("data-tab-id")), { selected: true });
       });
     }
 
@@ -129,7 +109,7 @@ var Popup = function() {
             $(this).find(".js-marquee-wrapper").css("margin-left", "0px");
           }).marquee({
             allowCss3Support: false,
-            delayBeforeStart: 2000,
+            delayBeforeStart: 2500,
             duration: scrollDuration,
             pauseOnCycle: true
           });
@@ -154,7 +134,6 @@ var Popup = function() {
     $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
 
     // Set the player row buttons
-    console.log(stateData.isPlaying);
     if(stateData.isPlaying) {
       $siteContainer.find("#playPause > span").removeClass("glyphicon-play").addClass("glyphicon-pause");
     }
@@ -164,14 +143,13 @@ var Popup = function() {
 
     // Set the tab enabled button
     if(typeof tab.streamkeysEnabled === "boolean") {
-      console.log("Enabled btn from bbackgroun: ", tab.streamkeysEnabled);
       this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
     }
   };
 
   /**
    * Query each active music tab for the player state, then update the popup state
-   * @param tabs {Array} array of active music tabs
+   * @param {Array} tabs - array of active music tabs
    */
   var getTabStates = function(tabs) {
     var that = this;
@@ -193,48 +171,11 @@ var Popup = function() {
     });
   };
 
-  this.setupListeners = function() {
-    // Toggle controls for a site
-    $(enableSiteBtn).click(function() {
-      var disabled = !$(this).hasClass(disabledBtnClass);
-      chrome.extension.getBackgroundPage().window.sk_sites.markSiteAsDisabled(tab_url, disabled);
-      toggleEnableBtn($(this), disabled);
-      this.toggleTabBtn(disabled);
-
-      // If we go from site disabled => enabled then the tab button won't update until clicked or popup reset
-      // So instead toggle it if click is to enable site based on the tab's previous state
-      var tabDisableStatus = !(!disabled && chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id));
-      toggleEnableBtn($(enableTabBtn), tabDisableStatus);
-    });
-
-    // Toggle controls for a specific tab
-    $(enableTabBtn).click(function() {
-      var disabled = !$(enableTabBtn).hasClass(disabledBtnClass);
-      chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tab_id, disabled);
-      toggleEnableBtn($(enableTabBtn), disabled);
-    });
-  };
-
   this.onLoad = function() {
-    // Setup all element click listeners
-    this.setupListeners();
-
     var that = this;
 
     // Set the options link to the options page
     $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
-
-    // // Checks if the active tab is a music site to show enable/disable buttons
-    // chrome.tabs.query({ active: true }, function(tab) {
-    //   tab_url = tab[0].url;
-    //   tab_id = tab[0].id;
-
-    //   var is_disabled = !chrome.extension.getBackgroundPage().window.sk_sites.checkEnabled(tab_url);
-    //   var is_tab_disabled = is_disabled || !chrome.extension.getBackgroundPage().window.sk_sites.checkTabEnabled(tab_id);
-
-    //   toggleEnableBtn($(enableSiteBtn), enableSiteBtnText, is_disabled);
-    //   toggleEnableBtn($(enableTabBtn), enableTabBtnText, is_tab_disabled);
-    // });
 
     // Send a request to get the player state of every active music site tab
     chrome.runtime.sendMessage({ action: "get_music_tabs" }, getTabStates.bind(this));

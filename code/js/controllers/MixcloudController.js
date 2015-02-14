@@ -11,8 +11,8 @@
     like: ".icon-favorite-inner:not(.ng-hide)",
 
     playState: ".player-control.pause-state",
-    song: ".current-track",
-    artist: ".current-artist > span"
+    song: ".player-cloudcast-title",
+    artist: ".player-cloudcast-author-link"
   });
 
   controller.mute = function() {

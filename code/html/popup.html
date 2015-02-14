@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="options-row">
+    <div class="options">
       <div>
         <a href="#" id="options-link" target="_blank" tabindex="-1">Options</a>
         <a href="http://www.streamkeys.com/guide.html" id="help-link" target="_blank" tabindex="-1">Help</a>
@@ -27,9 +27,9 @@
       <div data-id="tab_id" class="site-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
         <div class="player-row js-player-row">
           <div class="site-data js-site-data">
-            <img class="site-favicon js-site-favicon" />
+            <a data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}' class="js-tab-link" tabindex="-1" href="#" title="Open Tab"><img class="site-favicon js-site-favicon" /></a>
             <span class="site-title js-site-title"></span>
-            <a href="#" class="js-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
+            <a href="#" class="js-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}' title="Settings">
               <span class="glyphicon glyphicon-cog settings"></span>
             </a>
           </div>
@@ -42,11 +42,11 @@
           </div>
         </div>
         <div class="player-controls-row">
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-default sk-playcontrols" id="dislike" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-default sk-playcontrols" id="playPrev" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-backward"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-default sk-playcontrols" id="playPause" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-play"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-default sk-playcontrols" id="playNext" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-forward"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-default sk-playcontrols" id="like" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="dislike" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="playPrev" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-backward"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="playPause" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-play"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="playNext" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-forward"></span></button>
+          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="like" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart"></span></button>
         </div>
       </div>
     </script>

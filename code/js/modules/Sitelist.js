@@ -38,18 +38,21 @@
       "hypem": {name: "Hypemachine", url: "http://www.hypem.com", enabled: true},
       "iheart": {name: "iHeartRadio", url: "http://www.iheart.com", enabled: true},
       "jango": {name: "Jango", url: "http://www.jango.com", enabled: true},
+      "kollekt": {name: "Kollekt.fm", url: "http://www.kollekt.fm", enabled: true},
       "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true,
           alias: ["lastfm"]},
       "laracasts": {name: "Laracasts", url: "http://www.laracasts.com", enabled: true},
       "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true},
-      "music.sonyentertainmentnetwork": {name: "SonyMusicUnlimited", url: "https://music.sonyentertainmentnetwork.com",
+      "music.sonyentertainmentnetwork": {name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com",
           controller: "SonyMusicUnlimitedController.js", enabled: true},
+      "mycloudplayers": {name: "My Cloud Player", url: "http://www.mycloudplayers.com", enabled: true},
       "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true},
       "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true},
       "oplayer": {name: "oPlayer", url: "http://oplayer.org", enabled: true},
       "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com", enabled: true},
       "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true},
-      "pleer": {name: "Pleer.com", url: "http://pleer.com", enabled: true},
+      "player": {name: "Player.fm", url: "http://player.fm", enabled: true},
+      "pleer": {name: "Pleer", url: "http://pleer.com", enabled: true},
       "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true},
       "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com", enabled: true},
       "play.google": {name: "Google Music", url: "http://play.google.com", controller: "GoogleMusicController.js",
@@ -58,7 +61,9 @@
       "rainwave": {name: "Rainwave.cc", url: "http://www.rainwave.cc", enabled: true},
       "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true},
       "rdio": {name: "Rdio", url: "http://www.rdio.com", enabled: true},
+      "reverbnation": {name: "Reverb Nation", url: "http://www.reverbnation.com", enabled: true},
       "seesu": {name: "Seesu.me", url: "http://www.seesu.me", enabled: true},
+      "shortorange": {name: "ShortOrange", url: "http://www.shortorange.com", enabled: true},
       "slacker": {name: "Slacker", url: "http://www.slacker.com", enabled: true},
       "songstr": {name: "Songstr", url: "http://www.songstr.com", enabled: true},
       "songza": {name: "Songza", url: "http://www.songza.com", enabled: true},
@@ -68,7 +73,7 @@
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true},
       "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true},
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true},
-      "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", enabled: true},
+      "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js", enabled: true},
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to",
           controller: "YouarelisteningtoController.js", enabled: true},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true},
@@ -102,8 +107,8 @@
 
   /**
    * Set site enabled settings in localstorage
-   * @param key {String} name of the hotkey-sites key in localstorage
-   * @param value {Object} value to set
+   * @param {String} key - name of the hotkey-sites key in localstorage
+   * @param {Object} value - value to set
    * @return {Promise}
    */
   Sitelist.prototype.setStorage = function(key, value) {
@@ -123,7 +128,9 @@
     return promise;
   };
 
-  // @return [arr] enabled sites
+  /**
+   * @return {Array} array of enabled sites
+   */
   Sitelist.prototype.getEnabled = function() {
     return $.map(this.sites, function(val, key) {
       if(val.enabled) return key;
@@ -132,7 +139,7 @@
 
   /**
    * Returns the sitelist key of a url if it is matched to a music site
-   * @param url {String} url to check
+   * @param {String} url - url to check
    * @return {String} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
@@ -183,7 +190,7 @@
 
   /**
    * Checks if a tab has been temp disabled
-   * @param tabId {Number} id of tab to check
+   * @param {Number} tabId - id of tab to check
    * @return {Boolean} true if tab is enabled
    */
   Sitelist.prototype.checkTabEnabled = function(tabId) {
@@ -191,7 +198,7 @@
   };
 
   /**
-   * @param url {String} url of site to check for
+   * @param {String} url - url of site to check for
    * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
@@ -202,49 +209,37 @@
     });
   };
 
-  Sitelist.prototype.setSiteTabIcons = function(url) {
-    this.getMusicTabsByUrl(url).then(function(tab_ids) {
-      tab_ids.forEach(function(tab_id) {
-        chrome.runtime.sendMessage({action: "set_icon", url: url, tab_id: tab_id});
-      });
-    }, function(err) {
-      console.log(err);
-    });
-  };
-
   /**
    * Set the disabled value of a music site and store results in localstorage
-   * @param url {String} url of site to mark as disabled
-   * @param is_disabled {Boolean} disable site if true, enable site if false
+   * @param {String} url - url of site to mark as disabled
+   * @param {Boolean} is_disabled - disable site if true, enable site if false
    */
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
-        value = !is_disabled,
-        that = this;
+        value = !is_disabled;
     if(site_name) {
       this.sites[site_name].enabled = value;
-      this.setStorage(site_name, value).then(function() {
-        that.setSiteTabIcons(url);
-      }, function(err) {
-        console.log(err);
-      });
+      this.setStorage(site_name, value);
     }
   };
 
   /**
-   * @param tabId {Number} id of tab to temp disable
-   * @param is_disabled {Boolean} disable tab if true, enable tab if false
+   * @param {Number} tabId - id of tab to temp disable
+   * @param {Boolean} is_disabled - disable tab if true, enable tab if false
    */
   Sitelist.prototype.markTabAsDisabled = function(tabId, is_disabled) {
-    if(is_disabled)
+    tabId = parseInt(tabId);
+    if(is_disabled) {
       this.disabledTabs.push(parseInt(tabId));
-    else
+    }
+    else {
       this.disabledTabs = this.disabledTabs.filter(function(tab) { return tab !== tabId; });
+    }
   };
 
   /**
    * Gets the filename of a sites controller
-   * @param url {String} URL to get controller for
+   * @param {String} url - URL to get controller for
    * @return {String} controller filename if found
    */
   Sitelist.prototype.getController = function(url) {

@@ -3,12 +3,14 @@
 
   require("BaseController").init({
     siteName: "Di.fm",
-    playPause: "#ctl-play",
-    mute: "#btn-volume",
-    like: "#main-container .vote-btn.up",
-    dislike: "#main-container .vote-btn.down",
+    playPause: ".icon-play",
+    play: ".icon-play",
+    pause: ".icon-pause",
+    mute: ".volume",
+    like: ".icon-vote-up",
+    dislike: ".icon-vote-down",
 
-    playState: ".icon-stop",
-    song: "div.title-container > div.title"
+    playState: ".icon-pause",
+    song: ".track-name"
   });
 })();

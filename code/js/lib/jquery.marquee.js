@@ -175,7 +175,7 @@
 
             } else {
                 //Save the width of the each element so we can use it in animation
-                elWidth = $this.find('.js-marquee:first').width() + o.gap;
+                elWidth = $this.find('.js-marquee:first').width() + 16 + o.gap;
 
                 //container width
                 containerWidth = $this.width();
