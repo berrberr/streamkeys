@@ -2,7 +2,7 @@
   "use strict";
 
   require("BaseController").init({
-    siteName: "Google Music",
+    siteName: "Google Play Music",
     playPause: "[data-id=play-pause]",
     playNext: "[data-id=forward]",
     playPrev: "[data-id=rewind]",
