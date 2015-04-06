@@ -10,7 +10,7 @@
     like: ".player-controls .icon_like",
     dislike: ".player-controls .icon_like_on",
 
-    song: ".track__title",
-    artist: ".track__artists"
+    song: ".player-controls .track__title",
+    artist: ".player-controls .track__artists"
   });
 })();
