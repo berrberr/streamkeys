@@ -1,10 +1,18 @@
 {
-	"folders":
-	[
-		{
-			"follow_symlinks": true,
-			"path": ".",
+  "folders":
+  [
+    {
+      "follow_symlinks": true,
+      "path": ".",
       "folder_exclude_patterns": ["node_modules", ".sass-cache", "test/streamkeys-ext", "build"]
-		}
-	]
+    }
+  ],
+  "settings":
+  {
+    "editorconfig": true,
+    "ensure_newline_at_eof_on_save": true,
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": true
+  }
 }
