@@ -68,6 +68,7 @@
       "spotify": {name: "Spotify Web Player", url: "http://www.spotify.com", enabled: true},
       "spreaker": {name: "Spreaker", url: "http://www.spreaker.com", enabled: true},
       "stitcher": {name: "Stitcher", url: "http://www.stitcher.com", enabled: true},
+      "thedrop": {name: "TheDrop", url: "https://thedrop.club", enabled: true},
       "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true},
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true},
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true},
