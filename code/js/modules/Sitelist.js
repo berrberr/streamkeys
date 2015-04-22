@@ -22,6 +22,7 @@
       "8tracks": {name: "8tracks", url: "http://www.8tracks.com", enabled: true},
       "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player", enabled: true},
       "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com", enabled: true},
+      "asoftmurmur": {name: "A Soft Murmur", url: "http://www.asoftmurmur.com", enabled: true},
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true},
       "beatsmusic": {name: "Beats Web Player", url: "https://listen.beatsmusic.com/", enabled: true},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true},
