@@ -9,6 +9,7 @@
     playNext: ".next-button",
     playPrev: ".prev-button",
     mute: ".volume-button",
+    like: ".music-player .favorite-button",
 
     playState: ".button-left.pause-button",
     song: ".playing-title"

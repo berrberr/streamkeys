@@ -8,7 +8,7 @@
     playPrev: ".icon-fast-bw",
 
     playState: ".control-play.state-playing",
-    song: ".track-title",
-    artist: ".track-artist"
+    song: ".track-infos .track-title",
+    artist: ".track-infos .track-artist"
   });
 })();

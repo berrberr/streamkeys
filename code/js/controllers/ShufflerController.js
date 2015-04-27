@@ -6,6 +6,7 @@
     playPause: "#play-pause",
     playNext: "#next",
     playPrev: "#prev",
+    like: "#favorite",
 
     playState: ".pause",
     song: ".track-title",
