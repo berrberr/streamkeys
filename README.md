@@ -1,4 +1,4 @@
-# Streamkeys v1.4.4 [![Build Status](https://travis-ci.org/berrberr/streamkeys.svg?branch=master)](https://travis-ci.org/berrberr/streamkeys)
+# Streamkeys v1.4.5 [![Build Status](https://travis-ci.org/berrberr/streamkeys.svg?branch=master)](https://travis-ci.org/berrberr/streamkeys)
 
 Chrome extension to send "global" (ie. across the browser) hotkeys to various online media players.
 
@@ -106,7 +106,6 @@ node test/runner.js
 ## TODO
 
 - Redo tab stack
-- See if media keys can work with mac
 - Test on Ubuntu/Linux and ChromeOS
 - See if it can work with embedded players (ie. soundcloud). Maybe check for existence of some element, if found add tab to stack (should be done after load)?
 - Add tests for Amazon, Pandora, Plex, PocketCasts Seesu, Spotify, VK
