@@ -7,4 +7,4 @@ streamkeys-dev.zip
 streamkeys.zip
 .sass-cache/
 .idea/
-streamkeys.sublime-workspace
+*.sublime-workspace

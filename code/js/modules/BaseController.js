@@ -184,13 +184,14 @@
 
     return isPlaying;
   };
+
   /**
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
   BaseController.prototype.updatePlayerState = function() {
     var newState = this.getStateData();
     if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
-      console.log("state change!");
+      sk_log("Player state change");
       this.oldState = newState;
       chrome.runtime.sendMessage({
         action: "update_player_state",
