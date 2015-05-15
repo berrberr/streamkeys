@@ -2,7 +2,17 @@
   "use strict";
 
   var controller = require("BaseController"),
-      sk_log = require("../modules/SKLog.js");
+      sk_log = require("../modules/SKLog.js"),
+      $ = require("jquery");
+
+  var multiSelectors = {
+    play: [".ytp-button-play", null],
+    pause: [".ytp-button-pause", null],
+    playPause: [".ytp-button-play", ".ytp-play-button"],
+    playNext: [".ytp-button-next", ".ytp-next-button"],
+    playPrev: [".ytp-button-prev", ".ytp-prev-button"],
+    playState: [".ytp-button-pause", ".ytp-play-button[aria-label='Pause']"]
+  };
 
   controller.init({
     siteName: "YouTube",
@@ -20,6 +30,23 @@
     buttonSwitch: true
   });
 
+  controller.checkPlayer = function() {
+    var that = this;
+
+    if(document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
+      $.each(multiSelectors, function(key, value) {
+        that.selectors[key] = value[0];
+      });
+      that.buttonSwitch = true;
+    }
+    else {
+      $.each(multiSelectors, function(key, value) {
+        that.selectors[key] = value[1];
+      });
+      that.buttonSwitch = false;
+    }
+  };
+
   controller.playNext = function() {
     if(document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
     else this.click({selectorButton: this.selectors.playNext, action: "playNext"});
@@ -30,24 +57,4 @@
     else this.click({selectorButton: this.selectors.playPrev, action: "playPrev"});
   };
 
-  controller.click = function(opts) {
-    opts = opts || {};
-    if(opts.selectorButton === null) {
-      sk_log("disabled", opts.action);
-      return;
-    }
-
-    var doc = (opts.selectorFrame) ? document.querySelector(opts.selectorFrame).contentWindow.document : document;
-    if (!doc) return;
-
-    try {
-      doc.querySelector(opts.selectorButton).click();
-      sk_log(opts.action);
-    } catch(e) {
-      // If selector fails then we are using the new youtube player
-      if(opts.action === "playPause") doc.querySelector(".ytp-play-button").click();
-      if(opts.action === "playNext") doc.querySelector(".ytp-next-button").click();
-      if(opts.action === "playPrev") doc.querySelector(".ytp-prev-button").click();
-    }
-  };
 })();
