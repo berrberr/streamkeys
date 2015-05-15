@@ -6,11 +6,11 @@
     playPause: "[data-id=play-pause]",
     playNext: "[data-id=forward]",
     playPrev: "[data-id=rewind]",
-    like: "#player-right-wrapper li[data-rating='5']",
-    dislike: "#player-right-wrapper li[data-rating='1']",
+    like: ".rating-container [data-rating='5']",
+    dislike: ".rating-container [data-rating='1']",
 
-    playState: ".flat-button.playing",
-    song: "#playerSongTitle",
+    playState: "[data-id=play-pause].playing",
+    song: "#player-song-title",
     artist: "#player-artist",
     album: ".player-album"
   });
