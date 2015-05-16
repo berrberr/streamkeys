@@ -34,6 +34,7 @@
       "disco": {name: "Disco.io", url: "http://www.disco.io", enabled: true},
       "earbits": {name: "Earbits", url: "http://www.earbits.com", enabled: true},
       "player.edge": {name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js", enabled: true},
+      "emby": {name: "Emby", url: "http://app.emby.media", enabled: true},
       "gaana": {name: "Gaana", url: "http://www.gaana.com", enabled: true},
       "play.google": {name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js", enabled: true},
       "grooveshark": {name: "Grooveshark", url: "http://www.grooveshark.com", enabled: true},
