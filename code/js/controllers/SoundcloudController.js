@@ -9,6 +9,6 @@
     mute: ".volume__togglemute",
 
     playState: ".playControl.playing",
-    song: ".playbackTitle__link"
+    song: ".playbackSoundBadge__title > span:nth-of-type(2)"
   });
 })();
