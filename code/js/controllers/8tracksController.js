@@ -11,7 +11,7 @@
     like: ".mix-like.inactive",
     dislike: ".mix-like.active",
 
-    song: "li.track.now_playing > div.title_container > div.title_artist > span.t",
-    artist: "li.track.now_playing > div.title_container > div.title_artist > span.a"
+    song: "li.track.now_playing div.title_container div.title_artist span.t",
+    artist: "li.track.now_playing div.title_container div.title_artist span.a"
   });
 })();
