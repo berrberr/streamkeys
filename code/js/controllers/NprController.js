@@ -3,10 +3,10 @@
 
   require("BaseController").init({
     siteName: "NPR",
-    playPause: ".play.jp-play",
-    play: ".play.jp-play",
-    pause: ".pause.jp-pause",
-    playNext: ".sprite-next",
+    playPause: "a.play",
+    play: "a.play",
+    pause: "a.pause",
+    playNext: "a.next",
 
     song: ".title"
   });
