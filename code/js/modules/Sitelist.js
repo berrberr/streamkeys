@@ -80,6 +80,7 @@
       "thedrop": {name: "TheDrop", url: "https://www.thedrop.club", enabled: true},
       "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com", enabled: true},
       "tunein": {name: "TuneIn", url: "http://www.tunein.com", enabled: true},
+      "twitch": {name: "Twitch.tv", url: "http://www.twitch.tv", enabled: true},
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true},
       "xbox": {name: "Xbox Music", url: "http://music.xbox.com", enabled: true},
       "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js", enabled: true},
