@@ -161,6 +161,10 @@
         // Check if the class list contains the class that is only active when play button is playing
         isPlaying = playPauseEl.classList.contains(this.playStyle);
       }
+      else if(this.pauseStyle && this.selectors.pause) {
+        var pauseEl = document.querySelector(this.selectors.pause);
+        isPlaying = pauseEl.classList.contains(this.pauseStyle);
+      }
       else {
         // Check if the pause element exists
         if(this.selectors.playState) {

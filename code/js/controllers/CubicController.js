@@ -3,15 +3,14 @@
 
   require("BaseController").init({
     siteName: "Cubic.fm",
-    playPause: ".control.play",
-    play: ".control.play",
-    pause: ".control.pause",
-    playNext: ".control.next",
-    playPrev: ".control.previous",
-    like: ".radio > .action.like",
-    dislike: ".radio > .action.like",
+    playPause: ".player-button-play",
+    play: ".player-button-play .fa-play",
+    pause: ".player-button-play .fa-pause",
+    playNext: ".player-button-next",
+    playPrev: ".player-button-prev",
+    mute: ".player-button-vol .volume-icon",
 
-    playState: ".control.pause",
-    song: "div.track_data > div.track_name"
+    playState: ".player-button-play .fa-pause",
+    song: ".track-songtitle"
   });
 })();
