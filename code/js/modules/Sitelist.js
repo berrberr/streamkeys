@@ -60,6 +60,7 @@
       "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com", enabled: true},
       "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com", enabled: true},
       "radioswissjazz": {name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch", enabled: true},
+      "redditmusicplayer": {name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", enabled: true},
       "rainwave": {name: "Rainwave.cc", url: "http://www.rainwave.cc", enabled: true},
       "rdio": {name: "Rdio", url: "http://www.rdio.com", enabled: true},
       "reverbnation": {name: "Reverb Nation", url: "http://www.reverbnation.com", enabled: true},
