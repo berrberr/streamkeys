@@ -3,9 +3,9 @@
 
   require("BaseController").init({
     siteName: "Short Orange",
-    playPause: ".fa-play",
-    play: ".fa-play",
-    pause: ".fa-pause",
+    playPause: ".jp-play .fa-play",
+    play: ".jp-play .fa-play",
+    pause: ".jp-play .fa-pause",
     playNext: ".fa-forward",
     playPrev: ".fa-backward",
 
