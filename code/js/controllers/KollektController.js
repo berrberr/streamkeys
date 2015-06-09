@@ -2,13 +2,13 @@
   "use strict";
 
   require("BaseController").init({
-    siteName: "Kollet.fm",
-    playPause: ".fa-play",
-    playNext: ".fa-forward",
-    playPrev: ".fa-backward",
-    like: ".fa-heart",
+    siteName: "Kollekt.fm",
+    playPause: ".controls .fa-play",
+    playNext: ".controls .fa-forward",
+    playPrev: ".controls .fa-backward",
+    like: ".controls .fa-heart",
 
-    playState: ".fa-play.fa-pause",
+    playState: ".controls .fa-play.fa-pause",
     song: ".current-track-title .track"
   });
 })();
