@@ -54,6 +54,7 @@
       "oplayer": {name: "oPlayer", url: "http://oplayer.org", enabled: true},
       "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com", enabled: true},
       "pandora": {name: "Pandora", url: "http://www.pandora.com", enabled: true},
+      "reddit.music.player.il": {name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", enabled: true},
       "player": {name: "Player.fm", url: "http://player.fm", enabled: true},
       "pleer": {name: "Pleer", url: "http://pleer.com", enabled: true},
       "plex": {name: "Plex", url: "http://www.plex.tv", enabled: true},
