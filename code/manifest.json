@@ -59,6 +59,9 @@
       "description": "Toggle mute"
     },
     "stop": {
+      "suggested_key": {
+        "default": "MediaStop"
+      },
       "global": true,
       "description": "Stop all players"
     },
