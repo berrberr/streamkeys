@@ -22,8 +22,8 @@
     playNext: ".ytp-button-next",
     playPrev: ".ytp-button-prev",
     mute: ".ytp-button-volume",
-    like: "#watch-like",
-    dislike: "#watch-dislike",
+    like: ".like-button-renderer-like-button",
+    dislike: ".like-button-renderer-dislike-button",
 
     playState: ".ytp-button-pause",
     song: ".watch-title",
