@@ -30,7 +30,7 @@
 
   controller.checkPlayer = function() {
     var that = this,
-        doc = document.querySelector(multiSelectors.iframe[0]);
+        doc = document.querySelector(multiSelectors.iframe[0]) || document.querySelector(multiSelectors.iframe[1]);
 
     if(doc.querySelector(multiSelectors.playPause[0])) {
       $.each(multiSelectors, function(key, value) {
