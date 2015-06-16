@@ -18,5 +18,4 @@
     return (playStateEl &&
               window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
   };
-
 })();
