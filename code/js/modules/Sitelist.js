@@ -86,6 +86,7 @@
       "vk": {name: "Vkontakte", url: "http://www.vk.com", enabled: true},
       "xbox": {name: "Xbox Music", url: "http://music.xbox.com", enabled: true},
       "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js", enabled: true},
+      "radio.yandex": {name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js", enabled: true},
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js", enabled: true},
       "youtube": {name: "YouTube", url: "http://www.youtube.com", enabled: true},
       "zonga": {name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js", enabled: true}
