@@ -1,13 +1,22 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var controller = require("BaseController");
+
+  controller.init({
     siteName: "NPR",
     play: "a.play",
     pause: "a.pause",
     playNext: "a.next",
 
-    pauseStyle: "a.pause",
+    playState: "a.pause",
     song: ".title"
   });
+
+  controller.isPlaying = function() {
+    var playStateEl = document.querySelector(this.selectors.playState);
+    return (playStateEl &&
+              window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
+  };
+
 })();
