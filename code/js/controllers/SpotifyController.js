@@ -29,10 +29,10 @@
 
 
   controller.checkPlayer = function() {
-    var that = this,
-        doc = document.querySelector(multiSelectors.iframe[0]) || document.querySelector(multiSelectors.iframe[1]);
+    var that = this;
+    var player = document.querySelector(multiSelectors.iframe[0]) ? "v1" : "v2";
 
-    if(doc.querySelector(multiSelectors.playPause[0])) {
+    if(player == "v1") {
       $.each(multiSelectors, function(key, value) {
         that.selectors[key] = value[0];
       });
