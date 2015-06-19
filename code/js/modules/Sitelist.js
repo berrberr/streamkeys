@@ -25,6 +25,7 @@
       "asoftmurmur": {name: "A Soft Murmur", url: "http://www.asoftmurmur.com", enabled: true},
       "audiosplitter": {name: "Audiosplitter", url: "http://www.audiosplitter.fm", enabled: true},
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true},
+      "bbc": {name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js", enabled: true},
       "beatsmusic": {name: "Beats Web Player", url: "https://listen.beatsmusic.com", enabled: true},
       "blitzr": {name: "Blitzr", url: "http://www.blitzr.com", enabled: true},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true},
