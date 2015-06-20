@@ -63,6 +63,11 @@
     });
   };
 
+  BaseController.prototype.doc = function() {
+    var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName === "IFRAME");
+    return (useFrameSelector) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
+  };
+
   /**
    * Inject a script into the current document
    * @param {String} file.url - /relative/path/to/script
@@ -89,11 +94,8 @@
       return;
     }
 
-    var doc = (opts.selectorFrame) ? document.querySelector(opts.selectorFrame).contentWindow.document : document;
-    if (!doc) return;
-
     try {
-      doc.querySelector(opts.selectorButton).click();
+      this.doc().querySelector(opts.selectorButton).click();
       sk_log(opts.action);
     } catch(e) {
       sk_log("Element not found for click.", opts.selectorButton, true);
@@ -144,11 +146,8 @@
    * @return {Boolean} true if site is currently playing
    */
   BaseController.prototype.isPlaying = function() {
-    // Check for player iFrame
-    var doc = (this.selectors.iframe) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
-
-    var playEl = doc.querySelector(this.selectors.play),
-        playPauseEl = doc.querySelector(this.selectors.playPause),
+    var playEl = this.doc().querySelector(this.selectors.play),
+        playPauseEl = this.doc().querySelector(this.selectors.playPause),
         isPlaying = false;
 
     if(this.buttonSwitch) {
@@ -162,13 +161,13 @@
         isPlaying = playPauseEl.classList.contains(this.playStyle);
       }
       else if(this.pauseStyle && this.selectors.pause) {
-        var pauseEl = document.querySelector(this.selectors.pause);
+        var pauseEl = this.doc().querySelector(this.selectors.pause);
         isPlaying = pauseEl.classList.contains(this.pauseStyle);
       }
       else {
         // Check if the pause element exists
         if(this.selectors.playState) {
-          isPlaying = (doc.querySelector(this.selectors.playState) !== null);
+          isPlaying = (this.doc().querySelector(this.selectors.playState) !== null);
         }
         // Hack to get around sometimes not being able to read css properties that are not inline
         else if(playEl) {
@@ -227,10 +226,7 @@
   BaseController.prototype.getSongData = function(selector) {
     if(!selector) return null;
 
-    // Check for player iFrame
-    var doc = (this.selectors.iframe) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
-
-    var dataEl = doc.querySelector(selector);
+    var dataEl = this.doc().querySelector(selector);
     if(dataEl && dataEl.textContent) {
       return dataEl.textContent;
     }
