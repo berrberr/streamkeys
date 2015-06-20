@@ -28,7 +28,7 @@
     "grunt-contrib-sass": "~0.8.1",
     "grunt-cli": "~0.1.13",
     "grunt-mkdir": "~0.1.1",
-    "grunt-lintspaces": "~0.5.1",
+    "grunt-lintspaces": "~0.7.0",
     "grunt-browserify": "~3.1.0",
     "grunt-exec": "~0.4.6",
     "grunt-text-replace": "",
