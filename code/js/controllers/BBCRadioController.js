@@ -9,6 +9,7 @@
     mute: "#volume-mute",
     like: "#toggle-mystations > span",
 
-    song: "p.title > a"
+    song: "p.title > a",
+    artist: "p.artist > a"
   });
 })();
