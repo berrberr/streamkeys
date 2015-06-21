@@ -43,7 +43,13 @@
       song: null,
       artist: null,
       isPlaying: null,
-      siteName: null
+      siteName: null,
+      canDislike: null,
+      canPlayPrev: null,
+      canPlayPause: null,
+      canPlayNext: null,
+      canLike: null,
+      hasPlayer: null
     };
 
     // Set to true if the play/pause buttons share the same element
@@ -210,11 +216,23 @@
    * @return {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
    */
   BaseController.prototype.getStateData = function() {
+    var vCanDislike = !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
+        vCanPlayPrev = !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
+        vCanPlayPause = !!((this.selectors.playPause && this.doc().querySelector(this.selectors.playPause)) || (this.selectors.play && this.doc().querySelector(this.selectors.play)) || (this.selectors.pause && this.doc().querySelector(this.selectors.pause))),
+        vCanPlayNext = !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
+        vCanLike = !!(this.selectors.like && this.doc().querySelector(this.selectors.like));
+    var vHasPlayer = (!(!vCanDislike && !vCanPlayPrev && !vCanPlayPause && !vCanPlayNext && !vCanLike));
     return {
       song: this.getSongData(this.selectors.song),
       artist: this.getSongData(this.selectors.artist),
       isPlaying: this.isPlaying(),
-      siteName: this.siteName
+      siteName: this.siteName,
+      canDislike: vCanDislike,
+      canPlayPrev: vCanPlayPrev,
+      canPlayPause: vCanPlayPause,
+      canPlayNext: vCanPlayNext,
+      canLike: vCanLike,
+      hasPlayer: vHasPlayer
     };
   };
 
