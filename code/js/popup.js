@@ -157,14 +157,6 @@ var Popup = function() {
       $siteContainer.find("#playPrev").addClass("disabled");
     }
 
-    // Set the button state for playPause
-    if(stateData.canPlayPause) {
-      $siteContainer.find("#playPause").removeClass("disabled");
-    }
-    else {
-      $siteContainer.find("#playPause").addClass("disabled");
-    }
-
     // Set the button state for playNext
     if(stateData.canPlayNext) {
       $siteContainer.find("#playNext").removeClass("disabled");
