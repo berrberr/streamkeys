@@ -7,6 +7,7 @@
     playNext: ".skipControl__next",
     playPrev: ".skipControl__previous",
     mute: ".volume__iconWrapper",
+    like: ".playbackSoundBadge__like",
 
     playState: ".playControl.playing",
     song: ".playbackSoundBadge__title > span:nth-of-type(2)"
