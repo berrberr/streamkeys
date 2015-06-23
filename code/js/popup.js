@@ -141,6 +141,38 @@ var Popup = function() {
       $siteContainer.find("#playPause > span").removeClass("glyphicon-pause").addClass("glyphicon-play");
     }
 
+    // Set the button state for dislike
+    if(stateData.canDislike) {
+      $siteContainer.find("#dislike").removeClass("disabled");
+    }
+    else {
+      $siteContainer.find("#dislike").addClass("disabled");
+    }
+
+    // Set the button state for playPrev
+    if(stateData.canPlayPrev) {
+      $siteContainer.find("#playPrev").removeClass("disabled");
+    }
+    else {
+      $siteContainer.find("#playPrev").addClass("disabled");
+    }
+
+    // Set the button state for playNext
+    if(stateData.canPlayNext) {
+      $siteContainer.find("#playNext").removeClass("disabled");
+    }
+    else {
+      $siteContainer.find("#playNext").addClass("disabled");
+    }
+
+    // Set the button state for like
+    if(stateData.canLike) {
+      $siteContainer.find("#like").removeClass("disabled");
+    }
+    else {
+      $siteContainer.find("#like").addClass("disabled");
+    }
+
     // Set the tab enabled button
     if(typeof tab.streamkeysEnabled === "boolean") {
       this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);

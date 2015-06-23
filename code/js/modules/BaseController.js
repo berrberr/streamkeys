@@ -39,12 +39,7 @@
     this.pauseStyle = options.pauseStyle || null;
 
     // Previous player state, used to check vs current player state to see if anything changed
-    this.oldState = {
-      song: null,
-      artist: null,
-      isPlaying: null,
-      siteName: null
-    };
+    this.oldState = {};
 
     // Set to true if the play/pause buttons share the same element
     this.buttonSwitch = options.buttonSwitch || false;
@@ -214,7 +209,12 @@
       song: this.getSongData(this.selectors.song),
       artist: this.getSongData(this.selectors.artist),
       isPlaying: this.isPlaying(),
-      siteName: this.siteName
+      siteName: this.siteName,
+      canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
+      canPlayPrev: !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
+      canPlayPause: !!((this.selectors.playPause && this.doc().querySelector(this.selectors.playPause)) || (this.selectors.play && this.doc().querySelector(this.selectors.play)) || (this.selectors.pause && this.doc().querySelector(this.selectors.pause))),
+      canPlayNext: !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
+      canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like))
     };
   };
 
