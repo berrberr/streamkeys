@@ -157,6 +157,14 @@ var Popup = function() {
       $siteContainer.find("#playPrev").addClass("disabled");
     }
 
+    // Hide the site container if there are no usable buttons
+    if(!stateData.canPlayPause) {
+      $siteContainer.hide();
+    }
+    else {
+      $siteContainer.show();
+    }
+
     // Set the button state for playNext
     if(stateData.canPlayNext) {
       $siteContainer.find("#playNext").removeClass("disabled");
