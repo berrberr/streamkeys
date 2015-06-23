@@ -8,3 +8,4 @@ streamkeys.zip
 .sass-cache/
 .idea/
 *.sublime-workspace
+npm-debug.log
