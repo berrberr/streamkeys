@@ -26,6 +26,7 @@ var baseSites = [
   {name: "di.fm", url: "http://www.di.fm/ambient"},
   {name: "edge player", url: "http://player.edge.ca"},
   {name: "gaana", url: "http://www.gaana.com"},
+  {name: "guvera", url: "https://www.guvera.com"},
   {name: "grooveshark", url: "http://www.grooveshark.com"},
   {name: "hypemachine", url: "http://www.hypem.com"},
   {name: "hypster", url: "http://hypster.com/playlists/station/Electronic?rtg=4352"},

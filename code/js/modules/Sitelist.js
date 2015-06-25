@@ -37,6 +37,7 @@
       "player.edge": {name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js", enabled: true},
       "emby": {name: "Emby", url: "http://app.emby.media", enabled: true},
       "gaana": {name: "Gaana", url: "http://www.gaana.com", enabled: true},
+      "guvera": {name: "Guvera", url: "https://www.guvera.com", enabled: true},
       "play.google": {name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js", enabled: true},
       "grooveshark": {name: "Grooveshark", url: "http://www.grooveshark.com", enabled: true},
       "hypem": {name: "Hypemachine", url: "http://www.hypem.com", enabled: true},
