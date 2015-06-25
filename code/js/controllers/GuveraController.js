@@ -7,8 +7,6 @@
     pause: ".playing",
     playNext: ".next-track",
     playPrev: ".prev-track",
-    playState: ".playing",
-    song: "li.artist-name > a.title",
-    artist: "li.track-title> a.title"
+    playState: ".playing"
   });
 })();
