@@ -47,80 +47,83 @@ var Popup = function() {
     // Get the site's container div by tab id
     var $siteContainer = $("#site-" + tab.id);
     var that = this;
+    console.log($siteContainer, stateData);
 
-    if(stateData.hasPlayPause) {
-      // Create the elements and setup listeners for the new site's container
-      if($siteContainer.length === 0) {
-        var div_id = "site-" + tab.id;
-        var $playerContainer = $("<div>", { id: tab.id, "class": "js-site-player" });
-        $playerContainer.loadTemplate(
-          $("#template-site-player"),
-          {
-            "tab_id": div_id,
-            "data-tab-id": tab.id,
-            "tab_target": tab.id
-          }
-        );
+    // Create the elements and setup listeners for the new site's container
+    if($siteContainer.length === 0) {
+      var div_id = "site-" + tab.id;
+      var $playerContainer = $("<div>", { id: tab.id, "class": "js-site-player" });
+      $playerContainer.loadTemplate(
+        $("#template-site-player"),
+        {
+          "tab_id": div_id,
+          "data-tab-id": tab.id,
+          "tab_target": tab.id
+        }
+      );
 
-        var $sibling = $("div.js-site-player").filter(function() {
-          return $(this).data("tab-id") < tab.id;
-        });
-        if($sibling.length > 0) $sibling.after($playerContainer);
-        else $("#player").append($playerContainer);
+      var $sibling = $("div.js-site-player").filter(function() {
+        return $(this).data("tab-id") < tab.id;
+      });
+      if($sibling.length > 0) $sibling.after($playerContainer);
+      else $("#player").append($playerContainer);
 
-        // Update the siteContainer to the new div for use later
-        $siteContainer = $("#site-" + tab.id);
+      // Update the siteContainer to the new div for use later
+      $siteContainer = $("#site-" + tab.id);
 
-        // Click listener for player controls
-        $("[tab-target=" + tab.id +"]").click(function() {
-          chrome.runtime.sendMessage({action: "command", command: this.id, tab_target: this.getAttribute("tab-target")});
-        });
+      // Click listener for player controls
+      $("[tab-target=" + tab.id +"]").click(function() {
+        chrome.runtime.sendMessage({action: "command", command: this.id, tab_target: this.getAttribute("tab-target")});
+      });
 
-        // Click listener for site settings
-        $siteContainer.find(".js-tab-container").click(function() {
-          $siteContainer.find(".music-site-buttons").fadeToggle(100);
-          $siteContainer.find(".settings").toggleClass("settings-active");
-        });
+      // Click listener for site settings
+      $siteContainer.find(".js-tab-container").click(function() {
+        $siteContainer.find(".music-site-buttons").fadeToggle(100);
+        $siteContainer.find(".settings").toggleClass("settings-active");
+      });
 
-        // Click listener for enabled/disable tab button
-        $siteContainer.find(".js-enable-tab-btn").click(function() {
-          that.toggleTabBtn($(this));
-          $(this).parent().hide();
-        });
+      // Click listener for enabled/disable tab button
+      $siteContainer.find(".js-enable-tab-btn").click(function() {
+        that.toggleTabBtn($(this));
+        $(this).parent().hide();
+      });
 
-        $siteContainer.find(".js-tab-link").click(function() {
-          chrome.tabs.update(parseInt($(this).attr("data-tab-id")), { selected: true });
-        });
-      }
+      $siteContainer.find(".js-tab-link").click(function() {
+        chrome.tabs.update(parseInt($(this).attr("data-tab-id")), { selected: true });
+      });
+    }
 
-      // Get the song name element and add data to it if defined
-      var $songEl = $siteContainer.find(".js-song-data");
-      if(stateData.song) {
-        var songText = (stateData.artist) ? stateData.artist + " - " + stateData.song : stateData.song;
-        $songEl.css("display", "inline-block");
-        $siteContainer.find(".js-site-data").css("margin-bottom", "0");
-        // Only update if song data has changed
-        if($songEl.text() !== songText) {
-          // Remove any old marquees
-          $songEl.marquee("destroy");
-          $songEl.text(songText);
-          if($songEl.outerWidth() > $("#player").width()) {
-            var scrollDuration = (parseInt($songEl.outerWidth()) * 15);
-            $songEl.bind("finished", function() {
-              $(this).find(".js-marquee-wrapper").css("margin-left", "0px");
-            }).marquee({
-              allowCss3Support: false,
-              delayBeforeStart: 2500,
-              duration: scrollDuration,
-              pauseOnCycle: true
-            });
-          }
+    // Get the song name element and add data to it if defined
+    var $songEl = $siteContainer.find(".js-song-data");
+    if(stateData.song && stateData.song.length > 1) {
+      var songText = (stateData.artist) ? stateData.artist + " - " + stateData.song : stateData.song;
+      $songEl.css("display", "inline-block");
+      $siteContainer.find(".js-site-data").css("margin-bottom", "0");
+      // Only update if song data has changed
+      if($songEl.text() !== songText) {
+        // Remove any old marquees
+        $songEl.marquee("destroy");
+        $songEl.text(songText);
+        if($songEl.outerWidth() > $("#player").width()) {
+          var scrollDuration = (parseInt($songEl.outerWidth()) * 15);
+          $songEl.bind("finished", function() {
+            $(this).find(".js-marquee-wrapper").css("margin-left", "0px");
+          }).marquee({
+            allowCss3Support: false,
+            delayBeforeStart: 2500,
+            duration: scrollDuration,
+            pauseOnCycle: true
+          });
         }
       }
-      else {
-        $songEl.css("display", "none");
-        $siteContainer.find(".js-site-data").css("margin-bottom", "5px");
-      }
+    }
+    else {
+      $songEl.css("display", "none");
+      $siteContainer.find(".js-site-data").css("margin-bottom", "5px");
+    }
+
+    if(stateData.canPlayPause) {
+      $siteContainer.show();
 
       // Set the site favicon
       if(tab.favIconUrl) {
@@ -159,9 +162,8 @@ var Popup = function() {
         this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
       }
     }
-    // The tab doesn't have a play/pause selector so it's not a music player
     else {
-
+      $siteContainer.hide();
     }
   };
 
