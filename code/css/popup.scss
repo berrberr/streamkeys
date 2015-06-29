@@ -74,6 +74,7 @@ div a, div a:hover, div a:visited {
 
 #player {
   @extend .player-div-border;
+  min-height: 30px;
   padding-bottom: 10px;
   text-align: center;
 }
