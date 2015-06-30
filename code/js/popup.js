@@ -19,7 +19,6 @@ var Popup = function() {
       enabled = $el.hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tabId, !enabled);
     }
-    console.log("enabled: ", enabled);
     if(enabled) {
       $siteContainer.removeClass("disabled");
       $el.find(".btn-text").text("Tab Enabled");
@@ -41,8 +40,6 @@ var Popup = function() {
    */
   this.updateState = function(stateData, tab) {
     stateData = stateData || {};
-    console.log("update state called", stateData);
-    console.log("from: ", tab.id);
 
     // Get the site's container div by tab id
     var $siteContainer = $("#site-" + tab.id);
@@ -94,7 +91,7 @@ var Popup = function() {
 
     // Get the song name element and add data to it if defined
     var $songEl = $siteContainer.find(".js-song-data");
-    if(stateData.song) {
+    if(stateData.song && stateData.song.length > 1) {
       var songText = (stateData.artist) ? stateData.artist + " - " + stateData.song : stateData.song;
       $songEl.css("display", "inline-block");
       $siteContainer.find(".js-site-data").css("margin-bottom", "0");
@@ -121,61 +118,48 @@ var Popup = function() {
       $siteContainer.find(".js-site-data").css("margin-bottom", "5px");
     }
 
-    // Set the site favicon
-    if(tab.favIconUrl) {
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
+    if(stateData.canPlayPause) {
+      $siteContainer.show();
+
+      // Set the site favicon
+      if(tab.favIconUrl) {
+        $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
+        $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
+      }
+      else {
+        $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
+      }
+
+      // Set the site name
+      $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
+
+      // Set the player row buttons
+      if(stateData.isPlaying) {
+        $siteContainer.find("#playPause > span").removeClass("glyphicon-play").addClass("glyphicon-pause");
+      }
+      else {
+        $siteContainer.find("#playPause > span").removeClass("glyphicon-pause").addClass("glyphicon-play");
+      }
+
+      // Set the button state for playPrev
+      $siteContainer.find("#playPrev").toggleClass("disabled", !stateData.canPlayPrev);
+
+      // Set the button state for playNext
+      $siteContainer.find("#playNext").toggleClass("disabled", !stateData.canPlayNext);
+
+      // Set the button state for like
+      $siteContainer.find("#like").toggleClass("disabled", !stateData.canLike);
+
+      // Set the button state for dislike
+      $siteContainer.find("#dislike").toggleClass("disabled", !stateData.canDislike);
+
+      // Set the tab enabled button
+      if(typeof tab.streamkeysEnabled === "boolean") {
+        this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
+      }
     }
     else {
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
-    }
-
-    // Set the site name
-    $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
-
-    // Set the player row buttons
-    if(stateData.isPlaying) {
-      $siteContainer.find("#playPause > span").removeClass("glyphicon-play").addClass("glyphicon-pause");
-    }
-    else {
-      $siteContainer.find("#playPause > span").removeClass("glyphicon-pause").addClass("glyphicon-play");
-    }
-
-    // Set the button state for dislike
-    if(stateData.canDislike) {
-      $siteContainer.find("#dislike").removeClass("disabled");
-    }
-    else {
-      $siteContainer.find("#dislike").addClass("disabled");
-    }
-
-    // Set the button state for playPrev
-    if(stateData.canPlayPrev) {
-      $siteContainer.find("#playPrev").removeClass("disabled");
-    }
-    else {
-      $siteContainer.find("#playPrev").addClass("disabled");
-    }
-
-    // Set the button state for playNext
-    if(stateData.canPlayNext) {
-      $siteContainer.find("#playNext").removeClass("disabled");
-    }
-    else {
-      $siteContainer.find("#playNext").addClass("disabled");
-    }
-
-    // Set the button state for like
-    if(stateData.canLike) {
-      $siteContainer.find("#like").removeClass("disabled");
-    }
-    else {
-      $siteContainer.find("#like").addClass("disabled");
-    }
-
-    // Set the tab enabled button
-    if(typeof tab.streamkeysEnabled === "boolean") {
-      this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
+      $siteContainer.hide();
     }
   };
 
@@ -197,7 +181,6 @@ var Popup = function() {
       // This lets us create the container divs before we get a response, meaning less "flicker" when popup loaded
       that.updateState({}, tab);
       chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, function(playerState) {
-        console.log("state: ", playerState);
         that.updateState(playerState, tab);
       });
     });
