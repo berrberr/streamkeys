@@ -19,7 +19,6 @@ var Popup = function() {
       enabled = $el.hasClass(disabledBtnClass);
       chrome.extension.getBackgroundPage().window.sk_sites.markTabAsDisabled(tabId, !enabled);
     }
-    console.log("enabled: ", enabled);
     if(enabled) {
       $siteContainer.removeClass("disabled");
       $el.find(".btn-text").text("Tab Enabled");
@@ -41,13 +40,10 @@ var Popup = function() {
    */
   this.updateState = function(stateData, tab) {
     stateData = stateData || {};
-    console.log("update state called", stateData);
-    console.log("from: ", tab.id);
 
     // Get the site's container div by tab id
     var $siteContainer = $("#site-" + tab.id);
     var that = this;
-    console.log($siteContainer, stateData);
 
     // Create the elements and setup listeners for the new site's container
     if($siteContainer.length === 0) {
