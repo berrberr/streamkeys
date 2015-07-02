@@ -6,9 +6,11 @@
   /**
    * @return {RegExp} a regex that matches where the string is in a url's (domain) name
    */
-  var URL_check = function(domain, alias) {
-    var inner = alias ? domain + "|www." + domain + "|" + alias.join("|") : domain + "|www." + domain;
-    return (new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")+\\."));
+  var URL_check = function(domain, opts) {
+    opts = opts || {};
+    var inner = opts.alias ? domain + "|www." + domain + "|" + opts.alias.join("|") : domain + "|www." + domain;
+    if(opts.blacklist) inner += "|(?!" + opts.blacklist.join("|") + ")";
+    return (new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")+"));
   };
 
   /**
@@ -27,6 +29,7 @@
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true},
       "bbc": {name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js", enabled: true},
       "beatsmusic": {name: "Beats Web Player", url: "https://listen.beatsmusic.com", enabled: true},
+      "beta.last.fm": {name: "LastFm", url: "http://beta.last.fm", controller: "BetaLastfmController.js", enabled: true},
       "blitzr": {name: "Blitzr", url: "http://www.blitzr.com", enabled: true},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true},
       "cubic": {name: "Cubic.fm", url: "http://www.cubic.fm", enabled: true},
@@ -47,7 +50,7 @@
       "jango": {name: "Jango", url: "http://www.jango.com", enabled: true},
       "kollekt": {name: "Kollekt.fm", url: "http://www.kollekt.fm", enabled: true},
       "laracasts": {name: "Laracasts", url: "http://www.laracasts.com", enabled: true},
-      "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true, alias: ["lastfm"]},
+      "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", enabled: true, alias: ["lastfm"], blacklist: ["beta.last.fm"]},
       "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com", enabled: true},
       "mycloudplayers": {name: "My Cloud Player", url: "http://www.mycloudplayers.com", enabled: true},
       "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true},
@@ -108,7 +111,7 @@
           storageObj = {};
       $.each(that.sites, function(key) {
         if(objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) that.sites[key].enabled = obj["hotkey-sites"][key];
-        that.sites[key].url_regex = new URL_check(key, that.sites[key].alias);
+        that.sites[key].url_regex = new URL_check(key, { alias: that.sites[key].alias, blacklist: that.sites[key].blacklist });
         storageObj[key] = that.sites[key].enabled;
       });
       // Set the storage key on init incase previous storage format becomes broken
