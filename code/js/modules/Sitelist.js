@@ -55,6 +55,7 @@
       "mycloudplayers": {name: "My Cloud Player", url: "http://www.mycloudplayers.com", enabled: true},
       "myspace": {name: "MySpace", url: "http://www.myspace.com", enabled: true},
       "netflix": {name: "Netflix", url: "http://www.netflix.com", enabled: true},
+      "noise": {name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js", enabled: true},
       "npr": {name: "NPR One Player", url: "http://one.npr.org", enabled: true},
       "oplayer": {name: "oPlayer", url: "http://oplayer.org", enabled: true},
       "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com", enabled: true},
