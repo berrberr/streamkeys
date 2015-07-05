@@ -9,8 +9,23 @@
   var URL_check = function(domain, opts) {
     opts = opts || {};
     var inner = opts.alias ? domain + "|www." + domain + "|" + opts.alias.join("|") : domain + "|www." + domain;
-    if(opts.blacklist) inner += "|(?!" + opts.blacklist.join("|") + ")";
-    return (new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")+"));
+
+    // The {0, 3} matching group is there to match up to 3 subdomains
+    var re = new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")\\.+");
+    if(opts.blacklist) {
+      var blacklistRe = new RegExp("(" + opts.blacklist.join("|") + ")");
+
+      // XXX: All URL checks (should) make a call to `.test` on the RegExp
+      // Here we override it with a custom function to account for blacklisted hostnames
+      return {
+        test: function(_url) {
+          var parsedUrl = new URL(_url);
+          return (re.test(_url) && blacklistRe.test(parsedUrl.host));
+        }
+      };
+    }
+
+    return re;
   };
 
   /**
@@ -29,7 +44,7 @@
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com", enabled: true},
       "bbc": {name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js", enabled: true},
       "beatsmusic": {name: "Beats Web Player", url: "https://listen.beatsmusic.com", enabled: true},
-      "beta.last.fm": {name: "LastFm", url: "http://beta.last.fm", controller: "BetaLastfmController.js", enabled: true},
+      "beta.last": {name: "LastFm", url: "http://beta.last.fm", controller: "BetaLastfmController.js", enabled: true},
       "blitzr": {name: "Blitzr", url: "http://www.blitzr.com", enabled: true},
       "bop": {name: "Bop.fm", url: "http://www.bop.fm", enabled: true},
       "cubic": {name: "Cubic.fm", url: "http://www.cubic.fm", enabled: true},
