@@ -10,6 +10,8 @@
 
     playState: "[data-original-title=Pause]",
     song: ".track > .title > a",
-    artist: ".track > .artist > a"
+    artist: ".track > .artist > a",
+
+    hidePlayer: true
   });
 })();

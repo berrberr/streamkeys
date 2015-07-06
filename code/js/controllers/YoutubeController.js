@@ -25,7 +25,8 @@
 
     playState: ".ytp-button-pause",
     song: ".watch-title",
-    buttonSwitch: true
+    buttonSwitch: true,
+    hidePlayer: true
   });
 
   controller.checkPlayer = function() {

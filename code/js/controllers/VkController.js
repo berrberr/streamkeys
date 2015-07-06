@@ -21,7 +21,9 @@
     siteName: "VK",
     playPause: "#pd_play",
     playNext: "#pd_next",
-    playPrev: "#pd_prev"
+    playPrev: "#pd_prev",
+
+    hidePlayer: true
   });
 
   controller.selectors.playcontrols = "#pad_cont";

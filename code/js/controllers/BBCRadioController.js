@@ -10,6 +10,8 @@
     like: "#toggle-mystations > span",
 
     song: "p.title > a",
-    artist: "p.artist > a"
+    artist: "p.artist > a",
+
+    hidePlayer: true
   });
 })();

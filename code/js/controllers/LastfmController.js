@@ -11,6 +11,8 @@
 
     song: "span.track > a",
     artist: "span.artist > a",
-    album: "span.album > span.title > a"
+    album: "span.album > span.title > a",
+
+    hidePlayer: true
   });
 })();

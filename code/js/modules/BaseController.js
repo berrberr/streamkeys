@@ -47,6 +47,9 @@
     // Default listener sends actions to main document
     this.attachListeners();
 
+    // Set to true if the tab should be hidden from the popup unless it has a playPause element shown
+    this.hidePlayer = options.hidePlayer || false;
+
     chrome.runtime.sendMessage({created: true}, function() {
       sk_log("Told BG we are created");
     });
@@ -218,7 +221,8 @@
         (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
       ),
       canPlayNext: !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
-      canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like))
+      canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
+      hidePlayer: this.hidePlayer
     };
   };
 

@@ -10,7 +10,9 @@
     playNext: "a.next",
 
     playState: "a.pause",
-    song: ".title"
+    song: ".title",
+
+    hidePlayer: true
   });
 
   controller.isPlaying = function() {

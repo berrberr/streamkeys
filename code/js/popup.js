@@ -118,40 +118,47 @@ var Popup = function() {
       $siteContainer.find(".js-site-data").css("margin-bottom", "5px");
     }
 
-    if(stateData.canPlayPause) {
+    var $playerBtns = {
+      playPause: $siteContainer.find("#playPause"),
+      playNext: $siteContainer.find("#playNext"),
+      playPrev: $siteContainer.find("#playPrev"),
+      like: $siteContainer.find("#like"),
+      dislike: $siteContainer.find("#dislike")
+    };
+
+    // Hide the player if the property is defined in controller and we dont have a playPause selector
+    if(stateData.hidePlayer && !stateData.canPlayPause) {
+      $siteContainer.hide();
+    }
+    else {
       $siteContainer.show();
+    }
 
-      // Set the site favicon
-      if(tab.favIconUrl) {
-        $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
-        $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
-      }
-      else {
-        $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
-      }
+    // Set the site favicon
+    if(tab.favIconUrl) {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
+    }
+    else {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
+    }
 
-      // Set the site name
-      $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
+    // Set the site name
+    $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
 
-      // Set the player row buttons
+    if(stateData.canPlayPause) {
+      // Set the player button states
       if(stateData.isPlaying) {
-        $siteContainer.find("#playPause > span").removeClass("glyphicon-play").addClass("glyphicon-pause");
+        $playerBtns.playPause.find("span").removeClass("glyphicon-play").addClass("glyphicon-pause");
       }
       else {
-        $siteContainer.find("#playPause > span").removeClass("glyphicon-pause").addClass("glyphicon-play");
+        $playerBtns.playPause.find("span").removeClass("glyphicon-pause").addClass("glyphicon-play");
       }
-
-      // Set the button state for playPrev
-      $siteContainer.find("#playPrev").toggleClass("disabled", !stateData.canPlayPrev);
-
-      // Set the button state for playNext
-      $siteContainer.find("#playNext").toggleClass("disabled", !stateData.canPlayNext);
-
-      // Set the button state for like
-      $siteContainer.find("#like").toggleClass("disabled", !stateData.canLike);
-
-      // Set the button state for dislike
-      $siteContainer.find("#dislike").toggleClass("disabled", !stateData.canDislike);
+      $playerBtns.playPause.toggleClass("disabled", !stateData.canPlayPause);
+      $playerBtns.playPrev.toggleClass("disabled", !stateData.canPlayPrev);
+      $playerBtns.playNext.toggleClass("disabled", !stateData.canPlayNext);
+      $playerBtns.like.toggleClass("disabled", !stateData.canLike);
+      $playerBtns.dislike.toggleClass("disabled", !stateData.canDislike);
 
       // Set the tab enabled button
       if(typeof tab.streamkeysEnabled === "boolean") {
@@ -159,7 +166,11 @@ var Popup = function() {
       }
     }
     else {
-      $siteContainer.hide();
+      // Set all the buttons to disabled if we can't play/pause
+      // This means that either the player hasn't loaded, or the page does not contain a player
+      $.each($playerBtns, function(key, btn) {
+        btn.toggleClass("disabled", true);
+      });
     }
   };
 

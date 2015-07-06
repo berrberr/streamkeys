@@ -12,8 +12,11 @@
     dislike: "#thumbsDown > span",
 
     playState: "#mp3Player .playing",
-    song: "#nowPlayingSection .title"
+    song: "#nowPlayingSection .title",
+
+    hidePlayer: true
   });
+
   /* Overrides */
   controller.playControlsClick = function(div) {
     this.fireEvent = function(element, event, data){

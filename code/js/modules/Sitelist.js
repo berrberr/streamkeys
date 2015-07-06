@@ -20,7 +20,7 @@
       return {
         test: function(_url) {
           var parsedUrl = new URL(_url);
-          return (re.test(_url) && blacklistRe.test(parsedUrl.host));
+          return (re.test(_url) && !blacklistRe.test(parsedUrl.host));
         }
       };
     }

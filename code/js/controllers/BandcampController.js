@@ -9,6 +9,8 @@
 
     playState: ".playbutton.playing",
     song: "a.title_link > span.title",
-    artist: "[itemprop=byArtist]"
+    artist: "[itemprop=byArtist]",
+
+    hidePlayer: true
   });
 })();

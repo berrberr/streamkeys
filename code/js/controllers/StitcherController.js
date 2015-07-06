@@ -8,6 +8,8 @@
     mute: "#audio_player-volume",
 
     playState: "#audio_content .playing",
-    song: "#now-playing-feed-title"
+    song: "#now-playing-feed-title",
+
+    hidePlayer: true
   });
 })();

@@ -4,7 +4,9 @@
   var controller = require("BaseController");
   controller.init({
     siteName: "Laracasts",
-    playPause: "#override"
+    playPause: "#override",
+
+    hidePlayer: true
   });
 
   /* Overrides */
