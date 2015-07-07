@@ -11,7 +11,7 @@
 
     playState: ".playControl.playing",
     song: ".playbackSoundBadge__title > span:nth-of-type(2)",
-    artist: ".m-playing > .sc-type-light > .soundTitle__username > .soundTitle__usernameText",
+    artist: ".m-playing .soundTitle__username",
 
     hidePlayer: true
   });
