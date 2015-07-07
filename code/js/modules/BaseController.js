@@ -151,18 +151,15 @@
     if(this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
-    }
-    else {
+    } else {
       // Check for play/pause style overrides
       if(this.playStyle) {
         // Check if the class list contains the class that is only active when play button is playing
         isPlaying = playPauseEl.classList.contains(this.playStyle);
-      }
-      else if(this.pauseStyle && this.selectors.pause) {
+      } else if(this.pauseStyle && this.selectors.pause) {
         var pauseEl = this.doc().querySelector(this.selectors.pause);
         isPlaying = pauseEl.classList.contains(this.pauseStyle);
-      }
-      else {
+      } else {
         // Check if the pause element exists
         if(this.selectors.playState) {
           isPlaying = (this.doc().querySelector(this.selectors.playState) !== null);
@@ -176,8 +173,7 @@
             displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
           }
           isPlaying = (displayStyle == "none");
-        }
-        else {
+        } else {
           return null;
         }
       }
@@ -296,8 +292,7 @@
     var songData = this.getSongData(selector);
     if(songData) {
       sk_log("Song data: ", songData);
-    }
-    else {
+    } else {
       sk_log("Song data not found.", {}, true);
     }
   };

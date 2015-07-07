@@ -16,8 +16,7 @@
   controller.isPlaying = function() {
     if(this.twitchPlayer && this.twitchPlayer.isPaused) {
       return !this.twitchPlayer.isPaused();
-    }
-    else {
+    } else {
       try {
         this.twitchPlayer = document.querySelector(this.selectors.twitchPlayer);
       } catch (e) {
@@ -36,8 +35,7 @@
       } catch(e) {
         sk_log("Twitch player error", e, true);
       }
-    }
-    else {
+    } else {
       try {
         this.twitchPlayer.playVideo();
         sk_log("playPause");

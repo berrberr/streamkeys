@@ -24,8 +24,7 @@ var Popup = function() {
       $el.find(".btn-text").text("Tab Enabled");
       $el.removeClass(disabledBtnClass);
       $el.find(".glyphicon").addClass("glyphicon-ok").removeClass("glyphicon-remove");
-    }
-    else {
+    } else {
       $siteContainer.addClass("disabled");
       $el.find(".btn-text").text("Tab Disabled");
       $el.addClass(disabledBtnClass);
@@ -112,8 +111,7 @@ var Popup = function() {
           });
         }
       }
-    }
-    else {
+    } else {
       $songEl.css("display", "none");
       $siteContainer.find(".js-site-data").css("margin-bottom", "5px");
     }
@@ -129,8 +127,7 @@ var Popup = function() {
     // Hide the player if the property is defined in controller and we dont have a playPause selector
     if(stateData.hidePlayer && !stateData.canPlayPause) {
       $siteContainer.hide();
-    }
-    else {
+    } else {
       $siteContainer.show();
     }
 
@@ -138,8 +135,7 @@ var Popup = function() {
     if(tab.favIconUrl) {
       $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
       $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
-    }
-    else {
+    } else {
       $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
     }
 
@@ -150,8 +146,7 @@ var Popup = function() {
       // Set the player button states
       if(stateData.isPlaying) {
         $playerBtns.playPause.find("span").removeClass("glyphicon-play").addClass("glyphicon-pause");
-      }
-      else {
+      } else {
         $playerBtns.playPause.find("span").removeClass("glyphicon-pause").addClass("glyphicon-play");
       }
       $playerBtns.playPause.toggleClass("disabled", !stateData.canPlayPause);
@@ -164,8 +159,7 @@ var Popup = function() {
       if(typeof tab.streamkeysEnabled === "boolean") {
         this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
       }
-    }
-    else {
+    } else {
       // Set all the buttons to disabled if we can't play/pause
       // This means that either the player hasn't loaded, or the page does not contain a player
       $.each($playerBtns, function(key, btn) {
@@ -182,8 +176,7 @@ var Popup = function() {
     var that = this;
     if(!tabs.length || tabs.length === 0) {
       $(".js-no-sites").show();
-    }
-    else {
+    } else {
       $(".js-no-sites").hide();
     }
 

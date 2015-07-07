@@ -24,8 +24,7 @@
     if(request.tab_target && parseInt(request.tab_target)) {
       chrome.tabs.sendMessage(parseInt(request.tab_target), { "action": request.command });
       console.log("Single tab request. Sent: " + request.command + " To: " + request.tab_target);
-    }
-    else {
+    } else {
       sendAction(request.command);
     }
   };
