@@ -129,20 +129,6 @@ var Popup = function() {
       $siteContainer.hide();
     } else {
       $siteContainer.show();
-    }
-
-    // Set the site favicon
-    if(tab.favIconUrl) {
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
-    } else {
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
-    }
-
-    // Set the site name
-    $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
-
-    if(stateData.canPlayPause) {
       // Set the player button states
       if(stateData.isPlaying) {
         $playerBtns.playPause.find("span").removeClass("glyphicon-play").addClass("glyphicon-pause");
@@ -159,13 +145,18 @@ var Popup = function() {
       if(typeof tab.streamkeysEnabled === "boolean") {
         this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
       }
-    } else {
-      // Set all the buttons to disabled if we can't play/pause
-      // This means that either the player hasn't loaded, or the page does not contain a player
-      $.each($playerBtns, function(key, btn) {
-        btn.toggleClass("disabled", true);
-      });
     }
+
+    // Set the site favicon
+    if(tab.favIconUrl) {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
+    } else {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
+    }
+
+    // Set the site name
+    $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
   };
 
   /**
