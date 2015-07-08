@@ -124,10 +124,18 @@ var Popup = function() {
       dislike: $siteContainer.find("#dislike")
     };
 
-    // Hide the player if the property is defined in controller and we dont have a playPause selector
-    if(stateData.hidePlayer && !stateData.canPlayPause) {
-      $siteContainer.hide();
+    // Set the site favicon
+    if(tab.favIconUrl) {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
     } else {
+      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
+    }
+
+    // Set the site name
+    $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
+
+    if(stateData.canPlayPause) {
       $siteContainer.show();
       // Set the player button states
       if(stateData.isPlaying) {
@@ -145,18 +153,15 @@ var Popup = function() {
       if(typeof tab.streamkeysEnabled === "boolean") {
         this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
       }
-    }
-
-    // Set the site favicon
-    if(tab.favIconUrl) {
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").attr("src", tab.favIconUrl);
     } else {
-      $siteContainer.find(".js-site-data").find(".js-site-favicon").hide();
+      if(stateData.hidePlayer) { // Hide the player if the controller calls for it
+        $siteContainer.hide();
+      } else { // Otherwise disable the buttons in the player
+        $.each($playerBtns, function(key, btn) {
+          btn.toggleClass("disabled", true);
+        });
+      }
     }
-
-    // Set the site name
-    $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
   };
 
   /**
