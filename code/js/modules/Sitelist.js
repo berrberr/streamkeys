@@ -261,8 +261,7 @@
     tabId = parseInt(tabId);
     if(is_disabled) {
       this.disabledTabs.push(parseInt(tabId));
-    }
-    else {
+    } else {
       this.disabledTabs = this.disabledTabs.filter(function(tab) { return tab !== tabId; });
     }
   };

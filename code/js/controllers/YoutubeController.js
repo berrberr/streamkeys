@@ -37,8 +37,7 @@
         that.selectors[key] = value[0];
       });
       that.buttonSwitch = true;
-    }
-    else {
+    } else {
       $.each(multiSelectors, function(key, value) {
         that.selectors[key] = value[1];
       });

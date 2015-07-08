@@ -36,8 +36,7 @@
       $.each(multiSelectors, function(key, value) {
         that.selectors[key] = value[0];
       });
-    }
-    else {
+    } else {
       $.each(multiSelectors, function(key, value) {
         that.selectors[key] = value[1];
       });
