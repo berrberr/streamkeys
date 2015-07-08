@@ -44,6 +44,9 @@ var Popup = function() {
     var $siteContainer = $("#site-" + tab.id);
     var that = this;
 
+    // Make sure the player is shown in case it was previously hidden for any reason
+    $siteContainer.show();
+
     // Create the elements and setup listeners for the new site's container
     if($siteContainer.length === 0) {
       var div_id = "site-" + tab.id;
@@ -136,7 +139,6 @@ var Popup = function() {
     $siteContainer.find(".js-site-data").find(".js-site-title").text(stateData.siteName);
 
     if(stateData.canPlayPause) {
-      $siteContainer.show();
       // Set the player button states
       if(stateData.isPlaying) {
         $playerBtns.playPause.find("span").removeClass("glyphicon-play").addClass("glyphicon-pause");
