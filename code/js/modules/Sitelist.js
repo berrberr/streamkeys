@@ -40,6 +40,7 @@
       "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player"},
       "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com"},
       "asoftmurmur": {name: "A Soft Murmur", url: "http://www.asoftmurmur.com"},
+      "audible": {name: "Audible", url: "http://www.audible.com"},
       "audiosplitter": {name: "Audiosplitter", url: "http://www.audiosplitter.fm"},
       "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com"},
       "bbc": {name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js"},
