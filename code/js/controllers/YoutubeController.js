@@ -8,6 +8,7 @@
   var multiSelectors = {
     play: [".ytp-button-play", null],
     pause: [".ytp-button-pause", null],
+    playPause: [".ytp-button-play", ".ytp-play-button"],
     playNext: [".ytp-button-next", ".ytp-next-button"],
     playPrev: [".ytp-button-prev", ".ytp-prev-button"],
     playState: [".ytp-button-pause", ".ytp-play-button[aria-label='Pause']"]
