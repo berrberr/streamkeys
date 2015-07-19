@@ -4,6 +4,8 @@
   "description": "Global hotkeys for online music players including support for media keys.",
   "browser": {
     "jquery": "./code/js/lib/jquery-1.11.1.min.js",
+    "ko": "./node_modules/knockout/build/output/knockout-latest.js",
+    "lodash": "./node_modules/lodash/index.js",
     "BaseController": "./code/js/modules/BaseController.js"
   },
   "browserify-shim": {
@@ -38,10 +40,14 @@
     "browserify-shim": "~3.7.0",
     "chai": "~1.9.1",
     "mocha": "~1.21.4",
+    "knockout": "~3.3.0",
     "selenium-webdriver": "~2.43.5",
     "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git",
     "mocha-retry": "~0.0.9",
     "grunt-growl": "^0.1.5",
     "watchify": "~2.1.0"
+  },
+  "dependencies": {
+    "lodash": "~3.10.0"
   }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
   <head>
-    <script type="text/javascript" src="/js/popup.js"></script>
+    <script type="text/javascript" src="/js/popup/popup.js"></script>
     <link href="/css/popup.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
@@ -11,9 +11,48 @@
     </div>
 
     <div id="player">
-      <div class="no-sites js-no-sites">
+      <div class="no-sites js-no-sites" data-bind="visible: $data.musicTabs().length == 0">
         No music sites open.
       </div>
+      <!-- ko foreach: $data.musicTabs -->
+      <div class="site-tab-container">
+        <div class="player-row js-player-row">
+          <div class="site-data js-site-data">
+            <a class="js-tab-link" tabindex="-1" href="#" title="Open Tab">
+              <img class="site-favicon js-site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
+            </a>
+            <span class="site-title js-site-title" data-bind="text: $data.siteName"></span>
+            <a href="#" class="js-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}' title="Settings">
+              <span class="glyphicon glyphicon-cog settings"></span>
+            </a>
+          </div>
+          <div class="song-data" data-bind="scrollingSong: songArtistText, visible: songArtistText().length"></div>
+          <div class="music-site-buttons button-row">
+            <button type="button" class="btn btn-xs btn-enabled js-enable-tab-btn" tabindex="-1" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
+              <span class="glyphicon glyphicon-ok"></span>
+              <span class="btn-text">Site Enabled</span>
+            </button>
+          </div>
+        </div>
+        <div class="player-controls-row">
+          <button type="button" data-bind="css: { disabled: !$data.canDislike() }, click: function() { $data.sendAction('dislike') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-heart-empty"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canPlayPrev() }, click: function() { $data.sendAction('playPrev') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-backward"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canPlayPause() }, click: function() { $data.sendAction('playPause') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon" data-bind="css: { 'glyphicon-pause': $data.isPlaying(), 'glyphicon-play': !$data.isPlaying() }"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canPlayNext() }, click: function() { $data.sendAction('playNext') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-forward"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canLike() }, click: function() { $data.sendAction('like') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-heart"></span>
+          </button>
+        </div>
+      </div>
+      <!-- /ko -->
     </div>
 
     <div class="options">

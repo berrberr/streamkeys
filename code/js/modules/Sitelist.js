@@ -88,6 +88,7 @@
       "rdio": {name: "Rdio", url: "http://www.rdio.com"},
       "reddit.music.player.il": {name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", alias: ["reddit.musicplayer"]},
       "reverbnation": {name: "Reverb Nation", url: "http://www.reverbnation.com"},
+      "rhapsody": {name: "Rhapsody", url: "http://www.rhapsody.com"},
       "saavn": {name: "Saavn", url: "http://www.saavn.com"},
       "seesu": {name: "Seesu.me", url: "http://www.seesu.me"},
       "shortorange": {name: "ShortOrange", url: "http://www.shortorange.com"},

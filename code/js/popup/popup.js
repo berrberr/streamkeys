@@ -1,8 +1,121 @@
 "use strict";
 
-var $ = require("jquery");
-require("./lib/jquery.loadTemplate-1.4.4.min.js");
-require("./lib/jquery.marquee.js");
+var $ = require("jquery"),
+    ko = require("ko"),
+    _ = require("lodash");
+require("../lib/jquery.loadTemplate-1.4.4.min.js");
+require("../lib/jquery.marquee.js");
+
+var PopupViewModel = function PopupViewModel() {
+  var self = this;
+
+  self.musicTabs = ko.observableArray([]);
+  self.visibleMusicTabs = ko.observableArray([]);
+  self.optionsUrl = ko.observable(chrome.runtime.getURL("html/options.html"))
+
+  // Send a request to get the player state of every active music site tab
+  chrome.runtime.sendMessage({ action: "get_music_tabs" }, self.getTabStates.bind(this));
+
+  // Setup listener for updating the popup state
+  chrome.runtime.onMessage.addListener(function(request) {
+    if(request.action === "update_popup_state" && request.stateData) self.updateState(request.stateData, request.fromTab);
+  });
+};
+
+PopupViewModel.prototype.getOrCreateMusicTab = function(stateData) {
+  var tab = _.findWhere(this.musicTabs(), { tabId: stateData.tabId });
+  if(tab) {
+    console.log("we found a tab: ", tab);
+    return tab;
+  }
+
+  tab = new MusicTab(stateData);
+  this.musicTabs.push(tab);
+
+  return tab;
+};
+
+PopupViewModel.prototype.updateState = function(stateData, tab) {
+  console.log("Update state: ", stateData, tab, tab.id);
+  var musicTab = _.findWhere(this.musicTabs(), { tabId: tab.id });
+  console.log("The music tab: ", musicTab);
+  if(musicTab) {
+    /** Update observables **/
+    _.each(musicTab.observableProperties, function(property) {
+      if(typeof stateData[property] !== "undefined") musicTab[property](stateData[property]);
+    });
+  }
+  else {
+    musicTab = new MusicTab(_.assign(stateData, {
+      tabId: tab.id,
+      faviconUrl: tab.favIconUrl,
+      enabled: tab.streamkeysEnabled
+    }));
+    this.musicTabs.push(musicTab);
+  }
+
+  // if(stateData && stateData.canPlayPause) {
+  //   this.updateMusicTabById(stateData, tab.id);
+  // }
+};
+
+/**
+ * Query each active music tab for the player state, then update the popup state
+ * @param {Array} tabs - array of active music tabs
+ */
+PopupViewModel.prototype.getTabStates = function(tabs) {
+  var that = this;
+  // this.musicTabs(_.map(tabs, function(tab) {
+  //   return { tabId: tab.id, faviconUrl: tab.favIconUrl };
+  // }));
+
+  tabs.forEach(function(tab) {
+    // Call update state before we get response from content script
+    // This lets us create the container divs before we get a response, meaning less "flicker" when popup loaded
+    // that.updateState({}, tab);
+    chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, function(playerState) {
+      that.updateState(playerState, tab);
+    });
+  });
+};
+
+var MusicTab = (function() {
+  function MusicTab(attributes) {
+    this.observableProperties = [
+      "song",
+      "artist",
+      "isPlaying",
+      "canPlayPause",
+      "canPlayNext",
+      "canPlayPrev",
+      "canLike",
+      "canDislike"
+    ];
+
+    _.assign(this, attributes);
+
+    /** Override observables **/
+    _.forEach(this.observableProperties, function(property) {
+      this[property] = ko.observable(attributes[property] || null);
+    }, this);
+
+    this.songArtistText = ko.pureComputed(function() {
+      console.log(this);
+      console.log("getting song text", this.song());
+      return (this.artist()) ? this.artist() + " - " + this.song() : this.song();
+    }, this);
+
+    this.sendAction = function(action) {
+      chrome.runtime.sendMessage({
+        action: "command",
+        command: action,
+        tab_target: this.tabId
+      });
+    }
+  }
+
+  return MusicTab;
+})();
 
 var Popup = function() {
   var disabledBtnClass = "btn-disabled";
@@ -207,6 +320,26 @@ var Popup = function() {
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-  window.popup = new Popup();
-  window.popup.onLoad();
+  window.popup = new PopupViewModel();
+  ko.applyBindings(window.popup);
+
+  ko.bindingHandlers.scrollingSong = {
+    update: function(element, valueAccessor, allBindings) {
+      $(element).text(ko.unwrap(valueAccessor()));
+      if($(element).outerWidth() > $("#player").width()) {
+        // Remove any old marquees
+        $(element).marquee("destroy");
+        var scrollDuration = (parseInt($(element).outerWidth()) * 15);
+
+        $(element).bind("finished", function() {
+          $(this).find(".js-marquee-wrapper").css("margin-left", "0px");
+        }).marquee({
+          allowCss3Support: false,
+          delayBeforeStart: 2500,
+          duration: scrollDuration,
+          pauseOnCycle: true
+        });
+      }
+    }
+  }
 });
