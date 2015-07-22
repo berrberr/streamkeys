@@ -11,26 +11,26 @@
     </div>
 
     <div id="player">
-      <div class="no-sites js-no-sites" data-bind="visible: $data.musicTabs().length == 0">
+      <div class="no-sites" data-bind="visible: $data.musicTabs().length == 0 && $data.musicTabsLoaded()">
         No music sites open.
       </div>
-      <!-- ko foreach: $data.musicTabs -->
-      <div class="site-tab-container">
-        <div class="player-row js-player-row">
-          <div class="site-data js-site-data">
-            <a class="js-tab-link" tabindex="-1" href="#" title="Open Tab">
-              <img class="site-favicon js-site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
+      <!-- ko foreach: $data.sortedMusicTabs -->
+      <div class="site-tab-container" data-bind="css: { disabled: !$data.streamkeysEnabled() }">
+        <div class="player-row">
+          <div class="site-data">
+            <a tabindex="-1" href="#" data-bind="click: function() { $data.openTab() }" title="Open Tab">
+              <img class="site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
+              <span class="site-title" data-bind="text: $data.siteName"></span>
             </a>
-            <span class="site-title js-site-title" data-bind="text: $data.siteName"></span>
-            <a href="#" class="js-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}' title="Settings">
+            <a href="#" data-bind="click: function() { $data.showTabSettings(!$data.showTabSettings.peek()) }" title="Settings">
               <span class="glyphicon glyphicon-cog settings"></span>
             </a>
           </div>
-          <div class="song-data" data-bind="scrollingSong: songArtistText, visible: songArtistText().length"></div>
-          <div class="music-site-buttons button-row">
-            <button type="button" class="btn btn-xs btn-enabled js-enable-tab-btn" tabindex="-1" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
-              <span class="glyphicon glyphicon-ok"></span>
-              <span class="btn-text">Site Enabled</span>
+          <div class="song-data" data-bind="scrollingSong: songArtistText, visible: $data.songArtistText().length"></div>
+          <div class="button-row" data-bind="visible: $data.showTabSettings()">
+            <button type="button" class="btn btn-xs btn-enabled" data-bind="click: function() { $data.toggleStreamkeysEnabled(); $data.showTabSettings(false) }" tabindex="-1">
+              <span class="glyphicon" data-bind="css: { 'glyphicon-ok': !$data.streamkeysEnabled(), 'glyphicon-remove': $data.streamkeysEnabled() }"></span>
+              <span class="btn-text" data-bind="text: $data.streamkeysEnabled() ? 'Disable Site' : 'Enable Site'"></span>
             </button>
           </div>
         </div>
@@ -61,33 +61,5 @@
         <a href="http://www.streamkeys.com/guide.html" id="help-link" target="_blank" tabindex="-1">Help</a>
       </div>
     </div>
-
-    <script type="text/html" id="template-site-player">
-      <div data-id="tab_id" class="site-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
-        <div class="player-row js-player-row">
-          <div class="site-data js-site-data">
-            <a data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}' class="js-tab-link" tabindex="-1" href="#" title="Open Tab"><img class="site-favicon js-site-favicon" /></a>
-            <span class="site-title js-site-title"></span>
-            <a href="#" class="js-tab-container" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}' title="Settings">
-              <span class="glyphicon glyphicon-cog settings"></span>
-            </a>
-          </div>
-          <div class="song-data js-song-data"></div>
-          <div class="music-site-buttons button-row">
-            <button type="button" class="btn btn-xs btn-enabled js-enable-tab-btn" tabindex="-1" data-template-bind='{"attribute": "data-tab-id", "value": "tab_target"}'>
-              <span class="glyphicon glyphicon-ok"></span>
-              <span class="btn-text">Site Enabled</span>
-            </button>
-          </div>
-        </div>
-        <div class="player-controls-row">
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="dislike" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart-empty"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="playPrev" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-backward"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="playPause" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-play"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="playNext" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-forward"></span></button>
-          <button type="button" data-template-bind='{"attribute": "tab-target", "value": "tab_target"}' class="btn btn-sm btn-default sk-playcontrols" id="like" tabindex="-1"><span class="glyphicon player-glyphicon glyphicon-heart"></span></button>
-        </div>
-      </div>
-    </script>
   </body>
 </html>

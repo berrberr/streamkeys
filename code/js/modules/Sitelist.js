@@ -259,14 +259,14 @@
 
   /**
    * @param {Number} tabId - id of tab to temp disable
-   * @param {Boolean} is_disabled - disable tab if true, enable tab if false
+   * @param {Boolean} enabled - enable tab if true, disable tab if false
    */
-  Sitelist.prototype.markTabAsDisabled = function(tabId, is_disabled) {
+  Sitelist.prototype.markTabEnabledState = function(tabId, enabled) {
     tabId = parseInt(tabId);
-    if(is_disabled) {
-      this.disabledTabs.push(parseInt(tabId));
-    } else {
+    if(enabled) {
       this.disabledTabs = this.disabledTabs.filter(function(tab) { return tab !== tabId; });
+    } else {
+      if(this.disabledTabs.indexOf(tabId) == -1) this.disabledTabs.push(parseInt(tabId));
     }
   };
 

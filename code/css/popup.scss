@@ -44,7 +44,9 @@ div a, div a:hover, div a:visited {
 .site-data {
   overflow: hidden;
   height: 20px;
+  margin-bottom: 5px;
   width: $popup-width;
+
   .settings {
     float: right;
     margin: 3px 6px 0 0;
@@ -84,6 +86,8 @@ div a, div a:hover, div a:visited {
 }
 
 .site-tab-container {
+  min-height: 60px;
+
   a, a:hover, a:active, a:visited, a:focus {
     text-decoration: none;
     color: #000;
@@ -146,13 +150,9 @@ div a, div a:hover, div a:visited {
   padding-top: 10px;
 }
 
-.music-site-buttons {
-  padding-bottom: 5px;
-}
-
 .button-row {
+  padding-bottom: 5px;
   text-align: center;
-  display: none;
 
   button {
     padding: 1px 4px 1px 4px;
