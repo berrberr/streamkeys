@@ -10,39 +10,42 @@
 </head>
 
 <body>
+  <div class="header">
+    <h1>Streamkeys Extension Options</h1>
+  </div>
+  <div class="main-container">
+    <div class="row">
+      <div class="no-float menu">
+        <ul>
+          <li><a href="#" data-bind="click: function() { $data.selectedTab('sites') }">Enabled Sites</a></li>
+          <li><a href="#" data-bind="click: function() { $data.selectedTab('general') }">General</a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Donate</a></li>
+        </ul>
+      </div>
+      <div class="no-float content">
+        <div id="enabled-sites" data-bind="visible: $data.selectedTab() == 'sites'" class="inner">
+          <div id="sitelistz" class="row" data-bind="foreach: $data.sitelist()">
+            <button class="col-xs-4 button-col" data-bind="text: $data.name, click: function() { $data.toggleSite() }, css: { disabled: !$data.enabled() }"></button>
+          </div>
+        </div>
+        <div id="general" data-bind="visible: $data.selectedTab() == 'general'" class="inner">
+          <p>
+            To change the hotkey bindings go to the chrome extensions page (enter chrome://extensions in the URL bar) and click the
+            "Keyboard shortcuts" link at the bottom of the page. <a href="http://www.streamkeys.com/guide.html" target="_blank">Read the guide</a> for more detailed information
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span><a href="http://www.streamkeys.com">Homepage</a></span>
+    <span><a href="http://www.streamkeys.com">GitHub</a></span>
+    <span><a href="http://www.streamkeys.com">Twitter</a></span>
+    <span><a href="mailto:alex@aegabriel.com">alex@aegabriel.com</a></span>
+  </div>
 
-<div class="header">
-  <div><h2>Streamkeys Extension Options</h2></div>
-  <div class="pull-right">
-    <a href="http://www.streamkeys.com/donate.html" target="_blank"><button class="btn btn-success">Donate</button></a>
-  </div>
-  <div class="pull-right">
-    <a href="http://www.streamkeys.com" target="_blank"><button class="btn btn-hdr btn-header">Homepage</button></a>
-  </div>
-  <div class="pull-right">
-    <a href="https://www.github.com/berrberr/streamkeys" target="_blank"><button class="btn btn-hdr btn-header">View Source</button></a>
-  </div>
-</div>
-<div class="container main-container">
-  <div class="form-horizontal">
-  <fieldset class="fieldset">
-    <legend>Website Settings</legend>
-    <div id="sitelist" class="row"></div>
-  </fieldset>
-  <br><br>
-  <fieldset class="fieldset">
-    <legend>Hotkey Bindings</legend>
-    <p>To change the hotkey bindings go to the chrome extensions page (enter chrome://extensions in the URL bar) and click the
-    "Keyboard shortcuts" link at the bottom of the page. <a href="http://www.streamkeys.com/guide.html" target="_blank">Read the guide</a> for more detailed information</p>
-  </fieldset>
-  <br><br>
-  <fieldset class="fieldset">
-    <legend>Misc Info</legend>
-    <p>Visit the <a href="http://www.streamkeys.com" target="blank">official extension page</a> to check for updates and leave feedback.</p>
-    <p><a href="mailto:alex@aegabriel.com">Email me: alex@aegabriel.com</a> for questions/feature requests/etc.</p>
-  </fieldset>
-  </div>
-</div>
 </body>
 
 <script src="../js/options.js"></script>

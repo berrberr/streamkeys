@@ -41,7 +41,7 @@
    */
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
     if(request.action === "update_keys") {
-      console.log("Options page has updated settings. Reloading..." + request.site_id);
+      console.log("Options page has updated settings. Reloading...");
       window.sk_sites.loadSettings();
     }
     if(request.action === "get_sites") {

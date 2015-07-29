@@ -1,92 +1,117 @@
-.btn-site-enable {
-  width: 90%;
-  white-space: normal;
+$footer-height: 50px;
+$header-height: 100px;
+$menu-padding: 40px;
+$menu-width: 300px;
+
+html,
+body {
+  height: 100%;
+}
+
+a {
+  &:active,
+  &:hover,
+  &:focus,
+  &:visited {
+    text-decoration: none;
+  }
 }
 
 .button-col {
-  padding: 4px;
-}
+  padding: 20px;
+  background-color: #e4eaec;
 
-.save-btn {
-  width: 100%;
-  margin-top: 20px;
-  padding-left: 4px;
-  button {
-    width: 100%;
+  &:hover {
+    background-color: #ccd5db;
+  }
+
+  &.disabled {
+    background-color: #76838f;
   }
 }
 
 .main-container {
-  margin: 20px 0 0 10px;
-}
-
-.header {
-  background-color: #2880C7;
-  color: #FFFFFF;
+  box-sizing: border-box;
+  display: table;
+  height: 100vh;
+  margin-top: -$header-height;
+  padding: $header-height 0 0 0;
   width: 100%;
-  height: 100px;
-  padding: 10px;
-  vertical-align: middle;
-  position: relative;
-  div {
-    h2 {
+
+  .row {
+    display: table-row;
+  }
+
+  .no-float {
+    float: none;
+  }
+
+  .content {
+    display: table-cell;
+
+    .inner {
+      margin-bottom: calc(#{$footer-height} + 10px);
+      padding-top: $menu-padding;
+      padding-left: 20px;
+    }
+  }
+
+  .menu {
+    display: table-cell;
+    background-color: #263238;
+    padding: 0;
+    vertical-align: top;
+    width: $menu-width;
+
+    ul {
+      list-style: none;
       margin: 0;
+      padding: $menu-padding 0 0 0;
+
+      li {
+        a {
+          color: rgba(163, 175, 183, .9);
+          display: block;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 50px;
+          padding: 0 30px;
+
+          &:active,
+          &:hover {
+            color: rgba(255, 255, 255, .8);
+            background-color: #76838f;
+          }
+
+        }
+      }
     }
-    a, a:hover {
-      color: #FFFFFF;
-      text-decoration: none;
-    }
-    display: inline-block;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
   }
 }
 
-.btn-hdr {
-  margin-right: 5px;
+.header {
+  background-color: #2880c7;
+  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.8);
+  color: #fff;
+  display: block;
+  height: $header-height;
+
+  h1 {
+    margin: 0;
+    padding: 30px 30px;
+  }
 }
 
-.btn-header {
-  color: #000000;
-  background-color: #FFFFFF;
-  border-color: #034746;
+.footer {
+  background-color: rgba(0, 0, 0, .08);
+  clear: both;
+  height: $footer-height;
+  margin-top: -$footer-height;
+  margin-left: $menu-width;
+  padding: 15px 30px;
+  text-align: center;
 }
 
-.btn-header:hover,
-.btn-header:focus,
-.btn-header:active,
-.btn-header.active,
-.open .dropdown-toggle.btn-header {
-  color: #000000;
-  background-color: #B4C2C2;
-  border-color: #034746;
-}
-
-.btn-header:active,
-.btn-header.active,
-.open .dropdown-toggle.btn-header {
-  background-image: none;
-}
-
-.btn-header.disabled,
-.btn-header[disabled],
-fieldset[disabled] .btn-header,
-.btn-header.disabled:hover,
-.btn-header[disabled]:hover,
-fieldset[disabled] .btn-header:hover,
-.btn-header.disabled:focus,
-.btn-header[disabled]:focus,
-fieldset[disabled] .btn-header:focus,
-.btn-header.disabled:active,
-.btn-header[disabled]:active,
-fieldset[disabled] .btn-header:active,
-.btn-header.disabled.active,
-.btn-header[disabled].active,
-fieldset[disabled] .btn-header.active {
-  background-color: #FFFFFF;
-  border-color: #034746;
-}
 
 .btn-header .badge {
   color: #FFFFFF;
