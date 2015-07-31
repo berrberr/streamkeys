@@ -26,7 +26,7 @@
       </div>
       <div class="no-float content">
         <div id="enabled-sites" data-bind="visible: $data.selectedTab() == 'sites'" class="inner">
-          <div id="sitelistz" class="row" data-bind="foreach: $data.sitelist()">
+          <div class="inner-content" data-bind="foreach: $data.sitelist()">
             <button class="col-xs-4 button-col" data-bind="text: $data.name, click: function() { $data.toggleSite() }, css: { disabled: !$data.enabled() }"></button>
           </div>
         </div>
@@ -49,17 +49,5 @@
 </body>
 
 <script src="../js/options.js"></script>
-
-<script type="text/html" id="template-enabled">
-  <div class="col-xs-4 button-col">
-    <button data-id="site_id" class="btn btn-site-success btn-site-enable" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-ok"></span><span data-content-append="site_name">&nbsp;</span></button>
-  </div>
-</script>
-
-<script type="text/html" id="template-disabled">
-  <div class="col-xs-4 button-col">
-    <button data-id="site_id" class="btn btn-site-success btn-site-enable btn-error-border" data-template-bind='{"attribute": "is-enabled", "value": "enabled"}'><span class="glyphicon glyphicon-remove"></span><span data-content-append="site_name">&nbsp;</span></button>
-  </div>
-</script>
 
 </html>

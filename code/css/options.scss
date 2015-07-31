@@ -19,14 +19,14 @@ a {
 
 .button-col {
   padding: 20px;
-  background-color: #e4eaec;
+  background-color: rgba(0, 0, 0, 0.08);
 
   &:hover {
-    background-color: #ccd5db;
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   &.disabled {
-    background-color: #76838f;
+    background-color: rgba(0, 0, 0, 0.04);
   }
 }
 
@@ -51,8 +51,11 @@ a {
 
     .inner {
       margin-bottom: calc(#{$footer-height} + 10px);
-      padding-top: $menu-padding;
-      padding-left: 20px;
+      padding: $menu-padding 20px;
+
+      .inner-content {
+        display: table-cell;
+      }
     }
   }
 
@@ -103,7 +106,7 @@ a {
 }
 
 .footer {
-  background-color: rgba(0, 0, 0, .08);
+  background-color: #e4eaec;
   clear: both;
   height: $footer-height;
   margin-top: -$footer-height;
