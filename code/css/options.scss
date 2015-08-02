@@ -1,5 +1,6 @@
 $footer-height: 50px;
 $header-height: 100px;
+$menu-color: #263238;
 $menu-padding: 40px;
 $menu-width: 300px;
 
@@ -17,51 +18,56 @@ a {
   }
 }
 
-.button-col {
+.sitelist {
+  display: table-cell;
+  height: 100%;
+  padding: 6px;
+}
+
+.btn-site {
+  $button-margin: 4px;
+  $button-width: 325px;
+
+  background-color: #e4eaec;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.08);
+  margin: $button-margin;
+  width: $button-width;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: #ccd5db;
   }
 
   &.disabled {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: #76838f;
   }
 }
 
 .main-container {
   box-sizing: border-box;
-  display: table;
-  height: 100vh;
+  min-height: 100vh;
   margin-top: -$header-height;
   padding: $header-height 0 0 0;
   width: 100%;
 
-  .row {
-    display: table-row;
-  }
-
-  .no-float {
-    float: none;
-  }
-
   .content {
-    display: table-cell;
+    background-color: #f1f4f5;
+    height: 100%;
+    min-height: calc(100vh - #{$header-height});
+    margin-left: $menu-width;
 
     .inner {
+      display: table;
       margin-bottom: calc(#{$footer-height} + 10px);
+      height: 100%;
       padding: $menu-padding 20px;
-
-      .inner-content {
-        display: table-cell;
-      }
     }
   }
 
   .menu {
-    display: table-cell;
-    background-color: #263238;
+    background-color: $menu-color;
+    float: left;
+    height: 100%;
+    min-height: calc(100vh - #{$header-height});
     padding: 0;
     vertical-align: top;
     width: $menu-width;
@@ -73,19 +79,40 @@ a {
 
       li {
         a {
-          color: rgba(163, 175, 183, .9);
+          color: #a3afb7;
           display: block;
           font-size: 16px;
           font-weight: 500;
           line-height: 50px;
-          padding: 0 30px;
+          padding: 0 10px 0 30px;
+
+          &.selected {
+            background-color: #242f35;
+            border-bottom: 1px solid rgba(0, 0, 0, .06);
+            border-top: 1px solid rgba(0, 0, 0, .06);
+            color: #fff;
+          }
 
           &:active,
           &:hover {
             color: rgba(255, 255, 255, .8);
             background-color: #76838f;
           }
+        }
 
+        .menu-arrow {
+          display: inline-block;
+          font-size: 24px;
+          vertical-align: middle;
+
+          &:before {
+            content: "\232A";
+          }
+        }
+
+        .menu-title {
+          display: inline-block;
+          width: calc(#{$menu-width} - 65px);
         }
       }
     }
@@ -107,7 +134,6 @@ a {
 
 .footer {
   background-color: #e4eaec;
-  clear: both;
   height: $footer-height;
   margin-top: -$footer-height;
   margin-left: $menu-width;
