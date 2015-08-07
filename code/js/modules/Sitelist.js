@@ -135,7 +135,12 @@
         storageObj[key] = that.sites[key].enabled;
       });
       // Set the storage key on init incase previous storage format becomes broken
-      chrome.storage.local.set({"hotkey-sites": storageObj});
+      chrome.storage.local.set({ "hotkey-sites": storageObj });
+
+      // Initialize popup open on update setting
+      if(!obj.hasOwnProperty("hotkey-open_on_update")) {
+        chrome.storage.local.set({ "hotkey-open_on_update": true });
+      }
     });
   };
 
@@ -150,7 +155,7 @@
       chrome.storage.local.get(function(obj) {
         if(obj["hotkey-sites"]) {
           obj["hotkey-sites"][key] = value;
-          chrome.storage.local.set({"hotkey-sites": obj["hotkey-sites"]}, function() {
+          chrome.storage.local.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });
         } else {

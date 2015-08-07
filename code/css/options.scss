@@ -1,3 +1,5 @@
+$button-margin: 4px;
+$button-width: 300px;
 $footer-height: 50px;
 $header-height: 100px;
 $menu-color: #263238;
@@ -25,32 +27,52 @@ a {
 }
 
 .btn-site {
-  $button-margin: 4px;
-  $button-width: 325px;
-
   background-color: #e4eaec;
-  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  letter-spacing: 1px;
+  font-weight: 500;
+  padding: 20px 0;
   margin: $button-margin;
   width: $button-width;
 
-  &:hover {
-    background-color: #ccd5db;
+  &:hover,
+  &.disabled:hover {
+    background-color: #9aa5ad;
+    color: #000;
   }
 
   &.disabled {
     background-color: #76838f;
+    color: #fff;
+  }
+}
+
+.setting {
+  font-size: 16px;
+
+  input[type='checkbox'] {
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  label {
+    cursor: pointer;
+    font-weight: 400;
   }
 }
 
 .main-container {
   box-sizing: border-box;
-  min-height: 100vh;
+  display: table;
+  height: 100%;
+  min-height: calc(100vh - #{$header-height});
   margin-top: -$header-height;
   padding: $header-height 0 0 0;
   width: 100%;
 
   .content {
     background-color: #f1f4f5;
+    display: table-cell;
     height: 100%;
     min-height: calc(100vh - #{$header-height});
     margin-left: $menu-width;
@@ -65,9 +87,9 @@ a {
 
   .menu {
     background-color: $menu-color;
-    float: left;
+    display: table-cell;
     height: 100%;
-    min-height: calc(100vh - #{$header-height});
+    // min-height: calc(100vh - #{$header-height});
     padding: 0;
     vertical-align: top;
     width: $menu-width;

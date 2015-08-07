@@ -85,11 +85,15 @@
    * Open info page on install/update
    */
   chrome.runtime.onInstalled.addListener(function(details) {
-    if(details.reason == "install") {
-      //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
-    } else if(details.reason == "update") {
-      //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
-    }
+    chrome.storage.local.get(function(obj) {
+      if(obj["hotkey-open_on_update"]) {
+        if(details.reason == "install") {
+          //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
+        } else if(details.reason == "update") {
+          //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
+        }
+      }
+    });
   });
 
   // Store commands in global
