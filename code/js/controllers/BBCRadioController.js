@@ -4,8 +4,8 @@
   var controller = require("BaseController");
   controller.init({
     siteName: "BBC Radio",
-    play: "#btn-play",
-    pause: "#btn-pause",
+    play: "#play",
+    pause: "#pause",
     mute: "#volume-mute",
     like: "#toggle-mystations > span",
 
