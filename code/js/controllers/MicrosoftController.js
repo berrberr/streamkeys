@@ -2,7 +2,7 @@
   "use strict";
 
   require("BaseController").init({
-    siteName: "Xbox Music",
+    siteName: "Microsoft Groove",
     playPause: ".iconPlayerPlay",
     play: ".iconPlayerPlay",
     pause: ".iconPlayerPause",
