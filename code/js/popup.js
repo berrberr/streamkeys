@@ -44,6 +44,9 @@ var Popup = function() {
     var $siteContainer = $("#site-" + tab.id);
     var that = this;
 
+    // Make sure the player is shown in case it was previously hidden for any reason
+    $siteContainer.show();
+
     // Create the elements and setup listeners for the new site's container
     if($siteContainer.length === 0) {
       var div_id = "site-" + tab.id;
@@ -124,13 +127,6 @@ var Popup = function() {
       dislike: $siteContainer.find("#dislike")
     };
 
-    // Hide the player if the property is defined in controller and we dont have a playPause selector
-    if(stateData.hidePlayer && !stateData.canPlayPause) {
-      $siteContainer.hide();
-    } else {
-      $siteContainer.show();
-    }
-
     // Set the site favicon
     if(tab.favIconUrl) {
       $siteContainer.find(".js-site-data").find(".js-site-favicon").show();
@@ -160,11 +156,13 @@ var Popup = function() {
         this.toggleTabBtn($siteContainer.find(".js-enable-tab-btn"), tab.streamkeysEnabled);
       }
     } else {
-      // Set all the buttons to disabled if we can't play/pause
-      // This means that either the player hasn't loaded, or the page does not contain a player
-      $.each($playerBtns, function(key, btn) {
-        btn.toggleClass("disabled", true);
-      });
+      if(stateData.hidePlayer) { // Hide the player if the controller calls for it
+        $siteContainer.hide();
+      } else { // Otherwise disable the buttons in the player
+        $.each($playerBtns, function(key, btn) {
+          btn.toggleClass("disabled", true);
+        });
+      }
     }
   };
 
