@@ -47,7 +47,7 @@ var OptionsViewModel = function OptionsViewModel() {
 
     self.sitelistInitialzed(true);
   });
-}
+};
 
 var MusicSite = (function() {
   function MusicSite(attributes) {
@@ -58,7 +58,7 @@ var MusicSite = (function() {
     this.toggleSite = function() {
       console.log("toggle da site mon");
       this.enabled(!this.enabled.peek());
-    }
+    };
   }
 
   return MusicSite;
