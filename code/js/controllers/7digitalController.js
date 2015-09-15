@@ -5,6 +5,8 @@
     siteName: "7digital",
     playPause: ".player-play-pause",
     playNext: ".player-next",
+    playPrev: ".player-previous",
+    mute: "#player-mute-toggle-btn",
 
     playState: ".player-play-pause:not(.paused)",
     song: "#player-now-playing-title",
