@@ -60,7 +60,6 @@
       "gaana": {name: "Gaana", url: "http://www.gaana.com"},
       "guvera": {name: "Guvera", url: "https://www.guvera.com"},
       "play.google": {name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js"},
-      "grooveshark": {name: "Grooveshark", url: "http://www.grooveshark.com"},
       "hypem": {name: "Hypemachine", url: "http://www.hypem.com"},
       "hypster": {name: "Hypster", url: "http://www.hypster.com"},
       "iheart": {name: "iHeartRadio", url: "http://www.iheart.com"},
@@ -135,7 +134,12 @@
         storageObj[key] = that.sites[key].enabled;
       });
       // Set the storage key on init incase previous storage format becomes broken
-      chrome.storage.local.set({"hotkey-sites": storageObj});
+      chrome.storage.local.set({ "hotkey-sites": storageObj });
+
+      // Initialize popup open on update setting
+      if(!obj.hasOwnProperty("hotkey-open_on_update")) {
+        chrome.storage.local.set({ "hotkey-open_on_update": true });
+      }
     });
   };
 
@@ -150,7 +154,7 @@
       chrome.storage.local.get(function(obj) {
         if(obj["hotkey-sites"]) {
           obj["hotkey-sites"][key] = value;
-          chrome.storage.local.set({"hotkey-sites": obj["hotkey-sites"]}, function() {
+          chrome.storage.local.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });
         } else {
