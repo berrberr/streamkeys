@@ -47,8 +47,7 @@ PopupViewModel.prototype.updateState = function(stateData, tab) {
     _.forEach(musicTab.observableProperties, function(property) {
       if(typeof stateData[property] !== "undefined") musicTab[property](stateData[property]);
     });
-  }
-  else {
+  } else {
     musicTab = new MusicTab(_.assign(stateData, {
       tabId: tab.id,
       faviconUrl: tab.favIconUrl,

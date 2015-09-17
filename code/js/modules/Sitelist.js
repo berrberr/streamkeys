@@ -140,6 +140,9 @@
       if(!obj.hasOwnProperty("hotkey-open_on_update")) {
         chrome.storage.local.set({ "hotkey-open_on_update": true });
       }
+      if(!obj.hasOwnProperty("hotkey-youtube_restart")) {
+        chrome.storage.local.set({ "hotkey-youtube_restart": false });
+      }
     });
   };
 

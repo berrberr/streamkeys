@@ -11,23 +11,46 @@
     playPause: [".ytp-button-play", ".ytp-play-button"],
     playNext: [".ytp-button-next", ".ytp-next-button"],
     playPrev: [".ytp-button-prev", ".ytp-prev-button"],
-    playState: [".ytp-button-pause", ".ytp-play-button[aria-label='Pause']"]
+    playState: [".ytp-button-pause", ".ytp-play-button[aria-label='Pause']"],
+    restart: [null, ".ytp-play-button[title='Replay']"]
   };
 
-  controller.init({
-    siteName: "YouTube",
-    play: ".ytp-button-play",
-    pause: ".ytp-button-pause",
-    playNext: ".ytp-button-next",
-    playPrev: ".ytp-button-prev",
-    mute: ".ytp-button-volume",
-    like: ".like-button-renderer-like-button",
-    dislike: ".like-button-renderer-dislike-button",
+  chrome.storage.local.get(function(obj) {
+    controller.init({
+      siteName: "YouTube",
+      play: ".ytp-button-play",
+      pause: ".ytp-button-pause",
+      playNext: ".ytp-button-next",
+      playPrev: ".ytp-button-prev",
+      mute: ".ytp-button-volume",
+      like: ".like-button-renderer-like-button",
+      dislike: ".like-button-renderer-dislike-button",
 
-    playState: ".ytp-button-pause",
-    song: ".watch-title",
-    buttonSwitch: true,
-    hidePlayer: true
+      playState: ".ytp-button-pause",
+      song: ".watch-title",
+      buttonSwitch: true,
+      hidePlayer: true
+    });
+
+    // Override the playPause function
+    controller.playPause = function() {
+      // If the restart button exists check for the setting before clicking
+      if(this.doc().querySelector(this.selectors.restart)) {
+        if(obj["hotkey-youtube_restart"]) {
+          this.click({ action: "playPause", selectorButton: this.selectors.restart, selectorFrame: this.selectors.iframe });
+        }
+      } else {
+        if(this.selectors.play !== null && this.selectors.pause !== null) {
+          if(this.isPlaying()) {
+            this.click({ action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe });
+          } else {
+            this.click({ action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe });
+          }
+        } else {
+          this.click({ action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe });
+        }
+      }
+    };
   });
 
   controller.checkPlayer = function() {

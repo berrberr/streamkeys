@@ -20,6 +20,11 @@ var OptionsViewModel = function OptionsViewModel() {
       chrome.storage.local.set({ "hotkey-open_on_update": value });
     });
 
+    self.youtubeRestart = ko.observable(obj["hotkey-youtube_restart"]);
+    self.youtubeRestart.subscribe(function(value) {
+      chrome.storage.local.set({ "hotkey-youtube_restart": value });
+    });
+
     self.settingsInitialized(true);
   });
 
