@@ -8,8 +8,10 @@ require("../lib/jquery.marquee.js");
 var PopupViewModel = function PopupViewModel() {
   var self = this;
 
-  self.musicTabsLoaded = ko.observable(false);
+  self.totalMusicTabs = ko.observable(1);
+  self.musicTabsLoaded = ko.observable(0);
   self.musicTabs = ko.observableArray([]);
+
   // Filter hidden players and sort by siteName -> tabId
   self.sortedMusicTabs = ko.computed(function() {
     return _.sortByAll(
@@ -17,6 +19,10 @@ var PopupViewModel = function PopupViewModel() {
         return (tab.canPlayPause() || !tab.hidePlayer);
       }),
     ["siteName", "tabId"]);
+  });
+
+  self.isLoaded = ko.computed(function() {
+    return self.musicTabsLoaded() == self.totalMusicTabs();
   });
 
   self.visibleMusicTabs = ko.observableArray([]);
@@ -34,11 +40,8 @@ var PopupViewModel = function PopupViewModel() {
 PopupViewModel.prototype.updateState = function(stateData, tab) {
   if(typeof stateData == "undefined") return false;
 
-  if(!this.musicTabsLoaded.peek()) this.musicTabsLoaded(true);
-
-  console.log("Update state: ", stateData, tab, tab.id);
   var musicTab = _.findWhere(this.musicTabs(), { tabId: tab.id });
-  console.log("The music tab: ", musicTab);
+
   if(musicTab) {
     // Update observables
     _.forEach(musicTab.observableProperties, function(property) {
@@ -46,14 +49,12 @@ PopupViewModel.prototype.updateState = function(stateData, tab) {
     });
   }
   else {
-    console.log("Init enabled state: ", tab.streamkeysEnabled);
     musicTab = new MusicTab(_.assign(stateData, {
       tabId: tab.id,
       faviconUrl: tab.favIconUrl,
       streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true
     }));
 
-    console.log("After creation enabled: ", musicTab.streamkeysEnabled());
     this.musicTabs.push(musicTab);
   }
 };
@@ -64,11 +65,12 @@ PopupViewModel.prototype.updateState = function(stateData, tab) {
  */
 PopupViewModel.prototype.getTabStates = function(tabs) {
   var that = this;
-  console.log("Tab states from background: ", tabs);
+  that.totalMusicTabs(tabs.length);
 
   _.forEach(tabs, function(tab) {
     chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
       that.updateState(playerState, this.tab);
+      that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
     }).bind({ tab: tab }));
   });
 };
@@ -117,7 +119,6 @@ var MusicTab = (function() {
 
     this.toggleStreamkeysEnabled = function() {
       this.streamkeysEnabled(!this.streamkeysEnabled.peek());
-      console.log("marking site as disabled: ", this.streamkeysEnabled.peek());
       chrome.extension.getBackgroundPage().window.sk_sites.markTabEnabledState(this.tabId, this.streamkeysEnabled.peek());
     };
   }

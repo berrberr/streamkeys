@@ -31,7 +31,7 @@ a {
   border: 1px solid rgba(0, 0, 0, .2);
   letter-spacing: 1px;
   font-weight: 500;
-  padding: 20px 0;
+  padding: 15px 0;
   margin: $button-margin;
   width: $button-width;
 
@@ -44,6 +44,10 @@ a {
   &.disabled {
     background-color: #76838f;
     color: #fff;
+  }
+
+  &:focus {
+    outline: 0;
   }
 }
 
@@ -161,6 +165,10 @@ a {
   margin-left: $menu-width;
   padding: 15px 30px;
   text-align: center;
+
+  a {
+    margin-right: 10px;
+  }
 }
 
 
