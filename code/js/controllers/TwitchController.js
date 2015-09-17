@@ -10,6 +10,7 @@
     song: ".title .real"
   });
 
+  controller.overridePlayPause = true; // Override here so controls are enabled in popup
   controller.selectors.twitchPlayer = "object[data$=TwitchPlayer\\.swf]";
   controller.twitchPlayer = null;
 
@@ -24,7 +25,6 @@
         return false;
       }
     }
-
   };
 
   controller.playPause = function() {
@@ -42,7 +42,6 @@
       } catch(e) {
         sk_log("Twitch player error", e, true);
       }
-
     }
   };
 

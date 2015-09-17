@@ -211,7 +211,7 @@
       siteName: this.siteName,
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
       canPlayPrev: !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
-      canPlayPause: !!(
+      canPlayPause: this.overridePlayPause || !!(
         (this.selectors.playPause && this.doc().querySelector(this.selectors.playPause)) ||
         (this.selectors.play && this.doc().querySelector(this.selectors.play)) ||
         (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
