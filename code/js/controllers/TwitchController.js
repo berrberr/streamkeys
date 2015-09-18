@@ -11,15 +11,15 @@
   });
 
   controller.overridePlayPause = true; // Override here so controls are enabled in popup
-  controller.selectors.twitchPlayer = "object[data$=TwitchPlayer\\.swf]";
-  controller.twitchPlayer = null;
+  controller.selectors.player = "object[data$=TwitchPlayer\\.swf]";
+  controller.player = null;
 
   controller.isPlaying = function() {
-    if(this.twitchPlayer && this.twitchPlayer.isPaused) {
-      return !this.twitchPlayer.isPaused();
+    if(this.player && this.player.isPaused) {
+      return !this.player.isPaused();
     } else {
       try {
-        this.twitchPlayer = document.querySelector(this.selectors.twitchPlayer);
+        this.player = document.querySelector(this.selectors.player);
       } catch (e) {
         sk_log("Twitch player not found", e, true);
         return false;
@@ -30,14 +30,14 @@
   controller.playPause = function() {
     if(this.isPlaying()) {
       try {
-        this.twitchPlayer.pauseVideo();
+        this.player.pauseVideo();
         sk_log("playPause");
       } catch(e) {
         sk_log("Twitch player error", e, true);
       }
     } else {
       try {
-        this.twitchPlayer.playVideo();
+        this.player.playVideo();
         sk_log("playPause");
       } catch(e) {
         sk_log("Twitch player error", e, true);

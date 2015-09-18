@@ -86,7 +86,7 @@
    */
   chrome.runtime.onInstalled.addListener(function(details) {
     chrome.storage.local.get(function(obj) {
-      if(obj["hotkey-open_on_update"]) {
+      if(obj["hotkey-open_on_update"] || typeof obj["hotkey-open_on_update"] === "undefined") {
         if(details.reason == "install") {
           //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
         } else if(details.reason == "update") {
