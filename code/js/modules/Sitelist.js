@@ -56,6 +56,7 @@
       "disco": {name: "Disco.io", url: "http://www.disco.io"},
       "earbits": {name: "Earbits", url: "http://www.earbits.com"},
       "player.edge": {name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js"},
+      "playmoss": {name: "Playmoss", url: "http://www.playmoss.com"},
       "emby": {name: "Emby", url: "http://app.emby.media"},
       "feedly": {name: "Feedly", url: "http://www.feedly.com"},
       "gaana": {name: "Gaana", url: "http://www.gaana.com"},
