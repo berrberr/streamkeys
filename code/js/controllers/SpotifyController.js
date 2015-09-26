@@ -10,6 +10,8 @@
     playPrev: ["#previous", "#previous"],
     playState: ["#play-pause.playing", "#play.playing"],
     iframe: ["#app-player", "#main"],
+    like: [".thumb.up", ".thumb.up"],
+    dislike: [".thumb.down", ".thumb.down"],
     song: ["#track-name", ".caption .track"],
     artist: ["#track-artist", ".caption .artist"]
   };
