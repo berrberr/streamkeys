@@ -62,6 +62,7 @@
       "gaana": {name: "Gaana", url: "http://www.gaana.com"},
       "guvera": {name: "Guvera", url: "https://www.guvera.com"},
       "play.google": {name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js"},
+      "googlevideo": {name: "GoogleVideo", url: "googlevideo.com", controller: "GoogleVideoController.js", url_regex: /googlevideo\.com\/videoplayback/},
       "hypem": {name: "Hypemachine", url: "http://www.hypem.com"},
       "hypster": {name: "Hypster", url: "http://www.hypster.com"},
       "iheart": {name: "iHeartRadio", url: "http://www.iheart.com"},
