@@ -3,14 +3,14 @@
 
   require("BaseController").init({
     siteName: "Rhapsody",
-    play: ".player-play-button .icon-play",
-    pause: ".player-play-button .icon-pause",
+    play: ".player-play-button .icon-play-button",
+    pause: ".player-play-button .icon-pause2",
     playNext: ".player-advance-button",
     playPrev: ".player-rewind-button",
     like: ".favorite-button",
     dislike: ".favorite-button.active",
 
-    playState: ".player-play-button .icon-pause",
+    playState: ".player-play-button .icon-pause2",
     song: ".player-track",
     artist: ".player-artist"
   });

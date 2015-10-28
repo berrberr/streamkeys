@@ -114,6 +114,7 @@
       "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js"},
       "radio.yandex": {name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js"},
       "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js"},
+      "xiami": {name: "Xiami", url: "http://www.xiami.com"},
       "youtube": {name: "YouTube", url: "http://www.youtube.com"},
       "zonga": {name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js"}
     };
