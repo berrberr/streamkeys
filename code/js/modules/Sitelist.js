@@ -86,6 +86,7 @@
       "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com"},
       "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com"},
       "radioswissjazz": {name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch"},
+      "radiotunes": {name: "RadioTunes", url: "http://www.radiotunes.com"},
       "rainwave": {name: "Rainwave.cc", url: "http://www.rainwave.cc"},
       "rdio": {name: "Rdio", url: "http://www.rdio.com"},
       "reddit.music.player.il": {name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", alias: ["reddit.musicplayer"]},
