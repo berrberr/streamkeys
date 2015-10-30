@@ -80,7 +80,7 @@
       "oplayer": {name: "oPlayer", url: "http://oplayer.org"},
       "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com"},
       "pandora": {name: "Pandora", url: "http://www.pandora.com"},
-      "player.fm": {name: "Player.fm", url: "http://player.fm", controller: "PlayerController.js"},
+      "player": {name: "Player.fm", url: "http://player.fm"},
       "pleer": {name: "Pleer", url: "http://pleer.com"},
       "plex": {name: "Plex", url: "http://www.plex.tv"},
       "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com"},
