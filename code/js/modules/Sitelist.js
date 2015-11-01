@@ -78,6 +78,7 @@
       "noise": {name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js"},
       "npr": {name: "NPR One Player", url: "http://one.npr.org"},
       "oplayer": {name: "oPlayer", url: "http://oplayer.org"},
+      "overcast": {name: "Overcast.fm", url: "http://overcast.fm"},
       "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com"},
       "pandora": {name: "Pandora", url: "http://www.pandora.com"},
       "player": {name: "Player.fm", url: "http://player.fm"},
