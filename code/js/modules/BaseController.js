@@ -162,7 +162,8 @@
       } else {
         // Check if the pause element exists
         if(this.selectors.playState) {
-          isPlaying = (this.doc().querySelector(this.selectors.playState) !== null);
+          var playStateEl = this.doc().querySelector(this.selectors.playState);
+          isPlaying = (playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
         }
         // Hack to get around sometimes not being able to read css properties that are not inline
         else if(playEl) {
