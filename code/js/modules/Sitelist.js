@@ -1,7 +1,8 @@
 ;(function() {
   "use strict";
 
-  var $ = require("jquery");
+  var _ = require("lodash"),
+      URL = require("urlutils");
 
   /**
    * @return {RegExp} a regex that matches where the string is in a url's (domain) name
@@ -31,111 +32,117 @@
   /**
    * Base class for all sites enabled in extension
    */
-  var Sitelist = function() { return this; };
+  function Sitelist(sites) {
+    this.validSiteAttributes = [
+      "name", "url", "controller", "alias", "blacklist"
+    ];
 
-  Sitelist.prototype.init = function() {
-    this.sites = {
-      "7digital": {name: "7digital", url: "http://www.7digital.com"},
-      "8tracks": {name: "8tracks", url: "http://www.8tracks.com"},
-      "amazon": {name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player"},
-      "ambientsleepingpill": {name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com"},
-      "asoftmurmur": {name: "A Soft Murmur", url: "http://www.asoftmurmur.com"},
-      "audible": {name: "Audible", url: "http://www.audible.com"},
-      "audiosplitter": {name: "Audiosplitter", url: "http://www.audiosplitter.fm"},
-      "bandcamp": {name: "Bandcamp", url: "http://www.bandcamp.com"},
-      "bbc": {name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js"},
-      "beatsmusic": {name: "Beats Web Player", url: "https://listen.beatsmusic.com"},
-      "beatport": {name: "Beatport", url: "https://www.beatport.com"},
-      "beta.last": {name: "LastFm", url: "http://beta.last.fm", controller: "BetaLastfmController.js"},
-      "blitzr": {name: "Blitzr", url: "http://www.blitzr.com"},
-      "bop": {name: "Bop.fm", url: "http://www.bop.fm"},
-      "cubic": {name: "Cubic.fm", url: "http://www.cubic.fm"},
-      "deezer": {name: "Deezer", url: "http://www.deezer.com"},
-      "demodrop": {name: "DemoDrop", url: "http://www.demodrop.com"},
-      "di": {name: "Di.fm", url: "http://www.di.fm"},
-      "disco": {name: "Disco.io", url: "http://www.disco.io"},
-      "earbits": {name: "Earbits", url: "http://www.earbits.com"},
-      "player.edge": {name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js"},
-      "playmoss": {name: "Playmoss", url: "http://www.playmoss.com"},
-      "emby": {name: "Emby", url: "http://app.emby.media"},
-      "feedly": {name: "Feedly", url: "http://www.feedly.com"},
-      "gaana": {name: "Gaana", url: "http://www.gaana.com"},
-      "guvera": {name: "Guvera", url: "https://www.guvera.com"},
-      "play.google": {name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js"},
-      "hypem": {name: "Hypemachine", url: "http://www.hypem.com"},
-      "hypster": {name: "Hypster", url: "http://www.hypster.com"},
-      "iheart": {name: "iHeartRadio", url: "http://www.iheart.com"},
-      "ivoox": {name: "ivoox", url: "http://www.ivoox.com"},
-      "jango": {name: "Jango", url: "http://www.jango.com"},
-      "kollekt": {name: "Kollekt.fm", url: "http://www.kollekt.fm"},
-      "laracasts": {name: "Laracasts", url: "http://www.laracasts.com"},
-      "last": {name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"], blacklist: ["beta.last.fm"]},
-      "mixcloud": {name: "Mixcloud", url: "http://www.mixcloud.com"},
-      "music.microsoft": {name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js",},
-      "mycloudplayers": {name: "My Cloud Player", url: "http://www.mycloudplayers.com"},
-      "myspace": {name: "MySpace", url: "http://www.myspace.com"},
-      "netflix": {name: "Netflix", url: "http://www.netflix.com"},
-      "noise": {name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js"},
-      "npr": {name: "NPR One Player", url: "http://one.npr.org"},
-      "oplayer": {name: "oPlayer", url: "http://oplayer.org"},
-      "overcast": {name: "Overcast.fm", url: "http://overcast.fm"},
-      "palcomp3": {name: "Palco MP3", url: "http://palcomp3.com"},
-      "pandora": {name: "Pandora", url: "http://www.pandora.com"},
-      "player": {name: "Player.fm", url: "http://player.fm"},
-      "pleer": {name: "Pleer", url: "http://pleer.com"},
-      "plex": {name: "Plex", url: "http://www.plex.tv"},
-      "pocketcasts": {name: "Pocketcasts", url: "https://play.pocketcasts.com"},
-      "radioparadise": {name: "RadioParadise", url: "http://www.radioparadise.com"},
-      "radioswissjazz": {name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch"},
-      "radiotunes": {name: "RadioTunes", url: "http://www.radiotunes.com"},
-      "rainwave": {name: "Rainwave.cc", url: "http://www.rainwave.cc"},
-      "rdio": {name: "Rdio", url: "http://www.rdio.com"},
-      "reddit.music.player.il": {name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", alias: ["reddit.musicplayer"]},
-      "reverbnation": {name: "Reverb Nation", url: "http://www.reverbnation.com"},
-      "rhapsody": {name: "Rhapsody", url: "http://www.rhapsody.com"},
-      "saavn": {name: "Saavn", url: "http://www.saavn.com"},
-      "seesu": {name: "Seesu.me", url: "http://www.seesu.me"},
-      "shortorange": {name: "ShortOrange", url: "http://www.shortorange.com"},
-      "shuffler": {name: "Shuffler.fm", url: "http://www.shuffler.fm"},
-      "slacker": {name: "Slacker", url: "http://www.slacker.com"},
-      "songstr": {name: "Songstr", url: "http://www.songstr.com"},
-      "songza": {name: "Songza", url: "http://www.songza.com"},
-      "music.sonyentertainmentnetwork": {name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com", controller: "SonyMusicUnlimitedController.js"},
-      "sound": {name: "Sound.is", url: "http://www.sound.is"},
-      "soundcloud": {name: "Soundcloud", url: "http://www.soundcloud.com"},
-      "soundsgood": {name: "Soundsgood.co", url: "http://www.soundsgood.co"},
-      "spotify": {name: "Spotify Web Player", url: "http://www.spotify.com"},
-      "spreaker": {name: "Spreaker", url: "http://www.spreaker.com"},
-      "stitcher": {name: "Stitcher", url: "http://www.stitcher.com"},
-      "tidal": {name: "Tidal", url: "https://www.tidal.com", alias: ["tidalhifi"]},
-      "thedrop": {name: "TheDrop", url: "https://www.thedrop.club"},
-      "thesixtyone": {name: "TheSixtyOne", url: "http://www.thesixtyone.com"},
-      "tunein": {name: "TuneIn", url: "http://www.tunein.com"},
-      "twitch": {name: "Twitch.tv", url: "http://www.twitch.tv"},
-      "vk": {name: "Vkontakte", url: "http://www.vk.com"},
-      "music.yandex": {name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js"},
-      "radio.yandex": {name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js"},
-      "youarelistening": {name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js"},
-      "xiami": {name: "Xiami", url: "http://www.xiami.com"},
-      "youtube": {name: "YouTube", url: "http://www.youtube.com"},
-      "zonga": {name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js"}
+    this.sites = sites || {
+      "7digital": { name: "7digital", url: "http://www.7digital.com" },
+      "8tracks": { name: "8tracks", url: "http://www.8tracks.com" },
+      "amazon": { name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player" },
+      "ambientsleepingpill": { name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com" },
+      "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
+      "audible": { name: "Audible", url: "http://www.audible.com" },
+      "audiosplitter": { name: "Audiosplitter", url: "http://www.audiosplitter.fm" },
+      "bandcamp": { name: "Bandcamp", url: "http://www.bandcamp.com" },
+      "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
+      "beatsmusic": { name: "Beats Web Player", url: "https://listen.beatsmusic.com" },
+      "beatport": { name: "Beatport", url: "https://www.beatport.com" },
+      "beta.last": { name: "LastFm", url: "http://beta.last.fm", controller: "BetaLastfmController.js" },
+      "blitzr": { name: "Blitzr", url: "http://www.blitzr.com" },
+      "bop": { name: "Bop.fm", url: "http://www.bop.fm" },
+      "cubic": { name: "Cubic.fm", url: "http://www.cubic.fm" },
+      "deezer": { name: "Deezer", url: "http://www.deezer.com" },
+      "demodrop": { name: "DemoDrop", url: "http://www.demodrop.com" },
+      "di": { name: "Di.fm", url: "http://www.di.fm" },
+      "disco": { name: "Disco.io", url: "http://www.disco.io" },
+      "earbits": { name: "Earbits", url: "http://www.earbits.com" },
+      "player.edge": { name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js" },
+      "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
+      "emby": { name: "Emby", url: "http://app.emby.media" },
+      "feedly": { name: "Feedly", url: "http://www.feedly.com" },
+      "gaana": { name: "Gaana", url: "http://www.gaana.com" },
+      "guvera": { name: "Guvera", url: "https://www.guvera.com" },
+      "play.google": { name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js" },
+      "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
+      "hypster": { name: "Hypster", url: "http://www.hypster.com" },
+      "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
+      "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
+      "jango": { name: "Jango", url: "http://www.jango.com" },
+      "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
+      "laracasts": { name: "Laracasts", url: "http://www.laracasts.com" },
+      "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"], blacklist: ["beta.last.fm"] },
+      "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
+      "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
+      "mycloudplayers": { name: "My Cloud Player", url: "http://www.mycloudplayers.com" },
+      "myspace": { name: "MySpace", url: "http://www.myspace.com" },
+      "netflix": { name: "Netflix", url: "http://www.netflix.com" },
+      "noise": { name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js" },
+      "npr": { name: "NPR One Player", url: "http://one.npr.org" },
+      "oplayer": { name: "oPlayer", url: "http://oplayer.org" },
+      "overcast": { name: "Overcast.fm", url: "http://overcast.fm" },
+      "palcomp3": { name: "Palco MP3", url: "http://palcomp3.com" },
+      "pandora": { name: "Pandora", url: "http://www.pandora.com" },
+      "player": { name: "Player.fm", url: "http://player.fm" },
+      "pleer": { name: "Pleer", url: "http://pleer.com" },
+      "plex": { name: "Plex", url: "http://www.plex.tv" },
+      "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
+      "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
+      "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
+      "radiotunes": { name: "RadioTunes", url: "http://www.radiotunes.com" },
+      "rainwave": { name: "Rainwave.cc", url: "http://www.rainwave.cc" },
+      "rdio": { name: "Rdio", url: "http://www.rdio.com" },
+      "reddit.music.player.il": { name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", alias: ["reddit.musicplayer"] },
+      "reverbnation": { name: "Reverb Nation", url: "http://www.reverbnation.com" },
+      "rhapsody": { name: "Rhapsody", url: "http://www.rhapsody.com" },
+      "saavn": { name: "Saavn", url: "http://www.saavn.com" },
+      "seesu": { name: "Seesu.me", url: "http://www.seesu.me" },
+      "shortorange": { name: "ShortOrange", url: "http://www.shortorange.com" },
+      "shuffler": { name: "Shuffler.fm", url: "http://www.shuffler.fm" },
+      "slacker": { name: "Slacker", url: "http://www.slacker.com" },
+      "songstr": { name: "Songstr", url: "http://www.songstr.com" },
+      "songza": { name: "Songza", url: "http://www.songza.com" },
+      "music.sonyentertainmentnetwork": { name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com", controller: "SonyMusicUnlimitedController.js" },
+      "sound": { name: "Sound.is", url: "http://www.sound.is" },
+      "soundcloud": { name: "Soundcloud", url: "http://www.soundcloud.com" },
+      "soundsgood": { name: "Soundsgood.co", url: "http://www.soundsgood.co" },
+      "spotify": { name: "Spotify Web Player", url: "http://www.spotify.com" },
+      "spreaker": { name: "Spreaker", url: "http://www.spreaker.com" },
+      "stitcher": { name: "Stitcher", url: "http://www.stitcher.com" },
+      "tidal": { name: "Tidal", url: "https://www.tidal.com", alias: ["tidalhifi"] },
+      "thedrop": { name: "TheDrop", url: "https://www.thedrop.club" },
+      "thesixtyone": { name: "TheSixtyOne", url: "http://www.thesixtyone.com" },
+      "tunein": { name: "TuneIn", url: "http://www.tunein.com" },
+      "twitch": { name: "Twitch.tv", url: "http://www.twitch.tv" },
+      "vk": { name: "Vkontakte", url: "http://www.vk.com" },
+      "music.yandex": { name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js" },
+      "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
+      "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
+      "xiami": { name: "Xiami", url: "http://www.xiami.com" },
+      "youtube": { name: "YouTube", url: "http://www.youtube.com" },
+      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
     };
+
     this.disabledTabs = [];
   };
+
 
   /**
    * Get site enabled settings from localstorage
    */
   Sitelist.prototype.loadSettings = function() {
     var that = this;
-    if(!this.sites) this.init();
-    console.log(this);
+
     chrome.storage.local.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites"),
           storageObj = {};
-      $.each(that.sites, function(key) {
-        that.sites[key].enabled = (objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) ? obj["hotkey-sites"][key] : true;
-        that.sites[key].url_regex = new URL_check(key, { alias: that.sites[key].alias, blacklist: that.sites[key].blacklist });
+      _.each(_.keys(that.sites), function(key) {
+        that.addSite(
+          key,
+          that.sites[key],
+          (objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) ? obj["hotkey-sites"][key] : true
+        );
         storageObj[key] = that.sites[key].enabled;
       });
       // Set the storage key on init incase previous storage format becomes broken
@@ -150,6 +157,17 @@
       }
     });
   };
+
+  Sitelist.prototype.addSite = function(name, attributes, enabled) {
+    this.sites[name] = _.extend(
+      _.pick(attributes, this.validSiteAttributes),
+      {
+        enabled: enabled,
+        url_regex: new URL_check(name, { alias: attributes.alias, blacklist: attributes.blacklist })
+      }
+    );
+  };
+
 
   /**
    * Set site enabled settings in localstorage
@@ -178,7 +196,7 @@
    * @return {Array} array of enabled sites
    */
   Sitelist.prototype.getEnabled = function() {
-    return $.map(this.sites, function(val, key) {
+    return _.map(this.sites, function(val, key) {
       if(val.enabled) return key;
     });
   };
@@ -189,9 +207,9 @@
    * @return {String} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
-    var filtered_sites = $.grep(Object.keys(window.sk_sites.sites), function (name) {
-      return window.sk_sites.sites[name].url_regex.test(url);
-    });
+    var filtered_sites = _.filter(_.keys(this.sites), function (name) {
+      return this.sites[name].url_regex.test(url);
+    }, this);
 
     if (!filtered_sites.length) return null;
 
@@ -248,7 +266,7 @@
    * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
-    var sites_regex = $.map(this.sites, function(el) { return el.url_regex; });
+    var sites_regex = _.map(this.sites, function(site) { return site.url_regex; });
 
     return sites_regex.some(function(url_regex) {
       return (url_regex.test(url));
@@ -263,6 +281,7 @@
   Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
     var site_name = this.getSitelistName(url),
         value = !is_disabled;
+
     if(site_name) {
       this.sites[site_name].enabled = value;
       this.setStorage(site_name, value);
@@ -290,7 +309,7 @@
   Sitelist.prototype.getController = function(url) {
     var site_name = this.getSitelistName(url);
     if(site_name) {
-      var site = window.sk_sites.sites[site_name];
+      var site = this.sites[site_name];
       if(site.controller) return site.controller;
 
       return (site_name[0].toUpperCase() + site_name.slice(1) + "Controller.js");
@@ -346,5 +365,5 @@
    * When Sitelist is required create a new singleton and return that
    * Note: This makes all methods/properties of Sitelist publicly exposed
    */
-  module.exports = new Sitelist();
+  module.exports = Sitelist;
 })();

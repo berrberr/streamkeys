@@ -1,6 +1,8 @@
 ;(function() {
   "use strict";
 
+  var Sitelist = require("./modules/Sitelist.js");
+
   /**
    * Send a player action to every active player tab
    * @param {String} command - name of the command to pass to the players
@@ -102,6 +104,7 @@
   });
 
   // Define sk_sites as a sitelist in global context
-  window.sk_sites = require("./modules/Sitelist.js");
+  window.sk_sites = new Sitelist();
+  console.log(window.sk_sites);
   window.sk_sites.loadSettings();
 })();

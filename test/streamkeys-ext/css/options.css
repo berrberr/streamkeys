@@ -1,0 +1,137 @@
+html,
+body {
+  height: 100%; }
+
+a:active, a:hover, a:focus, a:visited {
+  text-decoration: none; }
+
+.sitelist {
+  display: table-cell;
+  height: 100%;
+  padding: 6px; }
+
+.btn-site {
+  background-color: #e4eaec;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+  font-weight: 500;
+  padding: 15px 0;
+  margin: 4px;
+  width: 300px; }
+  .btn-site:hover, .btn-site.disabled:hover {
+    background-color: #9aa5ad;
+    color: #000; }
+  .btn-site.disabled {
+    background-color: #76838f;
+    color: #fff; }
+  .btn-site:focus {
+    outline: 0; }
+
+.setting {
+  font-size: 16px; }
+  .setting input[type='checkbox'] {
+    cursor: pointer;
+    margin-right: 5px; }
+  .setting label {
+    cursor: pointer;
+    font-weight: 400; }
+
+.main-container {
+  box-sizing: border-box;
+  display: table;
+  height: 100%;
+  min-height: calc(100vh - 100px);
+  margin-top: -100px;
+  padding: 100px 0 0 0;
+  width: 100%; }
+  .main-container .content {
+    background-color: #f1f4f5;
+    display: table-cell;
+    height: 100%;
+    min-height: calc(100vh - 100px);
+    margin-left: 300px; }
+    .main-container .content .inner {
+      display: table;
+      margin-bottom: calc(50px + 10px);
+      height: 100%;
+      padding: 40px 20px; }
+  .main-container .menu {
+    background-color: #263238;
+    display: table-cell;
+    height: 100%;
+    padding: 0;
+    vertical-align: top;
+    width: 300px; }
+    .main-container .menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 40px 0 0 0; }
+      .main-container .menu ul li a {
+        color: #a3afb7;
+        display: block;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 50px;
+        padding: 0 10px 0 30px; }
+        .main-container .menu ul li a.selected {
+          background-color: #242f35;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          border-top: 1px solid rgba(0, 0, 0, 0.06);
+          color: #fff; }
+        .main-container .menu ul li a:active, .main-container .menu ul li a:hover {
+          color: rgba(255, 255, 255, 0.8);
+          background-color: #76838f; }
+      .main-container .menu ul li .menu-arrow {
+        display: inline-block;
+        font-size: 24px;
+        vertical-align: middle; }
+        .main-container .menu ul li .menu-arrow:before {
+          content: "\232A"; }
+      .main-container .menu ul li .menu-title {
+        display: inline-block;
+        width: calc(300px - 65px); }
+
+.header {
+  background-color: #2880c7;
+  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.8);
+  color: #fff;
+  display: block;
+  height: 100px; }
+  .header h1 {
+    margin: 0;
+    padding: 30px 30px; }
+
+.footer {
+  background-color: #e4eaec;
+  height: 50px;
+  margin-top: -50px;
+  margin-left: 300px;
+  padding: 15px 30px;
+  text-align: center; }
+  .footer a {
+    margin-right: 10px; }
+
+.btn-header .badge {
+  color: #FFFFFF;
+  background-color: #036564; }
+
+.btn-site-success {
+  color: #1E824C;
+  border: 1px solid #1E824C;
+  background-color: #FFFFFF;
+  padding-right: 5px; }
+  .btn-site-success:hover, .btn-site-success:active, .btn-site-success:focus {
+    color: #1E824C !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid red; }
+
+.btn-error-border {
+  border: 1px solid red;
+  color: red;
+  background: #FFF; }
+  .btn-error-border:hover, .btn-error-border:active, .btn-error-border:focus {
+    color: red !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #1E824C; }
+
+/*# sourceMappingURL=options.css.map */

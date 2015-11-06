@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+  <head>
+    <script type="text/javascript" src="/js/popup/popup.js"></script>
+    <link href="/css/popup.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+
+  <body>
+    <div class="header">
+      <a href="http://www.streamkeys.com" target="_blank" tabindex="-1">Streamkeys</a>
+    </div>
+
+    <div id="player">
+      <div data-bind="text: (function() { console.log($data.musicTabs()); console.log($data.musicTabsLoaded()); console.log('data loaded: ', $data.isLoaded()) })()"></div>
+      <div class="no-sites" data-bind="visible: $data.musicTabs().length == 0 && $data.isLoaded()">
+        No music sites open.
+      </div>
+      <!-- ko foreach: $data.sortedMusicTabs -->
+      <div class="site-tab-container" data-bind="css: { disabled: !$data.streamkeysEnabled() }">
+        <div class="player-row">
+          <div class="site-data">
+            <a tabindex="-1" href="#" data-bind="click: function() { $data.openTab() }" title="Open Tab">
+              <img class="site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
+              <span class="site-title" data-bind="text: $data.siteName"></span>
+            </a>
+            <a href="#" data-bind="click: function() { $data.showTabSettings(!$data.showTabSettings.peek()) }" title="Settings">
+              <span class="glyphicon glyphicon-cog settings"></span>
+            </a>
+          </div>
+          <div class="song-data" data-bind="scrollingSong: songArtistText, visible: $data.songArtistText().length"></div>
+          <div class="button-row" data-bind="visible: $data.showTabSettings()">
+            <button type="button" class="btn btn-xs btn-enabled" data-bind="click: function() { $data.toggleStreamkeysEnabled(); $data.showTabSettings(false) }" tabindex="-1">
+              <span class="glyphicon" data-bind="css: { 'glyphicon-ok': !$data.streamkeysEnabled(), 'glyphicon-remove': $data.streamkeysEnabled() }"></span>
+              <span class="btn-text" data-bind="text: $data.streamkeysEnabled() ? 'Disable Site' : 'Enable Site'"></span>
+            </button>
+          </div>
+        </div>
+        <div class="player-controls-row">
+          <button type="button" data-bind="css: { disabled: !$data.canDislike() }, click: function() { $data.sendAction('dislike') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-heart-empty"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canPlayPrev() }, click: function() { $data.sendAction('playPrev') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-backward"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canPlayPause() }, click: function() { $data.sendAction('playPause') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon" data-bind="css: { 'glyphicon-pause': $data.isPlaying(), 'glyphicon-play': !$data.isPlaying() }"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canPlayNext() }, click: function() { $data.sendAction('playNext') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-forward"></span>
+          </button>
+          <button type="button" data-bind="css: { disabled: !$data.canLike() }, click: function() { $data.sendAction('like') }" class="btn btn-sm btn-default sk-playcontrols" tabindex="-1">
+            <span class="glyphicon player-glyphicon glyphicon-heart"></span>
+          </button>
+        </div>
+      </div>
+      <!-- /ko -->
+    </div>
+
+    <div class="options">
+      <div>
+        <a href="#" id="options-link" target="_blank" tabindex="-1">Options</a>
+        <a href="http://www.streamkeys.com/guide.html" id="help-link" target="_blank" tabindex="-1">Help</a>
+      </div>
+    </div>
+  </body>
+</html>
