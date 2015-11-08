@@ -1,6 +1,10 @@
 ;(function() {
   "use strict";
 
+  // Needed for phantomjs to work
+  // @see [https://github.com/ariya/phantomjs/issues/12401]
+  require('es6-promise').polyfill();
+
   var _ = require("lodash"),
       URL = require("urlutils");
 
@@ -158,6 +162,9 @@
     });
   };
 
+  /**
+   * Adds a new site to `sites` and generates the URL regex
+   */
   Sitelist.prototype.addSite = function(name, attributes, enabled) {
     this.sites[name] = _.extend(
       _.pick(attributes, this.validSiteAttributes),
@@ -274,21 +281,6 @@
   };
 
   /**
-   * Set the disabled value of a music site and store results in localstorage
-   * @param {String} url - url of site to mark as disabled
-   * @param {Boolean} is_disabled - disable site if true, enable site if false
-   */
-  Sitelist.prototype.markSiteAsDisabled = function(url, is_disabled) {
-    var site_name = this.getSitelistName(url),
-        value = !is_disabled;
-
-    if(site_name) {
-      this.sites[site_name].enabled = value;
-      this.setStorage(site_name, value);
-    }
-  };
-
-  /**
    * @param {Number} tabId - id of tab to temp disable
    * @param {Boolean} enabled - enable tab if true, disable tab if false
    */
@@ -319,26 +311,6 @@
   };
 
   /**
-   * Gets an array of all active and enabled music tabs
-   * @return {Promise}
-   */
-  Sitelist.prototype.getActiveMusicTabs = function() {
-    var that = this;
-    var promise = new Promise(function(resolve) {
-      var music_tabs = [];
-      chrome.tabs.query({}, function (tabs) {
-        tabs.forEach(function (tab) {
-          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) music_tabs.push(tab);
-        });
-
-        resolve(music_tabs);
-      });
-    });
-
-    return promise;
-  };
-
-  /**
    * Gets an array of all tabs that are music tabs, ignoring whether they are active
    * @return {Promise}
    */
@@ -362,8 +334,24 @@
   };
 
   /**
-   * When Sitelist is required create a new singleton and return that
-   * Note: This makes all methods/properties of Sitelist publicly exposed
+   * Gets an array of all active and enabled music tabs
+   * @return {Promise}
    */
+  Sitelist.prototype.getActiveMusicTabs = function() {
+    var that = this;
+    var promise = new Promise(function(resolve) {
+      var music_tabs = [];
+      chrome.tabs.query({}, function (tabs) {
+        tabs.forEach(function (tab) {
+          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) music_tabs.push(tab);
+        });
+
+        resolve(music_tabs);
+      });
+    });
+
+    return promise;
+  };
+
   module.exports = Sitelist;
 })();

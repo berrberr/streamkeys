@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    clean: ["build/unpacked-dev", "build/unpacked-prod", "test/streamkeys-ext"],
+    clean: ["build/unpacked-dev", "build/unpacked-prod", "test-selectors/streamkeys-ext"],
 
     mkdir: {
       unpacked: { options: { create: ["build/unpacked-dev", "build/unpacked-dev/js", "build/unpacked-prod"] } }
@@ -45,13 +45,13 @@ module.exports = function(grunt) {
         expand: true,
         cwd: "build/unpacked-dev",
         src: ["**"],
-        dest: "test/streamkeys-ext/"
+        dest: "test-selectors/streamkeys-ext/"
       } ] },
       test_prod: { files: [ {
         expand: true,
         cwd: "build/unpacked-prod",
         src: ["**"],
-        dest: "test/streamkeys-ext/"
+        dest: "test-selectors/streamkeys-ext/"
       } ] }
     },
 
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
 
     exec: {
       run_tests: {
-        command: "node test/runner.js"
+        command: "node test-selectors/runner.js"
       }
     },
 

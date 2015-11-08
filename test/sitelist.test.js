@@ -3,7 +3,7 @@ var Sitelist = require("../code/js/modules/Sitelist.js"),
 
 describe("Sitelist tests", function() {
   var sitelist, siteNames, controllerNames, siteUrls,
-      aliases, aliasUrls, blacklists, blacklistUrls;
+      aliases, aliasUrls, blacklists, blacklistUrls, tabs;
 
   beforeAll(function() {
     chrome.storage.local.get.yields({});
@@ -42,9 +42,39 @@ describe("Sitelist tests", function() {
     ];
 
     blacklists = [
-      ["DONTMATCH.ME.COM", "ANTOHER.BLACKLIST", "athir.d"],
-      ["multiple.domain.blacklist.com"]
+      ["atestsitefortestingsitematches.BLACKLISTDOMAIN", "SUBDOMAINBLACKLIST.atestsitefortestingsitematches"],
+      ["MULTIPLE.acustomcontrollersite.DOMAINS"]
     ];
+
+    blacklistUrls = [
+      "http://www.atestsitefortestingsitematches.BLACKLISTDOMAIN.com",
+      "http://SUBDOMAINBLACKLIST.atestsitefortestingsitematches.fm",
+      "http://www.MULTIPLE.acustomcontrollersite.DOMAINS"
+    ];
+
+    tabs = [
+      {
+        id: 1,
+        title: siteNames[0],
+        url: siteUrls[0]
+      },
+      {
+        id: 2,
+        title: siteNames[1],
+        url: siteUrls[1]
+      },
+      {
+        id: 3,
+        title: siteNames[1],
+        url: siteUrls[1]
+      },
+      {
+        id: 4,
+        title: siteNames[2],
+        url: siteUrls[2]
+      }
+    ];
+    chrome.tabs.query.yields(tabs);
 
     var mockedSites = { };
 
@@ -118,4 +148,33 @@ describe("Sitelist tests", function() {
     expect(sitelist.getController(aliasUrls[0])).not.toBe(controllerNames[1]);
   });
 
+  it("doesn't match blacklisted domains", function() {
+    expect(sitelist.checkMusicSite(blacklistUrls[0])).toBe(false);
+    expect(sitelist.checkMusicSite(blacklistUrls[1])).toBe(false);
+    expect(sitelist.checkMusicSite(blacklistUrls[2])).toBe(false);
+  });
+
+  it("gets all enabled sites", function() {
+    expect(sitelist.getEnabled().length).toBe(siteNames.length);
+  });
+
+  it("gets music tabs from chrome tabs", function(done) {
+    sitelist.getMusicTabs().then(function(musicTabs) {
+      expect(musicTabs.length).toBe(tabs.length);
+      done();
+    });
+  });
+
+  it("gets active music tabs when all are active", function(done) {
+    sitelist.getActiveMusicTabs().then(function(musicTabs) {
+      expect(musicTabs.length).toBe(tabs.length);
+      done();
+    });
+  });
+
+  it("disables a tab", function() {
+    expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+    sitelist.markTabEnabledState(tabs[0].id, false);
+    expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(false);
+  });
 })

@@ -2,7 +2,7 @@
 node_modules/
 build/*
 test-selectors/streamkeys-ext/*
-test/secrets.json
+secrets.json
 streamkeys-dev.zip
 streamkeys.zip
 .sass-cache/
