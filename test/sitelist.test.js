@@ -2,11 +2,20 @@ var Sitelist = require("../code/js/modules/Sitelist.js"),
     _ = require("lodash");
 
 describe("Sitelist tests", function() {
+  var storageObject = {};
   var sitelist, siteNames, controllerNames, siteUrls,
       aliases, aliasUrls, blacklists, blacklistUrls, tabs;
 
   beforeAll(function() {
-    chrome.storage.local.get.yields({});
+    chrome.storage.local.get = sinon.spy(function(callback) {
+      callback(storageObject);
+    });
+
+    chrome.storage.local.set = sinon.spy(function(obj, callback) {
+      _.extend(storageObject, obj);
+
+      if(_.isFunction(callback)) callback(true);
+    });
 
     siteNames = [
       "atestsitefortestingsitematches",
@@ -154,10 +163,6 @@ describe("Sitelist tests", function() {
     expect(sitelist.checkMusicSite(blacklistUrls[2])).toBe(false);
   });
 
-  it("gets all enabled sites", function() {
-    expect(sitelist.getEnabled().length).toBe(siteNames.length);
-  });
-
   it("gets music tabs from chrome tabs", function(done) {
     sitelist.getMusicTabs().then(function(musicTabs) {
       expect(musicTabs.length).toBe(tabs.length);
@@ -172,9 +177,24 @@ describe("Sitelist tests", function() {
     });
   });
 
-  it("disables a tab", function() {
+  it("toggles enable/disable of a tab", function() {
     expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
     sitelist.markTabEnabledState(tabs[0].id, false);
     expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(false);
+    sitelist.markTabEnabledState(tabs[0].id, true);
+    expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+  });
+
+  it("toggles enable/disable of a site", function(done) {
+    expect(sitelist.getEnabled().length).toBe(siteNames.length);
+    sitelist.markSiteEnabledState(siteUrls[0], false, function() {
+      expect(sitelist.getEnabled().length).toBe(siteNames.length - 1);
+      expect(sitelist.checkEnabled(siteUrls[0])).toBe(false);
+      sitelist.markSiteEnabledState(siteUrls[0], true, function() {
+        expect(sitelist.getEnabled().length).toBe(siteNames.length);
+        expect(sitelist.checkEnabled(siteUrls[0])).toBe(true);
+        done();
+      });
+    });
   });
 })

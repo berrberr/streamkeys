@@ -182,7 +182,7 @@
    * @param {Object} value - value to set
    * @return {Promise}
    */
-  Sitelist.prototype.setStorage = function(key, value) {
+  Sitelist.prototype.setSiteStorage = function(key, value) {
     var promise = new Promise(function(resolve, reject) {
       chrome.storage.local.get(function(obj) {
         if(obj["hotkey-sites"]) {
@@ -200,12 +200,33 @@
   };
 
   /**
-   * @return {Array} array of enabled sites
+   * Set the disabled value of a music site and store results in localstorage
+   * @param {String} url - url of site to mark as disabled
+   * @param {Boolean} enabled - enable site if true, disable site if false
+   */
+  Sitelist.prototype.markSiteEnabledState = function(url, enabled, callback) {
+    var siteName = this.getSitelistName(url),
+        value = enabled;
+
+    if(siteName) {
+      this.sites[siteName].enabled = value;
+      this.setSiteStorage(siteName, value).then(function() {
+        callback();
+      });
+    } else {
+      callback();
+    }
+  };
+
+  /**
+   * @return {Array} array of enabled site keys
    */
   Sitelist.prototype.getEnabled = function() {
-    return _.map(this.sites, function(val, key) {
-      if(val.enabled) return key;
-    });
+    return _.keys(
+      _.pick(this.sites, function(site) {
+        return site.enabled;
+      })
+    );
   };
 
   /**
