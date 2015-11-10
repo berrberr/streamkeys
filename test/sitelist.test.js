@@ -1,65 +1,22 @@
 var Sitelist = require("../code/js/modules/Sitelist.js"),
+    SiteData = require("./data/sites.js"),
     _ = require("lodash");
 
+chrome.storage.local = require("./helpers/chrome_storage_area.js");
+
 describe("Sitelist tests", function() {
-  var storageObject = {};
   var sitelist, siteNames, controllerNames, siteUrls,
       aliases, aliasUrls, blacklists, blacklistUrls, tabs;
 
   beforeAll(function() {
-    chrome.storage.local.get = sinon.spy(function(callback) {
-      callback(storageObject);
-    });
-
-    chrome.storage.local.set = sinon.spy(function(obj, callback) {
-      _.extend(storageObject, obj);
-
-      if(_.isFunction(callback)) callback(true);
-    });
-
-    siteNames = [
-      "atestsitefortestingsitematches",
-      "acustomcontrollersite",
-      "ablacklistsite",
-      "analiasedsite"
-    ];
-
-    siteUrls = [
-      "http://atestsitefortestingsitematches.com",
-      "http://www.acustomcontrollersite.fm",
-      "http://play.ablacklistsite.ca",
-      "http://music.analiasedsite.xyz"
-    ];
-
-    controllerNames = [
-      "AtestsitefortestingsitematchesController.js",
-      "OVERRIDE.js",
-      "ANOTHEROVERRIDE.js",
-      "AnaliasedsiteController.js"
-    ];
-
-    aliases = [
-      ["somealiasone", "somealiasmultiple", "anotheralas"],
-      ["multiple.domain.alias.com"]
-    ];
-
-    aliasUrls = [
-      "http://" + aliases[0][0] + ".com",
-      "http://www." + aliases[0][1] + ".fm",
-      "http://withsubdomain." + aliases[0][2] + ".music",
-      "http://" + aliases[1][0] + ".com"
-    ];
-
-    blacklists = [
-      ["atestsitefortestingsitematches.BLACKLISTDOMAIN", "SUBDOMAINBLACKLIST.atestsitefortestingsitematches"],
-      ["MULTIPLE.acustomcontrollersite.DOMAINS"]
-    ];
-
-    blacklistUrls = [
-      "http://www.atestsitefortestingsitematches.BLACKLISTDOMAIN.com",
-      "http://SUBDOMAINBLACKLIST.atestsitefortestingsitematches.fm",
-      "http://www.MULTIPLE.acustomcontrollersite.DOMAINS"
-    ];
+    sitelist = SiteData.sitelist;
+    siteNames = SiteData.siteNames;
+    controllerNames = SiteData.controllerNames;
+    siteUrls = SiteData.siteUrls;
+    aliases = SiteData.aliases;
+    aliasUrls = SiteData.aliasUrls;
+    blacklists = SiteData.blacklists;
+    blacklistUrls = SiteData.blacklistUrls;
 
     tabs = [
       {
@@ -83,6 +40,7 @@ describe("Sitelist tests", function() {
         url: siteUrls[2]
       }
     ];
+
     chrome.tabs.query.yields(tabs);
 
     var mockedSites = { };
@@ -177,12 +135,19 @@ describe("Sitelist tests", function() {
     });
   });
 
-  it("toggles enable/disable of a tab", function() {
+  it("toggles enable/disable of a tab", function(done) {
     expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
     sitelist.markTabEnabledState(tabs[0].id, false);
     expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(false);
-    sitelist.markTabEnabledState(tabs[0].id, true);
-    expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+    sitelist.getActiveMusicTabs().then(function(firstMusicTabs) {
+      expect(firstMusicTabs.length).toBe(tabs.length - 1);
+      sitelist.markTabEnabledState(tabs[0].id, true);
+      expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+      sitelist.getActiveMusicTabs().then(function(secondMusicTabs) {
+        expect(secondMusicTabs.length).toBe(tabs.length);
+        done();
+      });
+    });
   });
 
   it("toggles enable/disable of a site", function(done) {
