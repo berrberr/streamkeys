@@ -1,8 +1,8 @@
 ;(function() {
   "use strict";
 
-  var BaseController = function() { return this; };
   var sk_log = require("../modules/SKLog.js");
+  var BaseController = function() { return this; };
 
   BaseController.prototype.init = function(options) {
     this.name = document.location.hostname;

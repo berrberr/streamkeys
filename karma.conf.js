@@ -4,6 +4,7 @@ module.exports = function(config) {
 
     frameworks: [
       "browserify",
+      "jasmine-jquery",
       "jasmine"
     ],
 
@@ -11,7 +12,8 @@ module.exports = function(config) {
       "node_modules/sinon/pkg/sinon.js",
       "node_modules/sinon-chrome/chrome.js",
       "node_modules/sinon-chrome/src/phantom-tweaks.js",
-      "test/**/*.test.js"
+      "test/**/*.test.js",
+      "test/fixtures/*.html"
     ],
 
     preprocessors: {
@@ -38,9 +40,10 @@ module.exports = function(config) {
     },
 
     plugins: [
-      "karma-phantomjs-launcher",
+      "karma-browserify",
       "karma-jasmine",
-      "karma-browserify"
+      "karma-jasmine-jquery",
+      "karma-phantomjs-launcher"
     ]
   });
 };

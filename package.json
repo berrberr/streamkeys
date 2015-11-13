@@ -43,6 +43,7 @@
     "karma": "^0.13.14",
     "karma-browserify": "^4.4.0",
     "karma-jasmine": "^0.3.6",
+    "karma-jasmine-jquery": "^0.1.1",
     "karma-phantomjs-launcher": "^0.2.1",
     "knockout": "~3.3.0",
     "mocha": "~1.21.4",
@@ -57,6 +58,7 @@
   },
   "dependencies": {
     "es6-promise": "^3.0.2",
+    "jasmine-jquery": "^2.1.1",
     "lodash": "~3.10.0"
   }
 }

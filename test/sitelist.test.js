@@ -1,10 +1,10 @@
 var Sitelist = require("../code/js/modules/Sitelist.js"),
-    SiteData = require("./data/sites.js"),
+    SiteData = require("./helpers/site_data.js"),
     _ = require("lodash");
 
 chrome.storage.local = require("./helpers/chrome_storage_area.js");
 
-describe("Sitelist tests", function() {
+describe("sitelist", function() {
   var sitelist, siteNames, controllerNames, siteUrls,
       aliases, aliasUrls, blacklists, blacklistUrls, tabs;
 

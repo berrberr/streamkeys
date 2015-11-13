@@ -105,6 +105,5 @@
 
   // Define sk_sites as a sitelist in global context
   window.sk_sites = new Sitelist();
-  console.log(window.sk_sites);
   window.sk_sites.loadSettings();
 })();
