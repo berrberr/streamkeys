@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Tidal",
     play: ".js-play",
     pause: ".js-pause",

@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Google Play Music",
     playPause: "[data-id=play-pause]",
     playNext: "[data-id=forward]",

@@ -1,8 +1,9 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
-  controller.init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "BBC Radio",
     play: "#play",
     pause: "#pause",

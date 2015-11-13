@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "AmbientSleepingPill",
     play: ".jp-play",
     pause: ".jp-pause",

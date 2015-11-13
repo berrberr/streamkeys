@@ -2,9 +2,8 @@
   "use strict";
 
   var sk_log = require("../modules/SKLog.js");
-  var BaseController = function() { return this; };
 
-  BaseController.prototype.init = function(options) {
+  function BaseController(options) {
     this.name = document.location.hostname;
     this.siteName = options.siteName || null;
 
@@ -59,7 +58,7 @@
     document.addEventListener("streamkeys-test-loaded", function() {
       sk_log("loaded");
     });
-  };
+  }
 
   BaseController.prototype.doc = function() {
     var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName === "IFRAME");
@@ -314,5 +313,5 @@
     sk_log("Attached listener for ", this);
   };
 
-  module.exports = new BaseController();
+  module.exports = BaseController;
 })();

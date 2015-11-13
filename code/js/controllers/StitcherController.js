@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Stitcher",
     playPause: "#audio_player-play",
     playNext: "#audio_player-skip",

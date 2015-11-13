@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Plex.tv",
     playPause: "button.play-btn:not([tabindex='-1'])",
     play: "button.play-btn:not([tabindex='-1'])",

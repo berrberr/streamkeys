@@ -1,11 +1,11 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
 
   var isNew = document.querySelector("#loading_bar") !== null;
 
-  controller.init({
+  new BaseController({
     siteName: "Deezer",
     playPause: ".control.control-play",
     play: ".control.control-play",
@@ -20,5 +20,4 @@
     song: ".player-track-title > span",
     artist: ".heading-2-sub span.player-track-link"
   });
-
 })();

@@ -1,8 +1,8 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
-  controller.init({
+  var BaseController = require("BaseController");
+  var controller = new BaseController({
     siteName: "Amazon Music",
     playPause: "[playeraction=togglePlay]",
     playNext: "[playeraction=next]",

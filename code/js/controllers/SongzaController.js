@@ -1,9 +1,9 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Songza",
     playPause: ".miniplayer-control-play-pause",
     playNext: ".miniplayer-control-skip",

@@ -58,7 +58,9 @@ Filename: FooplayerController.js
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     playPause: "#play_btn",
     playNext: "#next_btn",
     playPrev: "#prev_btn",

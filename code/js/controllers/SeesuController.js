@@ -1,8 +1,9 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
-  controller.init({
+  var BaseController = require("BaseController");
+
+  var controller = new BaseController({
     siteName: "Seesu",
     playPause: "#override",
     playNext: "#override",

@@ -1,9 +1,9 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Palco MP3",
     playPause: "#p_play",
     playState: "#p_play.p_pause",

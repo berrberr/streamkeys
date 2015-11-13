@@ -1,9 +1,9 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
 
-  controller.init({
+  new BaseController({
     siteName: "Emby",
     play: ".unpauseButton",
     pause: ".pauseButton",

@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Last.fm Beta",
     play: ".player-bar-btn--play",
     pause: ".player-bar-btn--pause",

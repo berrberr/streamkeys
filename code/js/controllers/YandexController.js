@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Yandex",
     playPause: ".player-controls__btn_play",
     playNext: ".player-controls__btn_next",

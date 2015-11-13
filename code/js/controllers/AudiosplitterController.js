@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Audiosplitter",
     play: ".p-controls .as-icon-play",
     pause: ".p-controls .as-icon-pause",

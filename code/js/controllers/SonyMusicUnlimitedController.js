@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Sony Music Unlimited",
     playPause: "#PlayerPlayPause",
     playNext: "#PlayerNext",

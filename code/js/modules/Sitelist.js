@@ -3,7 +3,7 @@
 
   // Needed for phantomjs to work
   // @see [https://github.com/ariya/phantomjs/issues/12401]
-  require('es6-promise').polyfill();
+  require("es6-promise").polyfill();
 
   var _ = require("lodash"),
       URL = require("urlutils");
@@ -129,7 +129,7 @@
     };
 
     this.disabledTabs = [];
-  };
+  }
 
 
   /**

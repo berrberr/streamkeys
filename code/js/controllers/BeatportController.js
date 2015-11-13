@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController"),
+  var BaseController = require("BaseController"),
       $ = require("jquery");
 
   var multiSelectors = {
@@ -15,7 +15,7 @@
     artist: [".omniplayer--artist", ".channel-text h1"]
   };
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Beatport"
   });
 
