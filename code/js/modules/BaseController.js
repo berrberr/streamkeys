@@ -4,7 +4,6 @@
   var sk_log = require("../modules/SKLog.js");
 
   function BaseController(options) {
-    this.name = document.location.hostname;
     this.siteName = options.siteName || null;
 
     this.selectors = {
@@ -22,9 +21,6 @@
       //** States **//
       playState: (options.playState || null),
       pauseState: (options.pauseState || null),
-
-      // ** Song Change Observer **//
-      songChange: (options.songChange || null),
 
       //** Song Info **//
       song: (options.song || null),
@@ -49,14 +45,8 @@
     // Set to true if the tab should be hidden from the popup unless it has a playPause element shown
     this.hidePlayer = options.hidePlayer || false;
 
-    chrome.runtime.sendMessage({created: true}, function() {
-      sk_log("Told BG we are created");
-    });
-
-    sk_log("SK content script loaded");
-
-    document.addEventListener("streamkeys-test-loaded", function() {
-      sk_log("loaded");
+    chrome.runtime.sendMessage({ created: true }, function() {
+      sk_log("SK content script loaded");
     });
   }
 
@@ -162,7 +152,7 @@
         // Check if the pause element exists
         if(this.selectors.playState) {
           var playStateEl = this.doc().querySelector(this.selectors.playState);
-          isPlaying = (playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
+          isPlaying = !!(playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
         }
         // Hack to get around sometimes not being able to read css properties that are not inline
         else if(playEl) {
@@ -172,9 +162,9 @@
           } else if (window.getComputedStyle) {
             displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
           }
-          isPlaying = (displayStyle == "none");
+          isPlaying = (displayStyle === "none");
         } else {
-          return null;
+          return false;
         }
       }
     }
@@ -239,15 +229,6 @@
   };
 
   /**
-   * Checks if a BaseController property is set. Used for testing.
-   * @param {String} property - name of property to check for
-   */
-  BaseController.prototype.getProperty = function(property) {
-    if(this[property]) sk_log(property);
-    else sk_log("Property not found.", property, true);
-  };
-
-  /**
    * Callback for request from background page
    */
   BaseController.prototype.doRequest = function(request, sender, response) {
@@ -268,47 +249,14 @@
   };
 
   /**
-   * Callback for request from tester
-   */
-  BaseController.prototype.doTestRequest = function(e) {
-    if(e.detail) {
-
-      if(e.detail === "playPause" || e.detail === "playNext" || e.detail === "playPrev" || e.detail === "stop" || e.detail === "mute" || e.detail === "like"|| e.detail === "dislike" ) {
-        this.doRequest({action: e.detail});
-      }
-
-      if(e.detail == "songName") this.test_getSongData(this.selectors.song);
-      if(e.detail == "artistName") this.test_getSongData(this.selectors.artist);
-      if(e.detail == "siteName") this.getProperty("siteName");
-      if(e.detail == "isPlaying") this.isPlaying();
-    }
-  };
-
-  /**
-   * Process a test request to get song data
-   * @param {String} selector - query selector for song data text
-   */
-  BaseController.prototype.test_getSongData = function(selector) {
-    var songData = this.getSongData(selector);
-    if(songData) {
-      sk_log("Song data: ", songData);
-    } else {
-      sk_log("Song data not found.", {}, true);
-    }
-  };
-
-  /**
-   * Setup listeners for extension messages and test requests. Initialize the playerState interval
+   * Setup listeners for extension messages. Initialize the playerState interval
    */
   BaseController.prototype.attachListeners = function() {
     // Listener for requests from background page
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
 
-    // Listener for requests from tests
-    document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
-
     // Update the popup player state intermittently
-    setInterval(this.updatePlayerState.bind(this), 200);
+    // setInterval(this.updatePlayerState.bind(this), 200);
 
     sk_log("Attached listener for ", this);
   };

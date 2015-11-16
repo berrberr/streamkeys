@@ -11,7 +11,6 @@ module.exports = function(config) {
     files: [
       "node_modules/sinon/pkg/sinon.js",
       "node_modules/sinon-chrome/chrome.js",
-      "node_modules/sinon-chrome/src/phantom-tweaks.js",
       "test/**/*.test.js",
       "test/fixtures/*.html"
     ],
@@ -26,13 +25,13 @@ module.exports = function(config) {
 
     colors: true,
 
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     autoWatch: false,
 
     singleRun: true,
 
-    browsers: ["PhantomJS"],
+    browsers: ["PhantomJS2"],
 
     browserify: {
       debug: true,
@@ -43,7 +42,7 @@ module.exports = function(config) {
       "karma-browserify",
       "karma-jasmine",
       "karma-jasmine-jquery",
-      "karma-phantomjs-launcher"
+      "karma-phantomjs2-launcher"
     ]
   });
 };
