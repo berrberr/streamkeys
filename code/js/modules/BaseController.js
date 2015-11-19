@@ -136,7 +136,7 @@
     else if(this.selectors.playState) {
       // Check if the play state element exists and is visible
       var playStateEl = this.doc().querySelector(this.selectors.playState);
-      isPlaying = !!(playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
+      isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
     }
     else if(playEl) {
       isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
@@ -229,7 +229,7 @@
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
 
     // Update the popup player state intermittently
-    // setInterval(this.updatePlayerState.bind(this), 200);
+    setInterval(this.updatePlayerState.bind(this), 200);
 
     sk_log("Attached listener for ", this);
   };
