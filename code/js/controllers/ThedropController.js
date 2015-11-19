@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "The Drop",
-    playPause: ".button-left.play-button",
     play: ".button-left.play-button",
     pause: ".pause-button",
     playNext: ".next-button",

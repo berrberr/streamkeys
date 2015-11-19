@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "RadioSwissJazz",
-    playPause: "[role=play]",
     play: "[role=play]",
     pause: "[role=stop]",
 

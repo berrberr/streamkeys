@@ -25,7 +25,8 @@ module.exports = function(config) {
 
     colors: true,
 
-    logLevel: config.LOG_DEBUG,
+    // LOG_DISABLE, LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG
+    logLevel: config.LOG_INFO,
 
     autoWatch: false,
 

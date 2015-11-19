@@ -26,7 +26,7 @@ describe("base controller", function() {
     });
 
     beforeEach(function() {
-      loadFixtures("basic_music_site.html");
+      loadFixtures("music_site_basic.html");
     });
 
     it("gets proper state data on init", function() {
@@ -107,7 +107,7 @@ describe("base controller", function() {
 
     // We have to add a small delay here to account for iframe#ready event to fire
     beforeEach(function(done) {
-      loadFixtures("music_site_with_iframe.html");
+      loadFixtures("music_site_iframe.html");
       setTimeout(function() {
         done();
       }, 100);
@@ -127,7 +127,6 @@ describe("base controller", function() {
 
     it("plays and pauses and updates player state", function() {
       controller.playPause();
-      console.log(controller.getStateData());
       expect(controller.getStateData().isPlaying).toBe(true);
       sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
       controller.playPause();
@@ -137,6 +136,24 @@ describe("base controller", function() {
   });
 
   describe("music site with buttonSwitch", function() {
+    beforeAll(function() {
+      controller = new BaseController({
+        siteName: "Music Site With Buttonswitch",
+        play: ".playBtn",
+        pause: ".pauseBtn",
+        buttonSwitch: true
+      });
+    });
+
+    it("plays and pauses and updates player state", function() {
+      loadFixtures("music_site_buttonswitch.html");
+      controller.playPause();
+      expect(controller.getStateData().isPlaying).toBe(true);
+      sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
+      controller.playPause();
+      expect(controller.getStateData().isPlaying).toBe(false);
+      sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
+    });
 
   });
 

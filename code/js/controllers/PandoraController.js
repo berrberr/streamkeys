@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Pandora",
-    playPause: ".playButton",
     play: ".playButton",
     pause: ".pauseButton",
     playNext: ".skipButton",

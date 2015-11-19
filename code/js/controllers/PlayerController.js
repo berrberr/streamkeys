@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Player.fm",
-    playPause: ".control.play",
     play: ".control.play",
     pause: ".control.pause",
     playNext: ".control.forward",

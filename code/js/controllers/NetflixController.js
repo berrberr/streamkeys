@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Netflix",
-    playPause: ".player-play-pause.play",
     play: ".player-play-pause.play",
     pause: ".player-play-pause.pause",
     playNext: ".player-next-episode",

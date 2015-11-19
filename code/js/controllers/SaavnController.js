@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Saavn",
-    playPause: "#play",
     play: "#play",
     pause: "#pause",
     playNext: "#fwd",

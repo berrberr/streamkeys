@@ -7,7 +7,6 @@
 
   new BaseController({
     siteName: "Deezer",
-    playPause: ".control.control-play",
     play: ".control.control-play",
     pause: ".control.control-pause",
     playNext: ".control.control-next",

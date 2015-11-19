@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "The Edge",
-    playPause: "#playButton",
     play: "#playButton",
     pause: "#stopButton",
     playStyle: "disabled",

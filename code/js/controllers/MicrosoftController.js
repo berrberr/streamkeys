@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Microsoft Groove",
-    playPause: ".iconPlayerPlay",
     play: ".iconPlayerPlay",
     pause: ".iconPlayerPause",
     playNext: ".iconPlayerNext",

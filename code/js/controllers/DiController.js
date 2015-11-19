@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Di.fm",
-    playPause: ".icon-play",
     play: ".icon-play",
     pause: ".icon-pause",
     mute: ".volume",

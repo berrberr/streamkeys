@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "OPlayer",
-    playPause: ".jp-play",
     play: ".jp-play",
     pause: ".jp-pause",
     playNext: ".jp-forward",

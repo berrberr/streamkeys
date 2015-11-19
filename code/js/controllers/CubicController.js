@@ -5,7 +5,6 @@
 
   new BaseController({
     siteName: "Cubic.fm",
-    playPause: ".player-button-play",
     play: ".player-button-play .fa-play",
     pause: ".player-button-play .fa-pause",
     playNext: ".player-button-next",
