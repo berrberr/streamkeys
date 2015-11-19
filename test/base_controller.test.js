@@ -154,14 +154,25 @@ describe("base controller", function() {
       expect(controller.getStateData().isPlaying).toBe(false);
       sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
     });
-
   });
 
-  describe("music site with playPause button", function() {
+  describe("music site with playPause button and playState", function() {
+    beforeAll(function() {
+      controller = new BaseController({
+        siteName: "Music Site With playPause and playState",
+        playPause: "#playpause",
+        playState: "#player-container.playing"
+      });
+    });
 
-  });
-
-  describe("music site with play and pause hidden buttons", function() {
-
+    it("plays and pauses and updates player state", function() {
+      loadFixtures("music_site_playpause.html");
+      controller.playPause();
+      expect(controller.getStateData().isPlaying).toBe(true);
+      sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
+      controller.playPause();
+      expect(controller.getStateData().isPlaying).toBe(false);
+      sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
+    });
   });
 });

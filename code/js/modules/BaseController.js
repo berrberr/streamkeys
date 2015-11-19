@@ -135,7 +135,7 @@
     }
     else if(this.selectors.playState) {
       // Check if the play state element exists and is visible
-      var playStateEl this.doc().querySelector(this.selectors.playState);
+      var playStateEl = this.doc().querySelector(this.selectors.playState);
       isPlaying = !!(playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
     }
     else if(playEl) {
