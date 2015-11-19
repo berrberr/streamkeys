@@ -7,10 +7,9 @@
     siteName: "The Edge",
     play: "#playButton",
     pause: "#stopButton",
-    playStyle: "disabled",
-    pauseStyle: "disabled",
     mute: ".vol-icon",
 
+    playState: "#playButton.disabled",
     song: "#songTitle",
     artist: "#songArtist"
   });

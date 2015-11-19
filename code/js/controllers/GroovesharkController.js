@@ -11,7 +11,6 @@
     mute: "#volume",
     like: "#np-fav",
 
-    pauseState: ".player-btn.paused",
     playState: ".player-btn.playing",
     song: "a[data-tooltip-cache-key=playerSong]",
     artist: "a[data-tooltip-cache-key=playerArtist]"

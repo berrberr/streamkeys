@@ -10,7 +10,6 @@
     playNext: ".nextTrackButton",
     playPrev: ".previousTrackButton",
 
-    pauseState: ".pauseButton.hide",
     playState: ".unpauseButton.hide"
   });
 })();

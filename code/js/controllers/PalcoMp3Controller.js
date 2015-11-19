@@ -7,7 +7,6 @@
     siteName: "Palco MP3",
     playPause: "#p_play",
     playState: "#p_play.p_pause",
-    pauseState: "#p_play.p_play",
     mute: ".p_volume",
     song: ".p_musica",
     artist: ".p_artista"

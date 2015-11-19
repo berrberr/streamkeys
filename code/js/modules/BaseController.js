@@ -20,18 +20,11 @@
 
       //** States **//
       playState: (options.playState || null),
-      pauseState: (options.pauseState || null),
 
       //** Song Info **//
       song: (options.song || null),
       artist: (options.artist || null)
     };
-
-    // Optional. Style of play and pause buttons when they are NOT in use
-    // EX: When a play button is in use, css class "playing" is added
-    // In that case, set playStyle to "playing"
-    this.playStyle = options.playStyle || null;
-    this.pauseStyle = options.pauseStyle || null;
 
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
@@ -134,39 +127,19 @@
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        playPauseEl = this.doc().querySelector(this.selectors.playPause),
         isPlaying = false;
 
     if(this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
-    } else {
-      // Check for play/pause style overrides
-      if(this.playStyle) {
-        // Check if the class list contains the class that is only active when play button is playing
-        isPlaying = playPauseEl.classList.contains(this.playStyle);
-      } else if(this.pauseStyle && this.selectors.pause) {
-        var pauseEl = this.doc().querySelector(this.selectors.pause);
-        isPlaying = pauseEl.classList.contains(this.pauseStyle);
-      } else {
-        // Check if the pause element exists
-        if(this.selectors.playState) {
-          var playStateEl = this.doc().querySelector(this.selectors.playState);
-          isPlaying = !!(playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
-        }
-        // Hack to get around sometimes not being able to read css properties that are not inline
-        else if(playEl) {
-          var displayStyle = "none";
-          if (playEl.currentStyle) {
-            displayStyle = playEl.currentStyle.display;
-          } else if (window.getComputedStyle) {
-            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
-          }
-          isPlaying = (displayStyle === "none");
-        } else {
-          return false;
-        }
-      }
+    }
+    else if(this.selectors.playState) {
+      // Check if the play state element exists and is visible
+      var playStateEl this.doc().querySelector(this.selectors.playState);
+      isPlaying = !!(playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
+    }
+    else if(playEl) {
+      isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
     }
 
     return isPlaying;
