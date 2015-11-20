@@ -5,12 +5,12 @@
 
   new BaseController({
     siteName: "Kollekt.fm",
-    playPause: ".controls .fa-play",
-    playNext: ".controls .fa-forward",
-    playPrev: ".controls .fa-backward",
-    like: ".controls .fa-heart",
+    playPause: "#player-controls .fa-play",
+    playNext: "#player-controls .fa-forward",
+    playPrev: "#player-controls .fa-backward",
+    like: "#player-controls .fa-heart",
 
-    playState: ".controls .fa-play.fa-pause",
+    playState: "#player-controls .fa-play.fa-pause",
     song: ".current-track-title .track"
   });
 })();

@@ -5,9 +5,10 @@
 
   new BaseController({
     siteName: "ivoox",
-    play: ".jp-play2",
-    pause: ".jp-pause2",
+    play: ".jp-play2 a",
+    pause: ".jp-pause2 a",
 
-    song: "[itemprop=name]"
+    playState: ".jp-pause2",
+    song: ".cont-text h1"
   });
 })();
