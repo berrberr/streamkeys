@@ -8,6 +8,8 @@
     playPause: ".miniplayer-control-play-pause",
     playNext: ".miniplayer-control-skip",
     mute: ".miniplayer-volume-icon",
+    like: ".thumb-up",
+    dislike: ".thumb-down",
 
     playState: ".player-state-play",
     song: ".miniplayer-info-track-title"
@@ -21,7 +23,11 @@
       song: this.getSongData(this.selectors.song),
       artist: artistSpan,
       isPlaying: this.isPlaying(),
-      siteName: this.siteName
+      siteName: this.siteName,
+      canPlayPause: true,
+      canPlayNext: true,
+      canLike: true,
+      canDislike: true
     };
   };
 })();

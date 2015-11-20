@@ -3,12 +3,14 @@
 
   var BaseController = require("BaseController");
 
+  // No playstate available
   new BaseController({
     siteName: "Songstr",
-    playPause: "#playing_control",
+    playPause: "#do-play",
+    playNext: "#next",
+    playPrev: "#previous",
 
-    playState: ".player_stop",
-    song: "#playing_title",
-    artist: "#playing_artist"
+    song: ".song",
+    artist: ".artist"
   });
 })();
