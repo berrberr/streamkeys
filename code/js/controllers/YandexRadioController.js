@@ -11,6 +11,7 @@
     like: ".like_action_like",
     dislike: ".like_action_dislike",
 
+    playState: ".body_state_playing",
     song: ".slider__item:nth-child(3) .track__title",
     artist: ".slider__item:nth-child(3) .track__artists"
   });
