@@ -6,6 +6,8 @@
   new BaseController({
     siteName: "RadioTunes",
     playPause: "#ctl-play",
-    mute: "#btn-volume"
+    mute: "#btn-volume",
+
+    playState: ".info-container"
   });
 })();

@@ -7,7 +7,9 @@
   var controller = new BaseController({
     siteName: "RadioParadise",
     playPause: "#override",
-    song: "#nowplaying_title"
+    song: "#nowplaying_title",
+
+    overridePlayPause: true
   });
 
   /** Overrides **/
