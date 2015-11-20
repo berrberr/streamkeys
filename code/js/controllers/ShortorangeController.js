@@ -10,7 +10,7 @@
     playNext: ".fa-forward",
     playPrev: ".fa-backward",
 
-    playState: ".fa-play.ng-hide",
+    playState: ".fa-pause:not(.ng-hide)",
     song: ".episode-title",
     artist: ".podcast-title"
   });

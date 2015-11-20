@@ -25,5 +25,5 @@
   };
 
   /* Inject script to interact with parent DOM */
-  controller.injectScript({url: "/js/inject/palcomp3_inject.js"});
+  controller.injectScript({ url: "/js/inject/palcomp3_inject.js" });
 })();
