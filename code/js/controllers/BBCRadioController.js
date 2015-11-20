@@ -4,16 +4,14 @@
   var controller = require("BaseController");
   controller.init({
     siteName: "BBC Radio",
-    play: "#play",
-    pause: "#pause",
-    playNext: ".od-skip[data-offset='60']",
-    playPrev: ".od-skip[data-offset='-60']",
+    play: "#btn-play",
+    pause: "#btn-pause",
     mute: "#volume-mute",
     like: "#toggle-mystations:not(.in-mystations) > span",
     dislike: "#toggle-mystations.in-mystations > span",
 
-    song: "p.title > a",
-    artist: "p.artist > a",
+    song: "#title",
+    artist: "#parent-title",
 
     hidePlayer: true
   });
