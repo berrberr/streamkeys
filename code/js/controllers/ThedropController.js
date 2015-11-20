@@ -5,14 +5,14 @@
 
   new BaseController({
     siteName: "The Drop",
-    play: ".button-left.play-button",
-    pause: ".pause-button",
-    playNext: ".next-button",
-    playPrev: ".prev-button",
-    mute: ".volume-button",
-    like: ".music-player .favorite-button",
+    play: ".glyphicon-play",
+    pause: ".glyphicon-pause",
+    playNext: ".glyphicon-forward",
+    playPrev: ".glyphicon-backward",
+    mute: "#player-mute-toggle",
 
-    playState: ".button-left.pause-button",
-    song: ".playing-title"
+    playState: ".glyphicon-pause",
+    song: ".player--body .track-title > span",
+    artist: ".player--body .artist-name"
   });
 })();
