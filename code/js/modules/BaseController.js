@@ -38,6 +38,11 @@
     // Set to true if the tab should be hidden from the popup unless it has a playPause element shown
     this.hidePlayer = options.hidePlayer || false;
 
+    //** Overrides for popup buttons **//
+    this.overridePlayPrev = options.overridePlayPrev || false;
+    this.overridePlayPause = options.overridePlayPause || false;
+    this.overridePlayNext = options.overridePlayNext || false;
+
     chrome.runtime.sendMessage({ created: true }, function() {
       sk_log("SK content script loaded");
     });
@@ -173,13 +178,13 @@
       isPlaying: this.isPlaying(),
       siteName: this.siteName,
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
-      canPlayPrev: !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
+      canPlayPrev: this.overridePlayPrev || !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
       canPlayPause: this.overridePlayPause || !!(
         (this.selectors.playPause && this.doc().querySelector(this.selectors.playPause)) ||
         (this.selectors.play && this.doc().querySelector(this.selectors.play)) ||
         (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
       ),
-      canPlayNext: !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
+      canPlayNext: this.overridePlayNext || !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
       hidePlayer: this.hidePlayer
     };
