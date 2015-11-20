@@ -73,7 +73,6 @@
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
       "jango": { name: "Jango", url: "http://www.jango.com" },
       "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
-      "laracasts": { name: "Laracasts", url: "http://www.laracasts.com" },
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"], blacklist: ["beta.last.fm"] },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
