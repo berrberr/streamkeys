@@ -3,6 +3,7 @@ node_js:
   - '0.12.7'
 install:
   - npm install --production
+  - PATH="$TRAVIS_BUILD_DIR/node_modules/karma-phantomjs2-launcher/node_modules/phantomjs2-ext/bin:$PATH"
 cache:
   directories:
     - "$TRAVIS_BUILD_DIR/node_modules"
