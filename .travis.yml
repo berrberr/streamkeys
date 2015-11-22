@@ -7,9 +7,12 @@ before_install:
   - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
   - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
 install:
+  - echo phantomjs --version
   - npm install --production
   - PATH="$TRAVIS_BUILD_DIR/node_modules/karma-phantomjs2-launcher/node_modules/phantomjs2-ext/lib/phantom/bin/:$PATH"
+  - export PHANTOMJS_BIN=/usr/local/phantomjs/bin/phantomjs
   - echo $PATH
+  - echo phantomjs --version
 cache:
   directories:
     - "$TRAVIS_BUILD_DIR/node_modules"
