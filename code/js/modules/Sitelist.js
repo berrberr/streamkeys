@@ -79,6 +79,7 @@
       "myspace": { name: "MySpace", url: "http://www.myspace.com" },
       "netflix": { name: "Netflix", url: "http://www.netflix.com" },
       "noise": { name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js" },
+      "noonpacific": { name: "Noon Pacific", url: "http://www.noonpacific.com" },
       "npr": { name: "NPR One Player", url: "http://one.npr.org" },
       "oplayer": { name: "oPlayer", url: "http://oplayer.org" },
       "overcast": { name: "Overcast.fm", url: "http://overcast.fm" },
