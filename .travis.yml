@@ -1,15 +1,9 @@
 language: node_js
 node_js:
   - '0.12.7'
-before_install:
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
-  - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
-  - export PHANTOMJS_BIN=/usr/local/phantomjs/bin/phantomjs
 install:
-  - phantomjs --version
   - npm install --production
+  - export PHANTOMJS_BIN=$TRAVIS_BUILD_DIR/node_modules/karma-phantomjs2-launcher/node_modules/phantomjs2-ext/lib/phantom/bin/phantomjs
   - phantomjs --version
 cache:
   directories:
