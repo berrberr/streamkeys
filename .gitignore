@@ -1,11 +1,11 @@
 .DS_Store
 node_modules/
 build/*
-test/streamkeys-ext/*
-test/secrets.json
+secrets.json
 streamkeys-dev.zip
 streamkeys.zip
 .sass-cache/
 .idea/
 *.sublime-workspace
+*.sublime-project
 npm-debug.log

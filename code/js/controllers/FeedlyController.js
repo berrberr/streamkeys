@@ -1,10 +1,10 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController"),
+  var BaseController = require("BaseController"),
       sk_log = require("../modules/SKLog.js");
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Feedly",
     playPause: "audio",
     playNext: ".slideBumper-right",

@@ -1,12 +1,14 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Tidal",
-    play: ".js-play",
-    pause: ".js-pause",
-    playNext: ".icon-fast-forward",
-    playPrev: ".icon-fast-backward",
+    play: ".play-controls .js-play",
+    pause: ".play-controls .js-pause",
+    playNext: ".play-controls .icon-fast-forward",
+    playPrev: ".play-controls .icon-fast-backward",
 
     song: "[data-test-id=track-title]",
     artist: "[data-test-id=artist-title]"

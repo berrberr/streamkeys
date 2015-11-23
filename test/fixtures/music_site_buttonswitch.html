@@ -1,0 +1,14 @@
+<head>
+  <title>Buttonswitch Music Site</title>
+  <script type="text/javascript">
+    function togglePlayState() {
+      $("#play").toggleClass("playBtn").toggleClass("pauseBtn");
+    }
+  </script>
+</head>
+
+<body>
+  <div id="player-container">
+    <div id="play" class="playBtn" onclick="togglePlayState()">Play</div>
+  </div>
+</body>

@@ -1,12 +1,16 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
-    siteName: "Songstr",
-    playPause: "#playing_control",
+  var BaseController = require("BaseController");
 
-    playState: ".player_stop",
-    song: "#playing_title",
-    artist: "#playing_artist"
+  // No playstate available
+  new BaseController({
+    siteName: "Songstr",
+    playPause: "#do-play",
+    playNext: "#next",
+    playPrev: "#previous",
+
+    song: ".song",
+    artist: ".artist"
   });
 })();

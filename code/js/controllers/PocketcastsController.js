@@ -1,7 +1,9 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Pocketcasts",
     playPause: ".play_pause_button",
     playNext: ".skip_forward_button",

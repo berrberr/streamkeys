@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
 
   var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
@@ -17,7 +17,7 @@
     });
   });
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "VK",
     playPause: "#pd_play",
     playNext: "#pd_next",
@@ -51,11 +51,13 @@
       this.click({selectorButton: this.selectors.playPause, action: "playPause"});
     }
   };
+
   controller.playNext = function() {
     if(document.querySelector(this.selectors.playcontrols) === null) this.click({selectorButton: this.selectors.showControls, action: "openControls"});
     this.click({selectorButton: this.selectors.playNext, action: "playNext"});
     this.click({selectorButton: this.selectors.hideControls});
   };
+
   controller.playPrev = function() {
     if(document.querySelector(this.selectors.playcontrols) === null) this.click({selectorButton: this.selectors.showControls, action: "openControls"});
     this.click({selectorButton: this.selectors.playPrev, action: "playPrev"});

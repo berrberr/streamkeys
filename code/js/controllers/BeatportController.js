@@ -1,36 +1,35 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController"),
-      $ = require("jquery");
+  var BaseController = require("BaseController"),
+      _ = require("lodash");
 
   var multiSelectors = {
     play: [".omniplayer button[title=Play]", ".video-btn.play-icon"],
     pause: [".omniplayer button[title=Pause]", ".video-btn.pause-icon"],
-    playNext: [".omniplayer--next-icon", null],
+    playNext: [".omniplayer--action-icon.next", null],
     playState: [".omniplayer.is-playing", null],
     mute: [".omniplayer--volume-icon", "#mute"],
-    like: [".omniplayer--heart-icon", null],
+    like: [".omniplayer--action-icon.heart", null],
     song: [".omniplayer--title", ".stream-description .overview h1"],
     artist: [".omniplayer--artist", ".channel-text h1"]
   };
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Beatport"
   });
 
   controller.checkPlayer = function() {
     var that = this;
 
-    if(document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
-      $.each(multiSelectors, function(key, value) {
+    if(this.doc().querySelector(multiSelectors.play[0]) || this.doc().querySelector(multiSelectors.pause[0])) {
+      _.each(multiSelectors, function(value, key) {
         that.selectors[key] = value[0];
       });
     } else {
-      $.each(multiSelectors, function(key, value) {
+      _.each(multiSelectors, function(value, key) {
         that.selectors[key] = value[1];
       });
     }
   };
-
 })();

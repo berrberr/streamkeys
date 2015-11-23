@@ -1,17 +1,18 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
-    siteName: "The Drop",
-    playPause: ".button-left.play-button",
-    play: ".button-left.play-button",
-    pause: ".pause-button",
-    playNext: ".next-button",
-    playPrev: ".prev-button",
-    mute: ".volume-button",
-    like: ".music-player .favorite-button",
+  var BaseController = require("BaseController");
 
-    playState: ".button-left.pause-button",
-    song: ".playing-title"
+  new BaseController({
+    siteName: "The Drop",
+    play: ".glyphicon-play",
+    pause: ".glyphicon-pause",
+    playNext: ".glyphicon-forward",
+    playPrev: ".glyphicon-backward",
+    mute: "#player-mute-toggle",
+
+    playState: ".glyphicon-pause",
+    song: ".player--body .track-title > span",
+    artist: ".player--body .artist-name"
   });
 })();

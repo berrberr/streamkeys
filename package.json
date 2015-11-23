@@ -2,6 +2,11 @@
   "name": "Streamkeys",
   "version": "1.5.2",
   "description": "Global hotkeys for online music players including support for media keys.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/berrberr/streamkeys.git"
+  },
+  "license": "MIT",
   "browser": {
     "jquery": "./code/js/lib/jquery-1.11.1.min.js",
     "ko": "./node_modules/knockout/build/output/knockout-latest.js",
@@ -17,37 +22,46 @@
     ]
   },
   "scripts": {
-    "test": "grunt rel && node test/runner.js"
+    "test": "./node_modules/.bin/karma start --single-run"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-compress": "~0.10.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-clean": "~0.5.0",
+    "chai": "~1.9.1",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-sass": "~0.8.1",
-    "grunt-cli": "~0.1.13",
-    "grunt-mkdir": "~0.1.1",
-    "grunt-lintspaces": "~0.7.0",
-    "grunt-browserify": "~3.1.0",
     "grunt-exec": "~0.4.6",
     "grunt-text-replace": "",
-    "jshint": "~2.5.1",
-    "jshint-stylish": "~0.2.0",
-    "browserify": "~3.39.0",
-    "browserify-shim": "~3.7.0",
-    "chai": "~1.9.1",
     "mocha": "~1.21.4",
-    "knockout": "~3.3.0",
-    "selenium-webdriver": "~2.43.5",
-    "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git",
     "mocha-retry": "~0.0.9",
-    "grunt-growl": "^0.1.5",
+    "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git",
+    "selenium-webdriver": "~2.43.5",
     "watchify": "~2.1.0"
   },
   "dependencies": {
-    "lodash": "~3.10.0"
+    "browserify": "~3.39.0",
+    "browserify-shim": "~3.7.0",
+    "grunt": "~0.4.5",
+    "grunt-browserify": "~3.1.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-compress": "~0.10.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-sass": "~0.8.1",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-karma": "^0.12.1",
+    "grunt-lintspaces": "~0.7.0",
+    "grunt-mkdir": "~0.1.1",
+    "jasmine-core": "^2.3.4",
+    "jshint-stylish": "~0.2.0",
+    "karma": "^0.13.14",
+    "karma-browserify": "^4.4.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-phantomjs2-launcher": "^0.3.2",
+    "knockout": "~3.3.0",
+    "es6-promise": "^3.0.2",
+    "jasmine-jquery": "^2.1.1",
+    "lodash": "~3.10.0",
+    "sinon": "^1.11.1",
+    "sinon-chrome": "^0.2.0",
+    "urlutils": "0.0.3"
   }
 }

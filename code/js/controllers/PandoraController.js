@@ -1,9 +1,10 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Pandora",
-    playPause: ".playButton",
     play: ".playButton",
     pause: ".pauseButton",
     playNext: ".skipButton",

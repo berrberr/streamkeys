@@ -1,13 +1,15 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
   var sk_log = require("../modules/SKLog.js");
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "RadioParadise",
     playPause: "#override",
-    song: "#nowplaying_title"
+    song: "#nowplaying_title",
+
+    overridePlayPause: true
   });
 
   /** Overrides **/

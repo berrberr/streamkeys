@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController"),
+  var BaseController = require("BaseController"),
       $ = require("jquery");
 
   var multiSelectors = {
@@ -16,7 +16,7 @@
     artist: ["#track-artist", ".caption .artist"]
   };
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Spotify",
     playPause: "#play-pause",
     playNext: "#next",
@@ -28,7 +28,6 @@
     song: "#track-name",
     artist: "#track-artist"
   });
-
 
   controller.checkPlayer = function() {
     var that = this;

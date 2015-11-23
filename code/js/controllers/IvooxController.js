@@ -1,11 +1,14 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
-    siteName: "ivoox",
-    play: ".jp-play2",
-    pause: ".jp-pause2",
+  var BaseController = require("BaseController");
 
-    song: "[itemprop=name]"
+  new BaseController({
+    siteName: "ivoox",
+    play: ".jp-play2 a",
+    pause: ".jp-pause2 a",
+
+    playState: ".jp-pause2",
+    song: ".cont-text h1"
   });
 })();

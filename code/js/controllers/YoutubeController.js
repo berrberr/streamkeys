@@ -1,7 +1,7 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController"),
+  var BaseController = require("BaseController"),
       sk_log = require("../modules/SKLog.js"),
       $ = require("jquery");
 
@@ -16,7 +16,7 @@
   };
 
   chrome.storage.local.get(function(obj) {
-    controller.init({
+    var controller = new BaseController({
       siteName: "YouTube",
       play: ".ytp-button-play",
       pause: ".ytp-button-pause",
@@ -51,32 +51,32 @@
         }
       }
     };
+
+    controller.checkPlayer = function() {
+      var that = this;
+
+      if(document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
+        $.each(multiSelectors, function(key, value) {
+          that.selectors[key] = value[0];
+        });
+        that.buttonSwitch = true;
+      } else {
+        $.each(multiSelectors, function(key, value) {
+          that.selectors[key] = value[1];
+        });
+        that.buttonSwitch = false;
+      }
+    };
+
+    controller.playNext = function() {
+      if(document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
+      else this.click({selectorButton: this.selectors.playNext, action: "playNext"});
+    };
+
+    controller.playPrev = function() {
+      if(document.querySelector(this.selectors.playPrev) === null) sk_log("disabled. Playlist selectors not found!");
+      else this.click({selectorButton: this.selectors.playPrev, action: "playPrev"});
+    };
   });
-
-  controller.checkPlayer = function() {
-    var that = this;
-
-    if(document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
-      $.each(multiSelectors, function(key, value) {
-        that.selectors[key] = value[0];
-      });
-      that.buttonSwitch = true;
-    } else {
-      $.each(multiSelectors, function(key, value) {
-        that.selectors[key] = value[1];
-      });
-      that.buttonSwitch = false;
-    }
-  };
-
-  controller.playNext = function() {
-    if(document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
-    else this.click({selectorButton: this.selectors.playNext, action: "playNext"});
-  };
-
-  controller.playPrev = function() {
-    if(document.querySelector(this.selectors.playPrev) === null) sk_log("disabled. Playlist selectors not found!");
-    else this.click({selectorButton: this.selectors.playPrev, action: "playPrev"});
-  };
 
 })();

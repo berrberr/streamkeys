@@ -1,9 +1,9 @@
 ;(function() {
   "use strict";
 
-  var controller = require("BaseController");
+  var BaseController = require("BaseController");
 
-  controller.init({
+  var controller = new BaseController({
     siteName: "Twitch.tv",
     playPause: ".player-button--playpause",
     song: ".title .real"

@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    clean: ["build/unpacked-dev", "build/unpacked-prod", "test/streamkeys-ext"],
+    clean: ["build/unpacked-dev", "build/unpacked-prod", "test-selectors/streamkeys-ext"],
 
     mkdir: {
       unpacked: { options: { create: ["build/unpacked-dev", "build/unpacked-dev/js", "build/unpacked-prod"] } }
@@ -45,13 +45,13 @@ module.exports = function(grunt) {
         expand: true,
         cwd: "build/unpacked-dev",
         src: ["**"],
-        dest: "test/streamkeys-ext/"
+        dest: "test-selectors/streamkeys-ext/"
       } ] },
       test_prod: { files: [ {
         expand: true,
         cwd: "build/unpacked-prod",
         src: ["**"],
-        dest: "test/streamkeys-ext/"
+        dest: "test-selectors/streamkeys-ext/"
       } ] }
     },
 
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
 
     exec: {
       run_tests: {
-        command: "node test/runner.js"
+        command: "node test-selectors/runner.js"
       }
     },
 
@@ -148,11 +148,9 @@ module.exports = function(grunt) {
       }
     },
 
-    growl : {
-      build_success : {
-        message : "extension built successfully!",
-        title : "Grunt",
-        image: __dirname + "/code/icon128.png"
+    karma: {
+      unit: {
+        configFile: "karma.conf.js"
       }
     }
   });
@@ -169,7 +167,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-text-replace");
-  grunt.loadNpmTasks('grunt-growl');
+  grunt.loadNpmTasks("grunt-karma");
 
   /* Tasks */
   grunt.registerTask(
@@ -189,7 +187,7 @@ module.exports = function(grunt) {
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
   grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
-  grunt.registerTask("dev-post", ["copy:test_dev", "growl:build_success"]);
+  grunt.registerTask("dev-post", ["copy:test_dev"]);
   grunt.registerTask("dev", ["dev-pre", "browserify", "dev-post"]);
 
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);

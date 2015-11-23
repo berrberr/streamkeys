@@ -1,18 +1,18 @@
 ;(function() {
   "use strict";
 
-  require("BaseController").init({
+  var BaseController = require("BaseController");
+
+  new BaseController({
     siteName: "Last.fm",
-    playPause: "#radioControlPlay",
-    play: "#radioControlPlay",
-    pause: "#radioControlPause",
-    playNext: "#radioControlSkip",
-    like: "#radioControlLove",
+    play: ".player-bar-btn--play",
+    pause: ".player-bar-btn--pause",
+    playNext: ".player-bar-btn--next",
+    playPrev: ".player-bar-btn--previous",
+    like: ".player-bar-btn--love",
 
-    song: "span.track > a",
-    artist: "span.artist > a",
-    album: "span.album > span.title > a",
-
-    hidePlayer: true
+    playState: ".player-bar-btn--pause",
+    song: ".player-bar-track-name",
+    artist: ".player-bar-artist-name"
   });
 })();

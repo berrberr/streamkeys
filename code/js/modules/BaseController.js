@@ -1,11 +1,9 @@
 ;(function() {
   "use strict";
 
-  var BaseController = function() { return this; };
   var sk_log = require("../modules/SKLog.js");
 
-  BaseController.prototype.init = function(options) {
-    this.name = document.location.hostname;
+  function BaseController(options) {
     this.siteName = options.siteName || null;
 
     this.selectors = {
@@ -22,21 +20,11 @@
 
       //** States **//
       playState: (options.playState || null),
-      pauseState: (options.pauseState || null),
-
-      // ** Song Change Observer **//
-      songChange: (options.songChange || null),
 
       //** Song Info **//
       song: (options.song || null),
       artist: (options.artist || null)
     };
-
-    // Optional. Style of play and pause buttons when they are NOT in use
-    // EX: When a play button is in use, css class "playing" is added
-    // In that case, set playStyle to "playing"
-    this.playStyle = options.playStyle || null;
-    this.pauseStyle = options.pauseStyle || null;
 
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
@@ -50,16 +38,15 @@
     // Set to true if the tab should be hidden from the popup unless it has a playPause element shown
     this.hidePlayer = options.hidePlayer || false;
 
-    chrome.runtime.sendMessage({created: true}, function() {
-      sk_log("Told BG we are created");
-    });
+    //** Overrides for popup buttons **//
+    this.overridePlayPrev = options.overridePlayPrev || false;
+    this.overridePlayPause = options.overridePlayPause || false;
+    this.overridePlayNext = options.overridePlayNext || false;
 
-    sk_log("SK content script loaded");
-
-    document.addEventListener("streamkeys-test-loaded", function() {
-      sk_log("loaded");
+    chrome.runtime.sendMessage({ created: true }, function() {
+      sk_log("SK content script loaded");
     });
-  };
+  }
 
   BaseController.prototype.doc = function() {
     var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName === "IFRAME");
@@ -145,39 +132,19 @@
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        playPauseEl = this.doc().querySelector(this.selectors.playPause),
         isPlaying = false;
 
     if(this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
-    } else {
-      // Check for play/pause style overrides
-      if(this.playStyle) {
-        // Check if the class list contains the class that is only active when play button is playing
-        isPlaying = playPauseEl.classList.contains(this.playStyle);
-      } else if(this.pauseStyle && this.selectors.pause) {
-        var pauseEl = this.doc().querySelector(this.selectors.pause);
-        isPlaying = pauseEl.classList.contains(this.pauseStyle);
-      } else {
-        // Check if the pause element exists
-        if(this.selectors.playState) {
-          var playStateEl = this.doc().querySelector(this.selectors.playState);
-          isPlaying = (playStateEl && window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
-        }
-        // Hack to get around sometimes not being able to read css properties that are not inline
-        else if(playEl) {
-          var displayStyle = "none";
-          if (playEl.currentStyle) {
-            displayStyle = playEl.currentStyle.display;
-          } else if (window.getComputedStyle) {
-            displayStyle = window.getComputedStyle(playEl, null).getPropertyValue("display");
-          }
-          isPlaying = (displayStyle == "none");
-        } else {
-          return null;
-        }
-      }
+    }
+    else if(this.selectors.playState) {
+      // Check if the play state element exists and is visible
+      var playStateEl = this.doc().querySelector(this.selectors.playState);
+      isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
+    }
+    else if(playEl) {
+      isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
     }
 
     return isPlaying;
@@ -211,13 +178,13 @@
       isPlaying: this.isPlaying(),
       siteName: this.siteName,
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
-      canPlayPrev: !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
+      canPlayPrev: this.overridePlayPrev || !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
       canPlayPause: this.overridePlayPause || !!(
         (this.selectors.playPause && this.doc().querySelector(this.selectors.playPause)) ||
         (this.selectors.play && this.doc().querySelector(this.selectors.play)) ||
         (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
       ),
-      canPlayNext: !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
+      canPlayNext: this.overridePlayNext || !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
       hidePlayer: this.hidePlayer
     };
@@ -237,15 +204,6 @@
     }
 
     return null;
-  };
-
-  /**
-   * Checks if a BaseController property is set. Used for testing.
-   * @param {String} property - name of property to check for
-   */
-  BaseController.prototype.getProperty = function(property) {
-    if(this[property]) sk_log(property);
-    else sk_log("Property not found.", property, true);
   };
 
   /**
@@ -269,44 +227,11 @@
   };
 
   /**
-   * Callback for request from tester
-   */
-  BaseController.prototype.doTestRequest = function(e) {
-    if(e.detail) {
-
-      if(e.detail === "playPause" || e.detail === "playNext" || e.detail === "playPrev" || e.detail === "stop" || e.detail === "mute" || e.detail === "like"|| e.detail === "dislike" ) {
-        this.doRequest({action: e.detail});
-      }
-
-      if(e.detail == "songName") this.test_getSongData(this.selectors.song);
-      if(e.detail == "artistName") this.test_getSongData(this.selectors.artist);
-      if(e.detail == "siteName") this.getProperty("siteName");
-      if(e.detail == "isPlaying") this.isPlaying();
-    }
-  };
-
-  /**
-   * Process a test request to get song data
-   * @param {String} selector - query selector for song data text
-   */
-  BaseController.prototype.test_getSongData = function(selector) {
-    var songData = this.getSongData(selector);
-    if(songData) {
-      sk_log("Song data: ", songData);
-    } else {
-      sk_log("Song data not found.", {}, true);
-    }
-  };
-
-  /**
-   * Setup listeners for extension messages and test requests. Initialize the playerState interval
+   * Setup listeners for extension messages. Initialize the playerState interval
    */
   BaseController.prototype.attachListeners = function() {
     // Listener for requests from background page
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
-
-    // Listener for requests from tests
-    document.addEventListener("streamkeys-test", this.doTestRequest.bind(this));
 
     // Update the popup player state intermittently
     setInterval(this.updatePlayerState.bind(this), 200);
@@ -314,5 +239,5 @@
     sk_log("Attached listener for ", this);
   };
 
-  module.exports = new BaseController();
+  module.exports = BaseController;
 })();
