@@ -85,7 +85,7 @@
       "overcast": { name: "Overcast.fm", url: "http://overcast.fm" },
       "palcomp3": { name: "Palco MP3", url: "http://palcomp3.com" },
       "pandora": { name: "Pandora", url: "http://www.pandora.com" },
-      "player": { name: "Player.fm", url: "http://player.fm" },
+      "player": { name: "Player.fm", url: "http://player.fm", controller: "PlayerFmController.js", blacklist: ["player.spotify"] },
       "pleer": { name: "Pleer", url: "http://pleer.com" },
       "plex": { name: "Plex", url: "http://www.plex.tv" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },

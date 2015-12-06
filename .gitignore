@@ -1,6 +1,6 @@
 .DS_Store
 node_modules/
-build/*
+build/
 secrets.json
 streamkeys-dev.zip
 streamkeys.zip
@@ -9,3 +9,4 @@ streamkeys.zip
 *.sublime-workspace
 *.sublime-project
 npm-debug.log
+test-selectors/
