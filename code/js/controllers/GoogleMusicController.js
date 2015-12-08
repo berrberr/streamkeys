@@ -12,6 +12,7 @@
     dislike: ".rating-container [data-rating='1']",
 
     playState: "[data-id=play-pause].playing",
+    buttonSwitch: true,
     song: "#player-song-title",
     artist: "#player-artist",
     album: ".player-album"
