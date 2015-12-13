@@ -14,15 +14,15 @@ var OptionsViewModel = function OptionsViewModel() {
   self.sitelist = ko.observableArray([]);
 
   // Load localstorage settings into observables
-  chrome.storage.local.get(function(obj) {
+  chrome.storage.sync.get(function(obj) {
     self.openOnUpdate = ko.observable(obj["hotkey-open_on_update"]);
     self.openOnUpdate.subscribe(function(value) {
-      chrome.storage.local.set({ "hotkey-open_on_update": value });
+      chrome.storage.sync.set({ "hotkey-open_on_update": value });
     });
 
     self.youtubeRestart = ko.observable(obj["hotkey-youtube_restart"]);
     self.youtubeRestart.subscribe(function(value) {
-      chrome.storage.local.set({ "hotkey-youtube_restart": value });
+      chrome.storage.sync.set({ "hotkey-youtube_restart": value });
     });
 
     self.settingsInitialized(true);
@@ -36,7 +36,7 @@ var OptionsViewModel = function OptionsViewModel() {
         _.map(self.sitelist(), function(site) { return site.enabled.peek(); })
       );
       console.log("new sites: ", formattedSites);
-      chrome.storage.local.set({"hotkey-sites": formattedSites}, function() {
+      chrome.storage.sync.set({"hotkey-sites": formattedSites}, function() {
         chrome.runtime.sendMessage({ action: "update_keys" });
       });
     }

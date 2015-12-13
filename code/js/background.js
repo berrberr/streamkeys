@@ -1,7 +1,14 @@
 ;(function() {
   "use strict";
 
-  var Sitelist = require("./modules/Sitelist.js");
+  var Sitelist = require("./modules/Sitelist.js"),
+      _ = require("lodash");
+
+  /**
+   * Needed for phantomjs to work
+   * @see [https://github.com/ariya/phantomjs/issues/12401]
+   */
+  require("es6-promise").polyfill();
 
   /**
    * Send a player action to every active player tab
@@ -58,8 +65,10 @@
       chrome.tabs.executeScript(sender.tab.id, {file: request.file});
     }
     if(request.action === "check_music_site") {
-      // A tab index of -1 means that the tab is "embedded" in a page
-      // We should only inject into actual tabs
+      /**
+       * A tab index of -1 means that the tab is "embedded" in a page
+       * We should only inject into actual tabs
+       */
       if(sender.tab.index === -1) return response("no_inject");
       response(window.sk_sites.checkMusicSite(sender.tab.url));
     }
@@ -84,26 +93,56 @@
   });
 
   /**
-   * Open info page on install/update
+   * Copy over old settings from local storageArea to sync.
+   * TODO: This change introduced in v1.5.5. Deprecate this at some point in the future.
    */
-  chrome.runtime.onInstalled.addListener(function(details) {
-    chrome.storage.local.get(function(obj) {
-      if(obj["hotkey-open_on_update"] || typeof obj["hotkey-open_on_update"] === "undefined") {
-        if(details.reason == "install") {
-          //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?installed=true"});
-        } else if(details.reason == "update") {
-          //chrome.tabs.create({url: "http://www.streamkeys.com/guide.html?updated=true"});
-        }
+  var storageInitializedCheck = new Promise(function(resolve) {
+    chrome.storage.sync.get(function(syncStorageObj) {
+      if(syncStorageObj["hotkey-initialized"]) {
+        resolve();
+      } else {
+        var newStorageObj = {
+          "hotkey-initialized": true
+        };
+
+        chrome.storage.local.get(function(localStorageObj) {
+          _.each(localStorageObj, function(value, key) {
+            newStorageObj[key] = value;
+          });
+
+          chrome.storage.sync.set(newStorageObj, function() {
+            resolve();
+          });
+        });
       }
     });
   });
 
-  // Store commands in global
-  chrome.commands.getAll(function(cmds) {
-    window.coms = cmds;
-  });
+  storageInitializedCheck.then(function() {
+    // Open info page on install/update
+    chrome.runtime.onInstalled.addListener(function(details) {
+      chrome.storage.sync.get(function(obj) {
+        if(obj["hotkey-open_on_update"] || typeof obj["hotkey-open_on_update"] === "undefined") {
+          if(details.reason == "install") {
+            chrome.tabs.create({
+              url: "http://www.streamkeys.com/guide.html?installed=true"
+            });
+          } else if(details.reason == "update") {
+            chrome.tabs.create({
+              url: "http://www.streamkeys.com/guide.html?updated=true"
+            });
+          }
+        }
+      });
+    });
 
-  // Define sk_sites as a sitelist in global context
-  window.sk_sites = new Sitelist();
-  window.sk_sites.loadSettings();
+    // Store commands in global
+    chrome.commands.getAll(function(cmds) {
+      window.coms = cmds;
+    });
+
+    // Define sk_sites as a sitelist in global context
+    window.sk_sites = new Sitelist();
+    window.sk_sites.loadSettings();
+  });
 })();

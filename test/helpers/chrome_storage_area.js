@@ -1,5 +1,5 @@
 /**
- * Simulates _basic_ chrome.local.storageArea get/set functionality
+ * Simulates _basic_ chrome.sync.storageArea get/set functionality
  */
 
 var _ = require("lodash");

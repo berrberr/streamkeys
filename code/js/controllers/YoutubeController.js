@@ -15,7 +15,7 @@
     restart: [null, ".ytp-play-button[title='Replay']"]
   };
 
-  chrome.storage.local.get(function(obj) {
+  chrome.storage.sync.get(function(obj) {
     var controller = new BaseController({
       siteName: "YouTube",
       play: ".ytp-button-play",

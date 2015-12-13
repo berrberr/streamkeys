@@ -2,7 +2,7 @@ var Sitelist = require("../code/js/modules/Sitelist.js"),
     SiteData = require("./helpers/site_data.js"),
     _ = require("lodash");
 
-chrome.storage.local = require("./helpers/chrome_storage_area.js");
+chrome.storage.sync = require("./helpers/chrome_storage_area.js");
 
 describe("sitelist", function() {
   var sitelist, siteNames, controllerNames, siteUrls,

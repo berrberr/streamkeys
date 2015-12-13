@@ -1,8 +1,10 @@
 ;(function() {
   "use strict";
 
-  // Needed for phantomjs to work
-  // @see [https://github.com/ariya/phantomjs/issues/12401]
+  /**
+   * Needed for phantomjs to work
+   * @see [https://github.com/ariya/phantomjs/issues/12401]
+   */
   require("es6-promise").polyfill();
 
   var _ = require("lodash"),
@@ -135,7 +137,7 @@
   Sitelist.prototype.loadSettings = function() {
     var that = this;
 
-    chrome.storage.local.get(function(obj) {
+    chrome.storage.sync.get(function(obj) {
       var objSet = obj.hasOwnProperty("hotkey-sites"),
           storageObj = {};
       _.each(_.keys(that.sites), function(key) {
@@ -147,14 +149,14 @@
         storageObj[key] = that.sites[key].enabled;
       });
       // Set the storage key on init incase previous storage format becomes broken
-      chrome.storage.local.set({ "hotkey-sites": storageObj });
+      chrome.storage.sync.set({ "hotkey-sites": storageObj });
 
       // Initialize popup open on update setting
       if(!obj.hasOwnProperty("hotkey-open_on_update")) {
-        chrome.storage.local.set({ "hotkey-open_on_update": true });
+        chrome.storage.sync.set({ "hotkey-open_on_update": true });
       }
       if(!obj.hasOwnProperty("hotkey-youtube_restart")) {
-        chrome.storage.local.set({ "hotkey-youtube_restart": false });
+        chrome.storage.sync.set({ "hotkey-youtube_restart": false });
       }
     });
   };
@@ -181,10 +183,10 @@
    */
   Sitelist.prototype.setSiteStorage = function(key, value) {
     var promise = new Promise(function(resolve, reject) {
-      chrome.storage.local.get(function(obj) {
+      chrome.storage.sync.get(function(obj) {
         if(obj["hotkey-sites"]) {
           obj["hotkey-sites"][key] = value;
-          chrome.storage.local.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
+          chrome.storage.sync.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });
         } else {

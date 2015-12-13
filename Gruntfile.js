@@ -114,25 +114,6 @@ module.exports = function(grunt) {
       }
     },
 
-    replace: {
-      prod: {
-        src: ["code/js/background.js"],
-        dest: "code/js/background.js",
-        replacements: [{
-          from: /\/\/[ ]*chrome\.tabs\.create\({url: "http:\/\/www\.streamkeys\.com\/guide.html/gm,
-          to: 'chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
-        }]
-      },
-      dev: {
-        src: ["code/js/background.js"],
-        dest: "code/js/background.js",
-        replacements: [{
-          from: /^( *)chrome\.tabs\.create\({url: "http:\/\/www\.streamkeys\.com\/guide.html/gm,
-          to: '$1//chrome.tabs.create({url: "http://www.streamkeys.com/guide.html'
-        }]
-      }
-    },
-
     sass: {
       prod: {
         files: {
@@ -166,7 +147,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-mkdir");
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-browserify");
-  grunt.loadNpmTasks("grunt-text-replace");
   grunt.loadNpmTasks("grunt-karma");
 
   /* Tasks */
@@ -186,10 +166,10 @@ module.exports = function(grunt) {
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
   grunt.registerTask("test", ["exec:run_tests"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
-  grunt.registerTask("dev-pre", ["replace:dev", "jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
+  grunt.registerTask("dev-pre", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
   grunt.registerTask("dev-post", ["copy:test_dev"]);
   grunt.registerTask("dev", ["dev-pre", "browserify", "dev-post"]);
 
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
-  grunt.registerTask("rel-store", ["replace:prod", "rel"]);
+  grunt.registerTask("rel-store", ["rel"]);
 };
