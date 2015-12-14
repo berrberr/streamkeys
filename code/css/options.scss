@@ -29,6 +29,7 @@ a {
 .btn-site {
   background-color: #e4eaec;
   border: 1px solid rgba(0, 0, 0, .2);
+  cursor: pointer;
   letter-spacing: 1px;
   font-weight: 500;
   padding: 15px 0;
@@ -171,30 +172,10 @@ a {
   }
 }
 
-
-.btn-header .badge {
-  color: #FFFFFF;
-  background-color: #036564;
+.site-name {
+  margin-right: -25px;
 }
 
-.btn-site-success {
-  color: #1E824C;
-  border: 1px solid #1E824C;
-  background-color: #FFFFFF;
-  padding-right: 5px;
-  &:hover, &:active, &:focus {
-    color: #1E824C !important;
-    background-color: #FFFFFF !important;
-    border: 1px solid red;
-  }
-}
-.btn-error-border {
-  border: 1px solid red;
-  color: red;
-  background: #FFF;
-  &:hover, &:active, &:focus {
-    color: red !important;
-    background-color: #FFFFFF !important;
-    border: 1px solid #1E824C;
-  }
+.site-enabled-icon {
+  margin-right: 10px;
 }

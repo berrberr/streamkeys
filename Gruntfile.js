@@ -171,5 +171,4 @@ module.exports = function(grunt) {
   grunt.registerTask("dev", ["dev-pre", "browserify", "dev-post"]);
 
   grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
-  grunt.registerTask("rel-store", ["rel"]);
 };

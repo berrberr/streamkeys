@@ -27,7 +27,13 @@
       <div id="enabled-sites" data-bind="visible: $data.selectedTab() == 'sites'" class="inner">
         <div class="sitelist">
           <!-- ko foreach: $data.sitelist() -->
-          <button class="btn-site" data-bind="text: $data.name, click: function() { $data.toggleSite() }, css: { disabled: !$data.enabled() }"></button>
+          <button class="btn-site" data-bind="click: function() { $data.toggleSite() }, css: { disabled: !$data.enabled() }">
+            <span class="site-name" data-bind="text: $data.name"></span>
+            <span class="site-enabled-icon pull-right glyphicon" data-bind="css: {
+              'glyphicon-ok': $data.enabled(),
+              'glyphicon-remove': !$data.enabled()
+            }" aria-hidden="true"></span>
+          </button>
           <!-- /ko -->
         </div>
       </div>
@@ -50,9 +56,9 @@
     </div>
   </div>
   <div class="footer">
-    <span><a href="http://www.streamkeys.com">Homepage</a></span>
-    <span><a href="http://www.streamkeys.com">GitHub</a></span>
-    <span><a href="http://www.streamkeys.com">Twitter</a></span>
+    <span><a href="http://www.streamkeys.com" target="_blank">Homepage</a></span>
+    <span><a href="http://www.github.com/berrberr/streamkeys" target="_blank">GitHub</a></span>
+    <span><a href="http://www.twitter.com/streamkeys" target="_blank">Twitter</a></span>
     <span><a href="mailto:alex@aegabriel.com">alex@aegabriel.com</a></span>
   </div>
 
