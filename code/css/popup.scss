@@ -1,5 +1,5 @@
 $black: #000000;
-$popup-width: 220px;
+$popup-width: 230px;
 $main-color: #2880C7;
 $white: #ffffff;
 
@@ -15,7 +15,9 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-div a, div a:hover, div a:visited {
+a,
+a:hover,
+a:visited {
   text-decoration: none;
 }
 
@@ -25,21 +27,28 @@ div a, div a:hover, div a:visited {
 }
 
 .disabled {
-  .site-title, .site-favicon, .song-data {
+  .site-title,
+  .site-favicon,
+  .song-data {
     opacity: .5;
   }
+
   .player-controls-row {
-    opacity: .5;
-    pointer-events: none;
+    .player-control-btn-group {
+      opacity: .5;
+      pointer-events: none;
+    }
   }
 }
 
 .song-data {
-  overflow: hidden;
-  white-space: nowrap;
   display: inline-block;
-  padding: 0 4px 0 4px;
   height: 18px;
+  margin-top: -4px;
+  overflow: hidden;
+  padding: 0 4px 0 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .site-data {
@@ -94,17 +103,49 @@ div a, div a:hover, div a:visited {
   a,
   a:hover,
   a:active,
-  a:visited,
-  a:focus {
+  a:visited {
     text-decoration: none;
     color: $black;
   }
 }
 
 .player-controls-row {
-  span.glyphicon {
-    display: inline-block;
+  .btn {
     font-size: 12px;
+    padding: 4px 8px;
+
+    &:focus,
+    &:active:focus,
+    &.active:focus {
+      outline: none !important;
+    }
+  }
+
+  .player-control-btn-group {
+    .btn {
+      border-left-width: 0;
+      border-right-width: 1px;
+      border-radius: 0;
+
+      &:first-child {
+        border-left-width: 1px;
+        border-radius: 3px 0 0 3px;
+      }
+
+      &:last-child {
+        border-radius: 0 3px 3px 0;
+      }
+    }
+  }
+
+  .btn-floating {
+    &.pull-left {
+      margin-left: 5px;
+    }
+
+    &.pull-right {
+      margin-right: 5px;
+    }
   }
 }
 
@@ -164,51 +205,7 @@ div a, div a:hover, div a:visited {
   }
 }
 
-.toggle {
-  display: inline-block;
-  visibility: hidden;
-  vertical-align: middle;
-}
-
 .no-sites {
   padding-top: 10px;
-}
-
-.button-row {
-  padding-bottom: 5px;
-  text-align: center;
-
-  button {
-    padding: 1px 4px 1px 4px;
-    height: 20px;
-    width: 106px;
-    font-size: 12px;
-
-    span {
-      margin-right: 5px;
-    }
-  }
-
-  .btn-enabled, .btn-enabled:active, .btn-enabled:focus {
-    background-color: $main-color;
-    border-color: darken($main-color, 5%);
-    color: $white;
-
-    &:hover {
-      background-color: darken($main-color, 25%);
-      color: $white;
-    }
-  }
-
-  .btn-disabled, .btn-disabled:active, .btn-disabled:focus {
-    background-color: darken($main-color, 25%);;
-    border-color: darken($main-color, 5%);
-    color: $white;
-
-    &:hover {
-      background-color: $main-color;
-      color: $white;
-    }
-  }
 }
 

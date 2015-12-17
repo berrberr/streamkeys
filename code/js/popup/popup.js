@@ -96,8 +96,6 @@ var MusicTab = (function() {
     }, this);
 
     /** Popup specific observables **/
-    this.showTabSettings = ko.observable(false);
-
     this.songArtistText = ko.pureComputed(function() {
       if(!this.song()) return "";
 
