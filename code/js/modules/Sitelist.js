@@ -175,7 +175,6 @@
     );
   };
 
-
   /**
    * Set site enabled settings in localstorage
    * @param {String} key - name of the hotkey-sites key in localstorage

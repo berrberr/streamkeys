@@ -125,6 +125,10 @@ var MusicTab = (function() {
 
 document.addEventListener("DOMContentLoaded", function() {
   window.popup = new PopupViewModel();
+
+  // Set the options link to the options page
+  $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
+
   ko.applyBindings(window.popup);
 
   ko.bindingHandlers.scrollingSong = {
