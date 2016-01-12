@@ -76,6 +76,7 @@
       "jango": { name: "Jango", url: "http://www.jango.com" },
       "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"] },
+      "livephish": { name: "LivePhish", url: "http://plus.livephish.com" },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
       "mycloudplayers": { name: "My Cloud Player", url: "http://www.mycloudplayers.com" },
