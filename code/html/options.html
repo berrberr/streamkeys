@@ -16,8 +16,15 @@
   <div class="main-container">
     <div class="menu">
       <ul>
-        <li><a href="#" data-bind="click: function() { $data.selectedTab('sites') }, css: { selected: $data.selectedTab() == 'sites' }"><span class="menu-title">Enabled Sites</span><span class="menu-arrow"></span></a></li>
-        <li><a href="#" data-bind="click: function() { $data.selectedTab('general') }, css: { selected: $data.selectedTab() == 'general' }"><span class="menu-title">General</span><span class="menu-arrow"></span></a></li>
+        <li>
+          <a href="#" data-bind="click: function() { $data.selectedTab('sites') }, css: { selected: $data.selectedTab() == 'sites' }"><span class="menu-title">Enabled Sites</span><span class="menu-arrow"></span></a>
+        </li>
+        <li>
+          <a href="#" data-bind="click: function() { $data.selectedTab('sites') }, css: { selected: $data.selectedTab() == 'sites' }"><span class="menu-title">Site Aliases</span><span class="menu-arrow"></span></a>
+        </li>
+        <li>
+          <a href="#" data-bind="click: function() { $data.selectedTab('general') }, css: { selected: $data.selectedTab() == 'general' }"><span class="menu-title">General</span><span class="menu-arrow"></span></a>
+        </li>
         <li><a href="http://www.streamkeys.com/guide.html" target="_blank"><span class="menu-title">Help</span><span class="menu-arrow"></span></a></li>
         <li><a href="http://www.streamkeys.com/faq.html" target="_blank"><span class="menu-title">FAQ</span><span class="menu-arrow"></span></a></li>
         <li><a href="http://www.streamkeys.com/donate.html" target="_blank"><span class="menu-title">Donate</span><span class="menu-arrow"></span></a></li>
@@ -27,15 +34,40 @@
       <div id="enabled-sites" data-bind="visible: $data.selectedTab() == 'sites'" class="inner">
         <div class="sitelist">
           <!-- ko foreach: $data.sitelist() -->
-          <button class="btn-site" data-bind="click: function() { $data.toggleSite() }, css: { disabled: !$data.enabled() }">
+          <div class="site-container" data-bind="css: { disabled: !$data.enabled() }">
             <span class="site-name" data-bind="text: $data.name"></span>
-            <span class="site-enabled-icon pull-right glyphicon" data-bind="css: {
-              'glyphicon-ok': $data.enabled(),
-              'glyphicon-remove': !$data.enabled()
-            }" aria-hidden="true"></span>
-          </button>
+
+            <div class="row site-controls">
+              <div class="col-xs-6">
+                <button class="btn btn-default" data-bind="click: function() { $data.toggleSite() }, css: { 'site-disabled': !$data.enabled() }">
+                  <span data-bind="text: $data.enabled() ? 'Disable' : 'Enable'"></span>
+                  <span class="site-enabled-icon pull-right glyphicon" data-bind="css: {
+                    'glyphicon-ok': !$data.enabled(),
+                    'glyphicon-remove': $data.enabled()
+                  }" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <span class="input-group-addon">Priority</span>
+                  <div class="input-group-btn site-priority-input">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">1 <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#">4</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- /ko -->
         </div>
+      </div>
+      <div id="site-aliases" data-bind="visible: $data.selectedTab == 'sites_aliases'" class="inner">
+
       </div>
       <div id="general" data-bind="visible: $data.selectedTab() == 'general'" class="inner">
         <!-- ko if: $data.settingsInitialized() -->
@@ -62,8 +94,8 @@
     <span><a href="mailto:alex@aegabriel.com">alex@aegabriel.com</a></span>
   </div>
 
+  <script src="../js/lib/jquery-1.11.1.min.js"></script>
+  <script src="../js/lib/bootstrap.min.js"></script>
+  <script src="../js/options.js"></script>
 </body>
-
-<script src="../js/options.js"></script>
-
 </html>

@@ -26,14 +26,49 @@ a {
   padding: 6px;
 }
 
+.site-container {
+  background-color: #e4eaec;
+  border: 1px solid rgba(0, 0, 0, .2);
+  display: inline-block;
+  letter-spacing: 1px;
+  font-weight: 500;
+  margin: $button-margin;
+  padding: 10px;
+  text-align: center;
+  width: $button-width;
+
+  &.disabled {
+    background-color: #9b2000;
+    color: #fff;
+  }
+
+  .site-controls {
+    margin-top: 10px;
+  }
+}
+
+.site-priority-input {
+  .dropdown-menu {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    left: -2px;
+    margin-top: -1px;
+    min-width: 46px;
+
+    a {
+      padding: 3px 15px;
+    }
+  }
+}
+
 .btn-site {
   background-color: #e4eaec;
   border: 1px solid rgba(0, 0, 0, .2);
   cursor: pointer;
   letter-spacing: 1px;
   font-weight: 500;
-  padding: 15px 0;
   margin: $button-margin;
+  padding: 15px 0;
   width: $button-width;
 
   &:hover,
@@ -172,10 +207,7 @@ a {
   }
 }
 
-.site-name {
-  margin-right: -25px;
-}
-
 .site-enabled-icon {
-  margin-right: 10px;
+  margin-left: 6px;
+  margin-top: 2px;
 }
