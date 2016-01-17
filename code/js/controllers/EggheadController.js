@@ -1,9 +1,9 @@
 ;(function () {
   "use strict";
 
-  var BaseController = require("BaseController");
-
   var playButtonSelector = ".wistia_romulus_control[id^='wistia_'][id*='PlayButton']";
+
+  var BaseController = require("BaseController");
 
   var controller = new BaseController({
     playPause: playButtonSelector,
