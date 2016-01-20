@@ -10,6 +10,9 @@
   var _ = require("lodash"),
       URL = require("urlutils");
 
+  // The _internal_ version of the objects in localstorage
+  var STORAGE_VERSION = 1;
+
   /**
    * @return {RegExp} a regex that matches where the string is in a url's (domain) name
    */
@@ -139,18 +142,33 @@
     var that = this;
 
     chrome.storage.sync.get(function(obj) {
-      var objSet = obj.hasOwnProperty("hotkey-sites"),
+      var objSet = _.has(obj, "hotkey-sites"),
           storageObj = {};
+
+      // Migrate old storage versions to new format
+      var version = (typeof obj["hotkey-storage-version"] === "undefined") ? 0 : obj["hotkey-storage-version"];
+
       _.each(_.keys(that.sites), function(key) {
+        var siteObj =
+          (version === 0) ?
+            { enabled: objSet ? obj["hotkey-sites"][key] : true, priority: 1 } :
+            objSet ? obj["hotkey-sites"][key] : { enabled: true, priority: 1 };
+
         that.addSite(
           key,
           that.sites[key],
-          (objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) ? obj["hotkey-sites"][key] : true
+          siteObj.enabled,
+          siteObj.priority
         );
-        storageObj[key] = that.sites[key].enabled;
+
+        storageObj[key] = siteObj;
       });
+
       // Set the storage key on init incase previous storage format becomes broken
       chrome.storage.sync.set({ "hotkey-sites": storageObj });
+
+      // Set storage version
+      chrome.storage.sync.set({ "hotkey-storage-version": STORAGE_VERSION });
 
       // Initialize popup open on update setting
       if(!obj.hasOwnProperty("hotkey-open_on_update")) {
@@ -165,11 +183,12 @@
   /**
    * Adds a new site to `sites` and generates the URL regex
    */
-  Sitelist.prototype.addSite = function(name, attributes, enabled) {
+  Sitelist.prototype.addSite = function(name, attributes, enabled, priority) {
     this.sites[name] = _.extend(
       _.pick(attributes, this.validSiteAttributes),
       {
         enabled: enabled,
+        priority: priority,
         url_regex: new URL_check(name, { alias: attributes.alias, blacklist: attributes.blacklist })
       }
     );
@@ -200,21 +219,15 @@
 
   /**
    * Set the disabled value of a music site and store results in localstorage
-   * @param {String} url - url of site to mark as disabled
-   * @param {Boolean} enabled - enable site if true, disable site if false
+   * @param {String} siteName - site name to update
+   * @param {Boolean} value - value object to set site to
+   * @param {Function} callback
    */
-  Sitelist.prototype.markSiteEnabledState = function(url, enabled, callback) {
-    var siteName = this.getSitelistName(url),
-        value = enabled;
-
-    if(siteName) {
-      this.sites[siteName].enabled = value;
-      this.setSiteStorage(siteName, value).then(function() {
-        callback();
-      });
-    } else {
-      callback();
-    }
+  Sitelist.prototype.setSiteState = function(siteKey, value, callback) {
+    _.extend(this.sites[siteKey], value);
+    this.setSiteStorage(siteKey, value).then(function() {
+      if(callback) callback();
+    });
   };
 
   /**
