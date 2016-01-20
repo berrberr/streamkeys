@@ -28,22 +28,15 @@ module.exports = function(config) {
     // LOG_DISABLE, LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    autoWatch: false,
+    autoWatch: true,
 
-    singleRun: true,
+    singleRun: false,
 
     browsers: ["PhantomJS2"],
 
     browserify: {
       debug: true,
       transform: []
-    },
-
-    plugins: [
-      "karma-browserify",
-      "karma-jasmine",
-      "karma-jasmine-jquery",
-      "karma-phantomjs2-launcher"
-    ]
+    }
   });
 };
