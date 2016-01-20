@@ -150,9 +150,18 @@
 
       _.each(_.keys(that.sites), function(key) {
         var siteObj =
-          (version === 0) ?
-            { enabled: objSet ? obj["hotkey-sites"][key] : true, priority: 1 } :
-            objSet ? obj["hotkey-sites"][key] : { enabled: true, priority: 1 };
+          (version === 0)
+            ? {
+                enabled: objSet ? obj["hotkey-sites"][key] || false : true,
+                priority: 1
+              }
+            : (objSet && obj["hotkey-sites"][key])
+                // Validate enabled/priority values in case of migration problems
+              ? {
+                  enabled: _.isBoolean(obj["hotkey-sites"][key].enabled) ? obj["hotkey-sites"][key].enabled : true,
+                  priority: _.isNumber(obj["hotkey-sites"][key].priority) ? obj["hotkey-sites"][key].priority : 1
+                }
+              : { enabled: true, priority: 1 };
 
         that.addSite(
           key,
