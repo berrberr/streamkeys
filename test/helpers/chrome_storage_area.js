@@ -14,5 +14,9 @@ module.exports = {
     _.extend(storageObject, obj);
 
     if(_.isFunction(callback)) callback(true);
-  })
+  }),
+
+  clear: function() {
+    storageObject = {};
+  }
 };
