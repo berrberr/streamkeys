@@ -148,29 +148,29 @@
       // Migrate old storage versions to new format
       var version = (typeof obj["hotkey-storage-version"] === "undefined") ? 0 : obj["hotkey-storage-version"];
 
-      _.each(_.keys(that.sites), function(key) {
+      _.each(_.keys(that.sites), function(siteKey) {
         var siteObj =
           (version === 0)
             ? {
-                enabled: objSet ? obj["hotkey-sites"][key] || false : true,
+                enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
                 priority: 1
               }
-            : (objSet && obj["hotkey-sites"][key])
-                // Validate enabled/priority values in case of migration problems
+            : (objSet && obj["hotkey-sites"][siteKey])
+              // Validate enabled/priority values in case of migration problems
               ? {
-                  enabled: _.isBoolean(obj["hotkey-sites"][key].enabled) ? obj["hotkey-sites"][key].enabled : true,
-                  priority: _.isNumber(obj["hotkey-sites"][key].priority) ? obj["hotkey-sites"][key].priority : 1
+                  enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
+                  priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1
                 }
               : { enabled: true, priority: 1 };
 
         that.addSite(
-          key,
-          that.sites[key],
+          siteKey,
+          that.sites[siteKey],
           siteObj.enabled,
           siteObj.priority
         );
 
-        storageObj[key] = siteObj;
+        storageObj[siteKey] = siteObj;
       });
 
       // Set the storage key on init incase previous storage format becomes broken
@@ -192,28 +192,28 @@
   /**
    * Adds a new site to `sites` and generates the URL regex
    */
-  Sitelist.prototype.addSite = function(name, attributes, enabled, priority) {
-    this.sites[name] = _.extend(
+  Sitelist.prototype.addSite = function(siteKey, attributes, enabled, priority) {
+    this.sites[siteKey] = _.extend(
       _.pick(attributes, this.validSiteAttributes),
       {
         enabled: enabled,
         priority: priority,
-        url_regex: new URL_check(name, { alias: attributes.alias, blacklist: attributes.blacklist })
+        url_regex: new URL_check(siteKey, { alias: attributes.alias, blacklist: attributes.blacklist })
       }
     );
   };
 
   /**
    * Set site enabled settings in localstorage
-   * @param {String} key - name of the hotkey-sites key in localstorage
+   * @param {String} siteKey - name of the hotkey-sites key in localstorage
    * @param {Object} value - value to set
    * @return {Promise}
    */
-  Sitelist.prototype.setSiteStorage = function(key, value) {
+  Sitelist.prototype.setSiteStorage = function(siteKey, value) {
     var promise = new Promise(function(resolve, reject) {
       chrome.storage.sync.get(function(obj) {
         if(obj["hotkey-sites"]) {
-          obj["hotkey-sites"][key] = value;
+          obj["hotkey-sites"][siteKey] = value;
           chrome.storage.sync.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });
@@ -232,11 +232,19 @@
    * @param {Boolean} value - value object to set site to
    * @param {Function} callback
    */
-  Sitelist.prototype.setSiteState = function(siteKey, value, callback) {
-    _.extend(this.sites[siteKey], value);
-    this.setSiteStorage(siteKey, value).then(function() {
-      if(callback) callback();
+  Sitelist.prototype.setSiteState = function(siteKey, value) {
+    var that = this;
+
+    var promise = new Promise(function(resolve) {
+      _.extend(that.sites[siteKey], value);
+      that.setSiteStorage(siteKey, value).then(function() {
+        resolve();
+      }, function() {
+        resolve();
+      });
     });
+
+    return promise;
   };
 
   /**
@@ -342,6 +350,7 @@
    */
   Sitelist.prototype.getController = function(url) {
     var site_name = this.getSitelistName(url);
+
     if(site_name) {
       var site = this.sites[site_name];
       if(site.controller) return site.controller;
@@ -353,22 +362,31 @@
   };
 
   /**
+   * @param {String} siteKey
+   * @return {Number} priorty of site
+   */
+  Sitelist.prototype.getPriority = function(siteKey) {
+    return this.sites[siteKey].priority;
+  };
+
+  /**
    * Gets an array of all tabs that are music tabs, ignoring whether they are active
    * @return {Promise}
    */
   Sitelist.prototype.getMusicTabs = function() {
     var that = this;
+
     var promise = new Promise(function(resolve) {
-      var music_tabs = [];
+      var musicTabs = [];
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url)) {
             tab.streamkeysEnabled = that.checkTabEnabled(tab.id);
-            music_tabs.push(tab);
+            musicTabs.push(tab);
           }
         });
 
-        resolve(music_tabs);
+        resolve(musicTabs);
       });
     });
 
@@ -381,14 +399,33 @@
    */
   Sitelist.prototype.getActiveMusicTabs = function() {
     var that = this;
+
     var promise = new Promise(function(resolve) {
-      var music_tabs = [];
+      var musicTabs = [];
+
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
-          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) music_tabs.push(tab);
+          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) {
+            musicTabs.push({
+              tab: tab,
+              priority: that.getPriority(that.getSitelistName(tab.url))
+            });
+          }
         });
 
-        resolve(music_tabs);
+        if(musicTabs.length > 0) {
+          var maxPriority = _.sortBy(musicTabs, function(tab) { return tab.priority * -1; })[0].priority;
+
+          musicTabs = _.map(
+            _.filter(
+              musicTabs,
+              function(tab) { return tab.priority == maxPriority; }
+            ),
+            function(musicTab) { return musicTab.tab; }
+          );
+        }
+
+        resolve(musicTabs);
       });
     });
 

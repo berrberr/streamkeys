@@ -147,10 +147,10 @@ describe("sitelist", function() {
 
   it("toggles enable/disable of a site", function(done) {
     expect(sitelist.getEnabled().length).toBe(siteNames.length);
-    sitelist.setSiteState(siteNames[0], { enabled: false }, function() {
+    sitelist.setSiteState(siteNames[0], { enabled: false }).then(function() {
       expect(sitelist.getEnabled().length).toBe(siteNames.length - 1);
       expect(sitelist.checkEnabled(siteUrls[0])).toBe(false);
-      sitelist.setSiteState(siteNames[0], { enabled: true }, function() {
+      sitelist.setSiteState(siteNames[0], { enabled: true }).then(function() {
         expect(sitelist.getEnabled().length).toBe(siteNames.length);
         expect(sitelist.checkEnabled(siteUrls[0])).toBe(true);
         done();
@@ -164,7 +164,6 @@ describe("loading settings from chrome.storage.sync", function() {
 
   describe("loading v0 settings", function() {
     beforeAll(function() {
-      console.log("Im being called V0");
       var oldSettingObj = {};
       oldSettingObj[siteNames[0]] = false;
       oldSettingObj[siteNames[1]] = true;
@@ -212,19 +211,19 @@ describe("loading settings from chrome.storage.sync", function() {
     });
   });
 
-  fdescribe("loading v1 settings with missing and undefined sites", function() {
+  describe("loading v1 settings with missing and undefined sites", function() {
     var storageSitelist;
 
     beforeAll(function() {
-      var oldSettingObj = {};
-      oldSettingObj[siteNames[0]] = { enabled: false, priority: null };
-      oldSettingObj[siteNames[1]] = { enabled: undefined, priority: 2 };
-      oldSettingObj[siteNames[2]] = { enabled: true, priority: 3 };
+      var settingObj = {};
+      settingObj[siteNames[0]] = { enabled: false, priority: null };
+      settingObj[siteNames[1]] = { enabled: undefined, priority: 2 };
+      settingObj[siteNames[2]] = { enabled: true, priority: 3 };
 
       chrome.storage.sync.clear();
 
       chrome.storage.sync.set({
-        "hotkey-sites": oldSettingObj,
+        "hotkey-sites": settingObj,
         "hotkey-storage-version": 1
       });
 
@@ -240,7 +239,6 @@ describe("loading settings from chrome.storage.sync", function() {
           expect(storageObject["hotkey-storage-version"]).toBe(1);
 
           var sites = storageObject["hotkey-sites"];
-          console.log(sites[siteNames[0]]);
           expect(sites[siteNames[0]].enabled).toBe(false);
           expect(sites[siteNames[0]].priority).toEqual(1);
           expect(sites[siteNames[1]].enabled).toBe(true);
@@ -252,5 +250,84 @@ describe("loading settings from chrome.storage.sync", function() {
         }
       );
     });
+
+    it("marks enabled states on sitelsit", function() {
+      expect(storageSitelist.checkEnabled(siteUrls[0])).toBe(false);
+      expect(storageSitelist.checkEnabled(siteUrls[1])).toBe(true);
+      expect(storageSitelist.checkEnabled(siteUrls[2])).toBe(true);
+      expect(storageSitelist.getEnabled()).toContain(siteNames[1]);
+      expect(storageSitelist.getEnabled()).toContain(siteNames[2]);
+    });
+  });
+});
+
+describe("site priority", function() {
+  var prioritySitelist;
+
+  beforeAll(function() {
+    tabs = [
+      {
+        id: 1,
+        title: siteNames[0],
+        url: siteUrls[0]
+      },
+      {
+        id: 2,
+        title: siteNames[1],
+        url: siteUrls[1]
+      },
+      {
+        id: 3,
+        title: siteNames[2],
+        url: siteUrls[2]
+      },
+      {
+        id: 4,
+        title: siteNames[3],
+        url: siteUrls[3]
+      }
+    ];
+
+    chrome.tabs.query.yields(tabs);
+
+    chrome.storage.sync.clear();
+
+    prioritySitelist = new Sitelist(mockedSites);
+    prioritySitelist.loadSettings();
+  });
+
+  it("sets priority", function(done) {
+    prioritySitelist.setSiteState(siteNames[1], { priority: 3 }).then(function() {
+      expect(prioritySitelist.getPriority(siteNames[1])).toEqual(3);
+      prioritySitelist.setSiteState(siteNames[2], { priority: 3 }).then(function() {
+        expect(prioritySitelist.getPriority(siteNames[2])).toEqual(3);
+        done();
+      });
+    });
+  });
+
+  it("only returns tabs with highest priority", function(done) {
+    prioritySitelist.getActiveMusicTabs().then(function(tabs) {
+      var activeUrls = tabs.map(function(tab) { return tab.url; });
+
+      expect(activeUrls).toContain(siteUrls[1]);
+      expect(activeUrls).toContain(siteUrls[2]);
+      expect(activeUrls).not.toContain(siteUrls[0]);
+      done();
+    });
+  });
+
+  it("doesn't affect site enabled state", function() {
+    expect(prioritySitelist.checkEnabled(siteUrls[0])).toBe(true);
+    expect(prioritySitelist.checkEnabled(siteUrls[1])).toBe(true);
+    expect(prioritySitelist.checkEnabled(siteUrls[2])).toBe(true);
+    expect(prioritySitelist.checkEnabled(siteUrls[3])).toBe(true);
+  });
+
+  it("doesn't affect tab enabled state", function() {
+    expect(prioritySitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+    expect(prioritySitelist.checkTabEnabled(tabs[1].id)).toBe(true);
+    expect(prioritySitelist.checkTabEnabled(tabs[2].id)).toBe(true);
+    expect(prioritySitelist.checkTabEnabled(tabs[3].id)).toBe(true);
   });
 });
