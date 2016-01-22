@@ -31,6 +31,9 @@
       </ul>
     </div>
     <div class="content">
+      <div class="loader-container" data-bind="visible: !$data.loadingComplete()">
+        <div class="loader"></div>
+      </div>
       <div id="enabled-sites" data-bind="visible: $data.selectedTab() == 'sites'" class="inner">
         <div class="sitelist">
           <!-- ko foreach: $data.sitelist() -->
@@ -43,7 +46,7 @@
                   <span data-bind="text: $data.enabled() ? 'Disable' : 'Enable'"></span>
                   <span class="site-enabled-icon pull-right glyphicon" data-bind="css: {
                     'glyphicon-ok': !$data.enabled(),
-                    'glyphicon-remove': $data.enabled()
+                    'glyphicon-remove': $data.enabled
                   }" aria-hidden="true"></span>
                 </button>
               </div>
@@ -51,12 +54,11 @@
                 <div class="input-group">
                   <span class="input-group-addon">Priority</span>
                   <div class="input-group-btn site-priority-input">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">1 <span class="caret"></span></button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span data-bind="text: $data.priority"></span> <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
+                      <li data-bind="foreach: Array.from({ length: 9 }, (v, k) => k + 1)">
+                        <a href="#" data-bind="text: $data, click: function() { $parent.priority($data) }"></a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -66,7 +68,7 @@
           <!-- /ko -->
         </div>
       </div>
-      <div id="site-aliases" data-bind="visible: $data.selectedTab == 'sites_aliases'" class="inner">
+      <div id="site-aliases" data-bind="visible: $data.selectedTab() == 'sites_aliases'" class="inner">
 
       </div>
       <div id="general" data-bind="visible: $data.selectedTab() == 'general'" class="inner">

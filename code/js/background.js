@@ -53,6 +53,12 @@
       console.log("Options page has updated settings. Reloading...");
       window.sk_sites.loadSettings();
     }
+    if(request.action === "update_site_settings") {
+      console.log("Options page has updated a site.", request);
+      window.sk_sites.setSiteState(request.siteKey, request.siteState).then(function() {
+        response(true);
+      });
+    }
     if(request.action === "get_sites") {
       console.log("Options page wants the sitelist.");
       response(window.sk_sites.sites);

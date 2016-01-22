@@ -1,8 +1,7 @@
 "use strict";
 
 var $ = require("jquery"),
-    ko = require("ko"),
-    _ = require("lodash");
+    ko = require("ko");
 
 var OptionsViewModel = function OptionsViewModel() {
   var self = this;
@@ -12,6 +11,10 @@ var OptionsViewModel = function OptionsViewModel() {
   self.sitelistInitialized = ko.observable(false);
   self.settingsInitialized = ko.observable(false);
   self.sitelist = ko.observableArray([]);
+
+  self.loadingComplete = ko.pureComputed(function() {
+    return self.sitelistInitialized() && self.settingsInitialized();
+  });
 
   // Load localstorage settings into observables
   chrome.storage.sync.get(function(obj) {
@@ -28,16 +31,16 @@ var OptionsViewModel = function OptionsViewModel() {
     self.settingsInitialized(true);
   });
 
-  self.sitelistChanged = function() {
-    console.log("sitelist changed", self.sitelistInitialized());
+  self.sitelistChanged = function(site) {
     if(self.sitelistInitialized()) {
-      var formattedSites = _.object(
-        _.pluck(self.sitelist(), "id"),
-        _.map(self.sitelist(), function(site) { return site.enabled.peek(); })
-      );
-      console.log("new sites: ", formattedSites);
-      chrome.storage.sync.set({"hotkey-sites": formattedSites}, function() {
-        chrome.runtime.sendMessage({ action: "update_keys" });
+
+      chrome.runtime.sendMessage({
+        action: "update_site_settings",
+        siteKey: site.id,
+        siteState: {
+          enabled: site.enabled.peek(),
+          priority: site.priority.peek()
+        }
       });
     }
   };
@@ -47,9 +50,11 @@ var OptionsViewModel = function OptionsViewModel() {
       var site = new MusicSite({
         id: key,
         name: val.name,
-        enabled: val.enabled
+        enabled: val.enabled,
+        priority: val.priority
       });
-      site.enabled.subscribe(self.sitelistChanged);
+      site.enabled.subscribe(() => self.sitelistChanged(site));
+      site.priority.subscribe(() => self.sitelistChanged(site));
       self.sitelist.push(site);
     });
 
@@ -62,6 +67,7 @@ var MusicSite = (function() {
     this.id = attributes.id;
     this.name = attributes.name;
     this.enabled = ko.observable(attributes.enabled);
+    this.priority = ko.observable(attributes.priority);
 
     this.toggleSite = function() {
       this.enabled(!this.enabled.peek());

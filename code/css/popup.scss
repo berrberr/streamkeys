@@ -1,18 +1,20 @@
 $black: #000000;
-$popup-width: 230px;
-$main-color: #2880C7;
+$popup-width: 250px;
+$main-color: #2880c7;
+$controls-background-color: #4a94d1;
 $white: #ffffff;
 
 html {
   padding: 0;
   margin: 0;
   min-height: 100px;
+  height: 0;
 }
 
 body {
   width: $popup-width;
   padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial',sans-serif!important;
 }
 
 a,
@@ -88,7 +90,7 @@ a:visited {
   @extend .player-div-border;
   height: auto;
   min-height: 30px;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   text-align: center;
 }
 
@@ -149,59 +151,59 @@ a:visited {
   }
 }
 
+.player-controls-container {
+  background-color: $main-color;
+  -webkit-user-select: none;
+
+  i {
+    color: $white;
+    cursor: pointer;
+    font-size: 32px;
+    margin: 4px 6px 0 6px;
+
+    &:hover {
+      color: darken($white, 20%);
+    }
+  }
+}
+
 .header {
   @extend .player-div-border;
   background-color: $main-color;
   border-top: 1px solid $main-color;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  height: 40px;
+  height: 38px;
   padding: 6px;
   text-align: center;
 
   a,
   a:active,
   a:visited {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
     color: $white;
+    display: block;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    margin-top: 8px;
     text-decoration: none;
   }
 
   a:hover {
     color: darken($white, 10%);
+    text-decoration: none;
   }
 }
 
 .options {
   @extend .player-div-border;
-  background-color: $main-color;
-  display: block;
-  height: 34px;
-  padding: 6px 27px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
   border-bottom: 2px solid $main-color;
-  width: 100%;
+  display: block;
+  height: 44px;
+  padding: 0;
+  text-align: center;
 
+  #options-link,
   #help-link {
-    float: right;
-    padding-right: 2px;
-  }
-
-  a,
-  a:hover,
-  a:visited {
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    color: $white;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: darken($white, 10%);
+    margin: 0 10px;
   }
 }
 

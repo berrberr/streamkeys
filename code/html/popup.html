@@ -2,7 +2,11 @@
   <head>
     <script type="text/javascript" src="/js/popup/popup.js"></script>
     <link href="/css/popup.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/js/lib/material.min.js"></script>
   </head>
 
   <body>
@@ -26,7 +30,14 @@
           </div>
           <div class="song-data" data-bind="scrollingSong: songArtistText, visible: $data.songArtistText().length"></div>
         </div>
-        <div class="player-controls-row">
+        <div class="player-controls-container">
+          <i class="material-icons md-dark">more_vert</i>
+          <i class="material-icons md-dark">fast_rewind</i>
+          <i class="material-icons md-dark">play_arrow</i>
+          <i class="material-icons md-dark">fast_forward</i>
+          <i class="material-icons md-dark">not_interested</i>
+        </div>
+        <!-- <div class="player-controls-row">
           <button type="button" data-bind="" class="btn btn-sm btn-default pull-left btn-floating">
             <span class="glyphicon glyphicon-star"></span>
           </button>
@@ -48,16 +59,18 @@
           <button type="button" data-bind="css: { 'active': !$data.streamkeysEnabled() }, click: function() { $data.toggleStreamkeysEnabled(); }" class="btn btn-sm btn-default pull-right btn-floating">
             <span class="glyphicon glyphicon-ban-circle"></span>
           </button>
-        </div>
+        </div> -->
       </div>
       <!-- /ko -->
     </div>
 
     <div class="options">
-      <div>
-        <a href="#" id="options-link" target="_blank" tabindex="-1">Options</a>
-        <a href="http://www.streamkeys.com/guide.html" id="help-link" target="_blank" tabindex="-1">Help</a>
-      </div>
+      <button id="options-link" class="mdl-button mdl-js-button mdl-js-ripple-effect" tabindex="-1">
+        Options
+      </button>
+      <button id="help-link" class="mdl-button mdl-js-button mdl-js-ripple-effect" tabindex="-1">
+        Help
+      </button>
     </div>
   </body>
 </html>
