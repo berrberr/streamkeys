@@ -68,6 +68,7 @@
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
       "gaana": { name: "Gaana", url: "http://www.gaana.com" },
+      "giantbomb": { name: "Giantbomb", url: "http://giantbomb.com" },
       "guvera": { name: "Guvera", url: "https://www.guvera.com" },
       "play.google": { name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js" },
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
