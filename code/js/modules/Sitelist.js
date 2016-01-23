@@ -93,6 +93,7 @@
       "player": { name: "Player.fm", url: "http://player.fm", controller: "PlayerFmController.js", blacklist: ["player.spotify", "reddit.music.player.il", "reddit.musicplayer.io"] },
       "pleer": { name: "Pleer", url: "http://pleer.com" },
       "plex": { name: "Plex", url: "http://www.plex.tv" },
+      "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
       "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
