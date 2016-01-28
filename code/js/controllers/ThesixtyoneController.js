@@ -5,13 +5,12 @@
 
   new BaseController({
     siteName: "TheSixtyOne",
-    playPause: "#play_button",
-    play: "#play_button",
-    pause: "#pause_button",
-    playNext: "#large_next_song_button",
-    playPrev: "#large_previous_song_button",
+    play: "#miniplayer_play_button",
+    pause: "#miniplayer_pause_button",
+    playNext: "#miniplayer_next_button",
+    playPrev: "#miniplayer_prev_button",
 
-    song: "#song_panel_title",
-    artist: "#song_panel_artist"
+    song: "#miniplayer_song_title",
+    artist: "#miniplayer_artist_name"
   });
 })();

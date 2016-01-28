@@ -40,18 +40,6 @@ module.exports = function(grunt) {
         cwd: "build/",
         src: [pkg.name + "-" + pkg.version + ".crx"],
         dest: process.env.CIRCLE_ARTIFACTS
-      } ] },
-      test_dev: { files: [ {
-        expand: true,
-        cwd: "build/unpacked-dev",
-        src: ["**"],
-        dest: "test-selectors/streamkeys-ext/"
-      } ] },
-      test_prod: { files: [ {
-        expand: true,
-        cwd: "build/unpacked-prod",
-        src: ["**"],
-        dest: "test-selectors/streamkeys-ext/"
       } ] }
     },
 
@@ -108,12 +96,6 @@ module.exports = function(grunt) {
       tasks: ["dev"]
     },
 
-    exec: {
-      run_tests: {
-        command: "node test-selectors/runner.js"
-      }
-    },
-
     sass: {
       prod: {
         files: {
@@ -164,11 +146,10 @@ module.exports = function(grunt) {
   );
 
   grunt.registerTask("lint", ["jshint", "lintspaces"]);
-  grunt.registerTask("test", ["exec:run_tests"]);
+  grunt.registerTask("test", ["karma"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
   grunt.registerTask("dev-pre", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
-  grunt.registerTask("dev-post", ["copy:test_dev"]);
-  grunt.registerTask("dev", ["dev-pre", "browserify", "dev-post"]);
+  grunt.registerTask("dev", ["dev-pre", "browserify"]);
 
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "copy:test_prod", "compress:rel"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "compress:rel"]);
 };
