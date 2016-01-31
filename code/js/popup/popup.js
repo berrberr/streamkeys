@@ -28,6 +28,10 @@ var PopupViewModel = function PopupViewModel() {
   self.visibleMusicTabs = ko.observableArray([]);
   self.optionsUrl = ko.observable(chrome.runtime.getURL("html/options.html"));
 
+  self.openOptionsPage = function() {
+    window.open(self.optionsUrl());
+  };
+
   // Send a request to get the player state of every active music site tab
   chrome.runtime.sendMessage({ action: "get_music_tabs" }, self.getTabStates.bind(this));
 
@@ -125,9 +129,6 @@ var MusicTab = (function() {
 
 document.addEventListener("DOMContentLoaded", function() {
   window.popup = new PopupViewModel();
-
-  // Set the options link to the options page
-  $("#options-link").attr("href", chrome.runtime.getURL("html/options.html"));
 
   ko.applyBindings(window.popup);
 

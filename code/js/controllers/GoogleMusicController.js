@@ -12,7 +12,7 @@
     dislike: ".rating-container [data-rating='1']",
 
     playState: "[data-id=play-pause].playing",
-    song: "#player-song-title",
+    song: "#currently-playing-title",
     artist: "#player-artist",
     album: ".player-album"
   });
