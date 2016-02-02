@@ -44,6 +44,7 @@
     ];
 
     this.sites = sites || {
+      "22tracks": { name: "22tracks", url: "http://www.22tracks.com" },
       "7digital": { name: "7digital", url: "http://www.7digital.com" },
       "8tracks": { name: "8tracks", url: "http://www.8tracks.com" },
       "amazon": { name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player" },
