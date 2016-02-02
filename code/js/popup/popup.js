@@ -11,6 +11,9 @@ var PopupViewModel = function PopupViewModel() {
   self.totalMusicTabs = ko.observable(1);
   self.musicTabsLoaded = ko.observable(0);
   self.musicTabs = ko.observableArray([]);
+  // Tabs from disabled music sites to show in disabled list toggle
+  self.disabledMusicTabs = ko.observableArray([]);
+  self.disabledSitesOpen = ko.observable(false);
 
   // Filter hidden players and sort by siteName -> tabId
   self.sortedMusicTabs = ko.computed(function() {
@@ -41,10 +44,13 @@ var PopupViewModel = function PopupViewModel() {
   });
 };
 
-PopupViewModel.prototype.updateState = function(stateData, tab) {
+PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
   if(typeof stateData == "undefined") return false;
 
-  var musicTab = _.findWhere(this.musicTabs(), { tabId: tab.id });
+  var musicTab = _.findWhere(
+    _.union(this.musicTabs.peek(), this.disabledMusicTabs.peek()),
+    { tabId: tab.id }
+  );
 
   if(musicTab) {
     // Update observables
@@ -52,13 +58,18 @@ PopupViewModel.prototype.updateState = function(stateData, tab) {
       if(typeof stateData[property] !== "undefined") musicTab[property](stateData[property]);
     });
   } else {
+    // Create new tab
     musicTab = new MusicTab(_.assign(stateData, {
       tabId: tab.id,
       faviconUrl: tab.favIconUrl,
       streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true
     }));
 
-    this.musicTabs.push(musicTab);
+    if(disabled) {
+      this.disabledMusicTabs.push(musicTab);
+    } else {
+      this.musicTabs.push(musicTab);
+    }
   }
 };
 
@@ -68,11 +79,18 @@ PopupViewModel.prototype.updateState = function(stateData, tab) {
  */
 PopupViewModel.prototype.getTabStates = function(tabs) {
   var that = this;
-  that.totalMusicTabs(tabs.length);
+  that.totalMusicTabs(tabs.enabled.length + tabs.disabled.length);
 
-  _.forEach(tabs, function(tab) {
+  _.forEach(tabs.enabled, function(tab) {
     chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
       that.updateState(playerState, this.tab);
+      that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
+    }).bind({ tab: tab }));
+  });
+
+  _.forEach(tabs.disabled, function(tab) {
+    chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
+      that.updateState(playerState, this.tab, true);
       that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
     }).bind({ tab: tab }));
   });

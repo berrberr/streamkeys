@@ -21,6 +21,15 @@ a:visited {
   text-decoration: none;
 }
 
+// Hides all the bootstrap outlines
+.btn {
+  &:focus,
+  &:active:focus,
+  &.active:focus {
+    outline: none !important;
+  }
+}
+
 .player-div-border {
   border-left: 1px solid $main-color;
   border-right: 1px solid $main-color;
@@ -73,10 +82,9 @@ a:visited {
 }
 
 .site-favicon {
-  width: 16px;
-  height: 16px;
-  margin-left: 12px;
   border: none;
+  height: 16px;
+  width: 16px;
 }
 
 .site-title {
@@ -113,12 +121,6 @@ a:visited {
   .btn {
     font-size: 12px;
     padding: 4px 8px;
-
-    &:focus,
-    &:active:focus,
-    &.active:focus {
-      outline: none !important;
-    }
   }
 
   .player-control-btn-group {
@@ -209,3 +211,6 @@ a:visited {
   padding-top: 10px;
 }
 
+.btn-disabled-sites {
+  margin-top: 10px;
+}

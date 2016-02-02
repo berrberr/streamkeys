@@ -342,17 +342,25 @@
    */
   Sitelist.prototype.getMusicTabs = function() {
     var that = this;
+
     var promise = new Promise(function(resolve) {
-      var music_tabs = [];
+      var musicTabs = {
+        enabled: [],
+        disabled: []
+      };
+
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url)) {
             tab.streamkeysEnabled = that.checkTabEnabled(tab.id);
-            music_tabs.push(tab);
+            musicTabs.enabled.push(tab);
+          } else if(that.checkMusicSite(tab.url)) {
+            tab.streamkeysEnabled = false;
+            musicTabs.disabled.push(tab);
           }
         });
 
-        resolve(music_tabs);
+        resolve(musicTabs);
       });
     });
 
@@ -365,14 +373,15 @@
    */
   Sitelist.prototype.getActiveMusicTabs = function() {
     var that = this;
+
     var promise = new Promise(function(resolve) {
-      var music_tabs = [];
+      var musicTabs = [];
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
-          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) music_tabs.push(tab);
+          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) musicTabs.push(tab);
         });
 
-        resolve(music_tabs);
+        resolve(musicTabs);
       });
     });
 

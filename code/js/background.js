@@ -84,7 +84,6 @@
     if(request.action === "get_music_tabs") {
       var music_tabs = window.sk_sites.getMusicTabs();
       music_tabs.then(function(tabs) {
-        console.log("Music tabs: ", tabs);
         response(tabs);
       });
 
