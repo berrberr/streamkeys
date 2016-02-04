@@ -118,7 +118,7 @@ describe("sitelist", function() {
 
   it("gets music tabs from chrome tabs", function(done) {
     sitelist.getMusicTabs().then(function(musicTabs) {
-      expect(musicTabs.length).toBe(tabs.length);
+      expect(musicTabs.enabled.length).toBe(tabs.length);
       done();
     });
   });
@@ -134,10 +134,12 @@ describe("sitelist", function() {
     expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
     sitelist.markTabEnabledState(tabs[0].id, false);
     expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(false);
+
     sitelist.getActiveMusicTabs().then(function(firstMusicTabs) {
       expect(firstMusicTabs.length).toBe(tabs.length - 1);
       sitelist.markTabEnabledState(tabs[0].id, true);
       expect(sitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+
       sitelist.getActiveMusicTabs().then(function(secondMusicTabs) {
         expect(secondMusicTabs.length).toBe(tabs.length);
         done();
@@ -150,10 +152,16 @@ describe("sitelist", function() {
     sitelist.setSiteState(siteNames[0], { enabled: false }).then(function() {
       expect(sitelist.getEnabled().length).toBe(siteNames.length - 1);
       expect(sitelist.checkEnabled(siteUrls[0])).toBe(false);
-      sitelist.setSiteState(siteNames[0], { enabled: true }).then(function() {
-        expect(sitelist.getEnabled().length).toBe(siteNames.length);
-        expect(sitelist.checkEnabled(siteUrls[0])).toBe(true);
-        done();
+
+      sitelist.getMusicTabs().then(function(musicTabs) {
+        expect(musicTabs.enabled.length).toBe(tabs.length - 1);
+        expect(musicTabs.disabled.length).toBe(1);
+
+        sitelist.setSiteState(siteNames[0], { enabled: true }).then(function() {
+          expect(sitelist.getEnabled().length).toBe(siteNames.length);
+          expect(sitelist.checkEnabled(siteUrls[0])).toBe(true);
+          done();
+        });
       });
     });
   });

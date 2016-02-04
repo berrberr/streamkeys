@@ -47,9 +47,11 @@
     ];
 
     this.sites = sites || {
+      "22tracks": { name: "22tracks", url: "http://www.22tracks.com" },
       "7digital": { name: "7digital", url: "http://www.7digital.com" },
       "8tracks": { name: "8tracks", url: "http://www.8tracks.com" },
       "amazon": { name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player" },
+      "accuradio": { name: "Accuradio", url: "https://www.accuradio.com" },
       "ambientsleepingpill": { name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com" },
       "anghami": { name: "Anghami", url: "https://www.anghami.com" },
       "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
@@ -59,19 +61,22 @@
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
       "blitzr": { name: "Blitzr", url: "http://www.blitzr.com" },
+      "coursera": { name: "Coursera", url: "http://www.coursera.org" },
       "cubic": { name: "Cubic.fm", url: "http://www.cubic.fm" },
       "deezer": { name: "Deezer", url: "http://www.deezer.com" },
       "demodrop": { name: "DemoDrop", url: "http://www.demodrop.com" },
       "di": { name: "Di.fm", url: "http://www.di.fm" },
       "disco": { name: "Disco.io", url: "http://www.disco.io" },
       "earbits": { name: "Earbits", url: "http://www.earbits.com" },
-      "player.edge": { name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js" },
-      "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
+      "egghead": { name: "egghead.io", url: "https://egghead.io" },
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
       "gaana": { name: "Gaana", url: "http://www.gaana.com" },
+      "giantbomb": { name: "Giantbomb", url: "http://giantbomb.com" },
       "guvera": { name: "Guvera", url: "https://www.guvera.com" },
       "play.google": { name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js" },
+      "player.edge": { name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js" },
+      "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
@@ -79,6 +84,8 @@
       "jango": { name: "Jango", url: "http://www.jango.com" },
       "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"] },
+      "listenonrepeat": { name: "ListenOnRepeat", url: "http://www.listenonrepeat.com" },
+      "livephish": { name: "LivePhish", url: "http://plus.livephish.com" },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
       "mycloudplayers": { name: "My Cloud Player", url: "http://www.mycloudplayers.com" },
@@ -94,6 +101,7 @@
       "player": { name: "Player.fm", url: "http://player.fm", controller: "PlayerFmController.js", blacklist: ["player.spotify", "reddit.music.player.il", "reddit.musicplayer.io"] },
       "pleer": { name: "Pleer", url: "http://pleer.com" },
       "plex": { name: "Plex", url: "http://www.plex.tv" },
+      "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
       "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
@@ -377,12 +385,19 @@
     var that = this;
 
     var promise = new Promise(function(resolve) {
-      var musicTabs = [];
+      var musicTabs = {
+        enabled: [],
+        disabled: []
+      };
+
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url)) {
             tab.streamkeysEnabled = that.checkTabEnabled(tab.id);
-            musicTabs.push(tab);
+            musicTabs.enabled.push(tab);
+          } else if(that.checkMusicSite(tab.url)) {
+            tab.streamkeysEnabled = false;
+            musicTabs.disabled.push(tab);
           }
         });
 
