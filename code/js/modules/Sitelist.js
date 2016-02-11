@@ -16,7 +16,7 @@
   /**
    * @return {RegExp} a regex that matches where the string is in a url's (domain) name
    */
-  var URL_check = function(domain, opts) {
+  var URLCheck = function(domain, opts) {
     opts = opts || {};
     var inner = opts.alias ? domain + "|www." + domain + "|" + opts.alias.join("|") : domain + "|www." + domain;
 
@@ -161,15 +161,22 @@
           (version === 0)
             ? {
                 enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
-                priority: 1
+                priority: 1,
+                alias: []
               }
             : (objSet && obj["hotkey-sites"][siteKey])
               // Validate enabled/priority values in case of migration problems
               ? {
                   enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
-                  priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1
+                  priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1,
+                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : []
                 }
-              : { enabled: true, priority: 1 };
+              : { enabled: true, priority: 1, alias: [] };
+
+        // Combine user defined site aliases with extension defined aliases
+        if(siteObj.alias.length > 0) {
+          that.sites[siteKey].alias = _.union(that.sites[siteKey].alias || [], siteObj.alias);
+        }
 
         that.addSite(
           siteKey,
@@ -206,7 +213,7 @@
       {
         enabled: enabled,
         priority: priority,
-        url_regex: new URL_check(siteKey, { alias: attributes.alias, blacklist: attributes.blacklist })
+        urlRegex: new URLCheck(siteKey, { alias: attributes.alias, blacklist: attributes.blacklist })
       }
     );
   };
@@ -273,7 +280,7 @@
    */
   Sitelist.prototype.getSitelistName = function(url) {
     var filtered_sites = _.filter(_.keys(this.sites), function (name) {
-      return this.sites[name].url_regex.test(url);
+      return this.sites[name].urlRegex.test(url);
     }, this);
 
     if (!filtered_sites.length) return null;
@@ -293,10 +300,10 @@
       if(sitelist_name === null) reject([]);
 
       var tab_ids = [];
-      var url_regex = that.sites[sitelist_name].url_regex;
+      var urlRegex = that.sites[sitelist_name].urlRegex;
       chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
-          if(url_regex.test(tab.url)) tab_ids.push(tab.id);
+          if(urlRegex.test(tab.url)) tab_ids.push(tab.id);
         }, this);
         resolve(tab_ids);
       });
@@ -313,7 +320,7 @@
     var _sites = this.sites;
 
     return this.getEnabled().some(function(sitename) {
-      return (_sites[sitename].url_regex.test(url));
+      return (_sites[sitename].urlRegex.test(url));
     });
   };
 
@@ -331,10 +338,10 @@
    * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
-    var sites_regex = _.map(this.sites, function(site) { return site.url_regex; });
+    var sites_regex = _.map(this.sites, function(site) { return site.urlRegex; });
 
-    return sites_regex.some(function(url_regex) {
-      return (url_regex.test(url));
+    return sites_regex.some(function(urlRegex) {
+      return (urlRegex.test(url));
     });
   };
 
@@ -357,13 +364,13 @@
    * @return {String} controller filename if found
    */
   Sitelist.prototype.getController = function(url) {
-    var site_name = this.getSitelistName(url);
+    var siteName = this.getSitelistName(url);
 
-    if(site_name) {
-      var site = this.sites[site_name];
+    if(siteName) {
+      var site = this.sites[siteName];
       if(site.controller) return site.controller;
 
-      return (site_name[0].toUpperCase() + site_name.slice(1) + "Controller.js");
+      return (siteName[0].toUpperCase() + siteName.slice(1) + "Controller.js");
     }
 
     return null;
@@ -393,9 +400,13 @@
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url)) {
+            tab.streamkeysSiteKey = that.getSitelistName(tab.url);
+            tab.streamkeysPriority = that.getPriority(tab.streamkeysSiteKey);
             tab.streamkeysEnabled = that.checkTabEnabled(tab.id);
             musicTabs.enabled.push(tab);
           } else if(that.checkMusicSite(tab.url)) {
+            tab.streamkeysSiteKey = that.getSitelistName(tab.url);
+            tab.streamkeysPriority = that.getPriority(tab.streamkeysSiteKey);
             tab.streamkeysEnabled = false;
             musicTabs.disabled.push(tab);
           }

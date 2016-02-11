@@ -4,6 +4,7 @@ var $ = require("jquery"),
     ko = require("ko"),
     _ = require("lodash");
 require("../lib/jquery.marquee.js");
+require("../lib/material.min.js");
 
 var PopupViewModel = function PopupViewModel() {
   var self = this;
@@ -62,7 +63,9 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     musicTab = new MusicTab(_.assign(stateData, {
       tabId: tab.id,
       faviconUrl: tab.favIconUrl,
-      streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true
+      priority: tab.streamkeysPriority,
+      siteKey: tab.streamkeysSiteKey,
+      streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true,
     }));
 
     if(disabled) {
@@ -98,10 +101,13 @@ PopupViewModel.prototype.getTabStates = function(tabs) {
 
 var MusicTab = (function() {
   function MusicTab(attributes) {
+    var self = this;
+
     this.observableProperties = [
       "song",
       "artist",
       "streamkeysEnabled",
+      "priority",
       "isPlaying",
       "canPlayPause",
       "canPlayNext",
@@ -123,6 +129,20 @@ var MusicTab = (function() {
 
       return (this.artist()) ? this.artist() + " - " + this.song() : this.song();
     }, this);
+
+    this.settingsOpen = ko.observable(false);
+
+    this.priority.subscribe(function(priority) {
+      console.log("prio changed :: ", priority, self);
+      chrome.runtime.sendMessage({
+        action: "update_site_settings",
+        siteKey: self.siteKey,
+        siteState: {
+          enabled: self.streamkeysEnabled.peek(),
+          priority: priority
+        }
+      });
+    });
 
     this.sendAction = function(action) {
       chrome.runtime.sendMessage({
@@ -166,6 +186,18 @@ document.addEventListener("DOMContentLoaded", function() {
           duration: scrollDuration,
           pauseOnCycle: true
         });
+      }
+    }
+  };
+
+  ko.bindingHandlers.slideMenu = {
+    update: function(element, valueAccessor) {
+      var value = ko.unwrap(valueAccessor());
+
+      if(value) {
+        $(element).slideDown("fast");
+      } else {
+        $(element).slideUp("fast");
       }
     }
   };

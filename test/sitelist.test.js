@@ -119,6 +119,10 @@ describe("sitelist", function() {
   it("gets music tabs from chrome tabs", function(done) {
     sitelist.getMusicTabs().then(function(musicTabs) {
       expect(musicTabs.enabled.length).toBe(tabs.length);
+      // Proper tab object formatting
+      expect(musicTabs.enabled[0].streamkeysPriority).toBe(1);
+      expect(musicTabs.enabled[0].streamkeysSiteKey).toBe(siteNames[0]);
+      expect(musicTabs.enabled[0].streamkeysEnabled).toBe(true);
       done();
     });
   });
@@ -197,12 +201,16 @@ describe("loading settings from chrome.storage.sync", function() {
           var sites = storageObject["hotkey-sites"];
           expect(sites[siteNames[0]].enabled).toBe(false);
           expect(sites[siteNames[0]].priority).toEqual(1);
+          expect(sites[siteNames[0]].alias).toEqual([]);
           expect(sites[siteNames[1]].enabled).toBe(true);
           expect(sites[siteNames[1]].priority).toEqual(1);
+          expect(sites[siteNames[1]].alias).toEqual([]);
           expect(sites[siteNames[2]].enabled).toBe(false);
           expect(sites[siteNames[2]].priority).toEqual(1);
+          expect(sites[siteNames[2]].alias).toEqual([]);
           expect(sites[siteNames[3]].enabled).toBe(true);
           expect(sites[siteNames[3]].priority).toEqual(1);
+          expect(sites[siteNames[3]].alias).toEqual([]);
 
           done();
         }
@@ -225,8 +233,8 @@ describe("loading settings from chrome.storage.sync", function() {
     beforeAll(function() {
       var settingObj = {};
       settingObj[siteNames[0]] = { enabled: false, priority: null };
-      settingObj[siteNames[1]] = { enabled: undefined, priority: 2 };
-      settingObj[siteNames[2]] = { enabled: true, priority: 3 };
+      settingObj[siteNames[1]] = { enabled: undefined, priority: 2, alias: undefined };
+      settingObj[siteNames[2]] = { enabled: true, priority: 3, alias: ["aliasone", "aliastwo"] };
 
       chrome.storage.sync.clear();
 
@@ -249,10 +257,14 @@ describe("loading settings from chrome.storage.sync", function() {
           var sites = storageObject["hotkey-sites"];
           expect(sites[siteNames[0]].enabled).toBe(false);
           expect(sites[siteNames[0]].priority).toEqual(1);
+          expect(sites[siteNames[0]].alias).toEqual([]);
           expect(sites[siteNames[1]].enabled).toBe(true);
           expect(sites[siteNames[1]].priority).toEqual(2);
+          expect(sites[siteNames[1]].alias).toEqual([]);
           expect(sites[siteNames[2]].enabled).toBe(true);
           expect(sites[siteNames[2]].priority).toEqual(3);
+          expect(sites[siteNames[2]].alias).toContain("aliasone");
+          expect(sites[siteNames[2]].alias).toContain("aliastwo");
 
           done();
         }
@@ -265,6 +277,10 @@ describe("loading settings from chrome.storage.sync", function() {
       expect(storageSitelist.checkEnabled(siteUrls[2])).toBe(true);
       expect(storageSitelist.getEnabled()).toContain(siteNames[1]);
       expect(storageSitelist.getEnabled()).toContain(siteNames[2]);
+    });
+
+    it("sets aliases properly", function() {
+      expect(storageSitelist.getSitelistName("http://www.aliasone.com")).toBe(siteNames[2]);
     });
   });
 });
@@ -306,9 +322,9 @@ describe("site priority", function() {
 
   it("sets priority", function(done) {
     prioritySitelist.setSiteState(siteNames[1], { priority: 3 }).then(function() {
-      expect(prioritySitelist.getPriority(siteNames[1])).toEqual(3);
+      expect(prioritySitelist.getPriority(siteNames[1])).toBe(3);
       prioritySitelist.setSiteState(siteNames[2], { priority: 3 }).then(function() {
-        expect(prioritySitelist.getPriority(siteNames[2])).toEqual(3);
+        expect(prioritySitelist.getPriority(siteNames[2])).toBe(3);
         done();
       });
     });

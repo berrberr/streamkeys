@@ -33,7 +33,6 @@ var OptionsViewModel = function OptionsViewModel() {
 
   self.sitelistChanged = function(site) {
     if(self.sitelistInitialized()) {
-
       chrome.runtime.sendMessage({
         action: "update_site_settings",
         siteKey: site.id,

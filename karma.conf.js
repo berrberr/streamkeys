@@ -19,7 +19,7 @@ module.exports = function(config) {
       "test/**/*.test.js": ["browserify"]
     },
 
-    reporters: ["progress"],
+    reporters: ["spec"],
 
     port: 9876,
 
