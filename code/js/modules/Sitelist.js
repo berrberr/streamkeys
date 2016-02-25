@@ -173,16 +173,9 @@
                 }
               : { enabled: true, priority: 1, alias: [] };
 
-        // Combine user defined site aliases with extension defined aliases
-        if(siteObj.alias.length > 0) {
-          that.sites[siteKey].alias = _.union(that.sites[siteKey].alias || [], siteObj.alias);
-        }
-
         that.addSite(
           siteKey,
-          that.sites[siteKey],
-          siteObj.enabled,
-          siteObj.priority
+          siteObj
         );
 
         storageObj[siteKey] = siteObj;
@@ -207,13 +200,21 @@
   /**
    * Adds a new site to `sites` and generates the URL regex
    */
-  Sitelist.prototype.addSite = function(siteKey, attributes, enabled, priority) {
+  Sitelist.prototype.addSite = function(siteKey, attributes) {
+    var site = this.sites[siteKey];
+
+    // Combine user defined site aliases with extension defined aliases
+    attributes.alias = _.union(site.alias || [], attributes.alias || []);
+    attributes.enabled = typeof attributes.enabled === "undefined" ? true : attributes.enabled;
+    attributes.priority = typeof attributes.priority === "undefined" ? 1 : attributes.priority;
+
     this.sites[siteKey] = _.extend(
+      site,
       _.pick(attributes, this.validSiteAttributes),
       {
-        enabled: enabled,
-        priority: priority,
-        urlRegex: new URLCheck(siteKey, { alias: attributes.alias, blacklist: attributes.blacklist })
+        enabled: attributes.enabled,
+        priority: attributes.priority,
+        urlRegex: new URLCheck(siteKey, { alias: attributes.alias, blacklist: site.blacklist })
       }
     );
   };
@@ -251,7 +252,7 @@
     var that = this;
 
     var promise = new Promise(function(resolve) {
-      _.extend(that.sites[siteKey], value);
+      that.addSite(siteKey, value);
       that.setSiteStorage(siteKey, value).then(function() {
         resolve();
       }, function() {
@@ -338,9 +339,9 @@
    * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
-    var sites_regex = _.map(this.sites, function(site) { return site.urlRegex; });
+    var sitesRegex = _.map(this.sites, function(site) { return site.urlRegex; });
 
-    return sites_regex.some(function(urlRegex) {
+    return sitesRegex.some(function(urlRegex) {
       return (urlRegex.test(url));
     });
   };

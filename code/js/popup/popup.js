@@ -133,7 +133,6 @@ var MusicTab = (function() {
     this.settingsOpen = ko.observable(false);
 
     this.priority.subscribe(function(priority) {
-      console.log("prio changed :: ", priority, self);
       chrome.runtime.sendMessage({
         action: "update_site_settings",
         siteKey: self.siteKey,

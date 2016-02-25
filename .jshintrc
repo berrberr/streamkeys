@@ -7,7 +7,8 @@
     "chrome": true,
     "require": true,
     "define": true,
-    "module": true
+    "module": true,
+    "$data": true
   },
   "globalstrict": true,
   "quotmark": "double",

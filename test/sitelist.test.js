@@ -201,16 +201,16 @@ describe("loading settings from chrome.storage.sync", function() {
           var sites = storageObject["hotkey-sites"];
           expect(sites[siteNames[0]].enabled).toBe(false);
           expect(sites[siteNames[0]].priority).toEqual(1);
-          expect(sites[siteNames[0]].alias).toEqual([]);
+          expect(sites[siteNames[0]].alias).toEqual(mockedSites[siteNames[0]].alias);
           expect(sites[siteNames[1]].enabled).toBe(true);
           expect(sites[siteNames[1]].priority).toEqual(1);
-          expect(sites[siteNames[1]].alias).toEqual([]);
+          expect(sites[siteNames[1]].alias).toEqual(mockedSites[siteNames[1]].alias);
           expect(sites[siteNames[2]].enabled).toBe(false);
           expect(sites[siteNames[2]].priority).toEqual(1);
-          expect(sites[siteNames[2]].alias).toEqual([]);
+          expect(sites[siteNames[2]].alias).toEqual(mockedSites[siteNames[2]].alias);
           expect(sites[siteNames[3]].enabled).toBe(true);
           expect(sites[siteNames[3]].priority).toEqual(1);
-          expect(sites[siteNames[3]].alias).toEqual([]);
+          expect(sites[siteNames[3]].alias).toEqual(mockedSites[siteNames[3]].alias);
 
           done();
         }
@@ -257,10 +257,10 @@ describe("loading settings from chrome.storage.sync", function() {
           var sites = storageObject["hotkey-sites"];
           expect(sites[siteNames[0]].enabled).toBe(false);
           expect(sites[siteNames[0]].priority).toEqual(1);
-          expect(sites[siteNames[0]].alias).toEqual([]);
+          expect(sites[siteNames[0]].alias).toEqual(mockedSites[siteNames[0]].alias);
           expect(sites[siteNames[1]].enabled).toBe(true);
           expect(sites[siteNames[1]].priority).toEqual(2);
-          expect(sites[siteNames[1]].alias).toEqual([]);
+          expect(sites[siteNames[1]].alias).toEqual(mockedSites[siteNames[1]].alias);
           expect(sites[siteNames[2]].enabled).toBe(true);
           expect(sites[siteNames[2]].priority).toEqual(3);
           expect(sites[siteNames[2]].alias).toContain("aliasone");
