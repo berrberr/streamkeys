@@ -38,22 +38,20 @@ a:visited {
 }
 
 .disabled {
+  .player-controls-button-play,
+  .player-controls-button-prev,
+  .player-controls-button-next,
   .site-title,
   .site-favicon,
   .song-data {
     opacity: .5;
-  }
-
-  .player-controls-row {
-    .player-control-btn-group {
-      opacity: .5;
-      pointer-events: none;
-    }
+    pointer-events: none;
   }
 }
 
 .song-data {
   display: inline-block;
+  font-size: 15px;
   height: 18px;
   margin-top: -4px;
   overflow: hidden;
@@ -64,8 +62,8 @@ a:visited {
 
 .site-data {
   overflow: hidden;
-  height: 20px;
-  margin-bottom: 5px;
+  height: 22px;
+  margin-bottom: 6px;
   width: $popup-width;
 
   .settings {
@@ -261,6 +259,16 @@ a:visited {
     &.right {
       float: right;
       width: calc(60%);
+    }
+
+    .priority-button {
+      min-width: 26px;
+      width: 26px;
+    }
+
+    .priority-text {
+      font-size: 15px;
+      font-weight: 500;
     }
 
     .advanced-settings-button {

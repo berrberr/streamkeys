@@ -229,7 +229,7 @@
     var promise = new Promise(function(resolve, reject) {
       chrome.storage.sync.get(function(obj) {
         if(obj["hotkey-sites"]) {
-          obj["hotkey-sites"][siteKey] = value;
+          _.extend(obj["hotkey-sites"][siteKey], value);
           chrome.storage.sync.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });

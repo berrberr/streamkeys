@@ -64,18 +64,18 @@
         }">
           <i class="material-icons md-dark">more_vert</i>
         </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
           $data.sendAction('playPrev');
         },
         css: { 'mdl-button--disabled': !$data.canPlayPrev() }">
           <i class="material-icons md-dark">fast_rewind</i>
         </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-play" data-bind="click: function() {
           $data.sendAction('playPause');
         }">
           <i class="material-icons md-dark" data-bind="text: $data.isPlaying() ? 'pause_arrow' : 'play_arrow'"></i>
         </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
           $data.sendAction('playNext');
         },
         css: { 'mdl-button--disabled': !$data.canPlayNext() }">
@@ -91,14 +91,14 @@
       <div class="site-settings initialize" data-bind="slideMenu: $data.settingsOpen">
         <div class="settings-item left">
           <label class="control-label">Priority</label>
-          <button class="mdl-button mdl-js-button mdl-button--icon" data-bind="click: function() {
+          <button class="mdl-button mdl-js-button mdl-button--icon priority-button" data-bind="click: function() {
             if ($data.priority.peek() > 1) $data.priority($data.priority.peek() - 1);
           },
           css: { 'mdl-button--disabled': $data.priority() <= 1 }">
             <i class="material-icons">remove_circle</i>
           </button>
-          <span data-bind="text: $data.priority()"></span>
-          <button class="mdl-button mdl-js-button mdl-button--icon" data-bind="click: function() {
+          <span class="priority-text" data-bind="text: $data.priority()"></span>
+          <button class="mdl-button mdl-js-button mdl-button--icon priority-button" data-bind="click: function() {
             if ($data.priority.peek() < 9) $data.priority($data.priority.peek() + 1);
           },
           css: { 'mdl-button--disabled': $data.priority() >= 9 }">

@@ -53,6 +53,7 @@
       window.sk_sites.loadSettings();
     }
     if(request.action === "update_site_settings") {
+      console.log("updating site settings: ", request.siteKey, request.siteState);
       window.sk_sites.setSiteState(request.siteKey, request.siteState).then(function() {
         response(true);
       });

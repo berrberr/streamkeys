@@ -137,7 +137,6 @@ var MusicTab = (function() {
         action: "update_site_settings",
         siteKey: self.siteKey,
         siteState: {
-          enabled: self.streamkeysEnabled.peek(),
           priority: priority
         }
       });
