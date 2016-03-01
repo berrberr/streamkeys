@@ -203,6 +203,10 @@
   Sitelist.prototype.addSite = function(siteKey, attributes) {
     var site = this.sites[siteKey];
 
+    if(attributes.removedAlias && _.isArray(attributes.removedAlias)) {
+      site.alias = _.xor(site.alias, attributes.removedAlias);
+    }
+
     // Combine user defined site aliases with extension defined aliases
     attributes.alias = _.union(site.alias || [], attributes.alias || []);
     attributes.enabled = typeof attributes.enabled === "undefined" ? true : attributes.enabled;

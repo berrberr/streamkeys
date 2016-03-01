@@ -116,6 +116,16 @@ describe("sitelist", function() {
     expect(sitelist.checkMusicSite(blacklistUrls[2])).toBe(false);
   });
 
+  it("toggles site aliases", function(done) {
+    sitelist.setSiteState(siteNames[0], { alias: ["anewsitealias"] }).then(function() {
+      expect(sitelist.getController("http://anewsitealias.com")).toBe(controllerNames[0]);
+      sitelist.setSiteState(siteNames[0], { alias: [], removedAlias: ["anewsitealias"] }).then(function() {
+        expect(sitelist.getController("http://anewsitealias.com")).not.toBe(controllerNames[0]);
+        done();
+      });
+    });
+  });
+
   it("gets music tabs from chrome tabs", function(done) {
     sitelist.getMusicTabs().then(function(musicTabs) {
       expect(musicTabs.enabled.length).toBe(tabs.length);

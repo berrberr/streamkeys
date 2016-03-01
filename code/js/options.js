@@ -51,7 +51,8 @@ var OptionsViewModel = function OptionsViewModel() {
         siteState: {
           enabled: site.enabled.peek(),
           priority: site.priority.peek(),
-          alias: site.alias.peek()
+          alias: site.alias.peek(),
+          removedAlias: site.removedAlias
         }
       });
     }
@@ -88,6 +89,7 @@ var MusicSite = (function() {
     self.enabled = ko.observable(attributes.enabled);
     self.priority = ko.observable(attributes.priority);
     self.alias = ko.observableArray(attributes.alias || []);
+    self.removedAlias = [];
     self.aliasText = ko.observable("");
 
     self.toggleSite = function() {
@@ -99,12 +101,16 @@ var MusicSite = (function() {
      *    However, since it is user input and can be deleted it's probably not worth it.
      */
     self.addAlias = function() {
+      self.removedAlias = [];
       self.alias.push(self.aliasText.peek());
       self.aliasText("");
     };
 
     self.removeAlias = function(index) {
-      self.alias.remove(self.alias.peek()[index()]);
+      var aliasToRemove = self.alias.peek()[index()];
+
+      self.removedAlias = [aliasToRemove];
+      self.alias.remove(aliasToRemove);
     };
   }
 
