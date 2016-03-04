@@ -18,10 +18,16 @@
    */
   var URLCheck = function(domain, opts) {
     opts = opts || {};
-    var inner = opts.alias ? domain + "|www." + domain + "|" + opts.alias.join("|") : domain + "|www." + domain;
 
+    var inner =
+      opts.alias
+        ? domain + "|www." + domain + "|" +  _.map(opts.alias,  _.escapeRegExp).join("|")
+        : domain + "|www." + domain;
+
+    // [A-Za-z0-9-] should capture all valid characters in a (sub)domain
     // The {0, 3} matching group is there to match up to 3 subdomains
-    var re = new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")\\.+");
+    var re = new RegExp("^(http|https):\/\/(?:[A-Za-z0-9-]*\\.){0,3}(?:" + inner + ")(\\.|:|$)+");
+
     if(opts.blacklist) {
       var blacklistRe = new RegExp("(" + opts.blacklist.join("|") + ")");
 

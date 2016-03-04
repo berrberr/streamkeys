@@ -69,10 +69,7 @@ describe("sitelist", function() {
     // Wrong sitename
     expect(sitelist.checkMusicSite("http://" + siteNames[0] + "somenonesense.com")).toBe(false);
     // Sitename in querystring
-    // TODO: fix this
-    // expect(sitelist.checkMusicSite("https://www.someothersite.com/index?site=www." + siteNames[0] + ".com")).toBe(false);
-    // No TLD
-    expect(sitelist.checkMusicSite("http://" + siteNames[0])).toBe(false);
+    expect(sitelist.checkMusicSite("https://www.someothersite.com/index?site=www." + siteNames[0] + ".com")).toBe(false);
   });
 
   it("gets site name from valid url", function() {
@@ -123,6 +120,15 @@ describe("sitelist", function() {
         expect(sitelist.getController("http://anewsitealias.com")).not.toBe(controllerNames[0]);
         done();
       });
+    });
+  });
+
+  it("matches ip aliases", function(done) {
+    sitelist.setSiteState(siteNames[0], { alias: ["192.168.0.1", "localhost:3000"] }).then(function() {
+      expect(sitelist.getController("http://192.168.0.1")).toBe(controllerNames[0]);
+      expect(sitelist.getController("http://localhost")).not.toBe(controllerNames[0]);
+      expect(sitelist.getController("http://localhost:3000")).toBe(controllerNames[0]);
+      done();
     });
   });
 
