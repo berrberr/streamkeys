@@ -12,17 +12,36 @@ var PopupViewModel = function PopupViewModel() {
   self.totalMusicTabs = ko.observable(1);
   self.musicTabsLoaded = ko.observable(0);
   self.musicTabs = ko.observableArray([]);
+
   // Tabs from disabled music sites to show in disabled list toggle
   self.disabledMusicTabs = ko.observableArray([]);
   self.disabledSitesOpen = ko.observable(false);
 
-  // Filter hidden players and sort by siteName -> tabId
+  // Filter hidden players and sort by priority -> siteName -> tabId
   self.sortedMusicTabs = ko.computed(function() {
-    return _.sortByAll(
+    var filteredGrouped = _.groupBy(
       _.filter(self.musicTabs(), function(tab) {
         return (tab.canPlayPause() || !tab.hidePlayer);
       }),
-    ["siteName", "tabId"]);
+      function(tab) { return tab.priority(); }
+    );
+
+    var sortedKeys = _.sortBy(
+      _.keys(filteredGrouped),
+      function(priority) { return priority * -1; }
+    );
+
+    var filteredGroupedSorted = [];
+
+    for(var key of sortedKeys) {
+      filteredGroupedSorted.push(
+        _.sortByAll(
+          filteredGrouped[key], ["siteName", "tabId"]
+        )
+      );
+    }
+
+    return _.flatten(filteredGroupedSorted);
   });
 
   self.isLoaded = ko.computed(function() {

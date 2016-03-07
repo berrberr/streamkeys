@@ -47,13 +47,13 @@
           <div class="info-block">
             <h4>Priority</h4>
             <p>
-              Site <strong>priority</strong> controls which sites are sent commands when a hotkey is pressed. All sites start at <strong>priority 1 by default.</strong> If a tab A is of a site with priority 1, and tab B is of a site with priority 5 and the play hotkey is pressed, only tab B will receive the play command. You can still control sites of any priority manually using the popup.
+              Site <strong>priority</strong> controls which sites are sent commands when a hotkey is pressed. All sites start at <strong>priority 1 by default</strong>. If a tab A is of a site with priority 1, and tab B is of a site with priority 5 and the play hotkey is pressed, only tab B will receive the play command. You can still control sites of any priority manually using the popup.
             </p>
           </div>
           <div class="info-block">
             <h4>Aliases</h4>
             <p>
-              You can define a list of <strong>custom aliases</strong> for a site. An alias lets you define a domain name to match for a site. For example, say you are running a Plex.tv server at "http://192.168.4.4". You could add the alias "192.168.4.4" for Plex.tv and Streamkeys will work on any tab with a URL of "192.168.4.4". Be sure to <strong>refresh the tab</strong> after defining a new alias.
+              You can define a list of <strong>custom aliases</strong> for a site. An alias lets you define a domain <strong>hostname</strong> to match for a site. For example, say you are running a Plex.tv server at <strong>http://192.168.4.4.</strong> You could add the alias <strong>192.168.4.4</strong> to Plex.tv and Streamkeys will work on any tab with a URL of 192.168.4.4.
             </p>
           </div>
         </div>
@@ -64,7 +64,7 @@
               <h3>Manage Aliases</h3>
               <h5>For <span data-bind="text: $data.name"></span></h5>
               <div class="alias-input-container">
-                <p>Add/remove custom domain aliases to a site. A site alias is a way to force a specific URL to load a Streamkeys controller.</p>
+                <p>Add/remove custom domain aliases to a site. A site alias is a way to force a specific URL to load a Streamkeys controller. An alias should include the site's <strong>hostname only</strong>, ie. do not include "www", ".com", etc.</p>
               </div>
               <div class="alias-input-container">
                 <div class="mdl-textfield mdl-js-textfield">

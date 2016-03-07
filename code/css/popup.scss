@@ -1,5 +1,5 @@
 $black: #000000;
-$popup-width: 250px;
+$popup-width: 290px;
 $color-primary: #2880c7;
 $controls-background-color: #4a94d1;
 $white: #ffffff;
@@ -65,6 +65,11 @@ a:visited {
   height: 22px;
   margin-bottom: 6px;
   width: $popup-width;
+  -webkit-user-select: none;
+
+  .site-link {
+    margin-left: 6px;
+  }
 
   .settings {
     float: right;
@@ -77,6 +82,7 @@ a:visited {
       opacity: 1;
     }
   }
+
   .settings-active {
     opacity: 1;
   }
@@ -91,6 +97,14 @@ a:visited {
 .site-title {
   font-size: 18px;
   vertical-align: middle;
+}
+
+.site-priority-label {
+  float: right;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: .4;
+  padding-right: 6px;
 }
 
 #player {
@@ -115,40 +129,6 @@ a:visited {
   a:visited {
     text-decoration: none;
     color: $black;
-  }
-}
-
-.player-controls-row {
-  .btn {
-    font-size: 12px;
-    padding: 4px 8px;
-  }
-
-  .player-control-btn-group {
-    .btn {
-      border-left-width: 0;
-      border-right-width: 1px;
-      border-radius: 0;
-
-      &:first-child {
-        border-left-width: 1px;
-        border-radius: 3px 0 0 3px;
-      }
-
-      &:last-child {
-        border-radius: 0 3px 3px 0;
-      }
-    }
-  }
-
-  .btn-floating {
-    &.pull-left {
-      margin-left: 5px;
-    }
-
-    &.pull-right {
-      margin-right: 5px;
-    }
   }
 }
 
@@ -187,8 +167,9 @@ a:visited {
   text-align: center;
 
   #options-link,
-  #help-link {
-    margin: 0 10px;
+  #help-link,
+  #donate-link {
+    margin: 0 5px;
   }
 }
 
@@ -212,18 +193,24 @@ a:visited {
   display: none;
 }
 
-
 .player-controls-container {
   background-color: $color-primary;
   padding: 2px 0;
   -webkit-user-select: none;
 
   .player-controls-button {
-    margin-left: 6px;
-    margin-right: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
 
     &.mdl-button--disabled {
       opacity: .7;
+    }
+
+    &.player-controls-button-like,
+    &.player-controls-button-dislike {
+      i {
+        font-size: 18px;
+      }
     }
   }
 
@@ -236,7 +223,7 @@ a:visited {
   border-bottom: 2px solid $color-primary;
   display: block;
   height: 54px;
-  text-align: left;
+  text-align: center;
 
   &.initialize {
     display: none;
@@ -245,7 +232,7 @@ a:visited {
   .control-label {
     display: block;
     font-weight: 700;
-    margin: 3px 0 -3px 6px;
+    margin: 3px 0 -3px 30px;
     text-align: left;
   }
 

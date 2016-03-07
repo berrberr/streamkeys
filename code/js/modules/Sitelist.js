@@ -215,8 +215,18 @@
 
     // Combine user defined site aliases with extension defined aliases
     attributes.alias = _.union(site.alias || [], attributes.alias || []);
-    attributes.enabled = typeof attributes.enabled === "undefined" ? true : attributes.enabled;
-    attributes.priority = typeof attributes.priority === "undefined" ? 1 : attributes.priority;
+    attributes.enabled =
+      (typeof attributes.enabled === "undefined")
+        ? (typeof site.enabled === "undefined")
+          ? true
+          : site.enabled
+        : attributes.enabled;
+    attributes.priority =
+      (typeof attributes.priority === "undefined")
+        ? (typeof site.priority === "undefined")
+          ? 1
+          : site.priority
+        : attributes.priority;
 
     this.sites[siteKey] = _.extend(
       site,

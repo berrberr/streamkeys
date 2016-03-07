@@ -370,4 +370,18 @@ describe("site priority", function() {
     expect(prioritySitelist.checkTabEnabled(tabs[2].id)).toBe(true);
     expect(prioritySitelist.checkTabEnabled(tabs[3].id)).toBe(true);
   });
+
+  it("doesn't overwrite settings on priority update", function(done) {
+    prioritySitelist.setSiteState(siteNames[1], { priority: 5, enabled: false }).then(function() {
+      expect(prioritySitelist.getPriority(siteNames[1])).toBe(5);
+      expect(prioritySitelist.checkEnabled(siteUrls[1])).toBe(false);
+
+      prioritySitelist.setSiteState(siteNames[1], { priority: 3 }).then(function() {
+        expect(prioritySitelist.getPriority(siteNames[1])).toBe(3);
+        expect(prioritySitelist.checkEnabled(siteUrls[1])).toBe(false);
+
+        done();
+      });
+    });
+  });
 });

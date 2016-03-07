@@ -43,15 +43,19 @@
       <button id="options-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: $data.openOptionsPage" tabindex="-1">
         Options
       </button>
-      <button id="help-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" tabindex="-1">
+      <button id="help-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: function() { window.open('http://www.streamkeys.com/guide.html'); }" tabindex="-1">
         Help
+      </button>
+      <button id="donate-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: function() { window.open('http://www.streamkeys.com/donate.html'); }" tabindex="-1">
+        Donate
       </button>
     </div>
 
     <script type="text/html" id="site-template">
       <div class="player-row player-container">
         <div class="site-data">
-          <a tabindex="-1" href="#" data-bind="click: function() { $data.openTab() }" title="Open Tab">
+          <span class="site-priority-label" data-bind="text: $data.priority"></span>
+          <a tabindex="-1" href="#" class="site-link" data-bind="click: function() { $data.openTab() }" title="Open Tab">
             <img class="site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
             <span class="site-title" data-bind="text: $data.siteName"></span>
           </a>
@@ -63,6 +67,12 @@
           $data.settingsOpen(!$data.settingsOpen.peek());
         }">
           <i class="material-icons md-dark">more_vert</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
+          $data.sendAction('dislike');
+        },
+        css: { 'mdl-button--disabled': !$data.canDislike() }">
+          <i class="material-icons md-dark">thumb_down</i>
         </button>
         <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
           $data.sendAction('playPrev');
@@ -80,6 +90,12 @@
         },
         css: { 'mdl-button--disabled': !$data.canPlayNext() }">
           <i class="material-icons md-dark">fast_forward</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
+          $data.sendAction('like');
+        },
+        css: { 'mdl-button--disabled': !$data.canLike() }">
+          <i class="material-icons md-dark">thumb_up</i>
         </button>
         <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.toggleStreamkeysEnabled();
