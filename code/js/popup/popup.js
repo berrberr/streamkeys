@@ -18,7 +18,7 @@ var PopupViewModel = function PopupViewModel() {
   self.disabledSitesOpen = ko.observable(false);
 
   // Filter hidden players and sort by priority -> siteName -> tabId
-  self.sortedMusicTabs = ko.computed(function() {
+  self.sortedMusicTabs = ko.pureComputed(function() {
     var filteredGrouped = _.groupBy(
       _.filter(self.musicTabs(), function(tab) {
         return (tab.canPlayPause() || !tab.hidePlayer);
@@ -44,7 +44,7 @@ var PopupViewModel = function PopupViewModel() {
     return _.flatten(filteredGroupedSorted);
   });
 
-  self.isLoaded = ko.computed(function() {
+  self.isLoaded = ko.pureComputed(function() {
     return self.musicTabsLoaded() == self.totalMusicTabs();
   });
 
