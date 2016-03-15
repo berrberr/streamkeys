@@ -14,7 +14,7 @@
     </div>
 
     <div id="player">
-      <div class="no-sites" data-bind="visible: $data.musicTabs().length == 0 && $data.isLoaded()">
+      <div class="no-sites" data-bind="visible: $data.sortedMusicTabs().length == 0 && $data.isLoaded()">
         No music sites open.
       </div>
       <!-- ko foreach: $data.sortedMusicTabs -->

@@ -158,6 +158,10 @@ a {
   flex-direction: column;
 }
 
+#general {
+  margin-bottom: 80px;
+}
+
 .main-container {
   display: flex;
   flex: 1;
@@ -244,7 +248,8 @@ a {
     padding: 15px;
 
     a {
-      margin-right: 10px;
+      letter-spacing: .4px;
+      margin-right: 25px;
     }
   }
 }

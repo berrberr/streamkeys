@@ -67,6 +67,8 @@ var PopupViewModel = function PopupViewModel() {
 PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
   if(typeof stateData == "undefined") return false;
 
+  var self = this;
+
   var musicTab = _.findWhere(
     _.union(this.musicTabs.peek(), this.disabledMusicTabs.peek()),
     { tabId: tab.id }
@@ -92,6 +94,15 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     } else {
       this.musicTabs.push(musicTab);
     }
+
+    // Subscribe to each sites priority to maintain state if multiple tabs are open
+    musicTab.priority.subscribe(function(newPriority) {
+      _.each(self.musicTabs(), function(tab) {
+        if(tab.siteKey === this.siteKey && tab.tabId !== this.tabId && tab.priority() !== newPriority) {
+          tab.priority(newPriority);
+        }
+      }, this);
+    }, musicTab);
   }
 };
 
