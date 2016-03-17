@@ -33,13 +33,13 @@ var PopupViewModel = function PopupViewModel() {
 
     var filteredGroupedSorted = [];
 
-    for(var key of sortedKeys) {
+    _.each(sortedKeys, function(key) {
       filteredGroupedSorted.push(
         _.sortByAll(
           filteredGrouped[key], ["siteName", "tabId"]
         )
       );
-    }
+    });
 
     return _.flatten(filteredGroupedSorted);
   });

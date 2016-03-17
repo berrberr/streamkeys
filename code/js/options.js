@@ -68,9 +68,15 @@ var OptionsViewModel = function OptionsViewModel() {
         alias: val.alias
       });
 
-      site.enabled.subscribe(() => self.sitelistChanged(site));
-      site.priority.subscribe(() => self.sitelistChanged(site));
-      site.alias.subscribe(() => self.sitelistChanged(site));
+      site.enabled.subscribe(function() {
+        self.sitelistChanged(site);
+      });
+      site.priority.subscribe(function() {
+        self.sitelistChanged(site);
+      });
+      site.alias.subscribe(function() {
+        self.sitelistChanged(site);
+      });
 
       self.sitelist.push(site);
     });
@@ -134,12 +140,12 @@ document.addEventListener("DOMContentLoaded", function() {
         value(parseInt($(this).attr("data-value")));
       };
 
-      for (let index of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      for (var idx = 1; idx <= 9; idx++) {
         // add each item to the list
         var $li = $("<li>")
           .addClass("mdl-menu__item")
-          .text(index)
-          .attr("data-value", index)
+          .text(idx)
+          .attr("data-value", idx)
           .on("click", updatePriority);
 
         $($ul).append($li);
