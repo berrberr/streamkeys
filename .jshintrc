@@ -7,12 +7,14 @@
     "chrome": true,
     "require": true,
     "define": true,
-    "module": true
+    "module": true,
+    "$data": true
   },
   "globalstrict": true,
   "quotmark": "double",
   "smarttabs": true,
   "trailing": true,
   "undef": true,
-  "unused": true
+  "unused": true,
+  "laxbreak": true
 }

@@ -10,15 +10,24 @@
   var _ = require("lodash"),
       URL = require("urlutils");
 
+  // The _internal_ version of the objects in localstorage
+  var STORAGE_VERSION = 1;
+
   /**
    * @return {RegExp} a regex that matches where the string is in a url's (domain) name
    */
-  var URL_check = function(domain, opts) {
+  var URLCheck = function(domain, opts) {
     opts = opts || {};
-    var inner = opts.alias ? domain + "|www." + domain + "|" + opts.alias.join("|") : domain + "|www." + domain;
 
+    var inner =
+      opts.alias
+        ? domain + "|www." + domain + "|" +  _.map(opts.alias,  _.escapeRegExp).join("|")
+        : domain + "|www." + domain;
+
+    // [A-Za-z0-9-] should capture all valid characters in a (sub)domain
     // The {0, 3} matching group is there to match up to 3 subdomains
-    var re = new RegExp("^(http|https):\/\/(?:[^.]*\\.){0,3}(?:" + inner + ")\\.+");
+    var re = new RegExp("^(http|https):\/\/(?:[A-Za-z0-9-]*\\.){0,3}(?:" + inner + ")(\\.|:|$)+");
+
     if(opts.blacklist) {
       var blacklistRe = new RegExp("(" + opts.blacklist.join("|") + ")");
 
@@ -133,6 +142,7 @@
       "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
       "xiami": { name: "Xiami", url: "http://www.xiami.com" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
+      "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
       "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
     };
 
@@ -147,18 +157,42 @@
     var that = this;
 
     chrome.storage.sync.get(function(obj) {
-      var objSet = obj.hasOwnProperty("hotkey-sites"),
+      var objSet = _.has(obj, "hotkey-sites"),
           storageObj = {};
-      _.each(_.keys(that.sites), function(key) {
+
+      // Migrate old storage versions to new format
+      var version = (typeof obj["hotkey-storage-version"] === "undefined") ? 0 : obj["hotkey-storage-version"];
+
+      _.each(_.keys(that.sites), function(siteKey) {
+        var siteObj =
+          (version === 0)
+            ? {
+                enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
+                priority: 1,
+                alias: []
+              }
+            : (objSet && obj["hotkey-sites"][siteKey])
+              // Validate enabled/priority values in case of migration problems
+              ? {
+                  enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
+                  priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1,
+                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : []
+                }
+              : { enabled: true, priority: 1, alias: [] };
+
         that.addSite(
-          key,
-          that.sites[key],
-          (objSet && (typeof obj["hotkey-sites"][key] !== "undefined")) ? obj["hotkey-sites"][key] : true
+          siteKey,
+          siteObj
         );
-        storageObj[key] = that.sites[key].enabled;
+
+        storageObj[siteKey] = siteObj;
       });
+
       // Set the storage key on init incase previous storage format becomes broken
       chrome.storage.sync.set({ "hotkey-sites": storageObj });
+
+      // Set storage version
+      chrome.storage.sync.set({ "hotkey-storage-version": STORAGE_VERSION });
 
       // Initialize popup open on update setting
       if(!obj.hasOwnProperty("hotkey-open_on_update")) {
@@ -173,27 +207,50 @@
   /**
    * Adds a new site to `sites` and generates the URL regex
    */
-  Sitelist.prototype.addSite = function(name, attributes, enabled) {
-    this.sites[name] = _.extend(
+  Sitelist.prototype.addSite = function(siteKey, attributes) {
+    var site = this.sites[siteKey];
+
+    if(attributes.removedAlias && _.isArray(attributes.removedAlias)) {
+      site.alias = _.xor(site.alias, attributes.removedAlias);
+    }
+
+    // Combine user defined site aliases with extension defined aliases
+    attributes.alias = _.union(site.alias || [], attributes.alias || []);
+    attributes.enabled =
+      (typeof attributes.enabled === "undefined")
+        ? (typeof site.enabled === "undefined")
+          ? true
+          : site.enabled
+        : attributes.enabled;
+    attributes.priority =
+      (typeof attributes.priority === "undefined")
+        ? (typeof site.priority === "undefined")
+          ? 1
+          : site.priority
+        : attributes.priority;
+
+    this.sites[siteKey] = _.extend(
+      site,
       _.pick(attributes, this.validSiteAttributes),
       {
-        enabled: enabled,
-        url_regex: new URL_check(name, { alias: attributes.alias, blacklist: attributes.blacklist })
+        enabled: attributes.enabled,
+        priority: attributes.priority,
+        urlRegex: new URLCheck(siteKey, { alias: attributes.alias, blacklist: site.blacklist })
       }
     );
   };
 
   /**
    * Set site enabled settings in localstorage
-   * @param {String} key - name of the hotkey-sites key in localstorage
+   * @param {String} siteKey - name of the hotkey-sites key in localstorage
    * @param {Object} value - value to set
    * @return {Promise}
    */
-  Sitelist.prototype.setSiteStorage = function(key, value) {
+  Sitelist.prototype.setSiteStorage = function(siteKey, value) {
     var promise = new Promise(function(resolve, reject) {
       chrome.storage.sync.get(function(obj) {
         if(obj["hotkey-sites"]) {
-          obj["hotkey-sites"][key] = value;
+          _.extend(obj["hotkey-sites"][siteKey], value);
           chrome.storage.sync.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });
@@ -208,21 +265,23 @@
 
   /**
    * Set the disabled value of a music site and store results in localstorage
-   * @param {String} url - url of site to mark as disabled
-   * @param {Boolean} enabled - enable site if true, disable site if false
+   * @param {String} siteName - site name to update
+   * @param {Boolean} value - value object to set site to
+   * @param {Function} callback
    */
-  Sitelist.prototype.markSiteEnabledState = function(url, enabled, callback) {
-    var siteName = this.getSitelistName(url),
-        value = enabled;
+  Sitelist.prototype.setSiteState = function(siteKey, value) {
+    var that = this;
 
-    if(siteName) {
-      this.sites[siteName].enabled = value;
-      this.setSiteStorage(siteName, value).then(function() {
-        callback();
+    var promise = new Promise(function(resolve) {
+      that.addSite(siteKey, value);
+      that.setSiteStorage(siteKey, value).then(function() {
+        resolve();
+      }, function() {
+        resolve();
       });
-    } else {
-      callback();
-    }
+    });
+
+    return promise;
   };
 
   /**
@@ -243,7 +302,7 @@
    */
   Sitelist.prototype.getSitelistName = function(url) {
     var filtered_sites = _.filter(_.keys(this.sites), function (name) {
-      return this.sites[name].url_regex.test(url);
+      return this.sites[name].urlRegex.test(url);
     }, this);
 
     if (!filtered_sites.length) return null;
@@ -263,10 +322,10 @@
       if(sitelist_name === null) reject([]);
 
       var tab_ids = [];
-      var url_regex = that.sites[sitelist_name].url_regex;
+      var urlRegex = that.sites[sitelist_name].urlRegex;
       chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
-          if(url_regex.test(tab.url)) tab_ids.push(tab.id);
+          if(urlRegex.test(tab.url)) tab_ids.push(tab.id);
         }, this);
         resolve(tab_ids);
       });
@@ -283,7 +342,7 @@
     var _sites = this.sites;
 
     return this.getEnabled().some(function(sitename) {
-      return (_sites[sitename].url_regex.test(url));
+      return (_sites[sitename].urlRegex.test(url));
     });
   };
 
@@ -301,10 +360,10 @@
    * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
-    var sites_regex = _.map(this.sites, function(site) { return site.url_regex; });
+    var sitesRegex = _.map(this.sites, function(site) { return site.urlRegex; });
 
-    return sites_regex.some(function(url_regex) {
-      return (url_regex.test(url));
+    return sitesRegex.some(function(urlRegex) {
+      return (urlRegex.test(url));
     });
   };
 
@@ -327,15 +386,24 @@
    * @return {String} controller filename if found
    */
   Sitelist.prototype.getController = function(url) {
-    var site_name = this.getSitelistName(url);
-    if(site_name) {
-      var site = this.sites[site_name];
+    var siteName = this.getSitelistName(url);
+
+    if(siteName) {
+      var site = this.sites[siteName];
       if(site.controller) return site.controller;
 
-      return (site_name[0].toUpperCase() + site_name.slice(1) + "Controller.js");
+      return (siteName[0].toUpperCase() + siteName.slice(1) + "Controller.js");
     }
 
     return null;
+  };
+
+  /**
+   * @param {String} siteKey
+   * @return {Number} priorty of site
+   */
+  Sitelist.prototype.getPriority = function(siteKey) {
+    return this.sites[siteKey].priority;
   };
 
   /**
@@ -354,9 +422,13 @@
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url)) {
+            tab.streamkeysSiteKey = that.getSitelistName(tab.url);
+            tab.streamkeysPriority = that.getPriority(tab.streamkeysSiteKey);
             tab.streamkeysEnabled = that.checkTabEnabled(tab.id);
             musicTabs.enabled.push(tab);
           } else if(that.checkMusicSite(tab.url)) {
+            tab.streamkeysSiteKey = that.getSitelistName(tab.url);
+            tab.streamkeysPriority = that.getPriority(tab.streamkeysSiteKey);
             tab.streamkeysEnabled = false;
             musicTabs.disabled.push(tab);
           }
@@ -378,10 +450,28 @@
 
     var promise = new Promise(function(resolve) {
       var musicTabs = [];
+
       chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
-          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) musicTabs.push(tab);
+          if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) {
+            musicTabs.push({
+              tab: tab,
+              priority: that.getPriority(that.getSitelistName(tab.url))
+            });
+          }
         });
+
+        if(musicTabs.length > 0) {
+          var maxPriority = _.sortBy(musicTabs, function(tab) { return tab.priority * -1; })[0].priority;
+
+          musicTabs = _.map(
+            _.filter(
+              musicTabs,
+              function(tab) { return tab.priority == maxPriority; }
+            ),
+            function(musicTab) { return musicTab.tab; }
+          );
+        }
 
         resolve(musicTabs);
       });

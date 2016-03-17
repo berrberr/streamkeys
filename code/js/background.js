@@ -50,11 +50,15 @@
    */
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
     if(request.action === "update_keys") {
-      console.log("Options page has updated settings. Reloading...");
       window.sk_sites.loadSettings();
     }
+    if(request.action === "update_site_settings") {
+      console.log("updating site settings: ", request.siteKey, request.siteState);
+      window.sk_sites.setSiteState(request.siteKey, request.siteState).then(function() {
+        response(true);
+      });
+    }
     if(request.action === "get_sites") {
-      console.log("Options page wants the sitelist.");
       response(window.sk_sites.sites);
     }
     if(request.action === "get_site_controller") {
@@ -82,8 +86,8 @@
       });
     }
     if(request.action === "get_music_tabs") {
-      var music_tabs = window.sk_sites.getMusicTabs();
-      music_tabs.then(function(tabs) {
+      var musicTabs = window.sk_sites.getMusicTabs();
+      musicTabs.then(function(tabs) {
         response(tabs);
       });
 

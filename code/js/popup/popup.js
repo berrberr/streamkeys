@@ -4,6 +4,7 @@ var $ = require("jquery"),
     ko = require("ko"),
     _ = require("lodash");
 require("../lib/jquery.marquee.js");
+require("../lib/material.min.js");
 
 var PopupViewModel = function PopupViewModel() {
   var self = this;
@@ -11,20 +12,39 @@ var PopupViewModel = function PopupViewModel() {
   self.totalMusicTabs = ko.observable(1);
   self.musicTabsLoaded = ko.observable(0);
   self.musicTabs = ko.observableArray([]);
+
   // Tabs from disabled music sites to show in disabled list toggle
   self.disabledMusicTabs = ko.observableArray([]);
   self.disabledSitesOpen = ko.observable(false);
 
-  // Filter hidden players and sort by siteName -> tabId
-  self.sortedMusicTabs = ko.computed(function() {
-    return _.sortByAll(
+  // Filter hidden players and sort by priority -> siteName -> tabId
+  self.sortedMusicTabs = ko.pureComputed(function() {
+    var filteredGrouped = _.groupBy(
       _.filter(self.musicTabs(), function(tab) {
         return (tab.canPlayPause() || !tab.hidePlayer);
       }),
-    ["siteName", "tabId"]);
+      function(tab) { return tab.priority(); }
+    );
+
+    var sortedKeys = _.sortBy(
+      _.keys(filteredGrouped),
+      function(priority) { return priority * -1; }
+    );
+
+    var filteredGroupedSorted = [];
+
+    _.each(sortedKeys, function(key) {
+      filteredGroupedSorted.push(
+        _.sortByAll(
+          filteredGrouped[key], ["siteName", "tabId"]
+        )
+      );
+    });
+
+    return _.flatten(filteredGroupedSorted);
   });
 
-  self.isLoaded = ko.computed(function() {
+  self.isLoaded = ko.pureComputed(function() {
     return self.musicTabsLoaded() == self.totalMusicTabs();
   });
 
@@ -47,6 +67,8 @@ var PopupViewModel = function PopupViewModel() {
 PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
   if(typeof stateData == "undefined") return false;
 
+  var self = this;
+
   var musicTab = _.findWhere(
     _.union(this.musicTabs.peek(), this.disabledMusicTabs.peek()),
     { tabId: tab.id }
@@ -62,7 +84,9 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     musicTab = new MusicTab(_.assign(stateData, {
       tabId: tab.id,
       faviconUrl: tab.favIconUrl,
-      streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true
+      priority: tab.streamkeysPriority,
+      siteKey: tab.streamkeysSiteKey,
+      streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true,
     }));
 
     if(disabled) {
@@ -70,6 +94,15 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     } else {
       this.musicTabs.push(musicTab);
     }
+
+    // Subscribe to each sites priority to maintain state if multiple tabs are open
+    musicTab.priority.subscribe(function(newPriority) {
+      _.each(self.musicTabs(), function(tab) {
+        if(tab.siteKey === this.siteKey && tab.tabId !== this.tabId && tab.priority() !== newPriority) {
+          tab.priority(newPriority);
+        }
+      }, this);
+    }, musicTab);
   }
 };
 
@@ -98,10 +131,13 @@ PopupViewModel.prototype.getTabStates = function(tabs) {
 
 var MusicTab = (function() {
   function MusicTab(attributes) {
+    var self = this;
+
     this.observableProperties = [
       "song",
       "artist",
       "streamkeysEnabled",
+      "priority",
       "isPlaying",
       "canPlayPause",
       "canPlayNext",
@@ -123,6 +159,18 @@ var MusicTab = (function() {
 
       return (this.artist()) ? this.artist() + " - " + this.song() : this.song();
     }, this);
+
+    this.settingsOpen = ko.observable(false);
+
+    this.priority.subscribe(function(priority) {
+      chrome.runtime.sendMessage({
+        action: "update_site_settings",
+        siteKey: self.siteKey,
+        siteState: {
+          priority: priority
+        }
+      });
+    });
 
     this.sendAction = function(action) {
       chrome.runtime.sendMessage({
@@ -166,6 +214,18 @@ document.addEventListener("DOMContentLoaded", function() {
           duration: scrollDuration,
           pauseOnCycle: true
         });
+      }
+    }
+  };
+
+  ko.bindingHandlers.slideMenu = {
+    update: function(element, valueAccessor) {
+      var value = ko.unwrap(valueAccessor());
+
+      if(value) {
+        $(element).slideDown("fast");
+      } else {
+        $(element).slideUp("fast");
       }
     }
   };

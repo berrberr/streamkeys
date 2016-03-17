@@ -4,20 +4,18 @@ var Sitelist = require("../code/js/modules/Sitelist.js"),
 
 chrome.storage.sync = require("./helpers/chrome_storage_area.js");
 
+var sitelist, siteNames, controllerNames, siteUrls,
+    aliasUrls, blacklistUrls, tabs, mockedSites;
+
+siteNames = SiteData.siteNames;
+controllerNames = SiteData.controllerNames;
+siteUrls = SiteData.siteUrls;
+aliasUrls = SiteData.aliasUrls;
+blacklistUrls = SiteData.blacklistUrls;
+mockedSites = SiteData.mockedSites;
+
 describe("sitelist", function() {
-  var sitelist, siteNames, controllerNames, siteUrls,
-      aliases, aliasUrls, blacklists, blacklistUrls, tabs;
-
   beforeAll(function() {
-    sitelist = SiteData.sitelist;
-    siteNames = SiteData.siteNames;
-    controllerNames = SiteData.controllerNames;
-    siteUrls = SiteData.siteUrls;
-    aliases = SiteData.aliases;
-    aliasUrls = SiteData.aliasUrls;
-    blacklists = SiteData.blacklists;
-    blacklistUrls = SiteData.blacklistUrls;
-
     tabs = [
       {
         id: 1,
@@ -43,20 +41,14 @@ describe("sitelist", function() {
 
     chrome.tabs.query.yields(tabs);
 
-    var mockedSites = { };
-
-    for(var i = 0; i < siteNames.length; i++) {
-      mockedSites[siteNames[i]] = {
-        name: siteNames[i],
-        url: siteUrls[i],
-        controller: controllerNames[i],
-        alias: aliases[i] || "",
-        blacklist: blacklists[i] || ""
-      };
-    }
+    chrome.storage.sync.clear();
 
     sitelist = new Sitelist(mockedSites);
     sitelist.loadSettings();
+  });
+
+  afterAll(function() {
+    chrome.storage.sync.clear();
   });
 
   it("creates a list of sites", function() {
@@ -76,8 +68,8 @@ describe("sitelist", function() {
     expect(sitelist.checkMusicSite(siteNames[0] + ".com")).toBe(false);
     // Wrong sitename
     expect(sitelist.checkMusicSite("http://" + siteNames[0] + "somenonesense.com")).toBe(false);
-    // No TLD
-    expect(sitelist.checkMusicSite("http://" + siteNames[0])).toBe(false);
+    // Sitename in querystring
+    expect(sitelist.checkMusicSite("https://www.someothersite.com/index?site=www." + siteNames[0] + ".com")).toBe(false);
   });
 
   it("gets site name from valid url", function() {
@@ -121,9 +113,32 @@ describe("sitelist", function() {
     expect(sitelist.checkMusicSite(blacklistUrls[2])).toBe(false);
   });
 
+  it("toggles site aliases", function(done) {
+    sitelist.setSiteState(siteNames[0], { alias: ["anewsitealias"] }).then(function() {
+      expect(sitelist.getController("http://anewsitealias.com")).toBe(controllerNames[0]);
+      sitelist.setSiteState(siteNames[0], { alias: [], removedAlias: ["anewsitealias"] }).then(function() {
+        expect(sitelist.getController("http://anewsitealias.com")).not.toBe(controllerNames[0]);
+        done();
+      });
+    });
+  });
+
+  it("matches ip aliases", function(done) {
+    sitelist.setSiteState(siteNames[0], { alias: ["192.168.0.1", "localhost:3000"] }).then(function() {
+      expect(sitelist.getController("http://192.168.0.1")).toBe(controllerNames[0]);
+      expect(sitelist.getController("http://localhost")).not.toBe(controllerNames[0]);
+      expect(sitelist.getController("http://localhost:3000")).toBe(controllerNames[0]);
+      done();
+    });
+  });
+
   it("gets music tabs from chrome tabs", function(done) {
     sitelist.getMusicTabs().then(function(musicTabs) {
       expect(musicTabs.enabled.length).toBe(tabs.length);
+      // Proper tab object formatting
+      expect(musicTabs.enabled[0].streamkeysPriority).toBe(1);
+      expect(musicTabs.enabled[0].streamkeysSiteKey).toBe(siteNames[0]);
+      expect(musicTabs.enabled[0].streamkeysEnabled).toBe(true);
       done();
     });
   });
@@ -154,7 +169,7 @@ describe("sitelist", function() {
 
   it("toggles enable/disable of a site", function(done) {
     expect(sitelist.getEnabled().length).toBe(siteNames.length);
-    sitelist.markSiteEnabledState(siteUrls[0], false, function() {
+    sitelist.setSiteState(siteNames[0], { enabled: false }).then(function() {
       expect(sitelist.getEnabled().length).toBe(siteNames.length - 1);
       expect(sitelist.checkEnabled(siteUrls[0])).toBe(false);
 
@@ -162,7 +177,7 @@ describe("sitelist", function() {
         expect(musicTabs.enabled.length).toBe(tabs.length - 1);
         expect(musicTabs.disabled.length).toBe(1);
 
-        sitelist.markSiteEnabledState(siteUrls[0], true, function() {
+        sitelist.setSiteState(siteNames[0], { enabled: true }).then(function() {
           expect(sitelist.getEnabled().length).toBe(siteNames.length);
           expect(sitelist.checkEnabled(siteUrls[0])).toBe(true);
           done();
@@ -170,4 +185,203 @@ describe("sitelist", function() {
       });
     });
   });
-})
+});
+
+describe("loading settings from chrome.storage.sync", function() {
+  var storageSitelist;
+
+  describe("loading v0 settings", function() {
+    beforeAll(function() {
+      var oldSettingObj = {};
+      oldSettingObj[siteNames[0]] = false;
+      oldSettingObj[siteNames[1]] = true;
+      oldSettingObj[siteNames[2]] = false;
+      oldSettingObj[siteNames[3]] = true;
+
+      chrome.storage.sync.clear();
+
+      chrome.storage.sync.set({
+        "hotkey-sites": oldSettingObj
+      });
+
+      storageSitelist = new Sitelist(mockedSites);
+      storageSitelist.loadSettings();
+    });
+
+    it("creates properly structured storage object", function(done) {
+      chrome.storage.sync.get(
+        function(storageObject) {
+          expect(storageObject["hotkey-sites"]).toBeDefined();
+          expect(storageObject["hotkey-storage-version"]).toBe(1);
+
+          var sites = storageObject["hotkey-sites"];
+          expect(sites[siteNames[0]].enabled).toBe(false);
+          expect(sites[siteNames[0]].priority).toEqual(1);
+          expect(sites[siteNames[0]].alias).toEqual(mockedSites[siteNames[0]].alias);
+          expect(sites[siteNames[1]].enabled).toBe(true);
+          expect(sites[siteNames[1]].priority).toEqual(1);
+          expect(sites[siteNames[1]].alias).toEqual(mockedSites[siteNames[1]].alias);
+          expect(sites[siteNames[2]].enabled).toBe(false);
+          expect(sites[siteNames[2]].priority).toEqual(1);
+          expect(sites[siteNames[2]].alias).toEqual(mockedSites[siteNames[2]].alias);
+          expect(sites[siteNames[3]].enabled).toBe(true);
+          expect(sites[siteNames[3]].priority).toEqual(1);
+          expect(sites[siteNames[3]].alias).toEqual(mockedSites[siteNames[3]].alias);
+
+          done();
+        }
+      );
+    });
+
+    it("marks enabled states on sitelsit", function() {
+      expect(storageSitelist.checkEnabled(siteUrls[0])).toBe(false);
+      expect(storageSitelist.checkEnabled(siteUrls[1])).toBe(true);
+      expect(storageSitelist.checkEnabled(siteUrls[2])).toBe(false);
+      expect(storageSitelist.checkEnabled(siteUrls[3])).toBe(true);
+      expect(storageSitelist.getEnabled()).toContain(siteNames[1]);
+      expect(storageSitelist.getEnabled()).toContain(siteNames[3]);
+    });
+  });
+
+  describe("loading v1 settings with missing and undefined sites", function() {
+    var storageSitelist;
+
+    beforeAll(function() {
+      var settingObj = {};
+      settingObj[siteNames[0]] = { enabled: false, priority: null };
+      settingObj[siteNames[1]] = { enabled: undefined, priority: 2, alias: undefined };
+      settingObj[siteNames[2]] = { enabled: true, priority: 3, alias: ["aliasone", "aliastwo"] };
+
+      chrome.storage.sync.clear();
+
+      chrome.storage.sync.set({
+        "hotkey-sites": settingObj,
+        "hotkey-storage-version": 1
+      });
+
+      storageSitelist = new Sitelist(mockedSites);
+      storageSitelist.loadSettings();
+    });
+
+
+    it("creates properly structured storage object", function(done) {
+      chrome.storage.sync.get(
+        function(storageObject) {
+          expect(storageObject["hotkey-sites"]).toBeDefined();
+          expect(storageObject["hotkey-storage-version"]).toBe(1);
+
+          var sites = storageObject["hotkey-sites"];
+          expect(sites[siteNames[0]].enabled).toBe(false);
+          expect(sites[siteNames[0]].priority).toEqual(1);
+          expect(sites[siteNames[0]].alias).toEqual(mockedSites[siteNames[0]].alias);
+          expect(sites[siteNames[1]].enabled).toBe(true);
+          expect(sites[siteNames[1]].priority).toEqual(2);
+          expect(sites[siteNames[1]].alias).toEqual(mockedSites[siteNames[1]].alias);
+          expect(sites[siteNames[2]].enabled).toBe(true);
+          expect(sites[siteNames[2]].priority).toEqual(3);
+          expect(sites[siteNames[2]].alias).toContain("aliasone");
+          expect(sites[siteNames[2]].alias).toContain("aliastwo");
+
+          done();
+        }
+      );
+    });
+
+    it("marks enabled states on sitelsit", function() {
+      expect(storageSitelist.checkEnabled(siteUrls[0])).toBe(false);
+      expect(storageSitelist.checkEnabled(siteUrls[1])).toBe(true);
+      expect(storageSitelist.checkEnabled(siteUrls[2])).toBe(true);
+      expect(storageSitelist.getEnabled()).toContain(siteNames[1]);
+      expect(storageSitelist.getEnabled()).toContain(siteNames[2]);
+    });
+
+    it("sets aliases properly", function() {
+      expect(storageSitelist.getSitelistName("http://www.aliasone.com")).toBe(siteNames[2]);
+    });
+  });
+});
+
+describe("site priority", function() {
+  var prioritySitelist;
+
+  beforeAll(function() {
+    tabs = [
+      {
+        id: 1,
+        title: siteNames[0],
+        url: siteUrls[0]
+      },
+      {
+        id: 2,
+        title: siteNames[1],
+        url: siteUrls[1]
+      },
+      {
+        id: 3,
+        title: siteNames[2],
+        url: siteUrls[2]
+      },
+      {
+        id: 4,
+        title: siteNames[3],
+        url: siteUrls[3]
+      }
+    ];
+
+    chrome.tabs.query.yields(tabs);
+
+    chrome.storage.sync.clear();
+
+    prioritySitelist = new Sitelist(mockedSites);
+    prioritySitelist.loadSettings();
+  });
+
+  it("sets priority", function(done) {
+    prioritySitelist.setSiteState(siteNames[1], { priority: 3 }).then(function() {
+      expect(prioritySitelist.getPriority(siteNames[1])).toBe(3);
+      prioritySitelist.setSiteState(siteNames[2], { priority: 3 }).then(function() {
+        expect(prioritySitelist.getPriority(siteNames[2])).toBe(3);
+        done();
+      });
+    });
+  });
+
+  it("only returns tabs with highest priority", function(done) {
+    prioritySitelist.getActiveMusicTabs().then(function(tabs) {
+      var activeUrls = tabs.map(function(tab) { return tab.url; });
+
+      expect(activeUrls).toContain(siteUrls[1]);
+      expect(activeUrls).toContain(siteUrls[2]);
+      expect(activeUrls).not.toContain(siteUrls[0]);
+      done();
+    });
+  });
+
+  it("doesn't affect site enabled state", function() {
+    expect(prioritySitelist.checkEnabled(siteUrls[0])).toBe(true);
+    expect(prioritySitelist.checkEnabled(siteUrls[1])).toBe(true);
+    expect(prioritySitelist.checkEnabled(siteUrls[2])).toBe(true);
+    expect(prioritySitelist.checkEnabled(siteUrls[3])).toBe(true);
+  });
+
+  it("doesn't affect tab enabled state", function() {
+    expect(prioritySitelist.checkTabEnabled(tabs[0].id)).toBe(true);
+    expect(prioritySitelist.checkTabEnabled(tabs[1].id)).toBe(true);
+    expect(prioritySitelist.checkTabEnabled(tabs[2].id)).toBe(true);
+    expect(prioritySitelist.checkTabEnabled(tabs[3].id)).toBe(true);
+  });
+
+  it("doesn't overwrite settings on priority update", function(done) {
+    prioritySitelist.setSiteState(siteNames[1], { priority: 5, enabled: false }).then(function() {
+      expect(prioritySitelist.getPriority(siteNames[1])).toBe(5);
+      expect(prioritySitelist.checkEnabled(siteUrls[1])).toBe(false);
+
+      prioritySitelist.setSiteState(siteNames[1], { priority: 3 }).then(function() {
+        expect(prioritySitelist.getPriority(siteNames[1])).toBe(3);
+        expect(prioritySitelist.checkEnabled(siteUrls[1])).toBe(false);
+
+        done();
+      });
+    });
+  });
+});

@@ -1,18 +1,20 @@
 $black: #000000;
-$popup-width: 230px;
-$main-color: #2880C7;
+$popup-width: 290px;
+$color-primary: #2880c7;
+$controls-background-color: #4a94d1;
 $white: #ffffff;
 
 html {
   padding: 0;
   margin: 0;
   min-height: 100px;
+  height: 0;
 }
 
 body {
   width: $popup-width;
   padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
 }
 
 a,
@@ -31,27 +33,27 @@ a:visited {
 }
 
 .player-div-border {
-  border-left: 1px solid $main-color;
-  border-right: 1px solid $main-color;
+  border-left: 1px solid $color-primary;
+  border-right: 1px solid $color-primary;
 }
 
 .disabled {
+  .player-controls-button-like,
+  .player-controls-button-dislike,
+  .player-controls-button-play,
+  .player-controls-button-prev,
+  .player-controls-button-next,
   .site-title,
   .site-favicon,
   .song-data {
     opacity: .5;
-  }
-
-  .player-controls-row {
-    .player-control-btn-group {
-      opacity: .5;
-      pointer-events: none;
-    }
+    pointer-events: none;
   }
 }
 
 .song-data {
   display: inline-block;
+  font-size: 15px;
   height: 18px;
   margin-top: -4px;
   overflow: hidden;
@@ -62,20 +64,27 @@ a:visited {
 
 .site-data {
   overflow: hidden;
-  height: 20px;
-  margin-bottom: 5px;
+  height: 22px;
+  margin-bottom: 6px;
   width: $popup-width;
+  -webkit-user-select: none;
+
+  .site-link {
+    margin-left: 6px;
+  }
 
   .settings {
     float: right;
-    margin: 3px 6px 0 0;
-    width: 12px;
     font-size: 12px;
+    margin: 3px 6px 0 0;
     opacity: .5;
+    width: 12px;
+
     &:hover {
       opacity: 1;
     }
   }
+
   .settings-active {
     opacity: 1;
   }
@@ -83,20 +92,28 @@ a:visited {
 
 .site-favicon {
   border: none;
-  height: 16px;
-  width: 16px;
+  height: 18px;
+  width: 18px;
 }
 
 .site-title {
-  font-size: 14px;
+  font-size: 18px;
   vertical-align: middle;
+}
+
+.site-priority-label {
+  float: right;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: .4;
+  padding-right: 6px;
 }
 
 #player {
   @extend .player-div-border;
   height: auto;
   min-height: 30px;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   text-align: center;
 }
 
@@ -117,100 +134,140 @@ a:visited {
   }
 }
 
-.player-controls-row {
-  .btn {
-    font-size: 12px;
-    padding: 4px 8px;
-  }
-
-  .player-control-btn-group {
-    .btn {
-      border-left-width: 0;
-      border-right-width: 1px;
-      border-radius: 0;
-
-      &:first-child {
-        border-left-width: 1px;
-        border-radius: 3px 0 0 3px;
-      }
-
-      &:last-child {
-        border-radius: 0 3px 3px 0;
-      }
-    }
-  }
-
-  .btn-floating {
-    &.pull-left {
-      margin-left: 5px;
-    }
-
-    &.pull-right {
-      margin-right: 5px;
-    }
-  }
-}
-
 .header {
   @extend .player-div-border;
-  background-color: $main-color;
-  border-top: 1px solid $main-color;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  height: 40px;
+  background-color: $color-primary;
+  border-top: 1px solid $color-primary;
+  height: 38px;
   padding: 6px;
   text-align: center;
 
   a,
   a:active,
   a:visited {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
     color: $white;
+    display: block;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    margin-top: 8px;
     text-decoration: none;
   }
 
   a:hover {
     color: darken($white, 10%);
+    text-decoration: none;
   }
 }
 
 .options {
   @extend .player-div-border;
-  background-color: $main-color;
+  border-bottom: 2px solid $color-primary;
   display: block;
-  height: 34px;
-  padding: 6px 27px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom: 2px solid $main-color;
-  width: 100%;
+  height: 44px;
+  padding: 0;
+  text-align: center;
 
-  #help-link {
-    float: right;
-    padding-right: 2px;
-  }
-
-  a,
-  a:hover,
-  a:visited {
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    color: $white;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: darken($white, 10%);
+  #options-link,
+  #help-link,
+  #donate-link {
+    margin: 0 5px;
   }
 }
 
 .no-sites {
+  font-size: 16px;
+  font-weight: 500;
   padding-top: 10px;
 }
 
-.btn-disabled-sites {
+#btn-disabled-sites {
   margin-top: 10px;
+  min-width: 203px;
+
+  i {
+    margin-right: -6px;
+    margin-top: -3px;
+  }
+}
+
+.disabled-site-tab-container.initialize {
+  display: none;
+}
+
+.player-controls-container {
+  background-color: $color-primary;
+  padding: 2px 0;
+  -webkit-user-select: none;
+
+  .player-controls-button {
+    margin-left: 2px;
+    margin-right: 2px;
+
+    &.mdl-button--disabled {
+      opacity: .7;
+    }
+
+    &.player-controls-button-like,
+    &.player-controls-button-dislike {
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+
+  i {
+    color: $white;
+  }
+}
+
+.site-settings {
+  border-bottom: 2px solid $color-primary;
+  display: block;
+  height: 54px;
+  text-align: center;
+
+  &.initialize {
+    display: none;
+  }
+
+  .control-label {
+    display: block;
+    font-weight: 700;
+    margin: 3px 0 -3px 30px;
+    text-align: left;
+  }
+
+  .settings-item {
+    &.left {
+      float: left;
+      margin-left: 6px;
+      width: calc(40% - 6px);
+    }
+
+    &.right {
+      float: right;
+      width: calc(60%);
+    }
+
+    .priority-button {
+      min-width: 26px;
+      width: 26px;
+    }
+
+    .priority-text {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .advanced-settings-button {
+      font-size: 12px;
+      padding: 0 6px;
+      margin-top: 9px;
+    }
+  }
+}
+
+.mdl-button--colored {
+  background-color: $color-primary !important;
 }
