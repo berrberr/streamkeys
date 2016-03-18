@@ -87,6 +87,7 @@
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
+      "jamendo": { name: "Jamendo", url: "https://www.jamendo.com" },
       "jango": { name: "Jango", url: "http://www.jango.com" },
       "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"] },
