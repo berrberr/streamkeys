@@ -4,13 +4,13 @@
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
-    siteName: "NPR",
-    play: "a.play",
-    pause: "a.pause",
-    playNext: "a.next",
+    siteName: "NPR One",
+    play: "toggle-play",
+    pause: "toggle-play",
+    playNext: "skip",
 
-    playState: "a.pause",
-    song: ".title",
+    playState: "i.player__play-control__icon--pause",
+    song: "h1.card__title",
 
     hidePlayer: true
   });
