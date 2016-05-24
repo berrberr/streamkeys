@@ -11,8 +11,8 @@
     like: ".thumbUpButton > a",
     dislike: ".thumbDownButton > a",
 
-    song: ".songTitle",
-    artist: ".artistSummary",
-    album: ".albumTitle"
+    song: ".playerBarSong",
+    artist: ".playerBarArtist",
+    album: ".playerBarAlbum"
   });
 })();
