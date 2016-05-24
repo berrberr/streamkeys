@@ -111,10 +111,6 @@ To run the tests locally, simply
 $ grunt test
 ```
 
-```
-node test/runner.js
-```
-
 ## License (MIT)
 
 Copyright (c) 2014 Alex Gabriel under the MIT license.
