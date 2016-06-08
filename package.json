@@ -28,7 +28,7 @@
     "chai": "~1.9.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-exec": "~0.4.6",
-    "grunt-sass": "^1.1.0",
+    "grunt-sass": "^1.2.0",
     "karma-spec-reporter": "0.0.23",
     "mocha": "~1.21.4",
     "mocha-retry": "~0.0.9",
