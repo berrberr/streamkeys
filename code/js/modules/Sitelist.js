@@ -85,6 +85,7 @@
       "play.google": { name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js" },
       "player.edge": { name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js" },
       "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
+      "hearthis": { name: "HearThis.at", url: "http://www.hearthis.at" },
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
