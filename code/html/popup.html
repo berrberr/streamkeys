@@ -1,130 +1,134 @@
 <!DOCTYPE html>
-  <head>
-    <script type="text/javascript" src="/js/popup/popup.js"></script>
-    <link href="/css/popup.css" rel="stylesheet">
+<html lang="en">
 
-    <link rel="stylesheet" href="/css/material.min.css">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Streamkeys</title>
+  <link type="text/css" rel="stylesheet" href="/css/material.min.css">
+  <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link type="text/css" rel="stylesheet" href="/css/popup.css">
+  <script type="text/javascript" src="/js/popup/popup.js"></script>
+</head>
 
-  <body>
-    <div class="header">
-      <a href="http://www.streamkeys.com" target="_blank" tabindex="-1">Streamkeys</a>
+<body>
+  <div class="header">
+    <a href="http://www.streamkeys.com" target="_blank" tabindex="-1">Streamkeys</a>
+  </div>
+
+  <div id="player">
+    <div class="no-sites" data-bind="visible: $data.sortedMusicTabs().length == 0 && $data.isLoaded()">
+      No music sites open.
     </div>
-
-    <div id="player">
-      <div class="no-sites" data-bind="visible: $data.sortedMusicTabs().length == 0 && $data.isLoaded()">
-        No music sites open.
-      </div>
-      <!-- ko foreach: $data.sortedMusicTabs -->
-      <div class="site-tab-container" data-bind="css: { disabled: !$data.streamkeysEnabled() }, template: {
+    <!-- ko foreach: $data.sortedMusicTabs -->
+    <div class="site-tab-container" data-bind="css: { disabled: !$data.streamkeysEnabled() }, template: {
         name: 'site-template'
       }"></div>
-      <!-- /ko -->
-      <!-- ko if: $data.disabledMusicTabs().length > 0 && $data.isLoaded -->
-      <button id="btn-disabled-sites" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="
+    <!-- /ko -->
+    <!-- ko if: $data.disabledMusicTabs().length > 0 && $data.isLoaded -->
+    <button id="btn-disabled-sites" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="
         click: function() {
           $data.disabledSitesOpen(!$data.disabledSitesOpen.peek());
         }
       ">
-        <span data-bind="text: $data.disabledSitesOpen() ? 'Hide Disabled Sites' : 'Show Disabled Sites'"></span>
-        <i class="material-icons" data-bind="text: $data.disabledSitesOpen() ? 'arrow_drop_up' : 'arrow_drop_down'"></i>
-      </button>
-      <div class="disabled-site-tab-container initialize" data-bind="slideMenu: $data.disabledSitesOpen">
-        <!-- ko foreach: $data.disabledMusicTabs -->
-        <div class="site-tab-container disabled-site" data-bind="template: { name: 'site-template' }"></div>
-        <!-- /ko -->
-      </div>
+      <span data-bind="text: $data.disabledSitesOpen() ? 'Hide Disabled Sites' : 'Show Disabled Sites'"></span>
+      <i class="material-icons" data-bind="text: $data.disabledSitesOpen() ? 'arrow_drop_up' : 'arrow_drop_down'"></i>
+    </button>
+    <div class="disabled-site-tab-container initialize" data-bind="slideMenu: $data.disabledSitesOpen">
+      <!-- ko foreach: $data.disabledMusicTabs -->
+      <div class="site-tab-container disabled-site" data-bind="template: { name: 'site-template' }"></div>
       <!-- /ko -->
     </div>
+    <!-- /ko -->
+  </div>
 
-    <div class="options">
-      <button id="options-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: $data.openOptionsPage" tabindex="-1">
-        Options
-      </button>
-      <button id="help-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: function() { window.open('http://www.streamkeys.com/guide.html'); }" tabindex="-1">
-        Help
-      </button>
-      <button id="donate-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: function() { window.open('http://www.streamkeys.com/donate.html'); }" tabindex="-1">
-        Donate
-      </button>
-    </div>
+  <div class="options">
+    <button id="options-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: $data.openOptionsPage" tabindex="-1">
+      Options
+    </button>
+    <button id="help-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: function() { window.open('http://www.streamkeys.com/guide.html'); }" tabindex="-1">
+      Help
+    </button>
+    <button id="donate-link" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-bind="click: function() { window.open('http://www.streamkeys.com/donate.html'); }" tabindex="-1">
+      Donate
+    </button>
+  </div>
 
-    <script type="text/html" id="site-template">
-      <div class="player-row player-container">
-        <div class="site-data">
-          <span class="site-priority-label" data-bind="text: $data.priority"></span>
-          <a tabindex="-1" href="#" class="site-link" data-bind="click: function() { $data.openTab() }" title="Open Tab">
-            <img class="site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
-            <span class="site-title" data-bind="text: $data.siteName"></span>
-          </a>
-        </div>
-        <div class="song-data" data-bind="scrollingSong: $data.songArtistText, visible: $data.songArtistText().length"></div>
+  <script type="text/html" id="site-template">
+    <div class="player-row player-container">
+      <div class="site-data">
+        <span class="site-priority-label" data-bind="text: $data.priority"></span>
+        <a tabindex="-1" href="#" class="site-link" data-bind="click: function() { $data.openTab() }" title="Open Tab">
+          <img class="site-favicon" data-bind="attr: { src: $data.faviconUrl }" />
+          <span class="site-title" data-bind="text: $data.siteName"></span>
+        </a>
       </div>
-      <div class="player-controls-container player-container">
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+      <div class="song-data" data-bind="scrollingSong: $data.songArtistText, visible: $data.songArtistText().length"></div>
+    </div>
+    <div class="player-controls-container player-container">
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.settingsOpen(!$data.settingsOpen.peek());
         }">
-          <i class="material-icons md-dark">more_vert</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
+        <i class="material-icons md-dark">more_vert</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
           $data.sendAction('dislike');
         },
         css: { 'mdl-button--disabled': !$data.canDislike() }">
-          <i class="material-icons md-dark">thumb_down</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
+        <i class="material-icons md-dark">thumb_down</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
           $data.sendAction('playPrev');
         },
         css: { 'mdl-button--disabled': !$data.canPlayPrev() }">
-          <i class="material-icons md-dark">fast_rewind</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-play" data-bind="click: function() {
+        <i class="material-icons md-dark">fast_rewind</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-play" data-bind="click: function() {
           $data.sendAction('playPause');
         }">
-          <i class="material-icons md-dark" data-bind="text: $data.isPlaying() ? 'pause_arrow' : 'play_arrow'"></i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
+        <i class="material-icons md-dark" data-bind="text: $data.isPlaying() ? 'pause_arrow' : 'play_arrow'"></i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
           $data.sendAction('playNext');
         },
         css: { 'mdl-button--disabled': !$data.canPlayNext() }">
-          <i class="material-icons md-dark">fast_forward</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
+        <i class="material-icons md-dark">fast_forward</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
           $data.sendAction('like');
         },
         css: { 'mdl-button--disabled': !$data.canLike() }">
-          <i class="material-icons md-dark">thumb_up</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+        <i class="material-icons md-dark">thumb_up</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.toggleStreamkeysEnabled();
         },
         css: { active: !$data.streamkeysEnabled() }">
-          <i class="material-icons md-dark">not_interested</i>
-        </button>
-      </div>
-      <div class="site-settings initialize" data-bind="slideMenu: $data.settingsOpen">
-        <div class="settings-item left">
-          <label class="control-label">Priority</label>
-          <button class="mdl-button mdl-js-button mdl-button--icon priority-button" data-bind="click: function() {
+        <i class="material-icons md-dark">not_interested</i>
+      </button>
+    </div>
+    <div class="site-settings initialize" data-bind="slideMenu: $data.settingsOpen">
+      <div class="settings-item left">
+        <label class="control-label">Priority</label>
+        <button class="mdl-button mdl-js-button mdl-button--icon priority-button" data-bind="click: function() {
             if ($data.priority.peek() > 1) $data.priority($data.priority.peek() - 1);
           },
           css: { 'mdl-button--disabled': $data.priority() <= 1 }">
-            <i class="material-icons">remove_circle</i>
-          </button>
-          <span class="priority-text" data-bind="text: $data.priority()"></span>
-          <button class="mdl-button mdl-js-button mdl-button--icon priority-button" data-bind="click: function() {
+          <i class="material-icons">remove_circle</i>
+        </button>
+        <span class="priority-text" data-bind="text: $data.priority()"></span>
+        <button class="mdl-button mdl-js-button mdl-button--icon priority-button" data-bind="click: function() {
             if ($data.priority.peek() < 9) $data.priority($data.priority.peek() + 1);
           },
           css: { 'mdl-button--disabled': $data.priority() >= 9 }">
-            <i class="material-icons">add_circle</i>
-          </button>
-        </div>
-        <div class="settings-item right">
-          <button class="mdl-button mdl-button--raised mdl-button--colored advanced-settings-button" data-bind="click: $parent.openOptionsPage" tabindex="-1">Advanced Settings</button>
-        </div>
+          <i class="material-icons">add_circle</i>
+        </button>
       </div>
-    </script>
-  </body>
+      <div class="settings-item right">
+        <button class="mdl-button mdl-button--raised mdl-button--colored advanced-settings-button" data-bind="click: $parent.openOptionsPage" tabindex="-1">Advanced Settings</button>
+      </div>
+    </div>
+  </script>
+</body>
+
 </html>
