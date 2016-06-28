@@ -69,6 +69,7 @@
       "blitzr": { name: "Blitzr", url: "http://www.blitzr.com" },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
       "cubic": { name: "Cubic.fm", url: "http://www.cubic.fm" },
+      "devchat": { name: "devchat.tv", url: "http://www.devchat.tv" },
       "deezer": { name: "Deezer", url: "http://www.deezer.com" },
       "demodrop": { name: "DemoDrop", url: "http://www.demodrop.com" },
       "di": { name: "Di.fm", url: "http://www.di.fm" },
