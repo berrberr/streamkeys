@@ -126,6 +126,7 @@
       "shortorange": { name: "ShortOrange", url: "http://www.shortorange.com" },
       "shuffler": { name: "Shuffler.fm", url: "http://www.shuffler.fm" },
       "slacker": { name: "Slacker", url: "http://www.slacker.com" },
+      "somafm": { name: "SomaFM", url: "http://somafm.com" },
       "songstr": { name: "Songstr", url: "http://www.songstr.com" },
       "songza": { name: "Songza", url: "http://www.songza.com" },
       "music.sonyentertainmentnetwork": { name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com", controller: "SonyMusicUnlimitedController.js" },
