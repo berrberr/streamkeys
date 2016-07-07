@@ -28,12 +28,7 @@
     "chai": "~1.9.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-exec": "~0.4.6",
-    "grunt-sass": "^1.1.0",
     "karma-spec-reporter": "0.0.23",
-    "mocha": "~1.21.4",
-    "mocha-retry": "~0.0.9",
-    "selenium-chromedriver": "git://github.com/berrberr/selenium-chromedriver.git",
-    "selenium-webdriver": "~2.43.5",
     "watchify": "~2.1.0"
   },
   "dependencies": {
@@ -49,6 +44,7 @@
     "grunt-karma": "^0.12.1",
     "grunt-lintspaces": "~0.7.0",
     "grunt-mkdir": "~0.1.1",
+    "grunt-sass": "^1.1.0",
     "jasmine-core": "^2.3.4",
     "jshint-stylish": "~0.2.0",
     "karma": "^0.13.14",
