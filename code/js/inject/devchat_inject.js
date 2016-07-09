@@ -3,12 +3,9 @@
 
   var sk_log = require("../modules/SKLog.js");
 
-
   var audio = document.getElementsByTagName("audio")[0];
 
-  if(audio === undefined)
-        return null;
-
+  if(audio === undefined) return null;
 
   document.addEventListener("streamkeys-cmd", function(e) {
 
