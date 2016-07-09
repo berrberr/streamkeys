@@ -67,7 +67,7 @@
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
       "blitzr": { name: "Blitzr", url: "http://www.blitzr.com" },
-      "brainfm": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
+      "brain": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
       "cubic": { name: "Cubic.fm", url: "http://www.cubic.fm" },
       "deezer": { name: "Deezer", url: "http://www.deezer.com" },
