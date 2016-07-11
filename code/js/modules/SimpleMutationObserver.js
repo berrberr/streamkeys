@@ -2,9 +2,26 @@
   "use strict";
 
   /**
-   * Wrapper over MutationObserver. Provides simple interface
-   * for listening event of is inserted or removed selector from node.
+   * @typedef {Object} HandlerStorageSelector
+   * @property {Function[]} inserted - Contains handlers for inserted event.
+   * @property {Function[]} removed - Contains handlers for removed event.
+   */
+
+  /**
+   * @typedef {Object} HandlerStorage
+   * @property {HandlerStorageSelector} selector-1 - Tracked selector 1.
+   * @property {HandlerStorageSelector} selector-2 - Tracked selector 2.
+   * @property {HandlerStorageSelector} selector-N - Tracked selector N.
+   */
+
+
+  /**
+   * Construct a new SimpleMutationObserver
+   *
    * @class SimpleMutationObserver
+   * @classdesc Wrapper over MutationObserver. Provides simple interface
+   * for listening event of is inserted or removed selector from node.
+   *
    * @constructor
    * @param {Node} node - Node for which observing DOM mutation.
    */
@@ -13,31 +30,35 @@
 
     /**
      * Node for which observing DOM mutation.
-     * @property node
-     * @type {Node}
+     *
+     * @name SimpleMutationObserver#node
+     * @type Node
      */
     self.node = node;
 
     /**
      * Storage for state of selectors.
      * Where key is the selector, and value is the state.
-     * @property selectors
-     * @type {Object}
+     *
+     * @name SimpleMutationObserver#selectors
+     * @type Object
      */
     self.selectors = {};
 
     /**
      * Storage for event handlers.
      * Where key is the selector, and value is the object of arrays of handlers.
-     * @property handlers
-     * @type {Object}
+     *
+     * @name SimpleMutationObserver#handlers
+     * @type HandlerStorage
      */
     self.handlers = {};
 
     /**
      * DOM mutations observer.
-     * @property observer
-     * @type {MutationObserver}
+     *
+     * @name SimpleMutationObserver#observer
+     * @type MutationObserver
      */
     self.observer = new MutationObserver(function() {
       // for each registered selectors checking state and dispatch events if needed
@@ -62,6 +83,7 @@
   /**
    * Call handlers for selector and event type.
    *
+   * @memberof SimpleMutationObserver#
    * @method trigger
    * @param {Object} selector - Selector of event handlers.
    * @param {String} eventType - Event type that can be "inserted" or "removed".
@@ -88,7 +110,8 @@
   /**
    * Deferred call handlers for selector and event type.
    *
-   * @method trigger
+   * @memberof SimpleMutationObserver#
+   * @method deferredTrigger
    * @param {Object} selector - Selector of event handlers.
    * @param {String} eventType - Event type that can be "inserted" or "removed".
    */
@@ -102,6 +125,7 @@
   /**
    * Subscribe handler on the event selector.
    *
+   * @memberof SimpleMutationObserver#
    * @method on
    * @param {String} selector - Event selector.
    * @param {String} type - Event type.
@@ -119,6 +143,7 @@
   /**
    * Subscribe handler on the event selector once. After the call handler will be removed.
    *
+   * @memberof SimpleMutationObserver#
    * @method once
    * @param {String} selector - Event selector.
    * @param {String} type - Event type.
@@ -137,6 +162,7 @@
   /**
    * Check enabled state of selector in node.
    *
+   * @memberof SimpleMutationObserver#
    * @method checkEnabled
    * @param {String} selector - Selector for checking.
    * @return {Boolean} Boolean indicating whether the DOM node contains selector.
@@ -148,6 +174,7 @@
   /**
    * Add selector for listening change state.
    *
+   * @memberof SimpleMutationObserver#
    * @method addSelector
    * @param {String} selector - Selector for adding.
    */
@@ -161,7 +188,8 @@
   /**
    * Remove selector listening.
    *
-   * @method addSelector
+   * @memberof SimpleMutationObserver#
+   * @method removeSelector
    * @param {String} selector - Selector for removing.
    */
   SimpleMutationObserver.prototype.removeSelector = function(selector) {
@@ -175,6 +203,7 @@
    * State of selector in tracking storage.
    * NOTE: After the call, selector to be tracked.
    *
+   * @memberof SimpleMutationObserver#
    * @method isEnabled
    * @param {String} selector - Selector for checking.
    * @return {Boolean} Boolean indicating whether the selector is enabled.

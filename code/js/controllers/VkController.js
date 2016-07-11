@@ -67,7 +67,7 @@
       playerPanel: "#gp",
       playerPanelInfo: "#gp_info",
       playerPanelNext: "#pd_next",
-      playerPanelPrev: "#pd_next"
+      playerPanelPrev: "#pd_prev"
     };
 
     controller = new BaseController({
