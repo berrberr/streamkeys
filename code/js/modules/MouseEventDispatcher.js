@@ -8,21 +8,20 @@
    *
    * @property {AbstractView} view - The event's AbstractView. You should pass the window object here.
    * @property {Number} detail - The event's mouse click count.
-
+   *
    * @property {Number} screenX - The event's screen x coordinate.
    * @property {Number} screenY - The event's screen y coordinate.
    * @property {Number} clientX - The event's client x coordinate.
    * @property {Number} clientY - The event's client y coordinate.
-
+   *
    * @property {Boolean} ctrlKey - Whether or not control key was depressed during the Event.
    * @property {Boolean} altKey - Whether or not alt key was depressed during the Event.
    * @property {Boolean} shiftKey - Whether or not shift key was depressed during the Event.
    * @property {Boolean} metaKey - Whether or not meta key was depressed during the Event.
-
+   *
    * @property {Number} button - The event's mouse button.
    * @property {EventTarget} relatedTarget - The event's related EventTarget. Only used with some event types (e.g. mouseover and mouseout). In other cases, pass null.
    */
-
 
   /**
    * @class MouseEventDispatcher

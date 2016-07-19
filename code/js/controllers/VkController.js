@@ -2,7 +2,7 @@
   "use strict";
 
   var sk_log = require("../modules/SKLog.js"),
-      BaseController = require("BaseController"),
+      MouseEventController = require("MouseEventController"),
       SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
       selectors,
       controller,
@@ -19,7 +19,7 @@
       playerPanelPlay: ".audio_page_player_play"
     };
 
-    controller = new BaseController({
+    controller = new MouseEventController({
       siteName: "VK Music",
 
       playPause: "#top_audio_player.top_audio_player_enabled .top_audio_player_play",
@@ -38,7 +38,7 @@
 
       // if player on header enabled call super and return
       if (vkObserver.isEnabled(selectors.headerPlayerEnabled)) {
-        return BaseController.prototype.playPause.call(self);
+        return MouseEventController.prototype.playPause.call(self);
       }
       // if play button enabled (e.g. current page it's music) start playing and return
       if (vkObserver.isEnabled(selectors.playerPanelPlay)) {
@@ -70,7 +70,7 @@
       playerPanelPrev: "#pd_prev"
     };
 
-    controller = new BaseController({
+    controller = new MouseEventController({
       siteName: "VK Music",
       playPause: "#gp_play",
       playNext: selectors.playerPanelNext,
@@ -106,7 +106,7 @@
       var self = this;
       // if player panel enabled call super method and return
       if (vkObserver.isEnabled(selectors.playerPanel)) {
-        return BaseController.prototype.playPause.call(self);
+        return MouseEventController.prototype.playPause.call(self);
       }
       // initialize player panel
       self.initWaitAndClose();
@@ -116,7 +116,7 @@
       var self = this;
       // if player panel already opened call super method and return
       if (vkObserver.isEnabled(selectors.playerPanelNext)) {
-        return BaseController.prototype.playNext.call(self);
+        return MouseEventController.prototype.playNext.call(self);
       }
       // open player panel, click next button, close player panel
       self.initWaitAndClose(selectors.playerPanelNext, selectors.playerPanelInfo, true);
@@ -126,14 +126,14 @@
       var self = this;
       // if player panel already opened call super method and return
       if (vkObserver.isEnabled(selectors.playerPanelPrev)) {
-        return BaseController.prototype.playPrev.call(self);
+        return MouseEventController.prototype.playPrev.call(self);
       }
       // open player panel, click prev button, close player panel
       self.initWaitAndClose(selectors.playerPanelPrev, selectors.playerPanelInfo, true);
     };
 
     controller.getStateData = function() {
-      var result = BaseController.prototype.getStateData.call(this); // call super
+      var result = MouseEventController.prototype.getStateData.call(this); // call super
       // if player panel enabled activate prev/next buttons
       if (vkObserver.isEnabled(selectors.playerPanel)) {
         result.canPlayPrev = true;
