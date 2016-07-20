@@ -6,6 +6,18 @@
       sk_log = require("../modules/SKLog.js");
 
   /**
+   * @class MouseEventController
+   * @extends BaseController
+   * @constructor
+   */
+  function MouseEventController() {
+    BaseController.apply(this, arguments);
+  }
+
+  MouseEventController.prototype = Object.create(BaseController.prototype);
+  MouseEventController.prototype.constructor = MouseEventController;
+
+  /**
    * Dispatch "dblclick" mouse event inside document
    * @param {String} opts.selectorButton - css selector for element
    */
@@ -51,7 +63,7 @@
       return;
     }
     // based on click method
-    BaseController.prototype[eventType] = function(opts, mouseOpts) {
+    MouseEventController.prototype[eventType] = function(opts, mouseOpts) {
       opts = opts || {};
       if (opts.selectorButton === null) {
         sk_log("disabled", opts.action);
@@ -70,5 +82,5 @@
     };
   });
 
-  module.exports = BaseController;
+  module.exports = MouseEventController;
 })();
