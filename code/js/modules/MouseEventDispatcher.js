@@ -40,7 +40,7 @@
    * @static
    */
   MouseEventDispatcher.eventTypes = [
-    "click",
+    "mouseclick",
     "dblclick",
     "mousedown",
     "mouseenter",
@@ -65,8 +65,10 @@
     if (typeof target === "string") {
       target = document.querySelector(target);
     }
-    if (!(target instanceof HTMLElement)) {
-      return;
+
+    // XXX: Dumb case so we don't overrite BaseController::click
+    if (eventType === "mouseclick") {
+      eventType = "click";
     }
 
     options = options || {};
@@ -115,7 +117,7 @@
 
   /**
    * @memberof MouseEventDispatcher
-   * @method click
+   * @method mouseclick
    * @param {(HTMLElement|String)} target
    * @param {MouseEventOptions} [options]
    * @static
