@@ -1,15 +1,20 @@
 ;(function() {
   "use strict";
 
-  var BaseController = require("BaseController");
+  var MouseEventController = require("MouseEventController");
 
-  new BaseController({
+  var controller = new MouseEventController({
     siteName: "Rainwave",
-    playPause: "#audio_status_play",
+    playPause: ".audio_icon_play",
 
     playState: ".playing",
-    song: ".timeline_now_playing_song .title",
-    artist: ".timeline_now_playing_song .artist",
-    album: ".timeline_now_playing_song .album"
+    song: ".song.now_playing .title",
+    artist: ".song.now_playing .artist",
+    album: ".song.now_playing .album"
   });
+
+
+  controller.playPause = function() {
+    this.mouseclick({ selectorButton: this.selectors.playPause });
+  };
 })();

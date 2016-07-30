@@ -18,6 +18,11 @@
   MouseEventController.prototype.constructor = MouseEventController;
 
   /**
+   * Dispatch "mouseclick" mouse "click" event inside document
+   * @param {String} opts.selectorButton - css selector for element
+   */
+
+  /**
    * Dispatch "dblclick" mouse event inside document
    * @param {String} opts.selectorButton - css selector for element
    */
@@ -78,6 +83,7 @@
       } catch (e) {
         sk_log("Element not found for " + eventType + ".", opts.selectorButton, true);
       }
+
       this.updatePlayerState();
     };
   });
