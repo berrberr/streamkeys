@@ -88,6 +88,7 @@
       "player.edge": { name: "Edge Player", url: "http://player.edge.ca", controller: "EdgeController.js" },
       "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
       "hearthis": { name: "HearThis.at", url: "http://www.hearthis.at" },
+      "hoopla": { name: "Hoopla", url: "https://www.hoopladigital.com", alias:["hoopladigital"] },
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
