@@ -5,13 +5,12 @@
 
   new BaseController({
     siteName: "Coursera",
-    play: ".mejs-play",
-    pause: ".mejs-pause",
-    playNext: ".course-lecture-view-speed-plus",
-    playPrev: ".course-lecture-view-speed-minus",
-    iframe: ".course-modal-frame iframe",
+    play: ".cif-play",
+    pause: ".cif-pause",
+    playNext: "[data-track-component='item_side_nav_next_lession']",
+    playPrev: "[data-track-component='item_side_nav_prev_lession']",
     buttonSwitch: true,
 
-    song: ".course-modal-frame-title"
+    song: ".c-video-title"
   });
 })();
