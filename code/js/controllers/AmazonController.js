@@ -14,7 +14,7 @@
     playState: ".playbackControlsView .playerIconPause",
     song: ".playbackControlsView .trackTitle",
     artist: ".playbackControlsView .trackArtist",
-
+    art: ".albumArtWrapper img",
     hidePlayer: true
   });
 })();

@@ -14,6 +14,7 @@
     playState: "[data-id=play-pause].playing",
     song: "#currently-playing-title",
     artist: "#player-artist",
-    album: ".player-album"
+    album: ".player-album",
+    art: "#playerBarArt"
   });
 })();

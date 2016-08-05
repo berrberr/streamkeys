@@ -13,6 +13,7 @@
 
     song: ".playerBarSong",
     artist: ".playerBarArtist",
-    album: ".playerBarAlbum"
+    album: ".playerBarAlbum",
+    art: ".playerBarArt"
   });
 })();
