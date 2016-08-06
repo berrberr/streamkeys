@@ -161,6 +161,12 @@
     var newState = this.getStateData();
     if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
       sk_log("Player state change");
+      if(this.getSongChanged(newState)) {
+        chrome.runtime.sendMessage({
+          action: "send_change_notification",
+          stateData: newState
+        });
+      }
       this.oldState = newState;
       chrome.runtime.sendMessage({
         action: "update_player_state",
@@ -192,6 +198,18 @@
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
       hidePlayer: this.hidePlayer
     };
+  };
+
+  /**
+   * Returns a bool indicating whether the player's song changed since the last state update
+   * @param {{song: {String}}} newState - new state object
+   * @return {Boolean} true if song just changed, false otherwise
+   */
+  BaseController.prototype.getSongChanged = function(newState) {
+      return this.oldState &&
+            newState &&
+            newState.song &&
+            this.oldState.song !== newState.song;
   };
 
   /**

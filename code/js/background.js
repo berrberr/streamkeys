@@ -11,6 +11,12 @@
   require("es6-promise").polyfill();
 
   /**
+   * Tracks TimeoutIds by notification ID, to cancel previous uncomplete Timeouts
+   * when a new notification is created prior to the last notification clearing
+   */
+  var notificationTimeouts = {};
+
+  /**
    * Send a player action to every active player tab
    * @param {String} command - name of the command to pass to the players
    */
@@ -92,6 +98,25 @@
       });
 
       return true;
+    }
+    if(request.action === "send_change_notification") {
+      chrome.notifications.create(sender.id, {
+        type: "list",
+        title: request.stateData.siteName,
+        message: request.stateData.song || "",
+        iconUrl: request.stateData.art || chrome.extension.getURL("icon128.png"),
+        items: [{title: request.stateData.song, message: "" },
+                {title: request.stateData.artist || "", message: request.stateData.album || "" }]
+      }, function(notificationId) {
+        if(notificationTimeouts[notificationId])
+        {
+          clearTimeout(notificationTimeouts[notificationId]);
+          delete notificationTimeouts[notificationId];
+        }
+        notificationTimeouts[notificationId] = setTimeout(function() {
+          chrome.notifications.clear(notificationId);
+        }, 5000);
+      });
     }
   });
 

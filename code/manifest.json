@@ -30,7 +30,7 @@
     "js/inject/hoopla_inject.js",
     "js/controllers/*"
   ],
-  "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
+  "permissions": ["tabs", "storage", "notifications", "http://*/*", "https://*/*"],
   "commands": {
     "playPause": {
       "suggested_key": {
