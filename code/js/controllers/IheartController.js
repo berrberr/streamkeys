@@ -5,13 +5,14 @@
 
   new BaseController({
     siteName: "iHeartRadio",
-    playPause: ".icon-play",
-    play: ".icon-play",
-    pause: ".icon-stop",
-    playNext: "[aria-label=Skip]",
-    mute: "[aria-label=Mute]",
+    play: ".player-controls .icon-play",
+    pause: ".player-controls .icon-pause",
+    playNext: ".player-controls .icon-skip",
+    mute: ".player-controls .icon-volume",
+    like: ".player-controls .icon-thumb-up-unfilled",
+    dislike: ".player-controls .icon-thumb-down-unfilled",
 
-    playState: "button.playing",
+    playState: ".player-controls .icon-pause",
     song: "a.player-song",
     artist: "a.player-artist"
   });

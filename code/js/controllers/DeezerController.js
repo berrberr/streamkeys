@@ -3,8 +3,6 @@
 
   var BaseController = require("BaseController");
 
-  var isNew = document.querySelector("#loading_bar") !== null;
-
   new BaseController({
     siteName: "Deezer",
     play: ".control.control-play",
@@ -14,7 +12,7 @@
     mute: ".icon-volume-off",
     like: ".player-actions .icon-love",
     dislike: ".player-actions .icon-unlove",
-    buttonSwitch: isNew,
+    buttonSwitch: true,
 
     song: ".player-track-title > span",
     artist: ".heading-2-sub span.player-track-link"
