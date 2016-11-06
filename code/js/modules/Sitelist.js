@@ -80,6 +80,7 @@
       "egghead": { name: "egghead.io", url: "https://egghead.io" },
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
+      "focusmusic": { name: "Focusmusic", url: "https://focusmusic.fm/" },
       "gaana": { name: "Gaana", url: "http://www.gaana.com" },
       "grooveshark": { name: "Grooveshark", url: "http://groovesharks.org", alias:["groovesharks"] },
       "giantbomb": { name: "Giantbomb", url: "http://giantbomb.com" },
