@@ -15,13 +15,13 @@
       //** Song Info **//
       'song', 'artist'
     ];
+    selectorsKeys.forEach((key) => this.selectors[key] = null);
 
     // Assign passed options to this and this.selectors
     Object.keys(options).forEach((key) => {
       if (!selectorsKeys.isInclude(key)) {
         this[key] = options[key];
       } else {
-        this.selectors[key] = null;
         if (typeof options[key] == "function")
           this[key] = options[key];
         else if (options[key])
