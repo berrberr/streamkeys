@@ -9,13 +9,13 @@
     pause: ["#play-pause", "#play", ".buttons [title='Pause']"],
     playNext: ["#next", "#next", ".buttons [title='Next']"],
     playPrev: ["#previous", "#previous", ".buttons [title='Previous']"],
-    playState: ["#play-pause.playing", "#play.playing", ".buttons [title='Play']"],
+    playState: ["#play-pause.playing", "#play.playing", ""],
     iframe: ["#app-player", "#main", ".top-container"],
     buttonSwitch: ["false", "false", "true"],
     like: [".thumb.up", ".thumb.up", ""],
     dislike: [".thumb.down", ".thumb.down" ,""],
-    song: ["#track-name", ".caption .track", "#track-info-name > a"],
-    artist: ["#track-artist", ".caption .artist", "track-info-artists span > a"]
+    song: ["#track-name", ".caption .track", ".track-info-name"],
+    artist: ["#track-artist", ".caption .artist", ".track-info-artists"]
   };
 
   var controller = new BaseController({
