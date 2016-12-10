@@ -5,12 +5,11 @@
 
   new BaseController({
     siteName: "Netflix",
-    play: ".player-play-pause.play",
-    pause: ".player-play-pause.pause",
-    playNext: ".player-next-episode",
-    mute: ".player-control-button.volume",
-
-    playState: ".player-play-pause.pause",
-    song: ".player-status-main-title"
+    play: ".button-nfplayerPlay",
+    pause: ".button-nfplayerPause",
+    playNext: ".button-nfplayerNextEpisode",
+    mute: ".button-volumeLow, .button-volumeMedium, .button-volumeMax, .button-volumeMuted",
+    playState: ".button-nfplayerPause",
+    song: ".title"
   });
 })();
