@@ -5,7 +5,10 @@
 
   new BaseController({
     siteName: "SomaFM",
+    buttonSwitch: true,
     play: "#playBtn",
-    pause: "#stopBtn"
+    pause: "#stopBtn",
+
+    playState: "#stopBtn",
   });
 })();
