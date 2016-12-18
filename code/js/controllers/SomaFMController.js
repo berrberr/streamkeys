@@ -9,6 +9,6 @@
     play: "#playBtn",
     pause: "#stopBtn",
 
-    playState: "#stopBtn",
+    playState: "#stopBtn"
   });
 })();
