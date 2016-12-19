@@ -20,17 +20,6 @@
 
   var controller = new BaseController({
     siteName: "Spotify",
-    play: "#play-pause",
-    pause: "#play-pause",
-    playNext: "#next",
-    playPrev: "#previous",
-    like: "#track-add",
-    iframe: "#app-player",
-
-    buttonSwitch: "false",
-    playState: "#play-pause.playing",
-    song: "#track-name",
-    artist: "#track-artist"
   });
 
   controller.checkPlayer = function() {
