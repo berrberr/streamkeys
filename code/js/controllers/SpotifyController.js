@@ -19,7 +19,7 @@
   };
 
   var controller = new BaseController({
-    siteName: "Spotify",
+    siteName: "Spotify"
   });
 
   controller.checkPlayer = function() {
