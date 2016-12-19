@@ -10,16 +10,17 @@
     playNext: ["#next", "#next", ".buttons [title='Next']"],
     playPrev: ["#previous", "#previous", ".buttons [title='Previous']"],
     playState: ["#play-pause.playing", "#play.playing", ""],
-    iframe: ["#app-player", "#main", ".top-container"],
+    iframe: ["#app-player", "#main", ".nowPlayingBar-container"],
     buttonSwitch: ["false", "false", "true"],
     like: [".thumb.up", ".thumb.up", ""],
     dislike: [".thumb.down", ".thumb.down" ,""],
-    song: ["#track-name", ".caption .track", ".track-info-name"],
-    artist: ["#track-artist", ".caption .artist", ".track-info-artists"]
+    song: ["#track-name", ".caption .track", ".now-playing-bar :first-child :nth-child(2) :nth-child(1) :first-child"],
+    artist: ["#track-artist", ".caption .artist", ".now-playing-bar :first-child :nth-child(2) :nth-child(2) :first-child"]
   };
 
   var controller = new BaseController({
-    siteName: "Spotify"
+    siteName: "Spotify",
+    buttonSwitch: "false"
   });
 
   controller.checkPlayer = function() {
