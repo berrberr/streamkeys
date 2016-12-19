@@ -9,7 +9,7 @@
     pause: [".player-play-pause.pause", ".button-nfplayerPause"],
     playNext: [".player-next-episode", ".button-nfplayerNextEpisode"],
     mute: [".player-control-button.volume", ".button-volumeLow, .button-volumeMedium, .button-volumeMax, .button-volumeMuted"],
-	
+
     playState: [".player-play-pause.pause",".button-nfplayerPause"],
     song: [".player-status-main-title", ".title"]
   };
