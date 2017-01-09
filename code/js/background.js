@@ -97,7 +97,7 @@
 
   /**
    * Copy over old settings from local storageArea to sync.
-   * TODO: This change introduced in v1.5.5. Deprecate this at some point in the future.
+   * @note This change introduced in v1.5.5. Deprecate this at some point in the future.
    */
   var storageInitializedCheck = new Promise(function(resolve) {
     chrome.storage.sync.get(function(syncStorageObj) {
@@ -131,9 +131,9 @@
               url: "http://www.streamkeys.com/guide.html?installed=true"
             });
           } else if(details.reason == "update") {
-            chrome.tabs.create({
-              url: "http://www.streamkeys.com/guide.html?updated=true"
-            });
+            // chrome.tabs.create({
+            //   url: "http://www.streamkeys.com/guide.html?updated=true"
+            // });
           }
         }
       });
