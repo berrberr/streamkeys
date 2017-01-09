@@ -1,16 +1,34 @@
 ;(function() {
   "use strict";
 
-  var BaseController = require("BaseController");
+  var BaseController = require("BaseController"),
+      _ = require("lodash");
 
-  new BaseController({
-    siteName: "Netflix",
-    play: ".player-play-pause.play",
-    pause: ".player-play-pause.pause",
-    playNext: ".player-next-episode",
-    mute: ".player-control-button.volume",
+  var multiSelectors = {
+    play: [".player-play-pause.play", ".button-nfplayerPlay"],
+    pause: [".player-play-pause.pause", ".button-nfplayerPause"],
+    playNext: [".player-next-episode", ".button-nfplayerNextEpisode"],
+    mute: [".player-control-button.volume", ".button-volumeLow, .button-volumeMedium, .button-volumeMax, .button-volumeMuted"],
 
-    playState: ".player-play-pause.pause",
-    song: ".player-status-main-title"
+    playState: [".player-play-pause.pause",".button-nfplayerPause"],
+    song: [".player-status-main-title", ".title"]
+  };
+
+  var controller = new BaseController({
+    siteName: "Netflix"
   });
+
+  controller.checkPlayer = function() {
+    var that = this;
+
+    if(this.doc().querySelector(multiSelectors.play[0]) || this.doc().querySelector(multiSelectors.pause[0])) {
+      _.each(multiSelectors, function(value, key) {
+        that.selectors[key] = value[0];
+      });
+    } else {
+      _.each(multiSelectors, function(value, key) {
+        that.selectors[key] = value[1];
+      });
+    }
+  };
 })();
