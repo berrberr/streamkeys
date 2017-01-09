@@ -2,11 +2,12 @@
   "use strict";
 
   var BaseController = require("BaseController"),
-      $ = require("jquery");
+      _ = require("lodash");
 
   var multiSelectors = {
-    play: ["#play-pause", "#play", ".buttons [title='Play']"],
-    pause: ["#play-pause", "#play", ".buttons [title='Pause']"],
+    play: [null, null, ".buttons [title='Play']"],
+    pause: [null, null, ".buttons [title='Pause']"],
+    playPause: ["#play-pause", "#play", null],
     playNext: ["#next", "#next", ".buttons [title='Next']"],
     playPrev: ["#previous", "#previous", ".buttons [title='Previous']"],
     playState: ["#play-pause.playing", "#play.playing", ""],
@@ -19,8 +20,7 @@
   };
 
   var controller = new BaseController({
-    siteName: "Spotify",
-    buttonSwitch: "false"
+    siteName: "Spotify"
   });
 
   controller.checkPlayer = function() {
@@ -29,19 +29,22 @@
     player = document.querySelector(multiSelectors.iframe[2]) ? "v3" : player;
 
     if(player == "v1") {
-      $.each(multiSelectors, function(key, value) {
+      _.each(multiSelectors, function(value, key) {
         that.selectors[key] = value[0];
       });
+      that.buttonSwitch = false;
     }
     else if(player == "v2"){
-      $.each(multiSelectors, function(key, value) {
+      _.each(multiSelectors, function(value, key) {
         that.selectors[key] = value[1];
       });
+      that.buttonSwitch = false;
     }
     else{
-      $.each(multiSelectors, function(key, value) {
+      _.each(multiSelectors, function(value, key) {
         that.selectors[key] = value[2];
       });
+      that.buttonSwitch = true;
     }
   };
 })();
