@@ -121,6 +121,7 @@
       "plex": { name: "Plex", url: "http://www.plex.tv" },
       "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
+      "radd": { name: "radd.it", url: "http://radd.it", controller: "RadditController.js" },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
       "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
       "radiotunes": { name: "RadioTunes", url: "http://www.radiotunes.com" },
