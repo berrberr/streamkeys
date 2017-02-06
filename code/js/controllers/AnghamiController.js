@@ -5,15 +5,15 @@
 
   new BaseController({
     siteName: "Anghami",
-    dislike: "i.like.liked",
-    like: "i.like:not(.liked)",
-    playNext: "button[data-method='next']",
-    playPause: "button[data-method='play']",
-    playPrev: "button[data-method='prev']",
+    dislike: "#player .like.active",
+    like: "#player .like:not(.active)",
+    playNext: "#player .next",
+    playPause: "#player .play-pause-button",
+    playPrev: "#player .previous",
 
-    album: "a.trackalbum",
-    artist: "a.trackartist",
-    playState: "button[class*='icon-pause']",
-    song: "a.tracktitle"
+    album: "",
+    artist: "#player .track-artist",
+    playState: "#player .paused",
+    song: "#player .track-title a"
   });
 })();
