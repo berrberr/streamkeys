@@ -7,8 +7,8 @@
     siteName: "Tidal",
     play: ".play-controls .js-play",
     pause: ".play-controls .js-pause",
-    playNext: ".play-controls .icon-fast-forward",
-    playPrev: ".play-controls .icon-fast-backward",
+    playNext: ".play-controls .js-next",
+    playPrev: ".play-controls .js-previous",
 
     song: "[data-test-id=track-title]",
     artist: "[data-test-id=artist-title]"
