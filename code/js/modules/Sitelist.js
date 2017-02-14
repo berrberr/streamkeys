@@ -76,6 +76,7 @@
       "di": { name: "Di.fm", url: "http://www.di.fm" },
       "disco": { name: "Disco.io", url: "http://www.disco.io" },
       "disi": { name: "Disi", url: "http://www.disi.co.il/" },
+      "driveplayer": { name: "Drive Player", url: "http://www.driveplayer.com/" },
       "earbits": { name: "Earbits", url: "http://www.earbits.com" },
       "egghead": { name: "egghead.io", url: "https://egghead.io" },
       "emby": { name: "Emby", url: "http://app.emby.media" },
