@@ -13,6 +13,21 @@ var OptionsViewModel = function OptionsViewModel() {
   self.settingsInitialized = ko.observable(false);
   self.sitelist = ko.observableArray([]);
   self.commandList = ko.observableArray([]);
+  self.serverPort = ko.observable("8081");
+  self.connectionStatus = ko.observable("not_connected");
+
+  self.connectionStatusMessage = ko.pureComputed(function() {
+    switch(self.connectionStatus()) {
+      case "not_connected":
+        return "Not connected";
+      case "connected":
+        return "Connected";
+      case "connecting":
+        return "Connecting...";
+      case "connection_error":
+        return "Connection error! Verify that your sever is running on the correct port";
+    }
+  });
 
   self.loadingComplete = ko.pureComputed(function() {
     return self.sitelistInitialized() && self.settingsInitialized();
@@ -28,6 +43,15 @@ var OptionsViewModel = function OptionsViewModel() {
     });
   };
 
+  self.setupServer = function() {
+    var port = self.serverPort();
+    self.connectionStatus("connecting");
+
+    chrome.runtime.sendMessage({ action: "unified_remote_connection", port: port }, function(response) {
+      self.connectionStatus(response.status);
+    });
+  };
+
   // Load localstorage settings into observables
   chrome.storage.sync.get(function(obj) {
     self.openOnUpdate = ko.observable(obj["hotkey-open_on_update"]);
@@ -39,6 +63,10 @@ var OptionsViewModel = function OptionsViewModel() {
     self.youtubeRestart.subscribe(function(value) {
       chrome.storage.sync.set({ "hotkey-youtube_restart": value });
     });
+
+    if (obj["hotkey-server_port"]) {
+      self.serverPort(obj["hotkey-server_port"]);
+    }
 
     self.settingsInitialized(true);
   });

@@ -2,7 +2,8 @@
   "use strict";
 
   var Sitelist = require("./modules/Sitelist.js"),
-      _ = require("lodash");
+      _ = require("lodash"),
+      io = require("socket.io-client");
 
   /**
    * Needed for phantomjs to work
@@ -36,6 +37,49 @@
     } else {
       sendAction(request.command);
     }
+  };
+
+  /**
+   * Attempt to connect to a Unified Remote server
+   * @param {String} port - Port number of server
+   * @return {Promise}
+   */
+  var initializeUnifiedRemoteConnection = function(port) {
+    var promise = new Promise(function(resolve) {
+      var socket = io("http://localhost:" + port, { reconnection: false });
+
+      socket.on("connect", function() {
+        // Listen for SK commands from remote server
+        socket.on("skCommand", function(data) {
+          console.log("skCommand :: ", data.command);
+          sendAction(data.command);
+        });
+
+        socket.on("disconnect", function() {
+          // TODO: also setup reconnect function timeout on disconnect
+          updateUnifiedRemoteConnectionState({ status: "disconnected" });
+        });
+
+        console.log("connected");
+        resolve({ status: "connected" });
+      });
+
+      socket.on("connect_error", function() {
+        console.log("connection error");
+        resolve({ status: "connection_error" });
+      });
+    });
+
+    return promise;
+  };
+
+  /**
+   * Signal to user the connected state of unified remote. Updates:
+   *   1. Message at bottom of popup player.
+   *   2. Extension icon.
+   */
+  var updateUnifiedRemoteConnectionState = function(state) {
+    console.log("Updating remote state: ", state);
   };
 
   /**
@@ -93,6 +137,15 @@
 
       return true;
     }
+    if(request.action === "unified_remote_connection") {
+      initializeUnifiedRemoteConnection(request.port).then(function(status) {
+        console.log("connection status: ", status);
+        response(status);
+        updateUnifiedRemoteConnectionState(status);
+      });
+
+      return true;
+    }
   });
 
   /**
@@ -102,7 +155,7 @@
   var storageInitializedCheck = new Promise(function(resolve) {
     chrome.storage.sync.get(function(syncStorageObj) {
       if(syncStorageObj["hotkey-initialized"]) {
-        resolve();
+        resolve(syncStorageObj);
       } else {
         var newStorageObj = {
           "hotkey-initialized": true
@@ -121,23 +174,27 @@
     });
   });
 
-  storageInitializedCheck.then(function() {
+  storageInitializedCheck.then(function(storageObj) {
     // Open info page on install/update
     chrome.runtime.onInstalled.addListener(function(details) {
-      chrome.storage.sync.get(function(obj) {
-        if(obj["hotkey-open_on_update"] || typeof obj["hotkey-open_on_update"] === "undefined") {
-          if(details.reason == "install") {
-            chrome.tabs.create({
-              url: "http://www.streamkeys.com/guide.html?installed=true"
-            });
-          } else if(details.reason == "update") {
-            // chrome.tabs.create({
-            //   url: "http://www.streamkeys.com/guide.html?updated=true"
-            // });
-          }
+      if(storageObj["hotkey-open_on_update"] || typeof storageObj["hotkey-open_on_update"] === "undefined") {
+        if(details.reason == "install") {
+          chrome.tabs.create({
+            url: "http://www.streamkeys.com/guide.html?installed=true"
+          });
+        } else if(details.reason == "update") {
+          // chrome.tabs.create({
+          //   url: "http://www.streamkeys.com/guide.html?updated=true"
+          // });
         }
-      });
+      }
     });
+
+    if (storageObj["hotkey-server_port"]) {
+      initializeUnifiedRemoteConnection(storageObj["hotkey-server_port"]).then(function(status) {
+        updateUnifiedRemoteConnectionState(status);
+      });
+    }
 
     // Store commands in global
     chrome.commands.getAll(function(cmds) {

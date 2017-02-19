@@ -25,6 +25,9 @@
         <li>
           <a href="#" data-bind="click: function() { $data.selectedTab('general') }, css: { selected: $data.selectedTab() == 'general' }"><span class="menu-title">General</span><span class="menu-arrow"></span></a>
         </li>
+        <li>
+          <a href="#" data-bind="click: function() { $data.selectedTab('unifiedremote') }, css: { selected: $data.selectedTab() == 'unifiedremote' }"><span class="menu-title">Unified Remote</span><span class="menu-arrow"></span></a>
+        </li>
         <li><a href="http://www.streamkeys.com/guide.html" target="_blank"><span class="menu-title">Help</span><span class="menu-arrow"></span></a></li>
         <li><a href="http://www.streamkeys.com/faq.html" target="_blank"><span class="menu-title">FAQ</span><span class="menu-arrow"></span></a></li>
         <li><a href="http://www.streamkeys.com/donate.html" target="_blank"><span class="menu-title">Donate</span><span class="menu-arrow"></span></a></li>
@@ -152,6 +155,21 @@
         <button class="mdl-button mdl-js-button mdl-button--raised" data-bind="click: $data.openExtensionKeysPage">Configure Hotkeys</button>
         <!-- /ko -->
       </div>
+      <div id="unified-remote" data-bind="visible: $data.selectedTab() == 'unifiedremote'" class="options-tab unified-remote">
+        <!-- ko if: $data.settingsInitialized() -->
+        <h3>Unified Remote Setup</h3>
+        <p>
+          Setup Unified Remote server connection here.
+        </p>
+        <p class="setting">
+          <label for="server-url">Server Port</label>
+          <input type="text" id="server-url" data-bind="textInput: $data.serverPort">
+        </p>
+        <button class="mdl-button mdl-js-button mdl-button--raised" data-bind="click: $data.setupServer">Connect</button>
+        <p data-bind="text: $data.connectionStatusMessage"></p>
+        <!-- /ko -->
+      </div>
+
     </div>
   </div>
   <div class="footer">
