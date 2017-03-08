@@ -10,7 +10,7 @@
     playPrev: "[title='Previous']",
 
     playState: "[title='Pause']",
-    song: ".nowPlayingBar-container [href*='/album/']",
-    artist: ".nowPlayingBar-container [href*='/artist/']"
+    song: ".now-playing-bar div div [href*='/album/']",
+    artist: ".now-playing-bar div div [href*='/artist/']"
   });
 })();
