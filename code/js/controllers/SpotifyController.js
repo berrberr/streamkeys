@@ -5,11 +5,11 @@
       _ = require("lodash");
 
   var multiSelectors = {
-    playPause: ["#play-pause", "#play", "[title='Pause'],[title='Play']"],
-    playNext: ["#next", "#next", "[title='Next']"],
-    playPrev: ["#previous", "#previous", "[title='Previous']"],
-    playState: ["#play-pause.playing", "#play.playing", "[title='Pause']"],
-    iframe: ["#app-player", "#main", null],
+    playPause: ["#play-pause", "#play", "#play-pause"],
+    playNext: ["#next", "#next", ".spoticon-skip-forward-24"],
+    playPrev: ["#previous", "#previous", ".spoticon-skip-back-24"],
+    playState: ["#play-pause.playing", "#play.playing", ".spoticon-pause-32"],
+    iframe: ["#app-player", "#main", "#app-player"],
     like: [".thumb.up", ".thumb.up", null],
     dislike: [".thumb.down", ".thumb.down", null],
     song: ["#track-name", ".caption .track", ".now-playing-bar div div [href*='/album/']"],
@@ -24,7 +24,7 @@
     var that = this;
     var selectorIndex;
 
-    if (window.location.hostname === "open.spotify.com") {
+    if (window.location.hostname === "open.spotify.com" || window.location.hostname === "play.spotify.com") {
       selectorIndex = 2;
     } else {
       if (document.querySelector(multiSelectors.iframe[0])) { selectorIndex = 0; }
