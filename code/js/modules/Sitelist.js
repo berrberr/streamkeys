@@ -101,6 +101,7 @@
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"] },
       "listenonrepeat": { name: "ListenOnRepeat", url: "http://www.listenonrepeat.com" },
       "livephish": { name: "LivePhish", url: "http://plus.livephish.com" },
+      "logitechmediaserver": { name: "LogitechMediaServer", url: "http://mysqueezebox.com", controller: "LogitechMediaServerController.js", alias: ["mysqueezebox"] },
       "lovelinetapes": { name: "Loveline Tapes", url: "http://www.lovelinetapes.com", controller: "LovelineTapesController.js", alias: ["lovelinetapes"] },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
