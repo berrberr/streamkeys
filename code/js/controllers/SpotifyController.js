@@ -5,15 +5,17 @@
       _ = require("lodash");
 
   var multiSelectors = {
-    playPause: ["#play-pause", "#play", "[title='Pause'],[title='Play']"],
-    playNext: ["#next", "#next", "[title='Next']"],
-    playPrev: ["#previous", "#previous", "[title='Previous']"],
-    playState: ["#play-pause.playing", "#play.playing", "[title='Pause']"],
-    iframe: ["#app-player", "#main", null],
-    like: [".thumb.up", ".thumb.up", null],
-    dislike: [".thumb.down", ".thumb.down", null],
-    song: ["#track-name", ".caption .track", ".now-playing-bar div div [href*='/album/']"],
-    artist: ["#track-artist", ".caption .artist", ".now-playing-bar div div [href*='/artist/']"]
+    play: [null, ".now-playing-bar .spoticon-play-32"],
+    pause: [null, ".now-playing-bar .spoticon-pause-32"],
+    playPause: ["#play-pause", null],
+    playNext: ["#next", ".now-playing-bar .spoticon-skip-forward-24"],
+    playPrev: ["#previous", ".now-playing-bar .spoticon-skip-back-24"],
+    playState: ["#play-pause.playing", ".now-playing-bar .spoticon-pause-32"],
+    iframe: ["#app-player", null],
+    like: [".thumb.up", null],
+    dislike: [".thumb.down", null],
+    song: ["#track-name", ".now-playing-bar div div [href*='/album/']"],
+    artist: ["#track-artist", ".now-playing-bar div div [href*='/artist/']"]
   };
 
   var controller = new BaseController({
@@ -22,14 +24,7 @@
 
   controller.checkPlayer = function() {
     var that = this;
-    var selectorIndex;
-
-    if (window.location.hostname === "open.spotify.com") {
-      selectorIndex = 2;
-    } else {
-      if (document.querySelector(multiSelectors.iframe[0])) { selectorIndex = 0; }
-      if (document.querySelector(multiSelectors.iframe[1])) { selectorIndex = 1; }
-    }
+    var selectorIndex = window.location.hostname === "open.spotify.com" ? 1 : 0;
 
     _.each(multiSelectors, function(value, key) {
       that.selectors[key] = value[selectorIndex];
