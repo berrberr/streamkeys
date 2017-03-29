@@ -143,6 +143,7 @@
       "music.sonyentertainmentnetwork": { name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com", controller: "SonyMusicUnlimitedController.js" },
       "sound": { name: "Sound.is", url: "http://www.sound.is" },
       "soundcloud": { name: "Soundcloud", url: "http://www.soundcloud.com" },
+      "soundredux": { name: "SoundRedux", url: "https://soundredux.io" },
       "soundsgood": { name: "Soundsgood.co", url: "http://www.soundsgood.co" },
       "spotify": { name: "Spotify Web Player", url: "http://www.spotify.com" },
       "spreaker": { name: "Spreaker", url: "http://www.spreaker.com" },
