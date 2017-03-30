@@ -68,6 +68,7 @@
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
       "blitzr": { name: "Blitzr", url: "http://www.blitzr.com" },
       "brain": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
+      "cloud.caster": { name: "Cloud Caster", url: "http://cloud-caster.com", controller: "CloudCasterController.js", alias: ["cloud-caster"] },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
       "cubic": { name: "Cubic.fm", url: "http://www.cubic.fm" },
       "devchat": { name: "devchat.tv", url: "http://www.devchat.tv" },
