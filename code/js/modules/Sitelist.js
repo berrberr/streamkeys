@@ -155,6 +155,7 @@
       "thesixtyone": { name: "TheSixtyOne", url: "http://www.thesixtyone.com" },
       "tunein": { name: "TuneIn", url: "http://www.tunein.com" },
       "twitch": { name: "Twitch.tv", url: "http://www.twitch.tv" },
+      "udemy": { name: "Udemy", url: "https://www.udemy.com/" },
       "vk": { name: "Vkontakte", url: "http://www.vk.com" },
       "music.yandex": { name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js" },
       "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
@@ -162,13 +163,11 @@
       "xiami": { name: "Xiami", url: "http://www.xiami.com" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
-      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" },
-      "udemy": { name: "Udemy", url: "https://www.udemy.com/", controller: "UdemyController.js" }
+      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
     };
 
     this.disabledTabs = [];
   }
-
 
   /**
    * Get site enabled settings from localstorage
