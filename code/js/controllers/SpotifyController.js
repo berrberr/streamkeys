@@ -5,12 +5,12 @@
       _ = require("lodash");
 
   var multiSelectors = {
-    play: [null, ".now-playing-bar .spoticon-play-32"],
-    pause: [null, ".now-playing-bar .spoticon-pause-32"],
+    play: [null, ".now-playing-bar button[title=Play]"],
+    pause: [null, ".now-playing-bar button[title=Pause]"],
     playPause: ["#play-pause", null],
-    playNext: ["#next", ".now-playing-bar .spoticon-skip-forward-24"],
-    playPrev: ["#previous", ".now-playing-bar .spoticon-skip-back-24"],
-    playState: ["#play-pause.playing", ".now-playing-bar .spoticon-pause-32"],
+    playNext: ["#next", ".now-playing-bar button[title=Next]"],
+    playPrev: ["#previous", ".now-playing-bar button[title=Previous]"],
+    playState: ["#play-pause.playing", ".now-playing-bar button[title=Pause]"],
     iframe: ["#app-player", null],
     like: [".thumb.up", null],
     dislike: [".thumb.down", null],
