@@ -83,6 +83,7 @@
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
       "focusmusic": { name: "Focusmusic", url: "https://focusmusic.fm/" },
+      "friskyradio": { name: "Frisky Radio", url: "https://www.friskyradio.com" },
       "gaana": { name: "Gaana", url: "http://www.gaana.com" },
       "grooveshark": { name: "Grooveshark", url: "http://groovesharks.org", alias:["groovesharks"] },
       "giantbomb": { name: "Giantbomb", url: "http://giantbomb.com" },
