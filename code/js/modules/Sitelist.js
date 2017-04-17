@@ -96,6 +96,7 @@
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
+      "internet-radio": {name: "Internet Radio", url: "https://www.internet-radio.com", controller: "InternetRadioController.js"},
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
       "jamendo": { name: "Jamendo", url: "https://www.jamendo.com" },
       "jango": { name: "Jango", url: "http://www.jango.com" },
@@ -380,7 +381,9 @@
    * @return {Boolean} true if url matches a music site
    */
   Sitelist.prototype.checkMusicSite = function(url) {
-    var sitesRegex = _.map(this.sites, function(site) { return site.urlRegex; });
+    var sitesRegex = _.map(this.sites, function(site) {
+      return site.urlRegex; // separate line for debug ability
+    });
 
     return sitesRegex.some(function(urlRegex) {
       return (urlRegex.test(url));

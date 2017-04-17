@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   chrome.runtime.sendMessage({ action: "check_music_site" }, function(response) {

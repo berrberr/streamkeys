@@ -1,30 +1,39 @@
-;(function() {
+(function() {
   "use strict";
 
+  require("../modules/utils.js");
   var sk_log = require("../modules/SKLog.js");
 
   function BaseController(options) {
     this.siteName = options.siteName || null;
 
-    this.selectors = {
-      //** Properties **//
-      playPause: (options.playPause || null),
-      play: (options.play || null),
-      pause: (options.pause || null),
-      playNext: (options.playNext || null),
-      playPrev: (options.playPrev || null),
-      mute: (options.mute || null),
-      like: (options.like || null),
-      dislike: (options.dislike || null),
-      iframe: (options.iframe || null),
-
-      //** States **//
-      playState: (options.playState || null),
-
+    this.selectors = {};
+    var selectorsKeys = [
+      'playPause', 'play', 'pause',
+      'playNext', 'playPrev', 'isPlaying',
+      'mute', 'like', 'dislike', 'iframe',
       //** Song Info **//
-      song: (options.song || null),
-      artist: (options.artist || null)
-    };
+      'song', 'artist'
+    ];
+    selectorsKeys.forEach((key) => this.selectors[key] = null);
+
+    // Assign passed options to this and this.selectors
+    Object.keys(options).forEach((key) => {
+      if (!selectorsKeys.isInclude(key)) {
+        this[key] = options[key];
+      } else {
+        if (typeof options[key] == "function")
+          this[key] = options[key];
+        else if (options[key])
+          this.selectors[key] = options[key];
+      }
+    });
+
+    // deprecated: selectors.playState, new name: isPlaying
+    // backward compatibility:
+    if (!this.selectors.isPlaying)
+      this.selectors.isPlaying = options.playState || null;
+
 
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
@@ -46,6 +55,20 @@
     chrome.runtime.sendMessage({ created: true }, function() {
       sk_log("SK content script loaded");
     });
+
+    this.getElement = (selector) => {
+      return this.doc().querySelector(selector);
+    };
+
+    this.getElements = (selector) => {
+      return this.doc().querySelectorAll(selector);
+    };
+
+    this.isVisible = (element) => {
+      return window.getComputedStyle(element, null)
+        .getPropertyValue("display") != "none";
+    };
+
   }
 
   BaseController.prototype.doc = function() {
@@ -91,12 +114,20 @@
   };
 
   BaseController.prototype.playPause = function() {
-    if(this.selectors.play !== null && this.selectors.pause !== null) {
-      if(this.isPlaying()) {
+    if(this.play && this.pause) {
+
+      if(this.isPlaying())
+        this.pause();
+      else
+        this.play();
+
+    } else if(this.selectors.play !== null && this.selectors.pause !== null) {
+
+      if(this.isPlaying())
         this.click({action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe});
-      } else {
+      else
         this.click({action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe});
-      }
+
     } else {
       this.click({action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe});
     }
@@ -138,13 +169,13 @@
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
     }
-    else if(this.selectors.playState) {
+    else if(this.selectors.isPlaying) {
       // Check if the play state element exists and is visible
-      var playStateEl = this.doc().querySelector(this.selectors.playState);
-      isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
+      var playStateEl = this.doc().querySelector(this.selectors.isPlaying);
+      isPlaying = !!(playStateEl && this.isVisible(playStateEl));
     }
     else if(playEl) {
-      isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
+      isPlaying = this.isVisible(playEl);
     }
 
     return isPlaying;
