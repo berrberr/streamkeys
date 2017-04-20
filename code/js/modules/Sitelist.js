@@ -125,7 +125,7 @@
       "plex": { name: "Plex", url: "http://www.plex.tv" },
       "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
-      "y.qq.com/portal/player.html": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js" },
+      "qq.com/portal/player.html": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js" },
       "radd": { name: "radd.it", url: "http://radd.it", controller: "RadditController.js" },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
       "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
