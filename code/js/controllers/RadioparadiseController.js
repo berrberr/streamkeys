@@ -7,6 +7,7 @@
   var controller = new BaseController({
     siteName: "RadioParadise",
     playPause: "#override",
+    playNext: "#psd_button",
     song: "#nowplaying_title",
 
     overridePlayPause: true
