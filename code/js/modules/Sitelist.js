@@ -78,6 +78,7 @@
       "disco": { name: "Disco.io", url: "http://www.disco.io" },
       "disi": { name: "Disi", url: "http://www.disi.co.il/" },
       "driveplayer": { name: "Drive Player", url: "http://www.driveplayer.com/" },
+      "duckburgradio": { name: "Duckburg Radio", url: "http://beta.radio-mb.com", controller: "DuckburgRadioController.js", alias: ["radio-mb"] },
       "earbits": { name: "Earbits", url: "http://www.earbits.com" },
       "egghead": { name: "egghead.io", url: "https://egghead.io" },
       "emby": { name: "Emby", url: "http://app.emby.media" },
