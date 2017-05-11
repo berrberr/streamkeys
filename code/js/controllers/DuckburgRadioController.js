@@ -6,7 +6,6 @@
   new BaseController({
     siteName: "Duckburg Radio",
 
-    buttonSwitch: true,
     playPause: "#radiomb-play",
     mute : "#radiomb-volume",
 
