@@ -8,8 +8,8 @@
     overridePlayPause: true,
     overridePlayPrev: true,
     overridePlayNext: true,
-    song: ".playing .segment-name",
-    artist: "h5.subheader"
+    song: ".rmq-55a86633" // not sure how permanent this react class is, but it is the best option right now for getting the song name
+    // artist name not obtainable from DOM
   });
 
   controller.playPause = function() {
