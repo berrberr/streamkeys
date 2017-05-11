@@ -99,6 +99,7 @@
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
       "jamendo": { name: "Jamendo", url: "https://www.jamendo.com" },
       "jango": { name: "Jango", url: "http://www.jango.com" },
+      "koel": { name: "Koel", url: "https://koel.phanan.net" },
       "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"] },
       "listenonrepeat": { name: "ListenOnRepeat", url: "http://www.listenonrepeat.com" },
