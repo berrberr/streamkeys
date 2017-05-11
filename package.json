@@ -45,7 +45,7 @@
     "grunt-karma": "^0.12.1",
     "grunt-lintspaces": "~0.7.0",
     "grunt-mkdir": "~0.1.1",
-    "grunt-sass": "^1.1.0",
+    "grunt-sass": "^2.0.0",
     "jasmine-core": "^2.3.4",
     "jshint-stylish": "~0.2.0",
     "karma": "^0.13.14",
