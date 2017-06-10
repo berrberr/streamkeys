@@ -114,6 +114,7 @@
       "napster": { name: "Napster", url: "https://app.napster.com", controller: "NapsterController.js" },
       "netflix": { name: "Netflix", url: "http://www.netflix.com" },
       "noise": { name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js" },
+      "noisli": { name: "Noisli", url: "http://noisli.com", controller: "NoisliController.js" },
       "noonpacific": { name: "Noon Pacific", url: "http://www.noonpacific.com" },
       "www.npr": { name: "NPR News Player", url: "http://www.npr.org", controller: "NprNewsController.js" },
       "one.npr": { name: "NPR One Player", url: "http://one.npr.org", controller: "NprOneController.js" },
