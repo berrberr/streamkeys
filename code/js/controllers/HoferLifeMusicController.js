@@ -4,7 +4,7 @@
   var BaseController = require("BaseController");
 
   new BaseController({
-    siteName: "LifeStoreFlat",
+    siteName: "Hofer life music",
     play: ".player-play-button .icon-play-button",
     pause: ".player-play-button .icon-pause2",
     playNext: ".player-advance-button",
