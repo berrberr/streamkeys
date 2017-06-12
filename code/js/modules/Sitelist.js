@@ -103,6 +103,7 @@
       "koel": { name: "Koel", url: "https://koel.phanan.net" },
       "kollekt": { name: "Kollekt.fm", url: "http://www.kollekt.fm" },
       "last": { name: "LastFm", url: "http://www.last.fm", controller: "LastfmController.js", alias: ["lastfm"] },
+      "lifestore-flat": { name: "Hofer life music", url: "https://app.lifestore-flat.at", controller: "HoferLifeMusicController.js" },
       "listenonrepeat": { name: "ListenOnRepeat", url: "http://www.listenonrepeat.com" },
       "livephish": { name: "LivePhish", url: "http://plus.livephish.com" },
       "logitechmediaserver": { name: "LogitechMediaServer", url: "http://mysqueezebox.com", controller: "LogitechMediaServerController.js", alias: ["mysqueezebox"] },
