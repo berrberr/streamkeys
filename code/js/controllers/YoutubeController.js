@@ -3,7 +3,7 @@
 
   var BaseController = require("BaseController"),
       sk_log = require("../modules/SKLog.js"),
-      $ = require("jquery");
+      _ = require("lodash");
 
   var multiSelectors = {
     play: [".ytp-button-play", null],
@@ -56,12 +56,12 @@
       var that = this;
 
       if(document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
-        $.each(multiSelectors, function(key, value) {
+        _.each(multiSelectors, function(value, key) {
           that.selectors[key] = value[0];
         });
         that.buttonSwitch = true;
       } else {
-        $.each(multiSelectors, function(key, value) {
+        _.each(multiSelectors, function(value, key) {
           that.selectors[key] = value[1];
         });
         that.buttonSwitch = false;

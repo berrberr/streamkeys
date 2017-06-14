@@ -2,45 +2,32 @@
   "use strict";
 
   var BaseController = require("BaseController"),
-      $ = require("jquery");
+      _ = require("lodash");
 
   var multiSelectors = {
-    playPause: ["#play-pause", "#play"],
-    playNext: ["#next", "#next"],
-    playPrev: ["#previous", "#previous"],
-    playState: ["#play-pause.playing", "#play.playing"],
-    iframe: ["#app-player", "#main"],
-    like: [".thumb.up", ".thumb.up"],
-    dislike: [".thumb.down", ".thumb.down"],
-    song: ["#track-name", ".caption .track"],
-    artist: ["#track-artist", ".caption .artist"]
+    play: [null, ".now-playing-bar button[class*=play]"],
+    pause: [null, ".now-playing-bar button[class*=pause]"],
+    playPause: ["#play-pause", null],
+    playNext: ["#next", ".now-playing-bar button[class*=skip-forward]"],
+    playPrev: ["#previous", ".now-playing-bar button[class*=skip-back]"],
+    playState: ["#play-pause.playing", ".now-playing-bar button[class*=pause]"],
+    iframe: ["#app-player", null],
+    like: [".thumb.up", null],
+    dislike: [".thumb.down", null],
+    song: ["#track-name", ".now-playing-bar div div [href*='/album/']"],
+    artist: ["#track-artist", ".now-playing-bar div div [href*='/artist/']"]
   };
 
   var controller = new BaseController({
-    siteName: "Spotify",
-    playPause: "#play-pause",
-    playNext: "#next",
-    playPrev: "#previous",
-    like: "#track-add",
-    iframe: "#app-player",
-
-    playState: "#play-pause.playing",
-    song: "#track-name",
-    artist: "#track-artist"
+    siteName: "Spotify"
   });
 
   controller.checkPlayer = function() {
     var that = this;
-    var player = document.querySelector(multiSelectors.iframe[0]) ? "v1" : "v2";
+    var selectorIndex = window.location.hostname === "open.spotify.com" ? 1 : 0;
 
-    if(player == "v1") {
-      $.each(multiSelectors, function(key, value) {
-        that.selectors[key] = value[0];
-      });
-    } else {
-      $.each(multiSelectors, function(key, value) {
-        that.selectors[key] = value[1];
-      });
-    }
+    _.each(multiSelectors, function(value, key) {
+      that.selectors[key] = value[selectorIndex];
+    });
   };
 })();
