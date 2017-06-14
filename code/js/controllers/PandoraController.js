@@ -14,7 +14,8 @@
 
     song: [".playerBarSong", ".nowPlayingTopInfo__current__trackName div:nth-child(2) div div"],
     artist: [".playerBarArtist", ".nowPlayingTopInfo__current__artistName"],
-    album: [".playerBarAlbum", ".nowPlayingTopInfo__current__albumName"]
+    album: [".playerBarAlbum", ".nowPlayingTopInfo__current__albumName"],
+    art: [".playerBarArt", ".Tuner__Audio__TrackDetail__img > .ImageLoader > .ImageLoader__cover"]
   };
 
   var controller = new BaseController({
