@@ -192,16 +192,18 @@
             ? {
                 enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
                 priority: 1,
-                alias: []
+                alias: [],
+                showNotifications: false
               }
             : (objSet && obj["hotkey-sites"][siteKey])
               // Validate enabled/priority values in case of migration problems
               ? {
                   enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
                   priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1,
-                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : []
+                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : [],
+                  showNotifications: _.isBoolean(obj["hotkey-sites"][siteKey].showNotifications) ? obj["hotkey-sites"][siteKey].showNotifications : false
                 }
-              : { enabled: true, priority: 1, alias: [] };
+              : { enabled: true, priority: 1, alias: [], showNotifications: false };
 
         that.addSite(
           siteKey,
@@ -251,6 +253,12 @@
           ? 1
           : site.priority
         : attributes.priority;
+    attributes.showNotifications =
+      (typeof attributes.showNotifications === "undefined")
+        ? (typeof site.showNotifications === "undefined")
+          ? false
+          : site.showNotifications
+        : attributes.showNotifications;
 
     this.sites[siteKey] = _.extend(
       site,
@@ -258,6 +266,7 @@
       {
         enabled: attributes.enabled,
         priority: attributes.priority,
+        showNotifications: attributes.showNotifications,
         urlRegex: new URLCheck(siteKey, { alias: attributes.alias, blacklist: site.blacklist })
       }
     );
@@ -319,6 +328,17 @@
   };
 
   /**
+   * @return {Array} array of showNotifications site keys
+   */
+  Sitelist.prototype.getShowNotifications = function() {
+    return _.keys(
+      _.pick(this.sites, function(site) {
+        return site.showNotifications;
+      })
+    );
+  };
+
+  /**
    * Returns the sitelist key of a url if it is matched to a music site
    * @param {String} url - url to check
    * @return {String} sitelist key if found, null otherwise
@@ -365,6 +385,18 @@
     var _sites = this.sites;
 
     return this.getEnabled().some(function(sitename) {
+      return (_sites[sitename].urlRegex.test(url));
+    });
+  };
+
+  /**
+   * @param url {String} url of site to check for
+   * @return {Boolean} true if url matches a showNotifications site
+   */
+  Sitelist.prototype.checkShowNotifications = function(url) {
+    var _sites = this.sites;
+
+    return this.getShowNotifications().some(function(sitename) {
       return (_sites[sitename].urlRegex.test(url));
     });
   };

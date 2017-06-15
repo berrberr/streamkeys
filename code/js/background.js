@@ -100,7 +100,14 @@
       return true;
     }
     if(request.action === "send_change_notification") {
-      chrome.notifications.create(sender.id, {
+      if (window.sk_sites.checkShowNotifications(sender.tab.url)) {
+        sendChangeNotification(request, sender);
+      }
+    }
+  });
+
+  var sendChangeNotification = function(request, sender) {
+    chrome.notifications.create(sender.id, {
         type: "list",
         title: request.stateData.siteName,
         message: request.stateData.song || "",
@@ -117,8 +124,7 @@
           chrome.notifications.clear(notificationId);
         }, 5000);
       });
-    }
-  });
+  };
 
   /**
    * Copy over old settings from local storageArea to sync.
