@@ -100,7 +100,8 @@
       return true;
     }
     if(request.action === "send_change_notification") {
-      if (window.sk_sites.checkShowNotifications(sender.tab.url)) {
+      if (window.sk_sites.checkShowNotifications(sender.tab.url) &&
+          window.sk_sites.checkTabEnabled(sender.tab.id)) {
         sendChangeNotification(request, sender);
       }
     }
