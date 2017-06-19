@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -18,6 +18,6 @@
   controller.isPlaying = function() {
     var playStateEl = document.querySelector(this.selectors.playState);
     return (playStateEl &&
-              window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
+      window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none");
   };
 })();

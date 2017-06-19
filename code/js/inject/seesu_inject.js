@@ -5,9 +5,9 @@
   document.addEventListener("streamkeys-cmd", function(e) {
     //Get seesu current song object (thanks Gleb!)
     var song = window.su.p && window.su.p.c_song;
-    if(song) {
-      if(e.detail === "playPause") {
-        if(song.states.play) {
+    if (song) {
+      if (e.detail === "playPause") {
+        if (song.states.play) {
           try {
             song.pause();
             sk_log("playPause");
@@ -22,14 +22,14 @@
             sk_log("playPause", exception, true);
           }
         }
-      } else if(e.detail === "next") {
+      } else if (e.detail === "next") {
         try {
           song.playNext();
           sk_log("playNext");
         } catch (exception) {
           sk_log("playNext", exception, true);
         }
-      } else if(e.detail === "prev") {
+      } else if (e.detail === "prev") {
         try {
           song.playPrev();
           sk_log("playPrev");

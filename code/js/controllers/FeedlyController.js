@@ -1,8 +1,8 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController"),
-      sk_log = require("../modules/SKLog.js");
+    sk_log = require("../modules/SKLog.js");
 
   var controller = new BaseController({
     siteName: "Feedly",
@@ -25,18 +25,18 @@
   };
 
   controller.playPause = function() {
-    if(this.isPlaying()) {
+    if (this.isPlaying()) {
       try {
         this.getPlayer().pause();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("Feedly player error", e, true);
       }
     } else {
       try {
         this.getPlayer().play();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("Feedly player error", e, true);
       }
     }

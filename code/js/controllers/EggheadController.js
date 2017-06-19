@@ -1,4 +1,4 @@
-;(function () {
+(function() {
   "use strict";
 
   var playButtonSelector = ".wistia_romulus_control[id^='wistia_'][id*='PlayButton']";
@@ -18,7 +18,7 @@
     artist: ".lesson-video-container p.line-lesson-author a:last-of-type"
   });
 
-  controller.isPlaying = function () {
+  controller.isPlaying = function() {
     return !(this.doc().querySelector(playButtonSelector + ".paused"));
   };
 })();

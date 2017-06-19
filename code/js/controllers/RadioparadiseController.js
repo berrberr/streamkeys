@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -18,7 +18,7 @@
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
     try {
       var playButton = doc.querySelector("#play_button");
-      if(playButton.classList.contains("button_active")) {
+      if (playButton.classList.contains("button_active")) {
         try {
           doc.querySelector("input[title='Stop Audio']").click();
           sk_log("playPause");
@@ -47,7 +47,7 @@
 
   controller.getSongData = function() {
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
-    if(doc.querySelector("#nowplaying_title")) return doc.querySelector("#nowplaying_title").textContent;
+    if (doc.querySelector("#nowplaying_title")) return doc.querySelector("#nowplaying_title").textContent;
 
     return null;
   };

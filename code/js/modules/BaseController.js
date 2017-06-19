@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var sk_log = require("../modules/SKLog.js");
@@ -43,7 +43,9 @@
     this.overridePlayPause = options.overridePlayPause || false;
     this.overridePlayNext = options.overridePlayNext || false;
 
-    chrome.runtime.sendMessage({ created: true }, function() {
+    chrome.runtime.sendMessage({
+      created: true
+    }, function() {
       sk_log("SK content script loaded");
     });
   }
@@ -61,8 +63,12 @@
   BaseController.prototype.injectScript = function(file) {
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
-    if(file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
-    if(file.script) {script.innerHTML = file.script;}
+    if (file.url) {
+      script.setAttribute("src", chrome.extension.getURL(file.url));
+    }
+    if (file.script) {
+      script.innerHTML = file.script;
+    }
     (document.head || document.documentElement).appendChild(script);
   };
 
@@ -74,7 +80,7 @@
    */
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
-    if(opts.selectorButton === null) {
+    if (opts.selectorButton === null) {
       sk_log("disabled", opts.action);
       return;
     }
@@ -82,7 +88,7 @@
     try {
       this.doc().querySelector(opts.selectorButton).click();
       sk_log(opts.action);
-    } catch(e) {
+    } catch (e) {
       sk_log("Element not found for click.", opts.selectorButton, true);
     }
 
@@ -91,39 +97,71 @@
   };
 
   BaseController.prototype.playPause = function() {
-    if(this.selectors.play !== null && this.selectors.pause !== null) {
-      if(this.isPlaying()) {
-        this.click({action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe});
+    if (this.selectors.play !== null && this.selectors.pause !== null) {
+      if (this.isPlaying()) {
+        this.click({
+          action: "playPause",
+          selectorButton: this.selectors.pause,
+          selectorFrame: this.selectors.iframe
+        });
       } else {
-        this.click({action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe});
+        this.click({
+          action: "playPause",
+          selectorButton: this.selectors.play,
+          selectorFrame: this.selectors.iframe
+        });
       }
     } else {
-      this.click({action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe});
+      this.click({
+        action: "playPause",
+        selectorButton: this.selectors.playPause,
+        selectorFrame: this.selectors.iframe
+      });
     }
   };
 
   BaseController.prototype.playNext = function() {
-    this.click({action: "playNext", selectorButton: this.selectors.playNext, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "playNext",
+      selectorButton: this.selectors.playNext,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.playPrev = function() {
-    this.click({action: "playPrev", selectorButton: this.selectors.playPrev, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "playPrev",
+      selectorButton: this.selectors.playPrev,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.stop = function() {
-    if(this.isPlaying()) this.playPause();
+    if (this.isPlaying()) this.playPause();
   };
 
   BaseController.prototype.mute = function() {
-    this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "mute",
+      selectorButton: this.selectors.mute,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.like = function() {
-    this.click({action: "like", selectorButton: this.selectors.like, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "like",
+      selectorButton: this.selectors.like,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.dislike = function() {
-    this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "dislike",
+      selectorButton: this.selectors.dislike,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   /**
@@ -132,18 +170,16 @@
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        isPlaying = false;
+      isPlaying = false;
 
-    if(this.buttonSwitch) {
+    if (this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
-    }
-    else if(this.selectors.playState) {
+    } else if (this.selectors.playState) {
       // Check if the play state element exists and is visible
       var playStateEl = this.doc().querySelector(this.selectors.playState);
       isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
-    }
-    else if(playEl) {
+    } else if (playEl) {
       isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
     }
 
@@ -154,10 +190,10 @@
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
   BaseController.prototype.updatePlayerState = function() {
-    if(this.checkPlayer) this.checkPlayer();
+    if (this.checkPlayer) this.checkPlayer();
 
     var newState = this.getStateData();
-    if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
+    if (JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
       sk_log("Player state change");
       this.oldState = newState;
       chrome.runtime.sendMessage({
@@ -196,10 +232,10 @@
    * @return {*} song data if element is found, null otherwise
    */
   BaseController.prototype.getSongData = function(selector) {
-    if(!selector) return null;
+    if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.textContent) {
+    if (dataEl && dataEl.textContent) {
       return dataEl.textContent;
     }
 
@@ -210,15 +246,15 @@
    * Callback for request from background page
    */
   BaseController.prototype.doRequest = function(request, sender, response) {
-    if(typeof request !== "undefined") {
-      if(request.action === "playPause") this.playPause();
-      if(request.action === "playNext") this.playNext();
-      if(request.action === "playPrev") this.playPrev();
-      if(request.action === "stop") this.stop();
-      if(request.action === "mute") this.mute();
-      if(request.action === "like") this.like();
-      if(request.action === "dislike") this.dislike();
-      if(request.action === "getPlayerState") {
+    if (typeof request !== "undefined") {
+      if (request.action === "playPause") this.playPause();
+      if (request.action === "playNext") this.playNext();
+      if (request.action === "playPrev") this.playPrev();
+      if (request.action === "stop") this.stop();
+      if (request.action === "mute") this.mute();
+      if (request.action === "like") this.like();
+      if (request.action === "dislike") this.dislike();
+      if (request.action === "getPlayerState") {
         var newState = this.getStateData();
         this.oldState = newState;
         response(newState);

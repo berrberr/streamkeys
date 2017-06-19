@@ -1,8 +1,8 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   var multiSelectors = {
     play: [null, ".now-playing-bar button[class*=play]"],

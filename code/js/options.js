@@ -1,7 +1,7 @@
 "use strict";
 
 var $ = require("jquery"),
-    ko = require("ko");
+  ko = require("ko");
 require("./lib/material.min.js");
 
 var OptionsViewModel = function OptionsViewModel() {
@@ -32,19 +32,23 @@ var OptionsViewModel = function OptionsViewModel() {
   chrome.storage.sync.get(function(obj) {
     self.openOnUpdate = ko.observable(obj["hotkey-open_on_update"]);
     self.openOnUpdate.subscribe(function(value) {
-      chrome.storage.sync.set({ "hotkey-open_on_update": value });
+      chrome.storage.sync.set({
+        "hotkey-open_on_update": value
+      });
     });
 
     self.youtubeRestart = ko.observable(obj["hotkey-youtube_restart"]);
     self.youtubeRestart.subscribe(function(value) {
-      chrome.storage.sync.set({ "hotkey-youtube_restart": value });
+      chrome.storage.sync.set({
+        "hotkey-youtube_restart": value
+      });
     });
 
     self.settingsInitialized(true);
   });
 
   self.sitelistChanged = function(site) {
-    if(self.sitelistInitialized()) {
+    if (self.sitelistInitialized()) {
       chrome.runtime.sendMessage({
         action: "update_site_settings",
         siteKey: site.id,
@@ -58,7 +62,9 @@ var OptionsViewModel = function OptionsViewModel() {
     }
   };
 
-  chrome.runtime.sendMessage({ action: "get_sites" }, function(response) {
+  chrome.runtime.sendMessage({
+    action: "get_sites"
+  }, function(response) {
     $.each(response, function(key, val) {
       var site = new MusicSite({
         id: key,

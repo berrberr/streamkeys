@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -7,7 +7,7 @@
     siteName: "Duckburg Radio",
 
     playPause: "#radiomb-play",
-    mute : "#radiomb-volume",
+    mute: "#radiomb-volume",
 
     playState: "#radiomb-play.radiomb-playing",
 

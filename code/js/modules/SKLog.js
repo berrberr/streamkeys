@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   /**
@@ -8,9 +8,9 @@
    * @param [err] {Boolean} TRUE if the message is an error
    */
   module.exports = function(msg, obj, err) {
-    if(msg) {
+    if (msg) {
       obj = obj || "";
-      if(err) {
+      if (err) {
         console.error("STREAMKEYS-ERROR: " + msg, obj);
         msg = "ERROR: " + msg;
       } else {
