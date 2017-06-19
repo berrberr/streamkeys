@@ -208,7 +208,6 @@
   BaseController.prototype.getSongChanged = function(newState) {
       return this.oldState &&
             newState &&
-            newState.song &&
             this.oldState.song !== newState.song;
   };
 
