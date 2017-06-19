@@ -109,7 +109,28 @@ var MusicSite = (function() {
     };
 
     self.toggleNotifications = function() {
-      self.showNotifications(!self.showNotifications.peek());
+      var internalToggleNotifications = function() {
+        self.showNotifications(!self.showNotifications.peek());
+      };
+
+      chrome.permissions.contains({
+        permissions: ["notifications"],
+        origins: ["http://*/*", "https://*/*"]
+      }, function (alreadyHaveNotificationsPermissions) {
+        if (alreadyHaveNotificationsPermissions) {
+          internalToggleNotifications();
+        }
+        else {
+          chrome.permissions.request({
+          permissions: ["notifications"],
+          origins: ["http://*/*", "https://*/*"]
+          }, function (granted) {
+            if (granted) {
+              internalToggleNotifications();
+            }
+          });
+        }
+      });
     };
 
     /**
