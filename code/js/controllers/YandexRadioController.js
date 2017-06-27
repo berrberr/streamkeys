@@ -6,13 +6,13 @@
   new BaseController({
     siteName: "Yandex Radio",
     playPause: ".player-controls__play",
-    playNext: ".slider__item:nth-child(4) .button.skip",
+    playNext: ".slider__item_next",
     mute: ".volume__btn",
-    like: ".like_action_like",
-    dislike: ".like_action_dislike",
+    like: ".player-controls .like_action_like",
+    dislike: ".player-controls .like_action_dislike",
 
     playState: ".body_state_playing",
-    song: ".slider__item:nth-child(3) .track__title",
-    artist: ".slider__item:nth-child(3) .track__artists"
+    song: ".player-controls__title",
+    artist: ".player-controls__artists"
   });
 })();
