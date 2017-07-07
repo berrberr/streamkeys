@@ -63,6 +63,7 @@
       "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
       "audible": { name: "Audible", url: "http://www.audible.com" },
       "audiosplitter": { name: "Audiosplitter", url: "http://www.audiosplitter.fm" },
+      "audiotool": { name: "Audiotool", url: "https://www.audiotool.com/" },
       "bandcamp": { name: "Bandcamp", url: "http://www.bandcamp.com" },
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
