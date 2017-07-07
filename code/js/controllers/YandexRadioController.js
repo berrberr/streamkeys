@@ -1,18 +1,24 @@
 ;(function() {
   "use strict";
 
-  var BaseController = require("BaseController");
-
-  new BaseController({
+  var MouseEventController = require("MouseEventController");
+  var yandexRadioController = new MouseEventController({
     siteName: "Yandex Radio",
-    playPause: ".player-controls__play",
-    playNext: ".slider__item:nth-child(4) .button.skip",
-    mute: ".volume__btn",
-    like: ".like_action_like",
-    dislike: ".like_action_dislike",
 
+    playPause: ".player-controls__play",
+    playNext: ".slider__item_next",
     playState: ".body_state_playing",
-    song: ".slider__item:nth-child(3) .track__title",
-    artist: ".slider__item:nth-child(3) .track__artists"
+
+    mute: ".volume__btn",
+    like: ".player-controls .like_action_like",
+    dislike: ".player-controls .like_action_dislike",
+
+    song: ".player-controls__title",
+    artist: ".player-controls__artists"
   });
+
+  // override mute
+  yandexRadioController.mute = function() {
+    this.mousedown({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+  };
 })();
