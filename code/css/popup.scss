@@ -22,12 +22,12 @@ a:hover,
 a:visited {
   text-decoration: none;
 }
-
 // Hides all the bootstrap outlines
+
 .btn {
-  &:focus,
+  &.active:focus,
   &:active:focus,
-  &.active:focus {
+  &:focus {
     outline: none !important;
   }
 }
@@ -38,15 +38,15 @@ a:visited {
 }
 
 .disabled {
-  .player-controls-button-like,
   .player-controls-button-dislike,
+  .player-controls-button-like,
+  .player-controls-button-next,
   .player-controls-button-play,
   .player-controls-button-prev,
-  .player-controls-button-next,
-  .site-title,
   .site-favicon,
+  .site-title,
   .song-data {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 }
@@ -57,7 +57,7 @@ a:visited {
   height: 18px;
   margin-top: -4px;
   overflow: hidden;
-  padding: 0 4px 0 4px;
+  padding: 0 4px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -77,7 +77,7 @@ a:visited {
     float: right;
     font-size: 12px;
     margin: 3px 6px 0 0;
-    opacity: .5;
+    opacity: 0.5;
     width: 12px;
 
     &:hover {
@@ -105,7 +105,7 @@ a:visited {
   float: right;
   font-size: 12px;
   font-weight: 600;
-  opacity: .4;
+  opacity: 0.4;
   padding-right: 6px;
 }
 
@@ -118,7 +118,7 @@ a:visited {
 }
 
 .player-row {
-  padding: 5px 0 0 0;
+  padding: 5px 0 0;
   overflow: hidden;
 }
 
@@ -126,8 +126,8 @@ a:visited {
   min-height: 60px;
 
   a,
-  a:hover,
   a:active,
+  a:hover,
   a:visited {
     text-decoration: none;
     color: $black;
@@ -168,9 +168,9 @@ a:visited {
   padding: 0;
   text-align: center;
 
-  #options-link,
+  #donate-link,
   #help-link,
-  #donate-link {
+  #options-link {
     margin: 0 5px;
   }
 }
@@ -205,11 +205,11 @@ a:visited {
     margin-right: 2px;
 
     &.mdl-button--disabled {
-      opacity: .7;
+      opacity: 0.7;
     }
 
-    &.player-controls-button-like,
-    &.player-controls-button-dislike {
+    &.player-controls-button-dislike,
+    &.player-controls-button-like {
       i {
         font-size: 18px;
       }

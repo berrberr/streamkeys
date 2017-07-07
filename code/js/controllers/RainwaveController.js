@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var MouseEventController = require("MouseEventController");
@@ -15,6 +15,8 @@
 
 
   controller.playPause = function() {
-    this.mouseclick({ selectorButton: this.selectors.playPause });
+    this.mouseclick({
+      selectorButton: this.selectors.playPause
+    });
   };
 })();

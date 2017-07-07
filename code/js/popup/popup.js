@@ -1,8 +1,8 @@
 "use strict";
 
 var $ = require("jquery"),
-    ko = require("ko"),
-    _ = require("lodash");
+  ko = require("ko"),
+  _ = require("lodash");
 require("../lib/jquery.marquee.js");
 require("../lib/material.min.js");
 
@@ -23,12 +23,16 @@ var PopupViewModel = function PopupViewModel() {
       _.filter(self.musicTabs(), function(tab) {
         return (tab.canPlayPause() || !tab.hidePlayer);
       }),
-      function(tab) { return tab.priority(); }
+      function(tab) {
+        return tab.priority();
+      }
     );
 
     var sortedKeys = _.sortBy(
       _.keys(filteredGrouped),
-      function(priority) { return priority * -1; }
+      function(priority) {
+        return priority * -1;
+      }
     );
 
     var filteredGroupedSorted = [];
@@ -56,28 +60,31 @@ var PopupViewModel = function PopupViewModel() {
   };
 
   // Send a request to get the player state of every active music site tab
-  chrome.runtime.sendMessage({ action: "get_music_tabs" }, self.getTabStates.bind(this));
+  chrome.runtime.sendMessage({
+    action: "get_music_tabs"
+  }, self.getTabStates.bind(this));
 
   // Setup listener for updating the popup state
   chrome.runtime.onMessage.addListener(function(request) {
-    if(request.action === "update_popup_state" && request.stateData) self.updateState(request.stateData, request.fromTab);
+    if (request.action === "update_popup_state" && request.stateData) self.updateState(request.stateData, request.fromTab);
   });
 };
 
 PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
-  if(typeof stateData == "undefined") return false;
+  if (typeof stateData == "undefined") return false;
 
   var self = this;
 
   var musicTab = _.findWhere(
-    _.union(this.musicTabs.peek(), this.disabledMusicTabs.peek()),
-    { tabId: tab.id }
+    _.union(this.musicTabs.peek(), this.disabledMusicTabs.peek()), {
+      tabId: tab.id
+    }
   );
 
-  if(musicTab) {
+  if (musicTab) {
     // Update observables
     _.forEach(musicTab.observableProperties, function(property) {
-      if(typeof stateData[property] !== "undefined") musicTab[property](stateData[property]);
+      if (typeof stateData[property] !== "undefined") musicTab[property](stateData[property]);
     });
   } else {
     // Create new tab
@@ -89,7 +96,7 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
       streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true,
     }));
 
-    if(disabled) {
+    if (disabled) {
       this.disabledMusicTabs.push(musicTab);
     } else {
       this.musicTabs.push(musicTab);
@@ -98,7 +105,7 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     // Subscribe to each sites priority to maintain state if multiple tabs are open
     musicTab.priority.subscribe(function(newPriority) {
       _.each(self.musicTabs(), function(tab) {
-        if(tab.siteKey === this.siteKey && tab.tabId !== this.tabId && tab.priority() !== newPriority) {
+        if (tab.siteKey === this.siteKey && tab.tabId !== this.tabId && tab.priority() !== newPriority) {
           tab.priority(newPriority);
         }
       }, this);
@@ -115,17 +122,25 @@ PopupViewModel.prototype.getTabStates = function(tabs) {
   that.totalMusicTabs(tabs.enabled.length + tabs.disabled.length);
 
   _.forEach(tabs.enabled, function(tab) {
-    chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
+    chrome.tabs.sendMessage(tab.id, {
+      action: "getPlayerState"
+    }, (function(playerState) {
       that.updateState(playerState, this.tab);
       that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
-    }).bind({ tab: tab }));
+    }).bind({
+      tab: tab
+    }));
   });
 
   _.forEach(tabs.disabled, function(tab) {
-    chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
+    chrome.tabs.sendMessage(tab.id, {
+      action: "getPlayerState"
+    }, (function(playerState) {
       that.updateState(playerState, this.tab, true);
       that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
-    }).bind({ tab: tab }));
+    }).bind({
+      tab: tab
+    }));
   });
 };
 
@@ -155,7 +170,7 @@ var MusicTab = (function() {
 
     /** Popup specific observables **/
     this.songArtistText = ko.pureComputed(function() {
-      if(!this.song()) return "";
+      if (!this.song()) return "";
 
       return (this.artist()) ? this.artist() + " - " + this.song() : this.song();
     }, this);
@@ -181,7 +196,9 @@ var MusicTab = (function() {
     };
 
     this.openTab = function() {
-      chrome.tabs.update(parseInt(this.tabId), { selected: true });
+      chrome.tabs.update(parseInt(this.tabId), {
+        selected: true
+      });
     };
 
     this.toggleStreamkeysEnabled = function() {
@@ -201,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function() {
   ko.bindingHandlers.scrollingSong = {
     update: function(element, valueAccessor) {
       $(element).text(ko.unwrap(valueAccessor()));
-      if($(element).outerWidth() > $("#player").width()) {
+      if ($(element).outerWidth() > $("#player").width()) {
         // Remove any old marquees
         $(element).marquee("destroy");
         var scrollDuration = (parseInt($(element).outerWidth()) * 15);
@@ -222,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function() {
     update: function(element, valueAccessor) {
       var value = ko.unwrap(valueAccessor());
 
-      if(value) {
+      if (value) {
         $(element).slideDown("fast");
       } else {
         $(element).slideUp("fast");

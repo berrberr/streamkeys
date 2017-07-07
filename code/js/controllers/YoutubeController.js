@@ -1,9 +1,9 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController"),
-      sk_log = require("../modules/SKLog.js"),
-      _ = require("lodash");
+    sk_log = require("../modules/SKLog.js"),
+    _ = require("lodash");
 
   var multiSelectors = {
     play: [".ytp-button-play", null],
@@ -35,19 +35,35 @@
     // Override the playPause function
     controller.playPause = function() {
       // If the restart button exists check for the setting before clicking
-      if(this.doc().querySelector(this.selectors.restart)) {
-        if(obj["hotkey-youtube_restart"]) {
-          this.click({ action: "playPause", selectorButton: this.selectors.restart, selectorFrame: this.selectors.iframe });
+      if (this.doc().querySelector(this.selectors.restart)) {
+        if (obj["hotkey-youtube_restart"]) {
+          this.click({
+            action: "playPause",
+            selectorButton: this.selectors.restart,
+            selectorFrame: this.selectors.iframe
+          });
         }
       } else {
-        if(this.selectors.play !== null && this.selectors.pause !== null) {
-          if(this.isPlaying()) {
-            this.click({ action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe });
+        if (this.selectors.play !== null && this.selectors.pause !== null) {
+          if (this.isPlaying()) {
+            this.click({
+              action: "playPause",
+              selectorButton: this.selectors.pause,
+              selectorFrame: this.selectors.iframe
+            });
           } else {
-            this.click({ action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe });
+            this.click({
+              action: "playPause",
+              selectorButton: this.selectors.play,
+              selectorFrame: this.selectors.iframe
+            });
           }
         } else {
-          this.click({ action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe });
+          this.click({
+            action: "playPause",
+            selectorButton: this.selectors.playPause,
+            selectorFrame: this.selectors.iframe
+          });
         }
       }
     };
@@ -55,7 +71,7 @@
     controller.checkPlayer = function() {
       var that = this;
 
-      if(document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
+      if (document.querySelector(multiSelectors.play[0]) || document.querySelector(multiSelectors.pause[0])) {
         _.each(multiSelectors, function(value, key) {
           that.selectors[key] = value[0];
         });
@@ -69,13 +85,19 @@
     };
 
     controller.playNext = function() {
-      if(document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
-      else this.click({selectorButton: this.selectors.playNext, action: "playNext"});
+      if (document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
+      else this.click({
+        selectorButton: this.selectors.playNext,
+        action: "playNext"
+      });
     };
 
     controller.playPrev = function() {
-      if(document.querySelector(this.selectors.playPrev) === null) sk_log("disabled. Playlist selectors not found!");
-      else this.click({selectorButton: this.selectors.playPrev, action: "playPrev"});
+      if (document.querySelector(this.selectors.playPrev) === null) sk_log("disabled. Playlist selectors not found!");
+      else this.click({
+        selectorButton: this.selectors.playPrev,
+        action: "playPrev"
+      });
     };
   });
 

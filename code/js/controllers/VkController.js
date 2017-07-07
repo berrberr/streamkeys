@@ -1,12 +1,12 @@
-;(function() {
+(function() {
   "use strict";
 
   var sk_log = require("../modules/SKLog.js"),
-      MouseEventController = require("MouseEventController"),
-      SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
-      selectors,
-      controller,
-      vkObserver;
+    MouseEventController = require("MouseEventController"),
+    SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
+    selectors,
+    controller,
+    vkObserver;
 
   // if new ui detected
   if (document.getElementById("top_notify_btn")) {
@@ -42,19 +42,29 @@
       }
       // if play button enabled (e.g. current page it's music) start playing and return
       if (vkObserver.isEnabled(selectors.playerPanelPlay)) {
-        return self.click({ selectorButton: selectors.playerPanelPlay });
+        return self.click({
+          selectorButton: selectors.playerPanelPlay
+        });
       }
 
       // listen when player initialized
       vkObserver.once(selectors.playerPanelPlay, "inserted", function() {
-        self.click({ selectorButton: selectors.playerPanelPlay }); // start playing
-        self.mousedown({ selectorButton: selectors.headerPlayer }); // hide player panel
+        self.click({
+          selectorButton: selectors.playerPanelPlay
+        }); // start playing
+        self.mousedown({
+          selectorButton: selectors.headerPlayer
+        }); // hide player panel
       });
 
       // player initialization, click does not work
       // first need mouseover, and then mousedown
-      self.mouseover({ selectorButton: selectors.headerPlayerIcon });
-      self.mousedown({ selectorButton: selectors.headerPlayerIcon });
+      self.mouseover({
+        selectorButton: selectors.headerPlayerIcon
+      });
+      self.mousedown({
+        selectorButton: selectors.headerPlayerIcon
+      });
     };
   }
 
@@ -94,11 +104,17 @@
 
       vkObserver.once(waitSelector, "inserted", function() {
         if (clickOnWaitSelector) {
-          self.click({ selectorButton: waitSelector });
+          self.click({
+            selectorButton: waitSelector
+          });
         }
-        self.click({ selectorButton: selectors.playerPanelInfo }); // hide player
+        self.click({
+          selectorButton: selectors.playerPanelInfo
+        }); // hide player
       });
-      self.click({ selectorButton: initSelector });
+      self.click({
+        selectorButton: initSelector
+      });
     };
 
     // overrides

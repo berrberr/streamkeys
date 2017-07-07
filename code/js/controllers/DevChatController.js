@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -18,15 +18,23 @@
 
   /* Overrides */
   controller.playPause = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "playPause" }));
+    document.dispatchEvent(new CustomEvent("streamkeys-cmd", {
+      "detail": "playPause"
+    }));
   };
   controller.playNext = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "next" }));
+    document.dispatchEvent(new CustomEvent("streamkeys-cmd", {
+      "detail": "next"
+    }));
   };
   controller.playPrev = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "prev" }));
+    document.dispatchEvent(new CustomEvent("streamkeys-cmd", {
+      "detail": "prev"
+    }));
   };
 
   /* Inject script to interact with parent DOM */
-  controller.injectScript({ url: "/js/inject/devchat_inject.js" });
+  controller.injectScript({
+    url: "/js/inject/devchat_inject.js"
+  });
 })();

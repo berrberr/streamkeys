@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   /**
@@ -77,7 +77,11 @@
     });
 
     // observe DOM mutations
-    self.observer.observe(self.node, {childList: true, subtree: true, attributes: true});
+    self.observer.observe(self.node, {
+      childList: true,
+      subtree: true,
+      attributes: true
+    });
   };
 
   /**
