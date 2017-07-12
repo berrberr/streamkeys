@@ -5,7 +5,7 @@
 
   new BaseController({
     siteName: "Audiotool",
-    playPause: ".global.play",
+    playPause: "a.global.play",
     playNext: "a.forward",
     playPrev: "a.rewind",
     like: ".like.big",
