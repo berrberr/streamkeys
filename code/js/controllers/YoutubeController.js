@@ -68,6 +68,22 @@
       }
     };
 
+    controller.getArtData = function() {
+      var url = controller.doc().location.href;
+      var vParam = "v=";
+      var vIndex = url.indexOf(vParam);
+      var ampIndex = url.indexOf("&");
+
+      if (vIndex > -1) {
+        var videoId = ampIndex > -1
+          ? url.substring(vIndex + vParam.length, ampIndex)
+          : url.substr(vIndex + vParam.length);
+        return "https://img.youtube.com/vi/" + videoId + "/default.jpg";
+      }
+
+      return null;
+    };
+
     controller.playNext = function() {
       if(document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
       else this.click({selectorButton: this.selectors.playNext, action: "playNext"});
