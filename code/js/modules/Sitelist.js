@@ -154,6 +154,7 @@
       "spotify": { name: "Spotify Web Player", url: "http://www.spotify.com" },
       "spreaker": { name: "Spreaker", url: "http://www.spreaker.com" },
       "stitcher": { name: "Stitcher", url: "http://www.stitcher.com" },
+      "streamelements": { name: "StreamElements", url: "https://streamelements.com/dashboard/songrequest/general" },
       "subsonic": { name: "Subsonic", url: "http://www.subsonic.org" },
       "tidal": { name: "Tidal", url: "https://www.tidal.com", alias: ["tidalhifi"] },
       "thedrop": { name: "TheDrop", url: "https://www.thedrop.club" },
