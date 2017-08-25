@@ -96,6 +96,7 @@
       "hoopla": { name: "Hoopla", url: "https://www.hoopladigital.com", alias:["hoopladigital"] },
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
+      "ibroadcast": { name: "iBroadcast", url: "https://media.ibroadcast.com/" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
       "jamendo": { name: "Jamendo", url: "https://www.jamendo.com" },
