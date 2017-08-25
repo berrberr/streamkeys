@@ -110,6 +110,7 @@
       "logitechmediaserver": { name: "LogitechMediaServer", url: "http://mysqueezebox.com", controller: "LogitechMediaServerController.js", alias: ["mysqueezebox"] },
       "lovelinetapes": { name: "Loveline Tapes", url: "http://www.lovelinetapes.com", controller: "LovelineTapesController.js", alias: ["lovelinetapes"] },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
+      "music.163": { name: "music.163", url: "http://music.163.com", controller: "163Controller.js"},
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
       "mycloudplayers": { name: "My Cloud Player", url: "http://www.mycloudplayers.com" },
       "myspace": { name: "MySpace", url: "http://www.myspace.com" },
