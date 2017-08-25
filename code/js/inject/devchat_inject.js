@@ -1,29 +1,30 @@
 (function() {
   "use strict";
 
+  var $ = require("jquery");
   var sk_log = require("../modules/SKLog.js");
 
-  var audio = document.getElementsByTagName("audio")[0];
+  var element = document.getElementsByTagName("audio")[0] || document.getElementsByTagName("video")[0];
 
-  if(audio === undefined) return null;
+  if (element === undefined) return null;
 
   document.addEventListener("streamkeys-cmd", function(e) {
 
-    audio = document.getElementsByTagName("audio")[0];
+    element = document.getElementsByTagName("audio")[0] || document.getElementsByTagName("video")[0];
 
     if(e.detail === "playPause") {
-      if(!audio.paused) {
+      if(!element.paused) {
         try {
-          audio.pause();
-          $(audio).removeClass("sk-not");
+          element.pause();
+          $(element).removeClass("sk-not");
           sk_log("playPause");
         } catch (exception) {
           sk_log("playPause", exception, true);
         }
       } else {
         try {
-          audio.play();
-          $(audio).addClass("sk-not");
+          element.play();
+          $(element).addClass("sk-not");
           sk_log("playPause");
         } catch (exception) {
           sk_log("playPause", exception, true);
@@ -31,14 +32,14 @@
       }
     } else if(e.detail === "next") {
       try {
-        audio.currentTime += 15;
+        element.currentTime += 15;
         sk_log("playNext");
       } catch (exception) {
         sk_log("playNext", exception, true);
       }
     } else if(e.detail === "prev") {
       try {
-        audio.currentTime -= 15;
+        element.currentTime -= 15;
         sk_log("playPrev");
       } catch (exception) {
         sk_log("playPrev", exception, true);
