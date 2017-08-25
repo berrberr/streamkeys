@@ -193,6 +193,7 @@
       var version = (typeof obj["hotkey-storage-version"] === "undefined") ? 0 : obj["hotkey-storage-version"];
 
       _.each(_.keys(that.sites), function(siteKey) {
+        var siteDefaults = { enabled: true, priority: 1, alias: [], showNotifications: false };
         var siteObj =
           (version === 0)
             ? {
@@ -209,12 +210,20 @@
                   alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : [],
                   showNotifications: _.isBoolean(obj["hotkey-sites"][siteKey].showNotifications) ? obj["hotkey-sites"][siteKey].showNotifications : false
                 }
-              : { enabled: true, priority: 1, alias: [], showNotifications: false };
+              : siteDefaults;
 
         that.addSite(
           siteKey,
           siteObj
         );
+
+        // Delete properties that have default values to reduce storage space
+        // For `chrome.storage.sync` API each item must be under 8kb
+        _.each(_.keys(siteDefaults), function(property) {
+          if(_.isEqual(siteObj[property], siteDefaults[property])) {
+            delete siteObj[property];
+          }
+        });
 
         storageObj[siteKey] = siteObj;
       });
