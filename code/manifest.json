@@ -31,6 +31,7 @@
     "js/controllers/*"
   ],
   "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
+  "optional_permissions": [ "notifications", "http://*/*", "https://*/*"],
   "commands": {
     "playPause": {
       "suggested_key": {
