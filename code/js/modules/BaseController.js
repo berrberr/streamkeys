@@ -23,7 +23,9 @@
 
       //** Song Info **//
       song: (options.song || null),
-      artist: (options.artist || null)
+      artist: (options.artist || null),
+      album: (options.album || null),
+      art: (options.art || null)
     };
 
     // Previous player state, used to check vs current player state to see if anything changed
@@ -159,6 +161,12 @@
     var newState = this.getStateData();
     if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
       sk_log("Player state change");
+      if(this.getSongChanged(newState)) {
+        chrome.runtime.sendMessage({
+          action: "send_change_notification",
+          stateData: newState
+        });
+      }
       this.oldState = newState;
       chrome.runtime.sendMessage({
         action: "update_player_state",
@@ -175,6 +183,8 @@
     return {
       song: this.getSongData(this.selectors.song),
       artist: this.getSongData(this.selectors.artist),
+      album: this.getSongData(this.selectors.album),
+      art: this.getArtData(this.selectors.art),
       isPlaying: this.isPlaying(),
       siteName: this.siteName,
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
@@ -191,6 +201,17 @@
   };
 
   /**
+   * Returns a bool indicating whether the player's song changed since the last state update
+   * @param {{song: {String}}} newState - new state object
+   * @return {Boolean} true if song just changed, false otherwise
+   */
+  BaseController.prototype.getSongChanged = function(newState) {
+      return this.oldState &&
+            newState &&
+            this.oldState.song !== newState.song;
+  };
+
+  /**
    * Gets the text value from a song data selector
    * @param {String} selector - selector for song data
    * @return {*} song data if element is found, null otherwise
@@ -201,6 +222,17 @@
     var dataEl = this.doc().querySelector(selector);
     if(dataEl && dataEl.textContent) {
       return dataEl.textContent;
+    }
+
+    return null;
+  };
+
+  BaseController.prototype.getArtData = function(selector) {
+    if(!selector) return null;
+
+    var dataEl = this.doc().querySelector(selector);
+    if(dataEl && dataEl.attributes && dataEl.attributes.src) {
+      return dataEl.attributes.src.value;
     }
 
     return null;

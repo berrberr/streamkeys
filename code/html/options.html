@@ -56,6 +56,13 @@
               You can define a list of <strong>custom aliases</strong> for a site. An alias lets you define a domain <strong>hostname</strong> to match for a site. For example, say you are running a Plex.tv server at <strong>http://192.168.4.4.</strong>              You could add the alias <strong>192.168.4.4</strong> to Plex.tv and Streamkeys will work on any tab with a URL of 192.168.4.4.
             </p>
           </div>
+          <div class="info-block">
+            <h4>Notifications</h4>
+            <p>
+              When notifications are set to <strong>show</strong> you will receive a Chrome notification whenever the playing song on the tab of that site changes.
+              When notifications are set to <strong>hide</strong> you will not see Chrome notifications when the song on that site changes.
+            </p>
+          </div>
         </div>
         <!-- ko foreach: $data.sitelist() -->
         <div class="site-container" data-bind="css: { disabled: !$data.enabled() }">
@@ -110,6 +117,14 @@
               <button class="mdl-button mdl-js-button mdl-button--raised site-settings-button site-alias-button" data-bind="aliasModal: $data.alias">
                 <span data-bind="text: $data.alias().length > 0 ? $data.alias().length : 'None'"></span>
                 <i class="material-icons md-dark">add_circle</i>
+              </button>
+            </div>
+
+            <div class="controls-group">
+              <label class="input-header">Notifications</label>
+              <button class="mdl-button mdl-js-button mdl-button--raised site-settings-button" data-bind="click: function() { $data.toggleNotifications() }">
+                <span data-bind="text: $data.showNotifications() ? 'Hide' : 'Show'"></span>
+                <i class="material-icons md-dark" data-bind="text: $data.showNotifications() ? 'close' : 'check'"></i>
               </button>
             </div>
           </div>

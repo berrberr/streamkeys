@@ -63,6 +63,7 @@
       "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
       "audible": { name: "Audible", url: "http://www.audible.com" },
       "audiosplitter": { name: "Audiosplitter", url: "http://www.audiosplitter.fm" },
+      "audiotool": { name: "Audiotool", url: "https://www.audiotool.com/" },
       "bandcamp": { name: "Bandcamp", url: "http://www.bandcamp.com" },
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
@@ -96,7 +97,9 @@
       "hoopla": { name: "Hoopla", url: "https://www.hoopladigital.com", alias:["hoopladigital"] },
       "hypem": { name: "Hypemachine", url: "http://www.hypem.com" },
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
+      "ibroadcast": { name: "iBroadcast", url: "https://media.ibroadcast.com/" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
+      "indieshuffle": { name: "indieshuffle", url: "http://www.indieshuffle.com"},
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
       "jamendo": { name: "Jamendo", url: "https://www.jamendo.com" },
       "jango": { name: "Jango", url: "http://www.jango.com" },
@@ -109,9 +112,11 @@
       "logitechmediaserver": { name: "LogitechMediaServer", url: "http://mysqueezebox.com", controller: "LogitechMediaServerController.js", alias: ["mysqueezebox"] },
       "lovelinetapes": { name: "Loveline Tapes", url: "http://www.lovelinetapes.com", controller: "LovelineTapesController.js", alias: ["lovelinetapes"] },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
+      "music.163": { name: "music.163", url: "http://music.163.com", controller: "163Controller.js"},
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
       "mycloudplayers": { name: "My Cloud Player", url: "http://www.mycloudplayers.com" },
       "myspace": { name: "MySpace", url: "http://www.myspace.com" },
+      "music.naver": { name: "Naver Music", url: "https://playerui.music.naver.com", controller: "NaverMusicController.js"},
       "napster": { name: "Napster", url: "https://app.napster.com", controller: "NapsterController.js" },
       "netflix": { name: "Netflix", url: "http://www.netflix.com" },
       "noise": { name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js" },
@@ -194,16 +199,18 @@
             ? {
                 enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
                 priority: 1,
-                alias: []
+                alias: [],
+                showNotifications: false
               }
             : (objSet && obj["hotkey-sites"][siteKey])
               // Validate enabled/priority values in case of migration problems
               ? {
                   enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
                   priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1,
-                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : []
+                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : [],
+                  showNotifications: _.isBoolean(obj["hotkey-sites"][siteKey].showNotifications) ? obj["hotkey-sites"][siteKey].showNotifications : false
                 }
-              : { enabled: true, priority: 1, alias: [] };
+              : { enabled: true, priority: 1, alias: [], showNotifications: false };
 
         that.addSite(
           siteKey,
@@ -253,6 +260,12 @@
           ? 1
           : site.priority
         : attributes.priority;
+    attributes.showNotifications =
+      (typeof attributes.showNotifications === "undefined")
+        ? (typeof site.showNotifications === "undefined")
+          ? false
+          : site.showNotifications
+        : attributes.showNotifications;
 
     this.sites[siteKey] = _.extend(
       site,
@@ -260,6 +273,7 @@
       {
         enabled: attributes.enabled,
         priority: attributes.priority,
+        showNotifications: attributes.showNotifications,
         urlRegex: new URLCheck(siteKey, { alias: attributes.alias, blacklist: site.blacklist })
       }
     );
@@ -321,6 +335,17 @@
   };
 
   /**
+   * @return {Array} array of showNotifications site keys
+   */
+  Sitelist.prototype.getShowNotifications = function() {
+    return _.keys(
+      _.pick(this.sites, function(site) {
+        return site.showNotifications;
+      })
+    );
+  };
+
+  /**
    * Returns the sitelist key of a url if it is matched to a music site
    * @param {String} url - url to check
    * @return {String} sitelist key if found, null otherwise
@@ -367,6 +392,18 @@
     var _sites = this.sites;
 
     return this.getEnabled().some(function(sitename) {
+      return (_sites[sitename].urlRegex.test(url));
+    });
+  };
+
+  /**
+   * @param url {String} url of site to check for
+   * @return {Boolean} true if url matches a showNotifications site
+   */
+  Sitelist.prototype.checkShowNotifications = function(url) {
+    var _sites = this.sites;
+
+    return this.getShowNotifications().some(function(sitename) {
       return (_sites[sitename].urlRegex.test(url));
     });
   };

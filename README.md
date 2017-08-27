@@ -74,7 +74,7 @@ Filename: FooplayerController.js
 ##### Special controller properties:
 
 - `buttonSwitch` - Used to determine playing state. Set to `true` if a site only shows the pause button when it's playing and only shows the play button when it's paused.
-- `playState` - Used to determine playing state. Set to the selector that will return `true` iff the player is playing. Example: `playState: "#play_btn.playing"`
+- `playState` - Used to determine playing state. Set to the selector that will return `true` if the player is playing. Example: `playState: "#play_btn.playing"`
 - `iframe` - Used when the player is nested inside an iframe. Set to the selector of the iframe containing the player. Example: `iframe: "#player-frame"`
 
 **Note**: One of `buttonSwitch` or `playState` should (almost) always be set. If `buttonSwitch` is true then your controller **must** define both `play` and `pause` selectors. If a `playState` is defined, then you controller might have either a single `playPause` selector or both `play` and `pause` selectors.

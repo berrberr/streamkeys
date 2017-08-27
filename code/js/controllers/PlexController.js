@@ -1,16 +1,22 @@
 ;(function() {
   "use strict";
 
-  var BaseController = require("BaseController");
+  var MouseEventController = require("MouseEventController");
 
-  new BaseController({
+  var controller = new MouseEventController({
     siteName: "Plex.tv",
-    play: "button.play-btn:not([tabindex='-1'])",
-    pause: "button.pause-btn:not([tabindex='-1'])",
-    playNext: "button.next-btn",
-    playPrev: "button.previous-btn",
-    mute: "button.volume-btn",
+    play: "button[aria-label='Play'] > i",
+    pause: "button[aria-label='Pause'] > i",
+    playNext: "button[aria-label='Next'] > i",
+    playPrev: "button[aria-label='Previous'] > i",
+    mute: "button[aria-label='Mute Volume'] > i",
 
-    song: ".video-title"
+    song: "[class^=' MetadataPosterTitle-title'] [role=link]",
+    buttonSwitch: true
   });
+
+  controller.click = function(opts) {
+    this.mousedown({ selectorButton: opts.selectorButton });
+    this.mouseup({ selectorButton: opts.selectorButton });
+  };
 })();
