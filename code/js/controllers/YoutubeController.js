@@ -69,18 +69,12 @@
     };
 
     controller.getArtData = function() {
-      var url = controller.doc().location.href;
-      var vParam = "v=";
-      var vIndex = url.indexOf(vParam);
-      var ampIndex = url.indexOf("&");
+      var params = (new URL(controller.doc().location)).searchParams;
 
-      if (vIndex > -1) {
-        var videoId = ampIndex > -1
-          ? url.substring(vIndex + vParam.length, ampIndex)
-          : url.substr(vIndex + vParam.length);
-        return "https://img.youtube.com/vi/" + videoId + "/default.jpg";
+      var vid = params.get("v");
+      if (vid !== null) {
+        return "https://img.youtube.com/vi/" + vid + "/default.jpg";
       }
-
       return null;
     };
 
