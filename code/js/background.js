@@ -113,14 +113,17 @@
         title: request.stateData.siteName,
         message: request.stateData.song || "",
         iconUrl: request.stateData.art || chrome.extension.getURL("icon128.png"),
-        items: [{title: request.stateData.song, message: "" },
-                {title: request.stateData.artist || "", message: request.stateData.album || "" }]
+        items: [
+          { title: request.stateData.song, message: "" },
+          { title: request.stateData.artist || "", message: request.stateData.album || "" }
+        ]
       }, function(notificationId) {
         if(notificationTimeouts[notificationId])
         {
           clearTimeout(notificationTimeouts[notificationId]);
           delete notificationTimeouts[notificationId];
         }
+
         notificationTimeouts[notificationId] = setTimeout(function() {
           chrome.notifications.clear(notificationId);
         }, 5000);
