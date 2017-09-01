@@ -1,10 +1,10 @@
 $button-margin: 4px;
-$site-container-width: 280px;
+$site-container-width: 255px;
 $footer-height: 50px;
 $header-height: 100px;
 $menu-color: #263238;
 $menu-padding: 40px;
-$menu-width: 240px;
+$menu-width: 220px;
 $alias-dialog-width: 440px;
 
 a {
@@ -30,7 +30,7 @@ a {
 }
 
 .options-tab {
-  padding: 0 30px;
+  padding: 0 15px;
 
   #hotkeys-table {
     margin-bottom: 30px;
@@ -47,7 +47,7 @@ a {
   .sitelist-info {
     border-bottom: 3px solid $menu-color;
     display: flex;
-    margin: 20px -30px 20px -30px;
+    margin: 20px -5px 20px -15px;
     justify-content: space-around;
 
     .info-block {
