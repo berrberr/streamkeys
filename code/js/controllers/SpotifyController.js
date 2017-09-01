@@ -1,33 +1,19 @@
 ;(function() {
   "use strict";
 
-  var BaseController = require("BaseController"),
-      _ = require("lodash");
+  var BaseController = require("BaseController");
 
-  var multiSelectors = {
-    play: [null, ".now-playing-bar button[class*=play]"],
-    pause: [null, ".now-playing-bar button[class*=pause]"],
-    playPause: ["#play-pause", null],
-    playNext: ["#next", ".now-playing-bar button[class*=skip-forward]"],
-    playPrev: ["#previous", ".now-playing-bar button[class*=skip-back]"],
-    playState: ["#play-pause.playing", ".now-playing-bar button[class*=pause]"],
-    iframe: ["#app-player", null],
-    like: [".thumb.up", null],
-    dislike: [".thumb.down", null],
-    song: ["#track-name", ".now-playing-bar div div [href*='/album/']"],
-    artist: ["#track-artist", ".now-playing-bar div div [href*='/artist/']"]
-  };
-
-  var controller = new BaseController({
-    siteName: "Spotify"
+  new BaseController({
+    siteName: "Spotify",
+    play: ".control-button.spoticon-play-16",
+    pause: ".control-button.spoticon-pause-16",
+    playNext: ".control-button.spoticon-skip-forward-16",
+    playPrev: ".control-button.spoticon-skip-back-16",
+    like: ".control-button.spoticon-thumbs-up-16",
+    dislike: ".control-button.spoticon-thumbs-down-16",
+    buttonSwitch: true,
+    mute: ".volume-bar__icon",
+    song: ".track-info__name",
+    artist: ".track-info__artists"
   });
-
-  controller.checkPlayer = function() {
-    var that = this;
-    var selectorIndex = window.location.hostname === "open.spotify.com" ? 1 : 0;
-
-    _.each(multiSelectors, function(value, key) {
-      that.selectors[key] = value[selectorIndex];
-    });
-  };
 })();
