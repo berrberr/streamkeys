@@ -5,13 +5,14 @@
 
   new BaseController({
     siteName: "Naver Music",
-    playPause: ".play.sp",
-    playNext: ".next.sp",
-    playPrev: ".prev.sp",
-    mute: ".volume.sp",
+    playPause: ".player_controller .play",
+    playNext: ".player_controller .next",
+    playPrev: ".player_controller .prev",
+    mute: ".player_controller .volume",
 
-    playState: ".play.sp.is_paused",
+    playState: ".player_controller .play.is_paused",
     song: ".info_song p:first-child span",
-    artist: ".info_artist .name"
+    artist: ".info_artist .name",
+    art: ".player_cover img"
   });
 })();
