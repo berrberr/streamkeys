@@ -6,7 +6,7 @@
 
   var controller = new BaseController({
     siteName: "Mixcloud",
-    playPause: "[m-player-play-button]",
+    playPause: ".player-control",
     mute: ".player-volume-percent",
     like: ".icon-favorite-inner:not(.ng-hide)",
 
