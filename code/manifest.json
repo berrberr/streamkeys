@@ -76,6 +76,10 @@
     "dislike": {
       "global": true,
       "description": "Toggle dislike"
+    },
+    "playerStateNotify": {
+      "global": true,
+      "description": "Send notification of player(s) state"
     }
   }
 }

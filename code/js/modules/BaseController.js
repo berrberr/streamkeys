@@ -250,6 +250,12 @@
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
+      if(request.action === "playerStateNotify"){
+        chrome.runtime.sendMessage({
+          action: "send_change_notification",
+          stateData: this.getStateData()
+        });
+      }
       if(request.action === "getPlayerState") {
         var newState = this.getStateData();
         this.oldState = newState;
