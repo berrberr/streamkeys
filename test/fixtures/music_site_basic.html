@@ -1,0 +1,43 @@
+<head>
+  <title>Basic Music Site</title>
+  <script type="text/javascript">
+    function togglePlayState(state) {
+      if(state) {
+        $("#player-container").addClass("playing");
+      } else {
+        $("#player-container").removeClass("playing");
+      }
+    }
+
+    function toggleNext() {
+      $("#song-title").text("NextSongToggled");
+    }
+    function togglePrev() {
+      $("#song-title").text("PrevSongToggled");
+    }
+    function toggleMute() {
+      $("#volume").text("MuteToggled");
+    }
+    function toggleLike() {
+      $("#like").text("LikeToggled");
+    }
+    function toggleDislike() {
+      $("#dislike").text("DislikeToggled");
+    }
+  </script>
+</head>
+
+<body>
+  <div id="player-container">
+    <div id="play" onclick="togglePlayState(true)">Play</div>
+    <div id="pause" onclick="togglePlayState(false)">Pause</div>
+    <div id="play-next" onclick="toggleNext()">Play Next</div>
+    <div id="play-prev" onclick="togglePrev()">Play Previous</div>
+    <div id="volume" onclick="toggleMute()">Volume</div>
+    <div id="like" onclick="toggleLike()">Like</div>
+    <div id="dislike" onclick="toggleDislike()">Dislike</div>
+
+    <div id="song-title">Song</div>
+    <div id="artist-title">Artist</div>
+  </div>
+</body>

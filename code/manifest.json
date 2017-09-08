@@ -1,0 +1,81 @@
+{
+  "manifest_version": 2,
+  "homepage_url": "http://www.streamkeys.com",
+  "icons": {"48": "icon48.png", "128": "icon128.png"},
+  "options_page": "html/options.html",
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "browser_action": {
+    "default_title": "Streamkeys",
+    "default_popup": "html/popup.html",
+    "default_icon": "icon38.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/contentscript.js"]
+    },
+    {
+      "matches": ["*://*.streamkeys.com/*"],
+      "js": ["js/inject/sksite_inject.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "js/inject/devchat_inject.js",
+    "js/inject/seesu_inject.js",
+    "js/inject/palcomp3_inject.js",
+    "js/inject/laracasts_inject.js",
+    "js/inject/hoopla_inject.js",
+    "js/controllers/*"
+  ],
+  "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
+  "optional_permissions": [ "notifications", "http://*/*", "https://*/*"],
+  "commands": {
+    "playPause": {
+      "suggested_key": {
+        "default": "MediaPlayPause"
+      },
+      "global": true,
+      "description": "Toggle play/pause"
+    },
+    "playNext": {
+      "suggested_key": {
+        "default": "MediaNextTrack"
+      },
+      "global": true,
+      "description": "Play next track"
+    },
+    "playPrev": {
+      "suggested_key": {
+        "default": "MediaPrevTrack"
+      },
+      "global": true,
+      "description": "Play previous track"
+    },
+    "mute": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2",
+        "mac": "MacCtrl+Shift+2"
+      },
+      "global": true,
+      "description": "Toggle mute"
+    },
+    "stop": {
+      "suggested_key": {
+        "default": "MediaStop"
+      },
+      "global": true,
+      "description": "Stop all players"
+    },
+    "like": {
+      "global": true,
+      "description": "Toggle like"
+    },
+    "dislike": {
+      "global": true,
+      "description": "Toggle dislike"
+    }
+  }
+}

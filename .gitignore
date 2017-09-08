@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+build/
+secrets.json
+streamkeys-dev.zip
+streamkeys.zip
+.sass-cache/
+.idea/
+*.sublime-workspace
+*.sublime-project
+npm-debug.log
+test-selectors/
