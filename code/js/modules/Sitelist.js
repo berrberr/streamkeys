@@ -157,7 +157,8 @@
       "xiami": { name: "Xiami", url: "http://www.xiami.com" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
-      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
+      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" },
+      "focusatwill": { name: "focusatwill", url: "http://www.focusatwill.com", controller: "FocusatwillController.js" }
     };
 
     this.disabledTabs = [];
