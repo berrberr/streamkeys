@@ -52,6 +52,7 @@ var OptionsViewModel = function OptionsViewModel() {
           enabled: site.enabled.peek(),
           priority: site.priority.peek(),
           alias: site.alias.peek(),
+          showNotifications: site.showNotifications.peek(),
           removedAlias: site.removedAlias
         }
       });
@@ -65,7 +66,8 @@ var OptionsViewModel = function OptionsViewModel() {
         name: val.name,
         enabled: val.enabled,
         priority: val.priority,
-        alias: val.alias
+        alias: val.alias,
+        showNotifications: val.showNotifications
       });
 
       site.enabled.subscribe(function() {
@@ -75,6 +77,9 @@ var OptionsViewModel = function OptionsViewModel() {
         self.sitelistChanged(site);
       });
       site.alias.subscribe(function() {
+        self.sitelistChanged(site);
+      });
+      site.showNotifications.subscribe(function() {
         self.sitelistChanged(site);
       });
 
@@ -95,11 +100,37 @@ var MusicSite = (function() {
     self.enabled = ko.observable(attributes.enabled);
     self.priority = ko.observable(attributes.priority);
     self.alias = ko.observableArray(attributes.alias || []);
+    self.showNotifications = ko.observable(attributes.showNotifications);
     self.removedAlias = [];
     self.aliasText = ko.observable("");
 
     self.toggleSite = function() {
       self.enabled(!self.enabled.peek());
+    };
+
+    self.toggleNotifications = function() {
+      var internalToggleNotifications = function() {
+        self.showNotifications(!self.showNotifications.peek());
+      };
+
+      chrome.permissions.contains({
+        permissions: ["notifications"],
+        origins: ["http://*/*", "https://*/*"]
+      }, function (alreadyHaveNotificationsPermissions) {
+        if (alreadyHaveNotificationsPermissions) {
+          internalToggleNotifications();
+        }
+        else {
+          chrome.permissions.request({
+          permissions: ["notifications"],
+          origins: ["http://*/*", "https://*/*"]
+          }, function (granted) {
+            if (granted) {
+              internalToggleNotifications();
+            }
+          });
+        }
+      });
     };
 
     /**

@@ -68,6 +68,16 @@
       }
     };
 
+    controller.getArtData = function() {
+      var params = (new URL(controller.doc().location)).searchParams;
+
+      var vid = params.get("v");
+      if (vid !== null) {
+        return "https://img.youtube.com/vi/" + vid + "/default.jpg";
+      }
+      return null;
+    };
+
     controller.playNext = function() {
       if(document.querySelector(this.selectors.playNext) === null) sk_log("disabled. Playlist selectors not found!");
       else this.click({selectorButton: this.selectors.playNext, action: "playNext"});
