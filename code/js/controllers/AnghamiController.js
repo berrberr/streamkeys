@@ -5,15 +5,16 @@
 
   new BaseController({
     siteName: "Anghami",
-    dislike: "#player .like.active",
-    like: "#player .like:not(.active)",
+    dislike: "#player .icon-liked",
+    like: "#player .icon-like",
     playNext: "#player .next",
-    playPause: "#player .play-pause-button",
+    playPause: "#player .playpause",
     playPrev: "#player .previous",
-
-    album: "",
+    play: "#player .icon-play",
+    pause: "#player .icon-pause-2",
     artist: "#player .track-artist",
-    playState: "#player .paused",
+    playState: ".playing",
+    buttonSwitch: true,
     song: "#player .track-title a"
   });
 })();
