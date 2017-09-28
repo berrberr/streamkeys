@@ -80,6 +80,7 @@
       "egghead": { name: "egghead.io", url: "https://egghead.io" },
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
+      "focusatwill": { name: "focusatwill", url: "http://www.focusatwill.com", controller: "FocusatwillController.js" },
       "focusmusic": { name: "Focusmusic", url: "https://focusmusic.fm/" },
       "friskyradio": { name: "Frisky Radio", url: "https://www.friskyradio.com" },
       "gaana": { name: "Gaana", url: "http://www.gaana.com" },
