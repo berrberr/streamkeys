@@ -108,7 +108,7 @@
   });
 
   var sendChangeNotification = function(request, sender) {
-    chrome.notifications.create(sender.id, {
+    chrome.notifications.create(sender.id + request.stateData.siteName, {
         type: "list",
         title: request.stateData.siteName,
         message: request.stateData.song || "",
