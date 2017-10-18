@@ -5,13 +5,13 @@
 
   new BaseController({
     siteName: "Short Orange",
-    play: ".player-controls .fa-play",
-    pause: ".player-controls .fa-pause",
+    playPause: ".player-controls > .play-button",
     playNext: ".player-controls .fa-forward",
     playPrev: ".player-controls .fa-backward",
 
-    playState: ".fa-pause:not(.ng-hide)",
+    playState: ".player-controls > .play-button > .fa-pause",
     song: ".episode-title",
-    artist: ".podcast-title"
+    artist: ".podcast-title",
+    art: ".now-playing-art"
   });
 })();
