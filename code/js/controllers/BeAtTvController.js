@@ -10,6 +10,5 @@
     mute: ".btn.volume",
     song: ".ticker",
     playState: ".btn.pausebutton"
-    // buttonSwitch: true
   });
 })();
