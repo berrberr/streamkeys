@@ -66,7 +66,7 @@
   };
 
   /**
-   * Returns most tab of most recently updated status.
+   * Returns tab with most recently updated status.
    */
   var getRecentTab = function(tabs) {
     return _.max(tabs, function(tab) {
