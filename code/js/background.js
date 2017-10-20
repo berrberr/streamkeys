@@ -53,28 +53,40 @@
   /**
    * For "single player mode": if any tabs are playing - sends
    * action to all (as it's not clear which one to prefer)
-   * otherwise picks tab with most recently updated status.
+   * otherwise tries to select best tab to interact with.
    */
   var sendActionSinglePlayer = function(command, tabs) {
     if (_.isEmpty(tabs)) return;
     var playing = getPlayingTabs(tabs);
     if (_.isEmpty(playing)) {
-      sendActionAllPlayers(command, [getRecentTab(tabs)]);
+      sendActionAllPlayers(command, [getBestSinglePlayerTab(tabs)]);
     } else {
       sendActionAllPlayers(command, playing);
     }
   };
 
   /**
-   * Returns tab with most recently updated status.
+   * Returns "best" tab:
+   * - if any tab is updated after 200ms after any other
+   * - otherwise active tab
+   * - otherwise most recently updated
    */
-  var getRecentTab = function(tabs) {
-    return _.max(tabs, function(tab) {
-      if (tabStates.hasOwnProperty(tab.id)) {
-        return tabStates[tab.id].timestamp;
-      }
-      return 0;
+  var getBestSinglePlayerTab = function(tabs) {
+    var times = _.map(tabs, getTabUpdateTime);
+    var maxTimestamp = _.max(times);
+    // Pick tabs within 200ms from the most recent one.
+    tabs = _.filter(tabs, function(tab) {
+      return maxTimestamp - getTabUpdateTime(tab) < 200;
     });
+    var sorted = _.sortByAll(tabs, "active", getTabUpdateTime);
+    return _.last(sorted);
+  };
+
+  var getTabUpdateTime = function(tab) {
+    if (tabStates.hasOwnProperty(tab.id)) {
+      return tabStates[tab.id].timestamp;
+    }
+    return 0;
   };
 
   /**
