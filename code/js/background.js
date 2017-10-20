@@ -67,7 +67,7 @@
 
   /**
    * Returns "best" tab:
-   * - if any tab is updated after 200ms after any other
+   * - if there is one tab is updated 200ms after all others
    * - otherwise active tab
    * - otherwise most recently updated
    */
