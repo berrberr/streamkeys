@@ -5,7 +5,7 @@
 
   var controller = new BaseController({
     siteName: "Twitch.tv",
-    playPause: ".player-button--playpause",
+    playPause: ".qa-pause-play-button",
     song: ".title .real"
   });
 
