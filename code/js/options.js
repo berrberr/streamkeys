@@ -45,6 +45,11 @@ var OptionsViewModel = function OptionsViewModel() {
       chrome.storage.sync.set({ "hotkey-single_player_mode": value });
     });
 
+    self.muteAsPause = ko.observable(obj["hotkey-mute_as_pause"]);
+    self.muteAsPause.subscribe(function(value) {
+      chrome.storage.sync.set({ "hotkey-mute_as_pause": value });
+    });
+
     self.settingsInitialized(true);
   });
 

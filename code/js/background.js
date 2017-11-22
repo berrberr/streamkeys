@@ -151,6 +151,7 @@
     if(request.action === "inject_controller") {
       console.log("Inject: " + request.file + " into: " + sender.tab.id);
       chrome.tabs.executeScript(sender.tab.id, {file: request.file});
+
     }
     if(request.action === "check_music_site") {
       /**
@@ -264,5 +265,21 @@
     // Define sk_sites as a sitelist in global context
     window.sk_sites = new Sitelist();
     window.sk_sites.loadSettings();
+  });
+
+  // Handler for play/pause on mute button, if configured.
+  chrome.storage.sync.get(function(obj) {
+    if(obj["hotkey-mute_as_pause"]) {
+      chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+        if(changeInfo.mutedInfo) {
+          chrome.tabs.sendMessage(tabId, { action: "getPlayerState" },function(playerState) {
+            if(changeInfo.mutedInfo.muted === playerState.isPlaying) {
+              console.log("Sending play/pause due to mute change to tab " + tabId);
+              chrome.tabs.sendMessage(tabId, { "action": "playPause" });
+            }
+          });
+        }
+      });
+    }
   });
 })();
