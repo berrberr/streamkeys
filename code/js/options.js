@@ -40,6 +40,11 @@ var OptionsViewModel = function OptionsViewModel() {
       chrome.storage.sync.set({ "hotkey-youtube_restart": value });
     });
 
+    self.singlePlayerMode = ko.observable(obj["hotkey-single_player_mode"]);
+    self.singlePlayerMode.subscribe(function(value) {
+      chrome.storage.sync.set({ "hotkey-single_player_mode": value });
+    });
+
     self.settingsInitialized(true);
   });
 

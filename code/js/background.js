@@ -17,17 +17,95 @@
   var notificationTimeouts = {};
 
   /**
-   * Send a player action to every active player tab
+   * Map from tab.id to it's status and time when it was updated
+   * e.g. tabStates = {"787" : {"timestamp": <epoch>, "state": <state>}, ...}
+   * Look ./modules/BaseController.js getStateData method for what is state.
+   */
+  var tabStates = {};
+
+  /**
+   * Send a player action to every active player tab if it's state command
+   * or "stop"-like command. Otherwise command target depends on
+   * "single player mode" option.
    * @param {String} command - name of the command to pass to the players
    */
   var sendAction = function(command) {
     var active_tabs = window.sk_sites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
-      // Send the command to every music tab
-      tabs.forEach(function(tab) {
-        chrome.tabs.sendMessage(tab.id, { "action": command });
-        console.log("Sent: " + command + " To: " + tab.url);
+      if (command === "mute" ||
+          command === "stop" ||
+          command === "playerStateNotify" ||
+          command === "getPlayerState") {
+        sendActionAllPlayers(command, tabs);
+        return;
+      }
+      chrome.storage.sync.get(function(obj) {
+        if (obj.hasOwnProperty("hotkey-single_player_mode") &&
+            obj["hotkey-single_player_mode"]) {
+          sendActionSinglePlayer(command, tabs);
+        } else {
+          sendActionAllPlayers(command, tabs);
+        }
       });
+    });
+  };
+
+  /**
+   * For "single player mode": if any tabs are playing - sends
+   * action to all (as it's not clear which one to prefer)
+   * otherwise tries to select best tab to interact with.
+   */
+  var sendActionSinglePlayer = function(command, tabs) {
+    if (_.isEmpty(tabs)) return;
+    var playing = getPlayingTabs(tabs);
+    if (_.isEmpty(playing)) {
+      sendActionAllPlayers(command, [getBestSinglePlayerTab(tabs)]);
+    } else {
+      sendActionAllPlayers(command, playing);
+    }
+  };
+
+  /**
+   * Returns "best" tab:
+   * - if there is one tab is updated 200ms after all others
+   * - otherwise active tab
+   * - otherwise most recently updated
+   */
+  var getBestSinglePlayerTab = function(tabs) {
+    var times = _.map(tabs, getTabUpdateTime);
+    var maxTimestamp = _.max(times);
+    // Pick tabs within 200ms from the most recent one.
+    tabs = _.filter(tabs, function(tab) {
+      return maxTimestamp - getTabUpdateTime(tab) < 200;
+    });
+    var sorted = _.sortByAll(tabs, "active", getTabUpdateTime);
+    return _.last(sorted);
+  };
+
+  var getTabUpdateTime = function(tab) {
+    if (tabStates.hasOwnProperty(tab.id)) {
+      return tabStates[tab.id].timestamp;
+    }
+    return 0;
+  };
+
+  /**
+   * Filters out tabs that has not reported 'isPlaying' status.
+   */
+  var getPlayingTabs = function(tabs) {
+    return _.filter(tabs, function(tab) {
+      return tabStates.hasOwnProperty(tab.id) &&
+        tabStates[tab.id].state.isPlaying;
+    });
+  };
+
+  /**
+   * Sends command to every tab in the list.
+   */
+  var sendActionAllPlayers = function(command, tabs) {
+    tabs.forEach(function(tab) {
+      chrome.tabs.sendMessage(tab.id, { "action": command });
+      console.log("Sent: " + command + " To: " + tab.url);
     });
   };
 
@@ -85,6 +163,10 @@
     if(request.action === "get_commands") response(window.coms);
     if(request.action === "command") processCommand(request);
     if(request.action === "update_player_state") {
+      tabStates[sender.tab.id] = {
+        "timestamp": Date.now(),
+        "state": request.stateData
+      };
       chrome.runtime.sendMessage({
         action: "update_popup_state",
         stateData: request.stateData,
