@@ -3,7 +3,7 @@
 
   var BaseController = require("BaseController");
 
-  new BaseController({
+  var controller = new BaseController({
     siteName: "YouTube",
     playPause: ".ytp-play-button",
     playNext: ".ytp-next-button",
@@ -13,8 +13,19 @@
     dislike: "#menu > ytd-menu-renderer > #top-level-buttons > ytd-toggle-button-renderer:nth-child(2)",
 
     playState: ".ytp-play-button[aria-label='Pause']",
-    song: ".title",
-
+    song: ".title.ytd-video-primary-info-renderer",
+    album: "#playlist .title",
     hidePlayer: true
   });
+
+  controller.getArtData = function() {
+    var params = (new URL(controller.doc().location)).searchParams;
+
+    var vid = params.get("v");
+    if (vid !== null) {
+      return "https://img.youtube.com/vi/" + vid + "/default.jpg";
+    }
+    return null;
+  };
+
 })();
