@@ -5,8 +5,6 @@
 
   new BaseController({
     siteName: "BrainFM",
-    play: "#play_button.tc_play",
-    pause: "#play_button.tc_pause",
-    buttonSwitch: true
+    playPause: ".modules-music-player-css-PlayControl__wrapper___2ROhW"
   });
 })();
