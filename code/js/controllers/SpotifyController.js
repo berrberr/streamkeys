@@ -9,7 +9,7 @@
     pause: ".now-playing-bar button[class*=pause]",
     playNext: ".now-playing-bar button[class*=skip-forward]",
     playPrev: ".now-playing-bar button[class*=skip-back]",
-    like: ".now-playing-bar button[class*=thumbs-up]",
+    like: ".now-playing button",
     dislike: ".now-playing-bar button[class*=thumbs-down]",
     buttonSwitch: true,
     mute: ".now-playing-bar button[class*=volume]",
