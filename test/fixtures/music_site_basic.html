@@ -3,26 +3,26 @@
   <script type="text/javascript">
     function togglePlayState(state) {
       if(state) {
-        $("#player-container").addClass("playing");
+        document.querySelector("#player-container").classList.toggle("playing");
       } else {
-        $("#player-container").removeClass("playing");
+        document.querySelector("#player-container").classList.toggle("playing");
       }
     }
 
     function toggleNext() {
-      $("#song-title").text("NextSongToggled");
+      document.querySelector("#song-title").innerHTML = "NextSongToggled";
     }
     function togglePrev() {
-      $("#song-title").text("PrevSongToggled");
+      document.querySelector("#song-title").innerHTML = "PrevSongToggled";
     }
     function toggleMute() {
-      $("#volume").text("MuteToggled");
+      document.querySelector("#volume").innerHTML = "MuteToggled";
     }
     function toggleLike() {
-      $("#like").text("LikeToggled");
+      document.querySelector("#like").innerHTML = "LikeToggled";
     }
     function toggleDislike() {
-      $("#dislike").text("DislikeToggled");
+      document.querySelector("#dislike").innerHTML = "DislikeToggled";
     }
   </script>
 </head>

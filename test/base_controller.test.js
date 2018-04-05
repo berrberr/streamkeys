@@ -67,17 +67,17 @@ describe("base controller", function() {
 
     it("mutes", function() {
       controller.mute();
-      expect($("#volume")).toHaveText("MuteToggled");
+      expect(document.querySelector("#volume")).toHaveText("MuteToggled");
     });
 
     it("likes", function() {
       controller.like();
-      expect($("#like")).toHaveText("LikeToggled");
+      expect(document.querySelector("#like")).toHaveText("LikeToggled");
     });
 
     it("dislikes", function() {
       controller.dislike();
-      expect($("#dislike")).toHaveText("DislikeToggled");
+      expect(document.querySelector("#dislike")).toHaveText("DislikeToggled");
     });
   });
 
