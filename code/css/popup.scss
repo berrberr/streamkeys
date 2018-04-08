@@ -52,14 +52,18 @@ a:visited {
 }
 
 .song-data {
-  display: inline-block;
   font-size: 15px;
   height: 18px;
+  margin-bottom: 6px;
   margin-top: -4px;
   overflow: hidden;
   padding: 0 4px 0 4px;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  .song-text {
+    display: inline-block;
+  }
 }
 
 .site-data {
