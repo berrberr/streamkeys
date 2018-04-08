@@ -7,7 +7,7 @@
     siteName: "Gaana",
     playPause: ".playPause",
     playNext: ".next",
-    playPrev: ".prev",
+    playPrev: ".previous",
     mute: ".mute",
 
     playState: ".playPause.pause"
