@@ -39,9 +39,9 @@
     if (selectedItem && selectedItem.attributes) {
       var youtubeIdAttribute = selectedItem.attributes["data-ytid"];
       var imageUrlAttribute = selectedItem.attributes["data-image-url"];
-      // data-image-url is sometimes set, but equal to the string "undefined"
-      if (imageUrlAttribute && imageUrlAttribute.value && imageUrlAttribute.value !== "undefined") {
-        return imageUrlAttribute.value;
+      if (imageUrlAttribute && imageUrlAttribute.value) {
+        // imageUrlAttribute is sometimes a relative URL which we need to convert to an absolute URL to properly get art data
+        return new URL(imageUrlAttribute.value, this.doc().location.protocol + "//" + this.doc().location.host).href;
       }
       else if (youtubeIdAttribute && youtubeIdAttribute.value) {
         return "https://img.youtube.com/vi/" + youtubeIdAttribute.value + "/default.jpg";
