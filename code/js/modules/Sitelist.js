@@ -59,6 +59,7 @@
       "accuradio": { name: "Accuradio", url: "https://www.accuradio.com" },
       "ambientsleepingpill": { name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com" },
       "anghami": { name: "Anghami", url: "https://www.anghami.com" },
+      "arena": { name: "Are.na", url: "https://www.are.na/", alias: ["are"] },
       "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
       "audible": { name: "Audible", url: "http://www.audible.com" },
       "audiotool": { name: "Audiotool", url: "https://www.audiotool.com/" },
