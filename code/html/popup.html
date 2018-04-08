@@ -63,7 +63,9 @@
           <span class="site-title" data-bind="text: $data.siteName"></span>
         </a>
       </div>
-      <div class="song-data" data-bind="scrollingSong: $data.songArtistText, visible: $data.songArtistText().length"></div>
+      <div class="marquee song-data" data-bind="scrollingSong: $data.songArtistText, visible: $data.songArtistText().length">
+        <div class="song-text"></div>
+      </div>
     </div>
     <div class="player-controls-container player-container">
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {

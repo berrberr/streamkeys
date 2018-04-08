@@ -71,26 +71,6 @@ module.exports = function(grunt) {
       min: { files: fileMaps.uglify }
     },
 
-    compress: {
-      rel: {
-        options: {
-          archive: "streamkeys.zip",
-          pretty: true
-        },
-        expand: true,
-        cwd: "build/unpacked-prod",
-        src: "**/*"
-      },
-      dev: {
-        options: {
-          archive: "streamkeys-dev.zip"
-        },
-        expand: true,
-        cwd: "build/unpacked-dev",
-        src: "**/*"
-      }
-    },
-
     watch: {
       files: jsFiles.concat(htmlFiles),
       tasks: ["dev"]
@@ -119,7 +99,6 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-compress");
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
@@ -151,5 +130,5 @@ module.exports = function(grunt) {
   grunt.registerTask("dev-pre", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
   grunt.registerTask("dev", ["dev-pre", "browserify"]);
 
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify", "compress:rel"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify"]);
 };

@@ -200,19 +200,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
   ko.bindingHandlers.scrollingSong = {
     update: function(element, valueAccessor) {
-      $(element).text(ko.unwrap(valueAccessor()));
-      if($(element).outerWidth() > $("#player").width()) {
+      $(element).find(".song-text").text(ko.unwrap(valueAccessor()));
+
+      if($(element).find(".song-text").outerWidth() > $("#player").width()) {
         // Remove any old marquees
         $(element).marquee("destroy");
         var scrollDuration = (parseInt($(element).outerWidth()) * 15);
 
-        $(element).bind("finished", function() {
-          $(this).find(".js-marquee-wrapper").css("margin-left", "0px");
-        }).marquee({
-          allowCss3Support: false,
+        $(element).marquee({
           delayBeforeStart: 2500,
           duration: scrollDuration,
-          pauseOnCycle: true
+          pauseOnCycle: true,
+          startVisible: true
         });
       }
     }
