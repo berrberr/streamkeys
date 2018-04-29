@@ -23,7 +23,6 @@
     }
   ],
   "web_accessible_resources": [
-    "js/inject/devchat_inject.js",
     "js/inject/seesu_inject.js",
     "js/inject/palcomp3_inject.js",
     "js/inject/hoopla_inject.js",

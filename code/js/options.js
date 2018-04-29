@@ -1,7 +1,6 @@
 "use strict";
 
-var $ = require("jquery"),
-    ko = require("ko");
+var ko = require("ko");
 require("./lib/material.min.js");
 
 var OptionsViewModel = function OptionsViewModel() {
@@ -65,14 +64,16 @@ var OptionsViewModel = function OptionsViewModel() {
   };
 
   chrome.runtime.sendMessage({ action: "get_sites" }, function(response) {
-    $.each(response, function(key, val) {
+    Object.keys(response).forEach(function(key) {
+      const siteData = response[key];
+
       var site = new MusicSite({
         id: key,
-        name: val.name,
-        enabled: val.enabled,
-        priority: val.priority,
-        alias: val.alias,
-        showNotifications: val.showNotifications
+        name: siteData.name,
+        enabled: siteData.enabled,
+        priority: siteData.priority,
+        alias: siteData.alias,
+        showNotifications: siteData.showNotifications
       });
 
       site.enabled.subscribe(function() {
@@ -168,28 +169,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
       element.id = bindingContext.$data.sanitizedId;
 
-      var $ul = $("<ul>")
-        .addClass("mdl-menu mdl-js-menu mdl-js-ripple-effect")
-        .attr("for", bindingContext.$data.sanitizedId);
+      var $ul = document.createElement("ul");
+
+      $ul.className += "mdl-menu mdl-js-menu mdl-js-ripple-effect";
+      $ul.setAttribute("for", bindingContext.$data.sanitizedId);
 
       var updatePriority = function() {
-        value(parseInt($(this).attr("data-value")));
+        value(parseInt(this.getAttribute("data-value")));
       };
 
       for (var idx = 1; idx <= 9; idx++) {
         // add each item to the list
-        var $li = $("<li>")
-          .addClass("mdl-menu__item")
-          .text(idx)
-          .attr("data-value", idx)
-          .on("click", updatePriority);
+        var $li = document.createElement("li");
 
-        $($ul).append($li);
+        $li.className += "mdl-menu__item";
+        $li.textContent = idx;
+        $li.setAttribute("data-value", idx);
+        $li.onclick = updatePriority;
+
+        $ul.appendChild($li);
       }
 
-      $(element).after($ul);
+      element.after($ul);
 
-      window.componentHandler.upgradeElement($($ul)[0]);
+      window.componentHandler.upgradeElement($ul);
       window.componentHandler.upgradeElement(element);
     }
   };

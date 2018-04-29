@@ -1,9 +1,7 @@
 "use strict";
 
-var $ = require("jquery"),
-    ko = require("ko"),
+var ko = require("ko"),
     _ = require("lodash");
-require("../lib/jquery.marquee.js");
 require("../lib/material.min.js");
 
 var PopupViewModel = function PopupViewModel() {
@@ -186,7 +184,7 @@ var MusicTab = (function() {
 
     this.toggleStreamkeysEnabled = function() {
       this.streamkeysEnabled(!this.streamkeysEnabled.peek());
-      chrome.extension.getBackgroundPage().window.sk_sites.markTabEnabledState(this.tabId, this.streamkeysEnabled.peek());
+      chrome.extension.getBackgroundPage().window.skSites.markTabEnabledState(this.tabId, this.streamkeysEnabled.peek());
     };
   }
 
@@ -200,19 +198,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   ko.bindingHandlers.scrollingSong = {
     update: function(element, valueAccessor) {
-      $(element).find(".song-text").text(ko.unwrap(valueAccessor()));
+      element.querySelector(".song-text").textContent = ko.unwrap(valueAccessor());
 
-      if($(element).find(".song-text").outerWidth() > $("#player").width()) {
-        // Remove any old marquees
-        $(element).marquee("destroy");
-        var scrollDuration = (parseInt($(element).outerWidth()) * 15);
+      if(element.querySelector(".song-text").scrollWidth > document.querySelector("#player").clientWidth) {
+        var content = element.querySelector(".song-text").innerHTML;
 
-        $(element).marquee({
-          delayBeforeStart: 2500,
-          duration: scrollDuration,
-          pauseOnCycle: true,
-          startVisible: true
-        });
+        element.querySelector(".song-text").innerHTML = "<marquee>" + content + "</marquee>";
       }
     }
   };
@@ -222,9 +213,9 @@ document.addEventListener("DOMContentLoaded", function() {
       var value = ko.unwrap(valueAccessor());
 
       if(value) {
-        $(element).slideDown("fast");
+        element.style.display = "block";
       } else {
-        $(element).slideUp("fast");
+        element.style.display = "none";
       }
     }
   };

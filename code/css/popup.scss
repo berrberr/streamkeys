@@ -53,7 +53,7 @@ a:visited {
 
 .song-data {
   font-size: 15px;
-  height: 18px;
+  height: 20px;
   margin-bottom: 6px;
   margin-top: -4px;
   overflow: hidden;
@@ -65,6 +65,7 @@ a:visited {
     display: inline-block;
   }
 }
+
 
 .site-data {
   overflow: hidden;
@@ -230,6 +231,7 @@ a:visited {
   display: block;
   height: 54px;
   text-align: center;
+  transition: display 1s ease-out;
 
   &.initialize {
     display: none;

@@ -30,7 +30,7 @@
    * @param {String} command - name of the command to pass to the players
    */
   var sendAction = function(command) {
-    var active_tabs = window.sk_sites.getActiveMusicTabs();
+    var active_tabs = window.skSites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
       if (command === "mute" ||
           command === "stop" ||
@@ -134,19 +134,19 @@
    */
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
     if(request.action === "update_keys") {
-      window.sk_sites.loadSettings();
+      window.skSites.loadSettings();
     }
     if(request.action === "update_site_settings") {
       console.log("updating site settings: ", request.siteKey, request.siteState);
-      window.sk_sites.setSiteState(request.siteKey, request.siteState).then(function() {
+      window.skSites.setSiteState(request.siteKey, request.siteState).then(function() {
         response(true);
       });
     }
     if(request.action === "get_sites") {
-      response(window.sk_sites.sites);
+      response(window.skSites.sites);
     }
     if(request.action === "get_site_controller") {
-      response(window.sk_sites.getController(sender.tab.url));
+      response(window.skSites.getController(sender.tab.url));
     }
     if(request.action === "inject_controller") {
       console.log("Inject: " + request.file + " into: " + sender.tab.id);
@@ -158,7 +158,7 @@
        * We should only inject into actual tabs
        */
       if(sender.tab.index === -1) return response("no_inject");
-      response(window.sk_sites.checkMusicSite(sender.tab.url));
+      response(window.skSites.checkMusicSite(sender.tab.url));
     }
     if(request.action === "get_commands") response(window.coms);
     if(request.action === "command") processCommand(request);
@@ -174,7 +174,7 @@
       });
     }
     if(request.action === "get_music_tabs") {
-      var musicTabs = window.sk_sites.getMusicTabs();
+      var musicTabs = window.skSites.getMusicTabs();
       musicTabs.then(function(tabs) {
         response(tabs);
       });
@@ -182,8 +182,8 @@
       return true;
     }
     if(request.action === "send_change_notification") {
-      if (window.sk_sites.checkShowNotifications(sender.tab.url) &&
-          window.sk_sites.checkTabEnabled(sender.tab.id)) {
+      if (window.skSites.checkShowNotifications(sender.tab.url) &&
+          window.skSites.checkTabEnabled(sender.tab.id)) {
         sendChangeNotification(request, sender);
       }
     }
@@ -247,10 +247,6 @@
             chrome.tabs.create({
               url: "http://www.streamkeys.com/guide.html?installed=true"
             });
-          } else if(details.reason == "update") {
-            // chrome.tabs.create({
-            //   url: "http://www.streamkeys.com/guide.html?updated=true"
-            // });
           }
         }
       });
@@ -261,8 +257,8 @@
       window.coms = cmds;
     });
 
-    // Define sk_sites as a sitelist in global context
-    window.sk_sites = new Sitelist();
-    window.sk_sites.loadSettings();
+    // Define skSites as a sitelist in global context
+    window.skSites = new Sitelist();
+    window.skSites.loadSettings();
   });
 })();
