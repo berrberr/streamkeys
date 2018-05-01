@@ -5,11 +5,12 @@
 
   new BaseController({
     siteName: "Emby",
-    play: ".unpauseButton",
-    pause: ".pauseButton",
-    playNext: ".nextTrackButton",
-    playPrev: ".previousTrackButton",
-
+    play: ".btnPause",
+    pause: ".btnPause",
+    playNext: ".btnNextTrack",
+    playPrev: ".btnPreviousTrack",
+/*
     playState: ".unpauseButton.hide"
+*/
   });
 })();
