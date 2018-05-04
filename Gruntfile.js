@@ -31,8 +31,8 @@ module.exports = function(grunt) {
       } ] },
       prod: { files: [ {
         expand: true,
-        cwd: "code/",
-        src: ["**", "!js/*.js", "!**/*.md", "!**/*.scss"],
+        cwd: "build/unpacked-dev/",
+        src: ["**", "!js/*.js"],
         dest: "build/unpacked-prod/"
       } ] },
       artifact: { files: [ {
@@ -130,5 +130,5 @@ module.exports = function(grunt) {
   grunt.registerTask("dev-pre", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
   grunt.registerTask("dev", ["dev-pre", "browserify"]);
 
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify"]);
 };
