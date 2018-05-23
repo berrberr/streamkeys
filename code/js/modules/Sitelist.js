@@ -57,6 +57,7 @@
       "8tracks": { name: "8tracks", url: "http://www.8tracks.com" },
       "amazon": { name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player" },
       "accuradio": { name: "Accuradio", url: "https://www.accuradio.com" },
+      "airsonic": { name: "AirSonic", url: "https://airsonic.github.io/"},
       "ambientsleepingpill": { name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com" },
       "anghami": { name: "Anghami", url: "https://www.anghami.com" },
       "arena": { name: "Are.na", url: "https://www.are.na/", alias: ["are"] },
