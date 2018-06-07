@@ -162,6 +162,7 @@
       "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
       "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
       "xiami": { name: "Xiami", url: "http://www.xiami.com" },
+      "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
       "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
