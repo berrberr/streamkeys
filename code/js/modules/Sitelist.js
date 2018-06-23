@@ -67,6 +67,7 @@
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
       "be-at": { name: "BE-AT.TV", url: "https://be-at.tv", controller: "BeAtTvController.js"},
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
+      "bilibili": { name: "Bilibili", url: "https://www.bilibili.com", controller: "BilibiliController.js" },
       "brain": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
       "cloud.caster": { name: "Cloud Caster", url: "http://cloud-caster.com", controller: "CloudCasterController.js", alias: ["cloud-caster"] },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
