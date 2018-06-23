@@ -51,7 +51,7 @@
   }
 
   BaseController.prototype.doc = function() {
-    var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName === "IFRAME");
+    var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1);
     return (useFrameSelector) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
   };
 
