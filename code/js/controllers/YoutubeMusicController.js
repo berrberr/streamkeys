@@ -6,8 +6,8 @@
   var controller = new BaseController({
     siteName: "YouTube Music",
     playPause: ".play-pause-button",
-    playNext: ".left-controls-buttons > paper-icon-button[aria-label='Next song']",
-    playPrev: ".left-controls-buttons > paper-icon-button[aria-label='Previous song']",
+    playNext: ".next-button",
+    playPrev: ".previous-button",
     mute: ".volume",
     like: ".thumbs > .like",
     dislike: ".thumbs > .dislike",
