@@ -12,8 +12,8 @@
     like: ".playbackSoundBadge__like",
 
     playState: ".playControl.playing",
-    song: ".playbackSoundBadge__title > span:nth-of-type(2)",
-    artist: ".m-playing .soundTitle__username",
+    song: ".playbackSoundBadge__titleContextContainer > a",
+    artist: ".playbackSoundBadge__titleContextContainer > .playbackSoundBadge__title > a > span:nth-of-type(2)",
 
     hidePlayer: true
   });
