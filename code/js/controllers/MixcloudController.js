@@ -8,7 +8,8 @@
     siteName: "Mixcloud",
     playPause: ".player-control",
     mute: ".player-volume-percent",
-    like: ".icon-favorite-inner:not(.ng-hide)",
+    like: ".player-icons.favorite:not(.favorite-state)",
+    dislike: ".player-icons.favorite.favorite-state",
     overridePlayNext: true,
     overridePlayPrev: true,
 
