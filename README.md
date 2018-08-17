@@ -10,7 +10,7 @@ https://chrome.google.com/webstore/detail/streamkeys/ekpipjofdicppbepocohdlgenah
 
 #### Requirements
 
-- Node.js
+- Node.js v9
 
 #### Install
 
