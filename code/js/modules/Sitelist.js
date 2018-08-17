@@ -128,6 +128,7 @@
       "plex": { name: "Plex", url: "http://www.plex.tv" },
       "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
+      "musicforprogramming": { name: "MusicForProgramming", url: "http://musicforprogramming.net" },
       "pogoplug": { name: "Pogoplug", url: "http://my.pogoplug.com/view" },
       "music.qq": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js", alias: ["y.qq.com/portal/player.html"] },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
