@@ -111,6 +111,7 @@
       "music.163": { name: "music.163", url: "http://music.163.com", controller: "163Controller.js"},
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
       "mycloudplayers": { name: "My Cloud Player", url: "http://www.mycloudplayers.com" },
+      "mynoise" : { name: "myNoise", url : "https://mynoise.net" },
       "myspace": { name: "MySpace", url: "http://www.myspace.com" },
       "music.naver": { name: "Naver Music", url: "https://playerui.music.naver.com", controller: "NaverMusicController.js"},
       "napster": { name: "Napster", url: "https://app.napster.com", controller: "NapsterController.js" },
