@@ -236,6 +236,9 @@
       if(!obj.hasOwnProperty("hotkey-open_on_update")) {
         chrome.storage.sync.set({ "hotkey-open_on_update": true });
       }
+      if(!obj.hasOwnProperty("hotkey-use_mpris")) {
+        chrome.storage.sync.set({ "hotkey-use_mpris": false });
+      }
       if(!obj.hasOwnProperty("hotkey-youtube_restart")) {
         chrome.storage.sync.set({ "hotkey-youtube_restart": false });
       }
