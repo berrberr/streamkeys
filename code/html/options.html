@@ -138,6 +138,10 @@
           <input type="checkbox" id="single-player-mode" data-bind="checked: $data.singlePlayerMode">
           <label for="single-player-mode">Send commands to most recent player tab only.</label>
         </p>
+        <p class="setting" data-bind="visible: $data.supportsMPRIS">
+          <input type="checkbox" id="use-mpris" data-bind="checked: $data.useMPRIS, enable: $data.singlePlayerMode">
+          <label for="use-mpris">Register StreamKeys as an MPRIS player in DBus (send commands to most recent player tab only is required).</label>
+        </p>
         <p class="setting">
           <input type="checkbox" id="open-on-update" data-bind="checked: $data.openOnUpdate">
           <label for="open-on-update">Open information tab on update.</label>
