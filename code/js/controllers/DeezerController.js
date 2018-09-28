@@ -5,15 +5,16 @@
 
   new BaseController({
     siteName: "Deezer",
-    playPause: ".control.control-play",
-    playNext: ".control.control-next",
-    playPrev: ".control.control-prev",
-    mute: ".icon-volume-off",
-    like: ".player-actions .icon-love",
-    dislike: ".player-actions .icon-unlove",
-    playState: ".control.control-play > .svg-icon-pause",
 
-    song: ".player-track-title > a",
-    artist: ".player-track-artist > a"
+    buttonSwitch: true,
+    pause: ".player-controls button[aria-label=Pause]",
+    play: ".player-controls button[aria-label=Play]",
+    playNext: ".player-controls button[aria-label=Next]",
+    playPrev: ".player-controls button[aria-label=Back]",
+    playState: ".player-controls button[aria-label=Pause]",
+  
+    song: "a.track-link:nth-of-type(1)",
+    artist: "a.track-link:nth-of-type(2)"
+
   });
 })();
