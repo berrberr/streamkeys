@@ -14,27 +14,34 @@ https://chrome.google.com/webstore/detail/streamkeys/ekpipjofdicppbepocohdlgenah
 
 #### Install
 
-Clone the repo and then
+Clone the repo and then install dependencies:
 
 ```bash
 $ npm install
 ```
 
-to install dependencies. Then to build the extension run
+Then to build the extension in watch mode, run:
 
 ```bash
-$ grunt dev
+$ npm run develop
 ```
+In Chrome, load the unpacked extension from `build/unpacked-dev/`.
 
-## Grunt Tasks
 
-- `grunt dev`: Lints `code/*`, runs browserify and copies built code to `build/unpacked-dev/` and `test/streamkeys-ext/`
 
-- `grunt rel`: Lints `code/*`, runs browserify and uglify and copies built code to `build/unpacked-prod/` and `test/streamkeys-ext/`
+## NPM Scripts
+- `npm test`: Run unit tests.
 
-- `grunt watch`: Watches for changes to JS files in `code/*`, lints `code/*`, runs browserify and copies built code to `build/unpacked-dev/`
+- `npm run develop`: Lints `code/*`, runs browserify, copies built code to `build/unpacked-dev/` and `test/streamkeys-ext/` in watch mode
 
-- `grunt lint`: Lints `code/*`
+- `npm run grunt:dev`: Lints `code/*`, runs browserify and copies built code to `build/unpacked-dev/` and `test/streamkeys-ext/`
+
+- `npm run grunt:rel`: Lints `code/*`, runs browserify and uglify and copies built code to `build/unpacked-prod/` and `test/streamkeys-ext/`
+
+- `npm run grunt:watch`: Watches for changes to JS files in `code/*`, lints `code/*`, runs browserify and copies built code to `build/unpacked-dev/`
+
+- `npm run grunt:lint`: Lints `code/*`
+
 
 ## Info
 
@@ -108,11 +115,11 @@ There is a Karma test suite that simulates core extension functionality. The aut
 To run the tests locally, simply
 
 ```bash
-$ grunt test
+$ npm test
 ```
 
 ## License (MIT)
 
-Copyright (c) 2014 Alex Gabriel under the MIT license.
+Copyright (c) 2018 Alex Gabriel under the MIT license.
 
 [0]: https://github.com/berrberr/streamkeys/blob/master/code/js/modules/BaseController.js
