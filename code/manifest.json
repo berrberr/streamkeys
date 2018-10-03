@@ -23,9 +23,10 @@
     }
   ],
   "web_accessible_resources": [
-    "js/inject/seesu_inject.js",
-    "js/inject/palcomp3_inject.js",
     "js/inject/hoopla_inject.js",
+    "js/inject/musickit_inject.js",
+    "js/inject/palcomp3_inject.js",
+    "js/inject/seesu_inject.js",
     "js/controllers/*"
   ],
   "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
