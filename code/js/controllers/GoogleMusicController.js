@@ -15,6 +15,8 @@
     song: "#currently-playing-title",
     artist: "#player-artist",
     album: ".player-album",
-    art: "#playerBarArt"
+    art: "#playerBarArt",
+    currentTime: "#time_container_current",
+    totalTime: "#time_container_duration"
   });
 })();

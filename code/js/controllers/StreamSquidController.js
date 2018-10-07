@@ -16,6 +16,10 @@
     // Because the attributes contain untruncated song and artist names (unlike the DOM Element text)
     song: "data-track-name",
     artist: "data-artist-name",
+
+    // Yes, there is a typo in this id in the DOM
+    currentTime: "#player-time-elpased",
+    totalTime: "#player-duration"
   });
 
   controller.getSelectedQueueItem = function() {
@@ -30,7 +34,7 @@
       return selectedItem.attributes[dataAttribute].value;
     }
 
-    return null;
+    return BaseController.prototype.getSongData.call(this, dataAttribute);
   };
 
   controller.getArtData = function() {

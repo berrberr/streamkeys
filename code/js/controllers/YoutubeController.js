@@ -15,7 +15,10 @@
     playState: ".ytp-play-button[aria-label='Pause']",
     song: ".title.ytd-video-primary-info-renderer",
     album: "#playlist .title",
-    hidePlayer: true
+    hidePlayer: true,
+
+    currentTime: ".ytp-time-current",
+    totalTime: ".ytp-time-duration"
   });
 
   controller.getArtData = function() {
