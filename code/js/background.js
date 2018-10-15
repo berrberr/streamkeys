@@ -284,6 +284,19 @@
   var connections = 0;
   var mprisPort = null;
 
+  var hmsToSecondsOnly = function(str) {
+    var p = str.split(":");
+    var s = 0;
+    var m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+
+    return s;
+  };
+
   var handleNativeMsg = function(msg) {
     switch(msg.command) {
       case "play":
@@ -350,14 +363,16 @@
           "xesam:title": stateData.song,
           "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
           "xesam:album": stateData.album,
-          "mpris:artUrl": stateData.art
+          "mpris:artUrl": stateData.art,
+          "mpris:length": hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000
         };
         var args = [{ "CanGoNext": stateData.canPlayNext,
                   "CanGoPrevious": stateData.canPlayPrev,
                   "PlaybackStatus": (stateData.isPlaying ? "Playing" : "Paused"),
                   "CanPlay": stateData.canPlayPause,
                   "CanPause": stateData.canPlayPause,
-                  "Metadata": metadata }];
+                  "Metadata": metadata,
+                  "Position": hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000}];
 
         mprisPort.postMessage({ command: "update_state", args: args });
       }
