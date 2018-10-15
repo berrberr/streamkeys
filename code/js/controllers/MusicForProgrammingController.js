@@ -13,6 +13,6 @@
   });
 
   controller.isPlaying = function() {
-    return document.querySelector(this.selectors.playState).innerText === "[PAUSE]";
+    return document.querySelector(this.selectors.play).innerText === "[PAUSE]";
   };
 })();
