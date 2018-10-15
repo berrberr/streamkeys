@@ -13,6 +13,9 @@
     song: "a.title_link > span.title",
     artist: "[itemprop=byArtist]",
 
-    hidePlayer: true
+    hidePlayer: true,
+
+    currentTime: ".time_elapsed",
+    totalTime: ".time_total"
   });
 })();

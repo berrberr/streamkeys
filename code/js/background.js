@@ -190,15 +190,28 @@
   });
 
   var sendChangeNotification = function(request, sender) {
+    if (!request.stateData.song) {
+      return;
+    }
+
+    var notificationItems = [
+        { title: request.stateData.song.trim(), message: "" },
+      ];
+
+    if (request.stateData.artist || request.stateData.album) {
+      notificationItems.push({ title: (request.stateData.artist || "").trim(), message: (request.stateData.album || "").trim() });
+    }
+
+    if (request.stateData.currentTime || request.stateData.totalTime) {
+      notificationItems.push({ title: (request.stateData.currentTime || "").trim(), message: (request.stateData.totalTime || "").trim() });
+    }
+
     chrome.notifications.create(sender.id + request.stateData.siteName, {
         type: "list",
         title: request.stateData.siteName,
-        message: request.stateData.song || "",
+        message: (request.stateData.song || "").trim(),
         iconUrl: request.stateData.art || chrome.extension.getURL("icon128.png"),
-        items: [
-          { title: request.stateData.song, message: "" },
-          { title: request.stateData.artist || "", message: request.stateData.album || "" }
-        ]
+        items: notificationItems
       }, function(notificationId) {
         if(notificationTimeouts[notificationId])
         {

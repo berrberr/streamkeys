@@ -25,7 +25,9 @@
       song: (options.song || null),
       artist: (options.artist || null),
       album: (options.album || null),
-      art: (options.art || null)
+      art: (options.art || null),
+      currentTime: (options.currentTime || null),
+      totalTime: (options.totalTime || null)
     };
 
     // Previous player state, used to check vs current player state to see if anything changed
@@ -185,6 +187,8 @@
       artist: this.getSongData(this.selectors.artist),
       album: this.getSongData(this.selectors.album),
       art: this.getArtData(this.selectors.art),
+      currentTime: this.getSongData(this.selectors.currentTime),
+      totalTime: this.getSongData(this.selectors.totalTime),
       isPlaying: this.isPlaying(),
       siteName: this.siteName,
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),

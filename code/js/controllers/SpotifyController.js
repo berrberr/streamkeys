@@ -15,7 +15,11 @@
     mute: ".now-playing-bar button[class*=volume]",
     song: ".now-playing-bar .track-info__name",
     artist: ".now-playing-bar .track-info__artists",
-    art: "div.now-playing-bar__left div.cover-art-image.cover-art-image-loaded"
+    art: "div.now-playing-bar__left div.cover-art-image.cover-art-image-loaded",
+
+    // Messy nth-child selectors, but there is no other class/id/attribute information to distinguish the two times
+    currentTime: ".now-playing-bar .playback-bar__progress-time:nth-child(1)",
+    totalTime: ".now-playing-bar .playback-bar__progress-time:nth-child(3)"
   });
 
   // Spotify art uses an inline CSS background-image style, this override parses the image from there
