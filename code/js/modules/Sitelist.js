@@ -132,6 +132,7 @@
       "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
       "pogoplug": { name: "Pogoplug", url: "http://my.pogoplug.com/view" },
+      "primevideo": {name: "Prime Video", url: "https://www.primevideo.com"},
       "music.qq": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js", alias: ["y.qq.com/portal/player.html"] },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
       "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
