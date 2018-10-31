@@ -115,7 +115,11 @@
    */
   var processCommand = function(request) {
     if(request.tab_target && parseInt(request.tab_target)) {
-      chrome.tabs.sendMessage(parseInt(request.tab_target), { "action": request.command });
+      var message = { "action": request.command };
+      if(request.time != undefined) {
+        message.time = request.time;
+      }
+      chrome.tabs.sendMessage(parseInt(request.tab_target), message);
       console.log("Single tab request. Sent: " + request.command + " To: " + request.tab_target);
     } else {
       sendAction(request.command);

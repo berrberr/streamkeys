@@ -27,7 +27,10 @@
       album: (options.album || null),
       art: (options.art || null),
       currentTime: (options.currentTime || null),
-      totalTime: (options.totalTime || null)
+      totalTime: (options.totalTime || null),
+
+      //** Methods **//
+      seek: (options.seek || null)
     };
 
     // Previous player state, used to check vs current player state to see if anything changed
@@ -130,6 +133,15 @@
     this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
   };
 
+  BaseController.prototype.seek = function(time) {
+    if(this.selectors.canSeek) {
+      return;
+    }
+    if(this.selectors.seek != null) {
+      this.selectors.seek(time);
+    }
+  };
+
   /**
    * Attempts to check if the site is playing anything
    * @return {Boolean} true if site is currently playing
@@ -200,6 +212,7 @@
       ),
       canPlayNext: this.overridePlayNext || !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
+      canSeek: this.selectors.seek != null,
       hidePlayer: this.hidePlayer
     };
   };
@@ -254,6 +267,7 @@
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
+      if(request.action === "seek") this.seek(request.time);
       if(request.action === "playerStateNotify"){
         chrome.runtime.sendMessage({
           action: "send_change_notification",

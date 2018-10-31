@@ -85,10 +85,22 @@
         css: { 'mdl-button--disabled': !$data.canPlayPrev() }">
         <i class="material-icons md-dark">fast_rewind</i>
       </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
+          $data.sendAction('seek', -5);
+        },
+        css: { 'mdl-button--disabled': !$data.canSeek() }">
+        <i class="material-icons md-dark">replay_5</i>
+      </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-play" data-bind="click: function() {
           $data.sendAction('playPause');
         }">
         <i class="material-icons md-dark" data-bind="text: $data.isPlaying() ? 'pause_arrow' : 'play_arrow'"></i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
+          $data.sendAction('seek', 5);
+        },
+        css: { 'mdl-button--disabled': !$data.canSeek() }">
+        <i class="material-icons md-dark">forward_5</i>
       </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
           $data.sendAction('playNext');
