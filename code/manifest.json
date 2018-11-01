@@ -77,6 +77,14 @@
       "global": true,
       "description": "Toggle dislike"
     },
+    "forward5": {
+      "global": true,
+      "description": "seek forward"
+    },
+    "replay5": {
+      "global": true,
+      "description": "seek backwards"
+    },
     "playerStateNotify": {
       "global": true,
       "description": "Send notification of player(s) state"

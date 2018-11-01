@@ -268,6 +268,8 @@
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
       if(request.action === "seek") this.seek(request.time);
+      if(request.action === "forward5") this.seek(5);
+      if(request.action === "replay5") this.seek(-5);
       if(request.action === "playerStateNotify"){
         chrome.runtime.sendMessage({
           action: "send_change_notification",
