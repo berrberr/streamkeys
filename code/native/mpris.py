@@ -145,7 +145,7 @@ class Player(object):  # noqa
     def __init__(self, loop_status="None", metadata=None, position=0,
                  playback_status=PlaybackStatus.STOPPED.value, rate=1,
                  shuffle=False, volume=1, can_control=True, can_pause=True,
-                 can_play=True, can_seek=False, minimum_rate=1, maximum_rate=1,
+                 can_play=True, can_seek=True, minimum_rate=1, maximum_rate=1,
                  can_go_next=True, can_go_previous=True, **kwargs):
         super().__init__(**kwargs)
         self._loop_status = loop_status
@@ -372,6 +372,10 @@ class StreamKeysMPRIS(MediaPlayer):
         if self.CanGoPrevious:
             send_msg(Message(command=Command.PREVIOUS))
 
+    def Seek(self, offset):  # noqa: N802
+        if self.CanSeek:
+            send_msg(Message(command=Command.SEEK, args=offset))
+
     def Stop(self):  # noqa: N802
         send_msg(Message(command=Command.STOP))
 
@@ -476,6 +480,7 @@ class StreamKeysDBusService(object):
         GLib.io_add_watch(chan, GLib.IOCondition.IN, self.message_handler)
         GLib.io_add_watch(chan, GLib.IOCondition.HUP,
                           lambda *_: self.loop.quit())
+        self.add_player()
         self.loop.run()
 
     def add_player(self):

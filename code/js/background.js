@@ -29,22 +29,22 @@
    * "single player mode" option.
    * @param {String} command - name of the command to pass to the players
    */
-  var sendAction = function(command) {
+  var sendAction = function(command, args) {
     var active_tabs = window.skSites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
       if (command === "mute" ||
           command === "stop" ||
           command === "playerStateNotify" ||
           command === "getPlayerState") {
-        sendActionAllPlayers(command, tabs);
+        sendActionAllPlayers(command, tabs, args);
         return;
       }
       chrome.storage.sync.get(function(obj) {
         if (obj.hasOwnProperty("hotkey-single_player_mode") &&
             obj["hotkey-single_player_mode"]) {
-          sendActionSinglePlayer(command, tabs);
+          sendActionSinglePlayer(command, tabs, args);
         } else {
-          sendActionAllPlayers(command, tabs);
+          sendActionAllPlayers(command, tabs, args);
         }
       });
     });
@@ -55,13 +55,13 @@
    * action to all (as it's not clear which one to prefer)
    * otherwise tries to select best tab to interact with.
    */
-  var sendActionSinglePlayer = function(command, tabs) {
+  var sendActionSinglePlayer = function(command, tabs, args) {
     if (_.isEmpty(tabs)) return;
     var playing = getPlayingTabs(tabs);
     if (_.isEmpty(playing)) {
-      sendActionAllPlayers(command, [getBestSinglePlayerTab(tabs)]);
+      sendActionAllPlayers(command, [getBestSinglePlayerTab(tabs)], args);
     } else {
-      sendActionAllPlayers(command, playing);
+      sendActionAllPlayers(command, playing, args);
     }
   };
 
@@ -102,9 +102,13 @@
   /**
    * Sends command to every tab in the list.
    */
-  var sendActionAllPlayers = function(command, tabs) {
+  var sendActionAllPlayers = function(command, tabs, args) {
     tabs.forEach(function(tab) {
-      chrome.tabs.sendMessage(tab.id, { "action": command });
+      var message = { "action": command };
+      if(command === "seek" && args != undefined) {
+        message.time = args / (1000 * 1000);
+      }
+      chrome.tabs.sendMessage(tab.id, message);
       console.log("Sent: " + command + " To: " + tab.url);
     });
   };
@@ -116,7 +120,7 @@
   var processCommand = function(request) {
     if(request.tab_target && parseInt(request.tab_target)) {
       var message = { "action": request.command };
-      if(request.time != undefined) {
+      if(request.command === "seek" && request.time != undefined) {
         message.time = request.time;
       }
       chrome.tabs.sendMessage(parseInt(request.tab_target), message);
@@ -316,6 +320,9 @@
         break;
       case "previous":
         sendAction("playPrev");
+        break;
+      case "seek":
+        sendAction("seek", msg.args);
         break;
       default:
         console.log("Cannot handle native message command: " + msg.command);
