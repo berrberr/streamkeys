@@ -140,9 +140,11 @@ var MusicTab = (function() {
       "canPlayPause",
       "canPlayNext",
       "canPlayPrev",
+      "canMute",
       "canLike",
       "canDislike",
-      "canSeek"
+      "canSeek",
+      "canSetVolume"
     ];
 
     _.assign(this, attributes);
@@ -171,10 +173,10 @@ var MusicTab = (function() {
       });
     });
 
-    this.sendAction = function(action, time) {
+    this.sendAction = function(action, ...args) {
       chrome.runtime.sendMessage({
         action: "command",
-        time: time,
+        args: args,
         command: action,
         tab_target: this.tabId
       });

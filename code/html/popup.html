@@ -73,12 +73,6 @@
         }">
         <i class="material-icons md-dark">more_vert</i>
       </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
-          $data.sendAction('dislike');
-        },
-        css: { 'mdl-button--disabled': !$data.canDislike() }">
-        <i class="material-icons md-dark">thumb_down</i>
-      </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
           $data.sendAction('playPrev');
         },
@@ -108,17 +102,42 @@
         css: { 'mdl-button--disabled': !$data.canPlayNext() }">
         <i class="material-icons md-dark">fast_forward</i>
       </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
-          $data.sendAction('like');
-        },
-        css: { 'mdl-button--disabled': !$data.canLike() }">
-        <i class="material-icons md-dark">thumb_up</i>
-      </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.toggleStreamkeysEnabled();
         },
         css: { active: !$data.streamkeysEnabled() }">
         <i class="material-icons md-dark">not_interested</i>
+      </button>
+      <br>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
+          $data.sendAction('dislike');
+        },
+        css: { 'mdl-button--disabled': !$data.canDislike() }">
+        <i class="material-icons md-dark">thumb_down</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+          $data.sendAction('addVolume', -0.05);
+        },
+        css: { active: !$data.canSetVolume() }">
+        <i class="material-icons md-dark">volume_down</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+          $data.sendAction('mute');
+        },
+        css: { active: !$data.canMute() }">
+        <i class="material-icons md-dark">volume_off</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+          $data.sendAction('addVolume', 0.05);
+        },
+        css: { active: !$data.canSetVolume() }">
+        <i class="material-icons md-dark">volume_up</i>
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
+          $data.sendAction('like');
+        },
+        css: { 'mdl-button--disabled': !$data.canLike() }">
+        <i class="material-icons md-dark">thumb_up</i>
       </button>
     </div>
     <div class="site-settings initialize" data-bind="slideMenu: $data.settingsOpen">

@@ -28,10 +28,10 @@
       art: (options.art || null),
       currentTime: (options.currentTime || null),
       totalTime: (options.totalTime || null),
-
-      //** Methods **//
-      seek: (options.seek || null)
     };
+
+    // Volume if possible
+    this.volume = 1;
 
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
@@ -133,15 +133,6 @@
     this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
   };
 
-  BaseController.prototype.seek = function(time) {
-    if(this.selectors.canSeek) {
-      return;
-    }
-    if(this.selectors.seek != null) {
-      this.selectors.seek(time);
-    }
-  };
-
   /**
    * Attempts to check if the site is playing anything
    * @return {Boolean} true if site is currently playing
@@ -194,7 +185,7 @@
    * @return {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
    */
   BaseController.prototype.getStateData = function() {
-    return {
+    var state = {
       song: this.getSongData(this.selectors.song),
       artist: this.getSongData(this.selectors.artist),
       album: this.getSongData(this.selectors.album),
@@ -211,10 +202,15 @@
         (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
       ),
       canPlayNext: this.overridePlayNext || !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
+      canMute: this.mute != null,
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
-      canSeek: this.selectors.seek != null,
+      canSeek: this.seek != null,
       hidePlayer: this.hidePlayer
     };
+    if(this.getVolume != undefined) {
+      state.volume = this.getVolume();
+    }
+    return state;
   };
 
   /**
@@ -267,9 +263,17 @@
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
-      if(request.action === "seek") this.seek(request.time);
+      if(request.action === "seek") this.seek(request.args[0]);
       if(request.action === "forward5") this.seek(5);
       if(request.action === "replay5") this.seek(-5);
+      if(request.action === "volume") {
+        this.volume = Math.min(1.0, Math.max(0.0, request.args[0]));
+        this.setVolume(this.volume);
+      }
+      if(request.action === "addVolume") {
+        this.volume = Math.min(1.0, Math.max(0.0, this.volume + request.args[0]));
+        this.setVolume(this.volume);
+      }
       if(request.action === "playerStateNotify"){
         chrome.runtime.sendMessage({
           action: "send_change_notification",

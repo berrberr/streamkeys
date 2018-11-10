@@ -29,7 +29,7 @@
    * "single player mode" option.
    * @param {String} command - name of the command to pass to the players
    */
-  var sendAction = function(command, args) {
+  var sendAction = function(command, ...args) {
     var active_tabs = window.skSites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
       if (command === "mute" ||
@@ -105,8 +105,8 @@
   var sendActionAllPlayers = function(command, tabs, args) {
     tabs.forEach(function(tab) {
       var message = { "action": command };
-      if(command === "seek" && args != undefined) {
-        message.time = args / (1000 * 1000);
+      if(args != undefined) {
+        message.args = args;
       }
       chrome.tabs.sendMessage(tab.id, message);
       console.log("Sent: " + command + " To: " + tab.url);
@@ -120,8 +120,8 @@
   var processCommand = function(request) {
     if(request.tab_target && parseInt(request.tab_target)) {
       var message = { "action": request.command };
-      if(request.command === "seek" && request.time != undefined) {
-        message.time = request.time;
+      if(request.args != undefined) {
+        message.args = request.args;
       }
       chrome.tabs.sendMessage(parseInt(request.tab_target), message);
       console.log("Single tab request. Sent: " + request.command + " To: " + request.tab_target);
@@ -324,6 +324,9 @@
       case "seek":
         sendAction("seek", msg.args);
         break;
+      case "volume":
+        sendAction("volume", msg.args);
+        break;
       default:
         console.log("Cannot handle native message command: " + msg.command);
       }
@@ -369,17 +372,24 @@
           "xesam:title": stateData.song,
           "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
           "xesam:album": stateData.album,
-          "mpris:artUrl": stateData.art,
-          "mpris:length": hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000
+          "mpris:artUrl": stateData.art
         };
         var args = [{ "CanGoNext": stateData.canPlayNext,
                   "CanGoPrevious": stateData.canPlayPrev,
                   "PlaybackStatus": (stateData.isPlaying ? "Playing" : "Paused"),
                   "CanPlay": stateData.canPlayPause,
                   "CanPause": stateData.canPlayPause,
-                  "Metadata": metadata,
-                  "Position": hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000}];
-
+                  "CanSeek": stateData.canSeek,
+                  "Metadata": metadata}];
+        if(stateData.currentTime != undefined) {
+          args[0].Position = hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000;
+        }
+        if(stateData.totalTime != undefined) {
+          args[0].Metadata["mpris:length"] = hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000;
+        }
+        if(stateData.volume != undefined) {
+          args[0].Volume = stateData.volume;
+        }
         mprisPort.postMessage({ command: "update_state", args: args });
       }
     };

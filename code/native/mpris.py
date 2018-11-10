@@ -214,6 +214,9 @@ class Player(object):  # noqa
     def Stop(self):  # noqa: N802
         raise NotImplementedError
 
+    def SetVolume(self, volume):  #noqa: N802
+        raise NotImplementedError
+
 
 class MediaPlayer(Player, Root):
     """A class representing a generic MPRIS media player."""
@@ -230,6 +233,11 @@ class MediaPlayer(Player, Root):
 
     def __setattr__(self, name, value):
         """Override to set the DBus object properties and emit signals."""
+        if name == "Volume":
+            value = max(0.0, min(1.0, value))
+            value = round(value, 2)
+            self.volume = value
+            self.SetVolume(value)
         if name == "_properties":
             return super().__setattr__(name, value)
 
@@ -374,10 +382,15 @@ class StreamKeysMPRIS(MediaPlayer):
 
     def Seek(self, offset):  # noqa: N802
         if self.CanSeek:
-            send_msg(Message(command=Command.SEEK, args=offset))
+            # milliseconds to seconds
+            seconds = offset / (1000 * 1000)
+            send_msg(Message(command=Command.SEEK, args=seconds))
 
     def Stop(self):  # noqa: N802
         send_msg(Message(command=Command.STOP))
+
+    def SetVolume(self, volume): # noqa: N802
+        send_msg(Message(command=Command.VOLUME, args=volume))
 
 
 def make_streams_binary():
@@ -455,6 +468,7 @@ class Command(enum.Enum):
     ADD_PLAYER = "add_player"  # no args
     REMOVE_PLAYER = "remove_player"  # no args
     QUIT = "quit"  # no args
+    VOLUME = "volume"  # args: new volume
 
 
 def setup_logger(level=logging.DEBUG):
