@@ -11,6 +11,7 @@
     mute: ".volume",
     like: ".thumbs > .like",
     dislike: ".thumbs > .dislike",
+    video: "video",
 
     playState: ".play-pause-button[aria-label='Pause']",
     song: "song",

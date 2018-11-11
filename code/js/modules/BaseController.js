@@ -17,6 +17,7 @@
       like: (options.like || null),
       dislike: (options.dislike || null),
       iframe: (options.iframe || null),
+      video: (options.video || null),
 
       //** States **//
       playState: (options.playState || null),
@@ -29,6 +30,15 @@
       currentTime: (options.currentTime || null),
       totalTime: (options.totalTime || null),
     };
+
+    this.canMute = options.canMute || options.mute != undefined || false;
+    if(options.canMute == false) this.canMute = false; // disable if explicitly set ti false
+
+    this.canSeek = options.canSeek || options.video != undefined || false;
+    if(options.canSeek == false) this.canSeek = false; // disable if explicitly set to false
+
+    this.canSetVolume = options.canSetVolume || options.video != undefined || false;
+    if(options.canSetVolume == false) this.canSetVolume = false; // disable if explicitly set to false
 
     // Volume if possible
     this.volume = 1;
@@ -122,7 +132,11 @@
   };
 
   BaseController.prototype.mute = function() {
+    // TODO: volume of video tab and website state is different
     this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+    if(this.canSetVolume) {
+      this.setVolume(this.volume);
+    }
   };
 
   BaseController.prototype.like = function() {
@@ -157,11 +171,20 @@
     return isPlaying;
   };
 
+  BaseController.prototype.seek = function(time) {
+    // default implementation uses selectors if present
+    if(this.selectors.video) {
+      document.querySelector(this.selectors.video).currentTime += time;
+    }
+  };
+
   BaseController.prototype.getCurrentTime = function() {
     // default implementation uses selectors if present
     if(this.selectors.currentTime) {
       var timestr = (this.getSongData(this.selectors.currentTime) || "").trim();
       return hmsToSecondsOnly(timestr) * 1000 * 1000;
+    } else if(this.selectors.video) {
+      return document.querySelector(this.selectors.video).currentTime * 1000 * 1000;
     }
     return null;
   };
@@ -171,13 +194,25 @@
     if(this.selectors.totalTime) {
       var timestr = (this.getSongData(this.selectors.totalTime) || "").trim();
       return hmsToSecondsOnly(timestr) * 1000 * 1000;
+    } else if(this.selectors.video) {
+      return document.querySelector(this.selectors.video).duration * 1000 * 1000;
     }
     return null;
   };
 
   BaseController.prototype.getVolume = function() {
-    // default implementation return null
+    // default implementation uses selectors if present
+    if(this.selectors.video) {
+      return document.querySelector(this.selectors.video).volume;
+    }
     return null;
+  };
+
+  BaseController.prototype.setVolume = function(volume) {
+    // default implementation uses selectors if present
+    if(this.selectors.video) {
+      document.querySelector(this.selectors.video).volume = volume;
+    }
   };
 
   /**
@@ -225,9 +260,10 @@
         (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
       ),
       canPlayNext: this.overridePlayNext || !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
-      canMute: this.mute != null,
+      canMute: this.canMute,
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
-      canSeek: this.seek != null,
+      canSeek: this.canSeek,
+      canSetVolume: this.canSetVolume,
       hidePlayer: this.hidePlayer
     };
     state.volume = this.getVolume();

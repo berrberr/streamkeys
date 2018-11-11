@@ -9,6 +9,7 @@
     pause: [".player-play-pause.pause", ".button-nfplayerPause"],
     playNext: [".player-next-episode", ".button-nfplayerNextEpisode"],
     mute: [".player-control-button.volume", ".button-volumeLow, .button-volumeMedium, .button-volumeMax, .button-volumeMuted"],
+    video: "video",
 
     playState: [".player-play-pause.pause",".button-nfplayerPause"],
     song: [".player-status-main-title", ".title"]
@@ -38,30 +39,6 @@
     script.textContent = code;
     (document.head||document.documentElement).appendChild(script);
     script.remove();
-  };
-
-  controller.getCurrentTime = function() {
-    var videos = document.getElementsByTagName("video");
-    if(videos.length > 0) {
-      return videos[0].currentTime * 1000 * 1000;
-    }
-    return 0;
-  };
-
-  controller.getTotalTime = function() {
-    var videos = document.getElementsByTagName("video");
-    if(videos.length > 0) {
-      return videos[0].duration * 1000 * 1000;
-    }
-    return 0;
-  };
-
-  controller.getVolume = function() {
-    var videos = document.getElementsByTagName("video");
-    if(videos.length > 0) {
-      return videos[0].volume;
-    }
-    return 1;
   };
 
   controller.setVolume = function(volume) {

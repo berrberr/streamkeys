@@ -118,19 +118,19 @@
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.sendAction('addVolume', -0.05);
         },
-        css: { active: !$data.canSetVolume() }">
+        css: { 'mdl-button--disabled': !$data.canSetVolume() }">
         <i class="material-icons md-dark">volume_down</i>
       </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.sendAction('mute');
         },
-        css: { active: !$data.canMute() }">
+        css: { 'mdl-button--disabled': !$data.canMute() }">
         <i class="material-icons md-dark">volume_off</i>
       </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
           $data.sendAction('addVolume', 0.05);
         },
-        css: { active: !$data.canSetVolume() }">
+        css: { 'mdl-button--disabled': !$data.canSetVolume() }">
         <i class="material-icons md-dark">volume_up</i>
       </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
