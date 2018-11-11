@@ -292,19 +292,6 @@
   var connections = 0;
   var mprisPort = null;
 
-  var hmsToSecondsOnly = function(str) {
-    var p = str.split(":");
-    var s = 0;
-    var m = 1;
-
-    while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
-    }
-
-    return s;
-  };
-
   var handleNativeMsg = function(msg) {
     switch(msg.command) {
       case "play":
@@ -381,13 +368,13 @@
                   "CanPause": stateData.canPlayPause,
                   "CanSeek": stateData.canSeek,
                   "Metadata": metadata}];
-        if(stateData.currentTime != undefined) {
-          args[0].Position = hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000;
+        if(stateData.currentTime != null) {
+          args[0].Position = stateData.currentTime;
         }
-        if(stateData.totalTime != undefined) {
-          args[0].Metadata["mpris:length"] = hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000;
+        if(stateData.totalTime != null) {
+          args[0].Metadata["mpris:length"] = stateData.totalTime;
         }
-        if(stateData.volume != undefined) {
+        if(stateData.volume != null) {
           args[0].Volume = stateData.volume;
         }
         mprisPort.postMessage({ command: "update_state", args: args });

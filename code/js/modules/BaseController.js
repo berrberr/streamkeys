@@ -157,6 +157,29 @@
     return isPlaying;
   };
 
+  BaseController.prototype.getCurrentTime = function() {
+    // default implementation uses selectors if present
+    if(this.selectors.currentTime) {
+      var timestr = (this.getSongData(this.selectors.currentTime) || "").trim();
+      return hmsToSecondsOnly(timestr) * 1000 * 1000;
+    }
+    return null;
+  };
+
+  BaseController.prototype.getTotalTime = function() {
+    // default implementation uses selectors if present
+    if(this.selectors.totalTime) {
+      var timestr = (this.getSongData(this.selectors.totalTime) || "").trim();
+      return hmsToSecondsOnly(timestr) * 1000 * 1000;
+    }
+    return null;
+  };
+
+  BaseController.prototype.getVolume = function() {
+    // default implementation return null
+    return null;
+  };
+
   /**
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
@@ -190,8 +213,8 @@
       artist: this.getSongData(this.selectors.artist),
       album: this.getSongData(this.selectors.album),
       art: this.getArtData(this.selectors.art),
-      currentTime: this.getSongData(this.selectors.currentTime),
-      totalTime: this.getSongData(this.selectors.totalTime),
+      currentTime: this.getCurrentTime(),
+      totalTime: this.getTotalTime(),
       isPlaying: this.isPlaying(),
       siteName: this.siteName,
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
@@ -207,9 +230,7 @@
       canSeek: this.seek != null,
       hidePlayer: this.hidePlayer
     };
-    if(this.getVolume != undefined) {
-      state.volume = this.getVolume();
-    }
+    state.volume = this.getVolume();
     return state;
   };
 
@@ -311,6 +332,19 @@
     setInterval(this.updatePlayerState.bind(this), 200);
 
     sk_log("Attached listener for ", this);
+  };
+
+  var hmsToSecondsOnly = function(str) {
+    var p = str.split(":");
+    var s = 0;
+    var m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+
+    return s;
   };
 
   module.exports = BaseController;

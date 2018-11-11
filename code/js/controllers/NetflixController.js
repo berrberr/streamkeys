@@ -40,6 +40,22 @@
     script.remove();
   };
 
+  controller.getCurrentTime = function() {
+    var videos = document.getElementsByTagName("video");
+    if(videos.length > 0) {
+      return videos[0].currentTime * 1000 * 1000;
+    }
+    return 0;
+  };
+
+  controller.getTotalTime = function() {
+    var videos = document.getElementsByTagName("video");
+    if(videos.length > 0) {
+      return videos[0].duration * 1000 * 1000;
+    }
+    return 0;
+  };
+
   controller.getVolume = function() {
     var videos = document.getElementsByTagName("video");
     if(videos.length > 0) {
