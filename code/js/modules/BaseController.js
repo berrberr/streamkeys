@@ -264,14 +264,26 @@
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
       if(request.action === "seek") this.seek(request.args[0]);
-      if(request.action === "forward5") this.seek(5);
-      if(request.action === "replay5") this.seek(-5);
+      if(request.action === "forward5") this.seek(5); // manifest command
+      if(request.action === "replay5") this.seek(-5); // manifest command
       if(request.action === "volume") {
+        // mpris
         this.volume = Math.min(1.0, Math.max(0.0, request.args[0]));
         this.setVolume(this.volume);
       }
       if(request.action === "addVolume") {
+        // from popup
         this.volume = Math.min(1.0, Math.max(0.0, this.volume + request.args[0]));
+        this.setVolume(this.volume);
+      }
+      if(request.action === "volumeup") {
+        // manifest command
+        this.volume = Math.min(1.0, Math.max(0.0, this.volume + 0.05));
+        this.setVolume(this.volume);
+      }
+      if(request.action === "volumedown") {
+        // manifest command
+        this.volume = Math.min(1.0, Math.max(0.0, this.volume - 0.05));
         this.setVolume(this.volume);
       }
       if(request.action === "playerStateNotify"){

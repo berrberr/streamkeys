@@ -79,11 +79,19 @@
     },
     "forward5": {
       "global": true,
-      "description": "seek forward"
+      "description": "Seek forward"
     },
     "replay5": {
       "global": true,
-      "description": "seek backwards"
+      "description": "Seek backwards"
+    },
+    "volumeup": {
+      "global": true,
+      "description": "Increase volume"
+    },
+    "volumedown": {
+      "global": true,
+      "description": "Decrease volume"
     },
     "playerStateNotify": {
       "global": true,
