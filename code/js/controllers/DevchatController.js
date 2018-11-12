@@ -6,7 +6,7 @@
 
   var controller = new BaseController({
     siteName: "DevChat",
-    song: ".episode__body>h5",
+    song: "title",
 
     overridePlayPrev: true,
     overridePlayPause: true,
