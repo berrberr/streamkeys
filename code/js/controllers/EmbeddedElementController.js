@@ -13,7 +13,7 @@
   if(!getPlayer()) return;
 
   var controller = new BaseController({
-    siteName: "DevChat",
+    siteName: "Embedded Element",
     song: "title",
 
     overridePlayPrev: true,
