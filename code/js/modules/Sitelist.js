@@ -80,7 +80,7 @@
       "duckburgradio": { name: "Duckburg Radio", url: "http://beta.radio-mb.com", controller: "DuckburgRadioController.js", alias: ["radio-mb"] },
       "earbits": { name: "Earbits", url: "http://www.earbits.com" },
       "egghead": { name: "egghead.io", url: "https://egghead.io" },
-      "embedded": { name: "Embedded Element", url: "http://www.example.com", controller: "EmbeddedElementController.js" },
+      "embedded": { name: "Embedded Element", url: "http://www.example.com", controller: "EmbeddedElementController.js", alias: ["example"] },
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
       "focusatwill": { name: "focusatwill", url: "http://www.focusatwill.com", controller: "FocusatwillController.js" },
