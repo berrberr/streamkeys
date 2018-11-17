@@ -40,8 +40,14 @@
     this.canSetVolume = options.canSetVolume || options.video != undefined || false;
     if(options.canSetVolume == false) this.canSetVolume = false; // disable if explicitly set to false
 
-    // Volume if possible
-    this.volume = 1;
+    // Volume if possible/most recent, since mute changes the volume?
+    this.volume = this.getVolume();
+    if(this.volume == undefined) {
+      // we are probably muted, so we unmute, get data and mute
+      this.mute();
+      this.volume = this.getVolume();
+      this.mute();
+    }
 
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
@@ -134,7 +140,7 @@
   BaseController.prototype.mute = function() {
     // TODO: volume of video tab and website state is different
     this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
-    if(this.canSetVolume) {
+    if(this.canSetVolume && this.volume != undefined) {
       this.setVolume(this.volume);
     }
   };
@@ -171,6 +177,12 @@
     return isPlaying;
   };
 
+  BaseController.prototype.setPosition = function(time) {
+    if(this.selectors.video) {
+      document.querySelector(this.selectors.video).currentTime = time;
+    }
+  };
+
   BaseController.prototype.seek = function(time) {
     // default implementation uses selectors if present
     if(this.selectors.video) {
@@ -200,10 +212,23 @@
     return null;
   };
 
+  BaseController.prototype.isMuted = function() {
+    if(this.selectors.video) {
+      return document.querySelector(this.selectors.video).muted;
+    }
+    return null;
+  };
+
   BaseController.prototype.getVolume = function() {
     // default implementation uses selectors if present
     if(this.selectors.video) {
-      return document.querySelector(this.selectors.video).volume;
+      var video = document.querySelector(this.selectors.video);
+      if(!video.muted) {
+        return video.volume;
+      } else {
+        // last saved volume
+        return this.volume;
+      }
     }
     return null;
   };
@@ -320,6 +345,7 @@
       if(request.action === "mute") this.mute();
       if(request.action === "like") this.like();
       if(request.action === "dislike") this.dislike();
+      if(request.action === "position") this.setPosition(request.args[0]);
       if(request.action === "seek") this.seek(request.args[0]);
       if(request.action === "forward5") this.seek(5); // manifest command
       if(request.action === "replay5") this.seek(-5); // manifest command

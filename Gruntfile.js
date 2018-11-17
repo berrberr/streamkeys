@@ -28,6 +28,16 @@ module.exports = function(grunt) {
         cwd: "code/",
         src: ["**", "!js/**", "!**/*.md", "!**/*.scss"],
         dest: "build/unpacked-dev/"
+      }, {
+        expand: true,
+        cwd: "node_modules/material-design-lite/",
+        src: ["material.min.js"],
+        dest: "code/js/lib/"
+      }, {
+        expand: true,
+        cwd: "node_modules/material-design-lite/",
+        src: ["material.min.css"],
+        dest: "code/css"
       } ] },
       prod: { files: [ {
         expand: true,
@@ -77,6 +87,9 @@ module.exports = function(grunt) {
     },
 
     sass: {
+      options: {
+        sourceMap: true,
+      },
       prod: {
         files: {
           "build/unpacked-prod/css/popup.css": "code/css/popup.scss",

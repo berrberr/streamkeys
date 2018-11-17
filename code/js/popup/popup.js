@@ -2,7 +2,6 @@
 
 var ko = require("ko"),
     _ = require("lodash");
-require("../lib/material.min.js");
 
 var PopupViewModel = function PopupViewModel() {
   var self = this;
@@ -102,6 +101,24 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
       }, this);
     }, musicTab);
   }
+  var timeContainer = document.getElementById("time_container");
+  if(musicTab.currentTime != undefined && musicTab.totalTime != undefined) {
+    var time = parseInt(musicTab.currentTime() / (1000 * 1000));
+    var duration = parseInt(musicTab.totalTime() / (1000 * 1000));
+    displayTime(time, duration);
+    if(timeContainer) timeContainer.style.display = "flex";
+  } else {
+    if(timeContainer) timeContainer.style.display = "none";
+  }
+  var volumeContainer = document.getElementById("volume_container");
+  if(musicTab.volume != undefined) {
+    var volume = Math.round(musicTab.volume() * 100);
+    displayVolume(volume);
+    if(volumeContainer) volumeContainer.style.display = "flex";
+  } else {
+    if(volumeContainer) volumeContainer.style.display = "none";
+  }
+  window.componentHandler.upgradeDom();
 };
 
 /**
@@ -144,7 +161,10 @@ var MusicTab = (function() {
       "canLike",
       "canDislike",
       "canSeek",
-      "canSetVolume"
+      "canSetVolume",
+      "volume",
+      "currentTime",
+      "totalTime"
     ];
 
     _.assign(this, attributes);
@@ -190,6 +210,10 @@ var MusicTab = (function() {
       this.streamkeysEnabled(!this.streamkeysEnabled.peek());
       chrome.extension.getBackgroundPage().window.skSites.markTabEnabledState(this.tabId, this.streamkeysEnabled.peek());
     };
+
+    this.displayTime = displayTime;
+
+    this.displayVolume = displayVolume;
   }
 
   return MusicTab;
@@ -224,3 +248,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   };
 });
+
+function displayTime(time, duration) {
+  var timeSlider = document.getElementById("time_slider");
+  // we have to set max before min on the dom element
+  timeSlider.max = duration;
+  timeSlider.value = time;
+  var durationMinuteStrLength = parseInt(duration / 60).toString().length;
+  var timeStr = parseInt(time / 60).toString().padStart(durationMinuteStrLength, "0") + ":" + parseInt(time % 60).toString().padStart(2, "0");
+  var durationStr = parseInt(duration / 60).toString() + ":" + parseInt(duration % 60).toString().padStart(2, "0");
+  document.getElementById("time").innerHTML = timeStr + " / " + durationStr;
+}
+
+function displayVolume(volume) {
+  document.getElementById("vol_slider").value = volume;
+  document.getElementById("vol_perc").innerHTML = (volume + "%").padStart(4);
+}

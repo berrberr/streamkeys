@@ -276,3 +276,16 @@ a:visited {
 .mdl-button--colored {
   background-color: $color-primary !important;
 }
+
+.mdl-slider__background-flex {
+  @extend .mdl-slider__background-flex;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.mdl-slider {
+  @extend .mdl-slider;
+  margin-left: 0px;
+  margin-right: 0px;
+}

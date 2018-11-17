@@ -8,6 +8,7 @@
   <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link type="text/css" rel="stylesheet" href="/css/popup.css">
+  <script type="text/javascript" src="/js/lib/material.min.js"></script>
   <script type="text/javascript" src="/js/popup/popup.js"></script>
 </head>
 
@@ -79,22 +80,22 @@
         css: { 'mdl-button--disabled': !$data.canPlayPrev() }">
         <i class="material-icons md-dark">fast_rewind</i>
       </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-prev" data-bind="click: function() {
-          $data.sendAction('seek', -5);
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
+          $data.sendAction('dislike');
         },
-        css: { 'mdl-button--disabled': !$data.canSeek() }">
-        <i class="material-icons md-dark">replay_5</i>
+        css: { 'mdl-button--disabled': !$data.canDislike() }">
+        <i class="material-icons md-dark">thumb_down</i>
       </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-play" data-bind="click: function() {
           $data.sendAction('playPause');
         }">
         <i class="material-icons md-dark" data-bind="text: $data.isPlaying() ? 'pause_arrow' : 'play_arrow'"></i>
       </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
-          $data.sendAction('seek', 5);
+      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
+          $data.sendAction('like');
         },
-        css: { 'mdl-button--disabled': !$data.canSeek() }">
-        <i class="material-icons md-dark">forward_5</i>
+        css: { 'mdl-button--disabled': !$data.canLike() }">
+        <i class="material-icons md-dark">thumb_up</i>
       </button>
       <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-next" data-bind="click: function() {
           $data.sendAction('playNext');
@@ -108,38 +109,45 @@
         css: { active: !$data.streamkeysEnabled() }">
         <i class="material-icons md-dark">not_interested</i>
       </button>
-      <br>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-dislike" data-bind="click: function() {
-          $data.sendAction('dislike');
-        },
-        css: { 'mdl-button--disabled': !$data.canDislike() }">
-        <i class="material-icons md-dark">thumb_down</i>
-      </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
-          $data.sendAction('addVolume', -0.05);
-        },
-        css: { 'mdl-button--disabled': !$data.canSetVolume() }">
-        <i class="material-icons md-dark">volume_down</i>
-      </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
-          $data.sendAction('mute');
-        },
-        css: { 'mdl-button--disabled': !$data.canMute() }">
-        <i class="material-icons md-dark">volume_off</i>
-      </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
-          $data.sendAction('addVolume', 0.05);
-        },
-        css: { 'mdl-button--disabled': !$data.canSetVolume() }">
-        <i class="material-icons md-dark">volume_up</i>
-      </button>
-      <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button player-controls-button-like" data-bind="click: function() {
-          $data.sendAction('like');
-        },
-        css: { 'mdl-button--disabled': !$data.canLike() }">
-        <i class="material-icons md-dark">thumb_up</i>
-      </button>
-    </div>
+      <div id="volume_container" style="display: flex; align-items: center; justify-content: center">
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+            $data.sendAction('addVolume', -0.05);
+          },
+          css: { 'mdl-button--disabled': !$data.canSetVolume() }">
+          <i class="material-icons md-dark">volume_down</i>
+        </button>
+        <input id="vol_slider" class="mdl-slider mdl-js-slider" style="width: 120px" type="range" min="0" max="100" data-bind="event: { input: function() {
+            var volume = document.getElementById('vol_slider').value;
+            $data.volume = function() { return volume / 100; };
+            $data.sendAction('volume', volume / 100);
+            $data.displayVolume(volume);
+          }}">
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+            $data.sendAction('addVolume', 0.05);
+          },
+          css: { 'mdl-button--disabled': !$data.canSetVolume() }">
+          <i class="material-icons md-dark">volume_up</i>
+        </button>
+        <pre id="vol_perc"></pre>
+        <button class="mdl-button mdl-js-button mdl-button--icon player-controls-button" data-bind="click: function() {
+            $data.sendAction('mute');
+          },
+          css: { 'mdl-button--disabled': !$data.canMute() }">
+          <i class="material-icons md-dark">volume_off</i>
+        </button>
+      </div>
+      <div id="time_container" style="display: flex; align-items: center; justify-content: center; height: 48px">
+        <input id="time_slider" class="mdl-slider mdl-js-slider" style="width: 150px" type="range" min="0" max="100" data-bind="event: { input: function() {
+            var timeSlider = document.getElementById('time_slider');
+            var time = timeSlider.value;
+            var duration = timeSlider.max;
+            $data.current_time = function() { return time * 1000 * 1000; };
+            $data.total_time = function() { return duration * 1000 * 1000; };
+            $data.sendAction('position', time);
+            $data.displayTime(time, duration);
+          }}">
+        <a id="time" style="margin-left: 10px"></a>
+      </div>
     <div class="site-settings initialize" data-bind="slideMenu: $data.settingsOpen">
       <div class="settings-item left">
         <label class="control-label">Priority</label>
