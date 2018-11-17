@@ -31,7 +31,7 @@
       totalTime: (options.totalTime || null),
     };
 
-    this.canMute = options.canMute || options.mute != undefined || false;
+    this.canMute = options.canMute || options.mute != undefined || options.video != undefined || false;
     if(options.canMute == false) this.canMute = false; // disable if explicitly set ti false
 
     this.canSeek = options.canSeek || options.video != undefined || false;
@@ -139,7 +139,14 @@
 
   BaseController.prototype.mute = function() {
     // TODO: volume of video tab and website state is different
-    this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+    if(this.selectors.mute) {
+      this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+    } else if(this.selectors.video) {
+      var video = document.querySelector(this.selectors.video);
+      if(video) {
+        video.muted = !video.muted;
+      }
+    }
     if(this.canSetVolume && this.volume != undefined) {
       this.setVolume(this.volume);
     }
