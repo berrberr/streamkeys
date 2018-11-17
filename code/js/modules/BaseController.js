@@ -45,7 +45,7 @@
     if(this.volume == undefined) {
       // we are probably muted, so we unmute, get data and mute
       this.mute();
-      this.volume = this.getVolume();
+      this.getVolume();
       this.mute();
     }
 
@@ -196,7 +196,10 @@
       var timestr = (this.getSongData(this.selectors.currentTime) || "").trim();
       return hmsToSecondsOnly(timestr) * 1000 * 1000;
     } else if(this.selectors.video) {
-      return document.querySelector(this.selectors.video).currentTime * 1000 * 1000;
+      var video = document.querySelector(this.selectors.video);
+      if(video != undefined) {
+        return video.currentTime * 1000 * 1000;
+      }
     }
     return null;
   };
@@ -207,7 +210,10 @@
       var timestr = (this.getSongData(this.selectors.totalTime) || "").trim();
       return hmsToSecondsOnly(timestr) * 1000 * 1000;
     } else if(this.selectors.video) {
-      return document.querySelector(this.selectors.video).duration * 1000 * 1000;
+      var video = document.querySelector(this.selectors.video);
+      if(video != undefined) {
+        return video.duration * 1000 * 1000;
+      }
     }
     return null;
   };
@@ -223,7 +229,8 @@
     // default implementation uses selectors if present
     if(this.selectors.video) {
       var video = document.querySelector(this.selectors.video);
-      if(!video.muted) {
+      if(video != undefined && !video.muted) {
+        this.volume = video.volume;
         return video.volume;
       } else {
         // last saved volume

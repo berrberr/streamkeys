@@ -341,7 +341,10 @@
           bestTab = getBestSinglePlayerTab(playingTabs);
         }
 
-        func(tabStates[bestTab.id].state, bestTab);
+        // while loading website state may not exist, but the website does
+        if(bestTab.id in tabStates) {
+          func(tabStates[bestTab.id].state, bestTab);
+        }
       }
     });
   };

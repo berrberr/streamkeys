@@ -10,3 +10,5 @@ streamkeys.zip
 *.sublime-project
 npm-debug.log
 test-selectors/
+code/css/material.min.css
+code/js/lib/material.min.js
