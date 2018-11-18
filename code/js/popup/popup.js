@@ -102,7 +102,7 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     }, musicTab);
   }
   var timeContainer = document.getElementById("time_container");
-  if(musicTab.currentTime != undefined && musicTab.totalTime != undefined) {
+  if(musicTab.canSeek()) {
     var time = parseInt(musicTab.currentTime() / (1000 * 1000));
     var duration = parseInt(musicTab.totalTime() / (1000 * 1000));
     displayTime(time, duration);
@@ -111,7 +111,7 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     if(timeContainer) timeContainer.style.display = "none";
   }
   var volumeContainer = document.getElementById("volume_container");
-  if(musicTab.volume != undefined) {
+  if(musicTab.canSetVolume()) {
     var volume = Math.round(musicTab.volume() * 100);
     displayVolume(volume);
     if(volumeContainer) volumeContainer.style.display = "flex";
