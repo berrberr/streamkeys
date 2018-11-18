@@ -108,6 +108,20 @@ module.exports = function(grunt) {
       unit: {
         configFile: "karma.conf.js"
       }
+    },
+
+    crx: {
+      crx: {
+        src: "build/unpacked-prod/**/*",
+        dest: "build/streamkeys.crx",
+        options: {
+          privateKey: "privatekey.pem"
+        }
+      },
+      zip: {
+        src: "build/unpacked-prod/**/*",
+        dest: "build/streamkeys.zip"
+      }
     }
   });
 
@@ -115,13 +129,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-contrib-uglify-es");
   grunt.loadNpmTasks("grunt-sass");
   grunt.loadNpmTasks("grunt-exec");
   grunt.loadNpmTasks("grunt-mkdir");
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-karma");
+  grunt.loadNpmTasks("grunt-crx");
 
   /* Tasks */
   grunt.registerTask(
@@ -141,7 +156,9 @@ module.exports = function(grunt) {
   grunt.registerTask("test", ["karma"]);
   grunt.registerTask("rel-test", ["rel", "test"]);
   grunt.registerTask("dev-pre", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
-  grunt.registerTask("dev", ["dev-pre", "browserify"]);
+  grunt.registerTask("dev", ["dev-pre", "browserify:build"]);
 
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify:build", "copy:prod", "uglify"]);
+  grunt.registerTask("package-crx", ["rel", "crx:crx"]);
+  grunt.registerTask("package-zip", ["rel", "crx:zip"]);
 };

@@ -1,4 +1,4 @@
-# Streamkeys v1.7.8 [![Build Status](https://travis-ci.org/berrberr/streamkeys.svg?branch=master)](https://travis-ci.org/berrberr/streamkeys)
+# Streamkeys v1.8.0 [![Build Status](https://travis-ci.org/berrberr/streamkeys.svg?branch=master)](https://travis-ci.org/berrberr/streamkeys)
 
 Chrome extension to send "global" (ie. across the browser) hotkeys to various online media players.
 
@@ -41,6 +41,10 @@ In Chrome, load the unpacked extension from `build/unpacked-dev/`.
 - `npm run grunt:watch`: Watches for changes to JS files in `code/*`, lints `code/*`, runs browserify and copies built code to `build/unpacked-dev/`
 
 - `npm run grunt:lint`: Lints `code/*`
+
+- `npm run package-crx`: Create `.crx` file, that can be published using `privatekey.pem` in repository (not included)
+
+- `npm run package-zip`: Create `.zip` file, that can be published (without private key)
 
 
 ## Info
