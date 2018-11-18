@@ -8,7 +8,7 @@
     playPause: ".play-pause-button",
     playNext: ".next-button",
     playPrev: ".previous-button",
-    mute: ".volume",
+    //mute: ".volume",
     like: ".thumbs > .like",
     dislike: ".thumbs > .dislike",
     video: "video",
