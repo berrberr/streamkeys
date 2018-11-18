@@ -8,7 +8,7 @@
     play: ".button-nfplayerPlay",
     pause: ".button-nfplayerPause",
     playNext: ".button-nfplayerNextEpisode",
-    mute: [".button-volumeLow", ".button-volumeMuted"],
+    mute: [".button-volumeMuted", ".button-volumeLow", ".button-volumeMedium", ".button-volumeMax"],
     video: "video",
 
     playState: ".button-nfplayerPause",
