@@ -56,6 +56,7 @@
       "7digital": { name: "7digital", url: "http://www.7digital.com" },
       "8tracks": { name: "8tracks", url: "http://www.8tracks.com" },
       "amazon": { name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player" },
+      "ampache": { name: "Ampache", url: "http://ampache.org" },
       "accuradio": { name: "Accuradio", url: "https://www.accuradio.com" },
       "airsonic": { name: "AirSonic", url: "https://airsonic.github.io/"},
       "ambientsleepingpill": { name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com" },
