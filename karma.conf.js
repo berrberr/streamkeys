@@ -32,11 +32,17 @@ module.exports = function(config) {
 
     singleRun: true,
 
-    browsers: ["PhantomJS2"],
+    browsers: ["Chrome"],
 
     browserify: {
       debug: true,
       transform: []
+    },
+    
+    client: {
+      jasmine: {
+        random: false
+      }
     }
   });
 };

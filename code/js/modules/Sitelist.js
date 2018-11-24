@@ -1,12 +1,6 @@
 ;(function() {
   "use strict";
 
-  /**
-   * Needed for phantomjs to work
-   * @see [https://github.com/ariya/phantomjs/issues/12401]
-   */
-  require("es6-promise").polyfill();
-
   var _ = require("lodash"),
       URL = require("urlutils");
 
@@ -360,7 +354,7 @@
    * @return {String} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
-    var filtered_sites = _.filter(_.keys(this.sites), function (name) {
+    var filtered_sites = _.filter(_.keys(this.sites), function(name) {
       return this.sites[name].urlRegex.test(url);
     }, this);
 
@@ -490,8 +484,8 @@
         disabled: []
       };
 
-      chrome.tabs.query({}, function (tabs) {
-        tabs.forEach(function (tab) {
+      chrome.tabs.query({}, function(tabs) {
+        tabs.forEach(function(tab) {
           if(that.checkEnabled(tab.url)) {
             tab.streamkeysSiteKey = that.getSitelistName(tab.url);
             tab.streamkeysPriority = that.getPriority(tab.streamkeysSiteKey);
@@ -522,8 +516,8 @@
     var promise = new Promise(function(resolve) {
       var musicTabs = [];
 
-      chrome.tabs.query({}, function (tabs) {
-        tabs.forEach(function (tab) {
+      chrome.tabs.query({}, function(tabs) {
+        tabs.forEach(function(tab) {
           if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) {
             musicTabs.push({
               tab: tab,

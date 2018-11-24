@@ -5,12 +5,6 @@
       _ = require("lodash");
 
   /**
-   * Needed for phantomjs to work
-   * @see [https://github.com/ariya/phantomjs/issues/12401]
-   */
-  require("es6-promise").polyfill();
-
-  /**
    * Tracks TimeoutIds by notification ID, to cancel previous uncomplete Timeouts
    * when a new notification is created prior to the last notification clearing
    */
