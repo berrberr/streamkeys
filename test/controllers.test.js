@@ -11,8 +11,13 @@ describe("sitelist", function() {
 
     sitelist.loadSettings();
 
-    sitesMapping = _.map(
+    sitesWithUrl = _.pick(
       sitelist.sites,
+      function(siteData) { return !_.isEmpty(siteData.url); }
+    );
+
+    sitesMapping = _.map(
+      sitesWithUrl,
       function(siteData, siteKey) {
         return {
           key: siteKey,
