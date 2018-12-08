@@ -89,6 +89,7 @@ module.exports = function(grunt) {
     sass: {
       options: {
         sourceMap: true,
+        implementation: require("node-sass")
       },
       prod: {
         files: {
@@ -131,7 +132,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-uglify-es");
   grunt.loadNpmTasks("grunt-sass");
-  grunt.loadNpmTasks("grunt-exec");
   grunt.loadNpmTasks("grunt-mkdir");
   grunt.loadNpmTasks("grunt-lintspaces");
   grunt.loadNpmTasks("grunt-browserify");

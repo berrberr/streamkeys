@@ -72,7 +72,7 @@
     tabs = _.filter(tabs, function(tab) {
       return maxTimestamp - getTabUpdateTime(tab) < 200;
     });
-    var sorted = _.sortByAll(tabs, "active", getTabUpdateTime);
+    var sorted = _.sortBy(tabs, ["active", getTabUpdateTime]);
     return _.last(sorted);
   };
 
@@ -243,7 +243,7 @@
         };
 
         chrome.storage.local.get(function(localStorageObj) {
-          _.each(localStorageObj, function(value, key) {
+          _.forEach(localStorageObj, function(value, key) {
             newStorageObj[key] = value;
           });
 
