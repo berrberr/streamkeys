@@ -1,8 +1,7 @@
 ;(function() {
   "use strict";
 
-  var _ = require("lodash"),
-      URL = require("urlutils");
+  var _ = require("lodash");
 
   // The _internal_ version of the objects in localstorage
   var STORAGE_VERSION = 1;
@@ -29,8 +28,9 @@
       // Here we override it with a custom function to account for blacklisted hostnames
       return {
         test: function(_url) {
-          var parsedUrl = new URL(_url);
-          return (re.test(_url) && !blacklistRe.test(parsedUrl.host));
+          var parser = document.createElement("a");
+          parser.href = _url;
+          return (re.test(_url) && !blacklistRe.test(parser.hostname));
         }
       };
     }
