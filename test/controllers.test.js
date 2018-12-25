@@ -11,7 +11,7 @@ describe("sitelist", function() {
 
     sitelist.loadSettings();
 
-    sitesWithUrl = _.pick(
+    sitesWithUrl = _.pickBy(
       sitelist.sites,
       function(siteData) { return !_.isEmpty(siteData.url); }
     );
