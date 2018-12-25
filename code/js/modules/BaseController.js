@@ -149,7 +149,7 @@
     if(this.selectors.mute) {
       this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
     } else if(this.selectors.video) {
-      var video = document.querySelector(this.selectors.video);
+      var video = this.doc().querySelector(this.selectors.video);
       if(video) {
         video.muted = !video.muted;
       }
@@ -193,14 +193,14 @@
 
   BaseController.prototype.setPosition = function(time) {
     if(this.selectors.video) {
-      document.querySelector(this.selectors.video).currentTime = time;
+      this.doc().querySelector(this.selectors.video).currentTime = time;
     }
   };
 
   BaseController.prototype.seek = function(time) {
     // default implementation uses selectors if present
     if(this.selectors.video) {
-      document.querySelector(this.selectors.video).currentTime += time;
+      this.doc().querySelector(this.selectors.video).currentTime += time;
     }
   };
 
@@ -210,7 +210,7 @@
       var timestr = (this.getSongData(this.selectors.currentTime) || "").trim();
       return hmsToSecondsOnly(timestr) * 1000 * 1000;
     } else if(this.selectors.video) {
-      var video = document.querySelector(this.selectors.video);
+      var video = this.doc().querySelector(this.selectors.video);
       if(video != undefined) {
         return video.currentTime * 1000 * 1000;
       }
@@ -224,7 +224,7 @@
       var timestr = (this.getSongData(this.selectors.totalTime) || "").trim();
       return hmsToSecondsOnly(timestr) * 1000 * 1000;
     } else if(this.selectors.video) {
-      var video = document.querySelector(this.selectors.video);
+      var video = this.doc().querySelector(this.selectors.video);
       if(video != undefined) {
         return video.duration * 1000 * 1000;
       }
@@ -234,7 +234,7 @@
 
   BaseController.prototype.isMuted = function() {
     if(this.selectors.video) {
-      return document.querySelector(this.selectors.video).muted;
+      return this.doc().querySelector(this.selectors.video).muted;
     }
     return null;
   };
@@ -242,7 +242,7 @@
   BaseController.prototype.getVolume = function() {
     // default implementation uses selectors if present
     if(this.selectors.video) {
-      var video = document.querySelector(this.selectors.video);
+      var video = this.doc().querySelector(this.selectors.video);
       if(video != undefined && !video.muted) {
         this.volume = video.volume;
         return video.volume;
@@ -257,7 +257,7 @@
   BaseController.prototype.setVolume = function(volume) {
     // default implementation uses selectors if present
     if(this.selectors.video) {
-      document.querySelector(this.selectors.video).volume = volume;
+      this.doc().querySelector(this.selectors.video).volume = volume;
     }
   };
 
