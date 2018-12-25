@@ -316,10 +316,15 @@
   /**
    * Get the state of the player that a command will end up affecting and pass
    * it to a function to handle them, along with the tab that corresponds to
-   * that state data. If there is no active tab, then the state and the tab are
-   * null. For "single player mode" (which is required for MPRIS support), a
-   * command will go to all playing tabs or the best tab. In case we have
-   * multiple playing tabs, just use the state of the best playing tab.
+   * that state data.
+   * For "single player mode" (which is required for MPRIS support), a command
+   * will end up affecting the best tab if there are active tabs but no
+   * playing tabs, or all playing tabs if there are playing tabs (see
+   * sendActionSinglePlayer). With that in mind:
+   * - If there is no active tab, then the state and the tab are null.
+   * - If there are active tabs but no playing tabs, use the best tab.
+   * - If there are any playing tabs, just use the state of the best playing
+   *   tab. The command will be sent to all playing tabs anyway.
    */
   var handleStateData = function(func) {
     var activeMusicTabs = window.skSites.getActiveMusicTabs();

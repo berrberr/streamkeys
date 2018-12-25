@@ -135,8 +135,8 @@ and run the following commands:
 
 ```bash
 $ extension_id="....."
-$ installer=$(find $HOME/.config -name "install_mpris.py" | grep ${extension_id})
-$ python3 ${installer} --install ${extension_id}
+$ installer=$(find $HOME/.config -name "mpris_host_setup.py" | grep ${extension_id})
+$ python3 ${installer} install ${extension_id}
 ```
 
 #### Uninstall host script
@@ -146,8 +146,8 @@ and run the following commands:
 
 ```bash
 $ extension_id="....."
-$ installer=$(find $HOME/.config -name "install_mpris.py" | grep ${extension_id})
-$ python3 ${installer} --uninstall ${extension_id}
+$ installer=$(find $HOME/.config -name "mpris_host_setup.py" | grep ${extension_id})
+$ python3 ${installer} uninstall
 ```
 
 ## License (MIT)

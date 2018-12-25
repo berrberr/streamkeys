@@ -494,7 +494,6 @@ class StreamKeysDBusService(object):
         GLib.io_add_watch(chan, GLib.IOCondition.IN, self.message_handler)
         GLib.io_add_watch(chan, GLib.IOCondition.HUP,
                           lambda *_: self.loop.quit())
-        self.add_player()
         self.loop.run()
 
     def add_player(self):
