@@ -32,7 +32,14 @@ module.exports = function(config) {
 
     singleRun: true,
 
-    browsers: ["Chrome"],
+    browsers: ["Chrome", "ChromeHeadless", "ChromeHeadlessNoSandbox"],
+    // sandbox doesn't work in travis
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
 
     browserify: {
       debug: true,
