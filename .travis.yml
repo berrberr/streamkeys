@@ -8,3 +8,5 @@ cache:
     - "$TRAVIS_BUILD_DIR/node_modules"
 notifications:
   email: false
+addons:
+  chrome: stable
