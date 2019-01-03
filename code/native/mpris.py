@@ -214,9 +214,6 @@ class Player(object):  # noqa
     def Stop(self):  # noqa: N802
         raise NotImplementedError
 
-    def SetVolume(self, volume):  #noqa: N802
-        raise NotImplementedError
-
 
 class MediaPlayer(Player, Root):
     """A class representing a generic MPRIS media player."""
@@ -233,11 +230,6 @@ class MediaPlayer(Player, Root):
 
     def __setattr__(self, name, value):
         """Override to set the DBus object properties and emit signals."""
-        if name == "Volume":
-            value = max(0.0, min(1.0, value))
-            value = round(value, 2)
-            self.volume = value
-            self.SetVolume(value)
         if name == "_properties":
             return super().__setattr__(name, value)
 
@@ -350,6 +342,14 @@ class MediaPlayer(Player, Root):
 class StreamKeysMPRIS(MediaPlayer):
     """The StreamKeys MPRIS media player."""
 
+    def __setattr__(self, name, value):
+        """Override to set the DBus object properties and emit signals."""
+        if name == "Volume":
+            value = max(0.0, min(1.0, value))
+            value = round(value, 2)
+            send_msg(Message(command=Command.VOLUME, args=value))
+        super().__setattr__(name, value)
+
     def __init__(self):
         super().__init__(name="streamkeys",
                          identity="Chrome StreamKeys extension")
@@ -388,9 +388,6 @@ class StreamKeysMPRIS(MediaPlayer):
 
     def Stop(self):  # noqa: N802
         send_msg(Message(command=Command.STOP))
-
-    def SetVolume(self, volume): # noqa: N802
-        send_msg(Message(command=Command.VOLUME, args=volume))
 
 
 def make_streams_binary():
