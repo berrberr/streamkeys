@@ -9,7 +9,7 @@
     pause: "div.controls__playback-button-paused",
     playNext: "div.controls__fastforward-button",
     playPrev: "div.controls__rewind-button",
-    mute: "div.controls__volume-button-mute'e",
+    mute: "div.controls__volume-button-mute",
 
     song: ".metadata-area__third-line",
     buttonSwitch: false
