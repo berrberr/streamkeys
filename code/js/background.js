@@ -5,6 +5,12 @@
       _ = require("lodash");
 
   /**
+   * Needed for phantomjs to work
+   * @see [https://github.com/ariya/phantomjs/issues/12401]
+   */
+  require("es6-promise").polyfill();
+
+  /**
    * Tracks TimeoutIds by notification ID, to cancel previous uncomplete Timeouts
    * when a new notification is created prior to the last notification clearing
    */
@@ -401,28 +407,28 @@
             mprisPort.onMessage.removeListener(handleNativeMsg);
             mprisPort.disconnect();
         });
+
+        /**
+         * When a music tab is removed, we must remove it from tabStates and
+         * update the state of the MPRIS player.
+         */
+        chrome.tabs.onRemoved.addListener(function(tabId) {
+          if (tabStates.hasOwnProperty(tabId)) {
+            delete tabStates[tabId];
+            if (mprisPort)handleStateData(updateMPRISState);
+          }
+        });
+
+        /**
+         * When the active tab changes, the best single tab might change too.
+         * Thus we need to update the state of the MPRIS player.
+         */
+        chrome.tabs.onActivated.addListener(function(activeInfo) {
+          if (mprisPort && tabStates.hasOwnProperty(activeInfo.tabId)) {
+            handleStateData(updateMPRISState);
+          }
+        });
       }
-    }
-  });
-
-  /**
-   * When a music tab is removed, we must remove it from tabStates and update
-   * the state of the MPRIS player.
-   */
-  chrome.tabs.onRemoved.addListener(function(tabId) {
-    if (tabStates.hasOwnProperty(tabId)) {
-      delete tabStates[tabId];
-      if (mprisPort) handleStateData(updateMPRISState);
-    }
-  });
-
-  /**
-   * When the active tab changes, the best single tab might change too. Thus we
-   * need to update the state of the MPRIS player.
-   */
-  chrome.tabs.onActivated.addListener(function(activeInfo) {
-    if (mprisPort && tabStates.hasOwnProperty(activeInfo.tabId)) {
-      handleStateData(updateMPRISState);
     }
   });
 

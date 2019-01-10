@@ -31,6 +31,20 @@
       totalTime: (options.totalTime || null),
     };
 
+    // Any property that's a function, turn it into a getter
+    Object.defineProperties(
+      this.selectors,
+      Object.keys(this.selectors)
+        .reduce(function(properties, key) {
+          var fn = this.selectors[key];
+          if (typeof fn === "function") {
+            properties[key] = {
+              get: fn.bind(this)
+            };
+          }
+          return properties;
+        }.bind(this), {}));
+
     this.canMute = options.canMute || options.mute != undefined || options.video != undefined || false;
     if(options.canMute == false) this.canMute = false; // disable if explicitly set ti false
 
