@@ -149,6 +149,7 @@ class Player(object):  # noqa
                  can_go_next=True, can_go_previous=True, **kwargs):
         super().__init__(**kwargs)
         self._loop_status = loop_status
+        self._volume = volume
         if metadata is None:
             metadata = {
                 "mpris:trackid": GLib.Variant("o", NO_TRACK)
@@ -159,7 +160,6 @@ class Player(object):  # noqa
         self.PlaybackStatus = playback_status
         self.Rate = rate
         self.Shuffle = shuffle
-        self.Volume = volume
         self.CanControl = can_control
         self.CanPlay = can_play
         self.CanPause = can_pause
@@ -177,6 +177,16 @@ class Player(object):  # noqa
     def LoopStatus(self, value):  # noqa: N802
         if not self.CanControl:
             raise ValueError
+
+    @property
+    def Volume(self):
+        return self._volume
+
+    @Volume.setter
+    def Volume(self, value):
+        value = max(0.0, min(1.0, value))
+        value = round(value, 2)
+        self._volume = value
 
     def Next(self):  # noqa: N802
         if self.CanControl and self.CanGoNext:
@@ -344,15 +354,16 @@ class StreamKeysMPRIS(MediaPlayer):
 
     def __setattr__(self, name, value):
         """Override to set the DBus object properties and emit signals."""
-        if name == "Volume":
-            value = max(0.0, min(1.0, value))
-            value = round(value, 2)
-            send_msg(Message(command=Command.VOLUME, args=value))
         super().__setattr__(name, value)
 
     def __init__(self):
         super().__init__(name="streamkeys",
                          identity="Chrome StreamKeys extension")
+
+    @Player.Volume.setter
+    def Volume(self, value):
+        Player.Volume.fset(self, value)
+        send_msg(Message(command=Command.VOLUME, args=value))
 
     def Pause(self):  # noqa: N802
         status = PlaybackStatus(self.PlaybackStatus)
