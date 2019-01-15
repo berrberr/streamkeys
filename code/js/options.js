@@ -27,11 +27,37 @@ var OptionsViewModel = function OptionsViewModel() {
     });
   };
 
+  chrome.runtime.getPlatformInfo(function(platformInfo){
+    self.supportsMPRIS = (platformInfo.os === chrome.runtime.PlatformOs.LINUX);
+  });
+
   // Load localstorage settings into observables
   chrome.storage.sync.get(function(obj) {
     self.openOnUpdate = ko.observable(obj["hotkey-open_on_update"]);
     self.openOnUpdate.subscribe(function(value) {
       chrome.storage.sync.set({ "hotkey-open_on_update": value });
+    });
+
+    self.useMPRIS = ko.observable(obj["hotkey-use_mpris"]);
+    self.useMPRIS.subscribe(function(value) {
+      if (value) {
+        chrome.permissions.contains({
+          permissions: ["nativeMessaging"],
+        }, function (alreadyHaveNativeMessagingPermissions) {
+          if (alreadyHaveNativeMessagingPermissions) {
+            chrome.storage.sync.set({ "hotkey-use_mpris": value });
+          }
+          else {
+            chrome.permissions.request({
+            permissions: ["nativeMessaging"],
+            }, function (granted) {
+                chrome.storage.sync.set({ "hotkey-use_mpris": granted });
+            });
+          }
+        });
+      } else {
+        chrome.storage.sync.set({ "hotkey-use_mpris": value });
+      }
     });
 
     self.youtubeRestart = ko.observable(obj["hotkey-youtube_restart"]);
@@ -42,6 +68,7 @@ var OptionsViewModel = function OptionsViewModel() {
     self.singlePlayerMode = ko.observable(obj["hotkey-single_player_mode"]);
     self.singlePlayerMode.subscribe(function(value) {
       chrome.storage.sync.set({ "hotkey-single_player_mode": value });
+      if (!value) self.useMPRIS(false);
     });
 
     self.settingsInitialized(true);

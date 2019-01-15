@@ -30,6 +30,20 @@
       totalTime: (options.totalTime || null)
     };
 
+    // Any property that's a function, turn it into a getter
+    Object.defineProperties(
+      this.selectors,
+      Object.keys(this.selectors)
+        .reduce(function(properties, key) {
+          var fn = this.selectors[key];
+          if (typeof fn === "function") {
+            properties[key] = {
+              get: fn.bind(this)
+            };
+          }
+          return properties;
+        }.bind(this), {}));
+
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
 

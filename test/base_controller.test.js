@@ -175,4 +175,33 @@ describe("base controller", function() {
       sinon.assert.calledWithMatch(chrome.runtime.sendMessage, { action: "update_player_state" });
     });
   });
+
+  describe("music site with alternating playPause selector", function() {
+    beforeAll(function() {
+      controller = new BaseController({
+        playPause: function() {
+          return this.togglePlayPause ? "#play" : "#pause";
+        },
+        mute: function() {
+          return this.togglePlayPause ? "#muteA" : "#muteB";
+        },
+        playPrev: "#prev"
+      });
+
+      // Put this on the controller so we can ensure the getter is bound properly
+      controller.togglePlayPause = false;
+    });
+
+    it("plays and pauses and updates player state", function() {
+      expect(controller.selectors.playPause).toBe("#pause");
+      expect(controller.selectors.mute).toBe("#muteB");
+      expect(controller.selectors.playPrev).toBe("#prev");
+
+      controller.togglePlayPause = true;
+
+      expect(controller.selectors.playPause).toBe("#play");
+      expect(controller.selectors.mute).toBe("#muteA");
+      expect(controller.selectors.playPrev).toBe("#prev");
+    });
+  });
 });

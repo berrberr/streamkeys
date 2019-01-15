@@ -80,6 +80,7 @@
       "duckburgradio": { name: "Duckburg Radio", url: "http://beta.radio-mb.com", controller: "DuckburgRadioController.js", alias: ["radio-mb"] },
       "earbits": { name: "Earbits", url: "http://www.earbits.com" },
       "egghead": { name: "egghead.io", url: "https://egghead.io" },
+      "embedded": { name: "Embedded Element", url: null, controller: "EmbeddedElementController.js" },
       "emby": { name: "Emby", url: "http://app.emby.media" },
       "feedly": { name: "Feedly", url: "http://www.feedly.com" },
       "focusatwill": { name: "focusatwill", url: "http://www.focusatwill.com", controller: "FocusatwillController.js" },
@@ -235,6 +236,9 @@
       // Initialize popup open on update setting
       if(!obj.hasOwnProperty("hotkey-open_on_update")) {
         chrome.storage.sync.set({ "hotkey-open_on_update": true });
+      }
+      if(!obj.hasOwnProperty("hotkey-use_mpris")) {
+        chrome.storage.sync.set({ "hotkey-use_mpris": false });
       }
       if(!obj.hasOwnProperty("hotkey-youtube_restart")) {
         chrome.storage.sync.set({ "hotkey-youtube_restart": false });

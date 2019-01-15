@@ -118,6 +118,34 @@ To run the tests locally, simply
 $ npm test
 ```
 
+## Linux MPRIS support
+
+On Linux you can enable basic MPRIS support in options. Currently this requires
+`single player mode` to be enabled. It requires an extra host script to be
+installed.
+
+#### Install host script
+
+To install the host script, locate the extension ID from the Chrome extensions page
+and run the following commands:
+
+```bash
+$ extension_id="....."
+$ installer=$(find $HOME/.config -name "mpris_host_setup.py" | grep ${extension_id})
+$ python3 ${installer} install ${extension_id}
+```
+
+#### Uninstall host script
+
+To uninstall the host script, locate the extension ID from the Chrome extensions page
+and run the following commands:
+
+```bash
+$ extension_id="....."
+$ installer=$(find $HOME/.config -name "mpris_host_setup.py" | grep ${extension_id})
+$ python3 ${installer} uninstall
+```
+
 ## License (MIT)
 
 Copyright (c) 2018 Alex Gabriel under the MIT license.
