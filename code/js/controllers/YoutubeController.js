@@ -12,7 +12,7 @@
     like: "#menu > ytd-menu-renderer > #top-level-buttons > ytd-toggle-button-renderer:nth-child(1)",
     dislike: "#menu > ytd-menu-renderer > #top-level-buttons > ytd-toggle-button-renderer:nth-child(2)",
 
-    playState: ".ytp-play-button[aria-label='Pause']",
+    playState: ".ytp-play-button[aria-label^='Pause']",
     song: ".title.ytd-video-primary-info-renderer",
     album: "#playlist .title",
     hidePlayer: true,
