@@ -184,6 +184,8 @@ class Player(object):  # noqa
 
     @Volume.setter
     def Volume(self, value):
+        if not self.CanControl:
+            raise ValueError
         value = max(0.0, min(1.0, value))
         value = round(value, 2)
         self._volume = value
@@ -352,10 +354,6 @@ class MediaPlayer(Player, Root):
 class StreamKeysMPRIS(MediaPlayer):
     """The StreamKeys MPRIS media player."""
 
-    def __setattr__(self, name, value):
-        """Override to set the DBus object properties and emit signals."""
-        super().__setattr__(name, value)
-
     def __init__(self):
         super().__init__(name="streamkeys",
                          identity="Chrome StreamKeys extension")
@@ -363,7 +361,7 @@ class StreamKeysMPRIS(MediaPlayer):
     @Player.Volume.setter
     def Volume(self, value):
         Player.Volume.fset(self, value)
-        send_msg(Message(command=Command.VOLUME, args=value))
+        send_msg(Message(command=Command.VOLUME, args=self.Volume))
 
     def Pause(self):  # noqa: N802
         status = PlaybackStatus(self.PlaybackStatus)
