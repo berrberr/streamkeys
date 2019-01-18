@@ -132,6 +132,7 @@
       "plex": { name: "Plex", url: "http://www.plex.tv" },
       "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
+      "podster": { name: "Podster", url: "http://www.podster.fm" },
       "pogoplug": { name: "Pogoplug", url: "http://my.pogoplug.com/view" },
       "primevideo": {name: "Prime Video", url: "https://www.primevideo.com"},
       "music.qq": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js", alias: ["y.qq.com/portal/player.html"] },
