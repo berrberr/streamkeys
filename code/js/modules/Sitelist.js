@@ -144,7 +144,7 @@
       "songza": { name: "Songza", url: "http://www.songza.com" },
       "music.sonyentertainmentnetwork": { name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com", controller: "SonyMusicUnlimitedController.js" },
       "sound": { name: "Sound.is", url: "http://www.sound.is" },
-      "soundcloud": { name: "Soundcloud", url: "http://www.soundcloud.com" },
+      "soundcloud": { name: "Soundcloud", url: "http://www.soundcloud.com", patch: "SoundcloudPatch.js" },
       "soundredux": { name: "SoundRedux", url: "https://soundredux.io" },
       "soundsgood": { name: "Soundsgood.co", url: "http://www.soundsgood.co" },
       "spotify": { name: "Spotify Web Player", url: "http://www.spotify.com" },
@@ -463,6 +463,23 @@
 
     return null;
   };
+
+  /**
+   * Gets the filename of a sites patch
+   * @param {String} url - URL to get controller for
+   * @return {String} patch filename if found
+   */
+  Sitelist.prototype.getPatch = function(url) {
+    var siteName = this.getSitelistName(url);
+
+    if(siteName) {
+      var site = this.sites[siteName];
+      if(site.patch) return site.patch;
+
+      return (siteName[0].toUpperCase() + siteName.slice(1) + "Patch.js");
+    }
+
+    return null;  };
 
   /**
    * @param {String} siteKey

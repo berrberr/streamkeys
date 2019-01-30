@@ -432,4 +432,32 @@
     }
   });
 
+  /**
+   * Catch created audio/video elements/patch js code
+   */
+  window.ignoreTabIds = [];
+  chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.status == "loading") {
+      if (window.skSites.checkMusicSite(tab.url)) {
+        var index = window.ignoreTabIds.indexOf(tabId);
+        if (index !== -1) {
+          window.ignoreTabIds.splice(index, 1);
+          // media interceptor
+          chrome.tabs.executeScript(tabId,
+            {file: "js/modules/MediaInterceptor.js", runAt: "document_start"});
+          console.log("Inject: js/modules/MediaInterceptor.js into: " + tabId);
+          // js patches
+          var patchfile = window.skSites.getPatch(tab.url);
+          if (patchfile) {
+            chrome.tabs.executeScript(tabId,
+              {file: "js/patches/" + patchfile, runAt: "document_start"});
+            console.log("Inject: js/patches/" + patchfile + " into: " + tabId);
+          }
+          return;
+        }
+        window.ignoreTabIds.push(tabId);
+      }
+    }
+  });
+
 })();
