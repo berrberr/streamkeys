@@ -8,7 +8,7 @@
     playPause: ".qa-pause-play-button",
     mute: ".player-button--volume",
     song: ".title .real",
-    video: "video",
+    media: "video",
     canSeek: false // since livestream
   });
 

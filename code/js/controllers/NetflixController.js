@@ -9,7 +9,7 @@
     pause: ".button-nfplayerPause",
     playNext: ".button-nfplayerNextEpisode",
     mute: [".button-volumeMuted", ".button-volumeLow", ".button-volumeMedium", ".button-volumeMax"],
-    video: "video",
+    media: "video",
 
     playState: ".button-nfplayerPause",
   });

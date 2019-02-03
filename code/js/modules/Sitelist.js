@@ -475,8 +475,6 @@
     if(siteName) {
       var site = this.sites[siteName];
       if(site.patch) return site.patch;
-
-      return (siteName[0].toUpperCase() + siteName.slice(1) + "Patch.js");
     }
 
     return null;  };

@@ -17,7 +17,7 @@
       like: (options.like || null),
       dislike: (options.dislike || null),
       iframe: (options.iframe || null),
-      video: (options.video || null),
+      media: (options.media || null),
 
       //** States **//
       playState: (options.playState || null),
@@ -45,18 +45,20 @@
           return properties;
         }.bind(this), {}));
 
-    this.canMute = options.canMute || options.mute != undefined || options.video != undefined || false;
-    if(options.canMute == false) this.canMute = false; // disable if explicitly set ti false
+    this.canGetMedia = options.media != undefined || options.canGetMedia || false;
 
-    this.canSeek = options.canSeek || options.video != undefined || false;
-    if(options.canSeek == false) this.canSeek = false; // disable if explicitly set to false
+    this.canMute = options.canMute || options.mute != undefined || this.canGetMedia || false;
+    if (options.canMute == false) this.canMute = false; // disable if explicitly set to false
 
-    this.canSetVolume = options.canSetVolume || options.video != undefined || false;
-    if(options.canSetVolume == false) this.canSetVolume = false; // disable if explicitly set to false
+    this.canSeek = options.canSeek || this.canGetMedia || false;
+    if (options.canSeek == false) this.canSeek = false; // disable if explicitly set to false
+
+    this.canSetVolume = options.canSetVolume || this.canGetMedia || false;
+    if (options.canSetVolume == false) this.canSetVolume = false; // disable if explicitly set to false
 
     // Volume if possible/most recent, since mute changes the volume?
     this.volume = this.getVolume();
-    if(this.volume == undefined) {
+    if (this.volume == undefined) {
       // we are probably muted, so we unmute, get data and mute
       this.mute();
       this.getVolume();
@@ -97,6 +99,12 @@
     return (useFrameSelector) ? frame.contentWindow.document : document;
   };
 
+  BaseController.prototype.getMedia = function() {
+    if (this.canGetMedia) {
+      return this.doc().querySelector(this.selectors.media);
+    }
+  };
+
   /**
    * Inject a script into the current document
    * @param {String} file.url - /relative/path/to/script
@@ -105,8 +113,8 @@
   BaseController.prototype.injectScript = function(file) {
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
-    if(file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
-    if(file.script) {script.innerHTML = file.script;}
+    if (file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
+    if (file.script) {script.innerHTML = file.script;}
     (document.head || document.documentElement).appendChild(script);
   };
 
@@ -118,7 +126,7 @@
    */
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
-    if(opts.selectorButton === null) {
+    if (opts.selectorButton === null) {
       sk_log("disabled", opts.action);
       return;
     }
@@ -135,8 +143,8 @@
   };
 
   BaseController.prototype.playPause = function() {
-    if(this.selectors.play !== null && this.selectors.pause !== null) {
-      if(this.isPlaying()) {
+    if (this.selectors.play !== null && this.selectors.pause !== null) {
+      if (this.isPlaying()) {
         this.click({action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe});
       } else {
         this.click({action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe});
@@ -155,20 +163,20 @@
   };
 
   BaseController.prototype.stop = function() {
-    if(this.isPlaying()) this.playPause();
+    if (this.isPlaying()) this.playPause();
   };
 
   BaseController.prototype.mute = function() {
-    // TODO: volume of video tab and website state is different
-    if(this.selectors.mute) {
+    // TODO: volume of media tab and website state is different
+    if (this.selectors.mute) {
       this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
-    } else if(this.selectors.video) {
-      var video = this.doc().querySelector(this.selectors.video);
-      if(video) {
-        video.muted = !video.muted;
+    } else if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media) {
+        media.muted = !media.muted;
       }
     }
-    if(this.canSetVolume && this.volume != undefined) {
+    if (this.canSetVolume && this.volume != undefined) {
       this.setVolume(this.volume);
     }
   };
@@ -189,16 +197,16 @@
     var playEl = this.doc().querySelector(this.selectors.play),
         isPlaying = false;
 
-    if(this.buttonSwitch) {
+    if (this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
       isPlaying = (playEl === null);
     }
-    else if(this.selectors.playState) {
+    else if (this.selectors.playState) {
       // Check if the play state element exists and is visible
       var playStateEl = this.doc().querySelector(this.selectors.playState);
       isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
     }
-    else if(playEl) {
+    else if (playEl) {
       isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
     }
 
@@ -206,27 +214,33 @@
   };
 
   BaseController.prototype.setPosition = function(time) {
-    if(this.selectors.video) {
-      this.doc().querySelector(this.selectors.video).currentTime = time;
+    if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined) {
+        media.currentTime = time;
+      }
     }
   };
 
   BaseController.prototype.seek = function(time) {
     // default implementation uses selectors if present
-    if(this.selectors.video) {
-      this.doc().querySelector(this.selectors.video).currentTime += time;
+    if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined) {
+        media.currentTime += time;
+      }
     }
   };
 
   BaseController.prototype.getCurrentTime = function() {
     // default implementation uses selectors if present
-    if(this.selectors.currentTime) {
+    if (this.selectors.currentTime) {
       var timestr = (this.getSongData(this.selectors.currentTime) || "").trim();
-      return hmsToSecondsOnly(timestr) * 1000 * 1000;
-    } else if(this.selectors.video) {
-      var video = this.doc().querySelector(this.selectors.video);
-      if(video != undefined) {
-        return video.currentTime * 1000 * 1000;
+      return this.hmsToSecondsOnly(timestr) * 1000 * 1000;
+    } else if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined) {
+        return media.currentTime * 1000 * 1000;
       }
     }
     return null;
@@ -234,32 +248,35 @@
 
   BaseController.prototype.getTotalTime = function() {
     // default implementation uses selectors if present
-    if(this.selectors.totalTime) {
+    if (this.selectors.totalTime) {
       var timestr = (this.getSongData(this.selectors.totalTime) || "").trim();
-      return hmsToSecondsOnly(timestr) * 1000 * 1000;
-    } else if(this.selectors.video) {
-      var video = this.doc().querySelector(this.selectors.video);
-      if(video != undefined) {
-        return video.duration * 1000 * 1000;
+      return this.hmsToSecondsOnly(timestr) * 1000 * 1000;
+    } else if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined) {
+        return media.duration * 1000 * 1000;
       }
     }
     return null;
   };
 
   BaseController.prototype.isMuted = function() {
-    if(this.selectors.video) {
-      return this.doc().querySelector(this.selectors.video).muted;
+    if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined) {
+        return media.muted;
+      }
     }
     return null;
   };
 
   BaseController.prototype.getVolume = function() {
     // default implementation uses selectors if present
-    if(this.selectors.video) {
-      var video = this.doc().querySelector(this.selectors.video);
-      if(video != undefined && !video.muted) {
-        this.volume = video.volume;
-        return video.volume;
+    if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined && !media.muted) {
+        this.volume = media.volume;
+        return media.volume;
       } else {
         // last saved volume
         return this.volume;
@@ -270,8 +287,11 @@
 
   BaseController.prototype.setVolume = function(volume) {
     // default implementation uses selectors if present
-    if(this.selectors.video) {
-      this.doc().querySelector(this.selectors.video).volume = volume;
+    if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media != undefined) {
+        media.volume = volume;
+      }
     }
   };
 
@@ -279,12 +299,12 @@
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
   BaseController.prototype.updatePlayerState = function() {
-    if(this.checkPlayer) this.checkPlayer();
+    if (this.checkPlayer) this.checkPlayer();
 
     var newState = this.getStateData();
-    if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
+    if (JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
       sk_log("Player state change");
-      if(this.getSongChanged(newState)) {
+      if (this.getSongChanged(newState)) {
         chrome.runtime.sendMessage({
           action: "send_change_notification",
           stateData: newState
@@ -347,10 +367,10 @@
    * @return {*} song data if element is found, null otherwise
    */
   BaseController.prototype.getSongData = function(selector) {
-    if(!selector) return null;
+    if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.textContent) {
+    if (dataEl && dataEl.textContent) {
       return dataEl.textContent;
     }
 
@@ -358,10 +378,10 @@
   };
 
   BaseController.prototype.getArtData = function(selector) {
-    if(!selector) return null;
+    if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.attributes && dataEl.attributes.src) {
+    if (dataEl && dataEl.attributes && dataEl.attributes.src) {
       return dataEl.attributes.src.value;
     }
 
@@ -372,45 +392,45 @@
    * Callback for request from background page
    */
   BaseController.prototype.doRequest = function(request, sender, response) {
-    if(typeof request !== "undefined") {
-      if(request.action === "playPause") this.playPause();
-      if(request.action === "playNext") this.playNext();
-      if(request.action === "playPrev") this.playPrev();
-      if(request.action === "stop") this.stop();
-      if(request.action === "mute") this.mute();
-      if(request.action === "like") this.like();
-      if(request.action === "dislike") this.dislike();
-      if(request.action === "position") this.setPosition(request.args[0]);
-      if(request.action === "seek") this.seek(request.args[0]);
-      if(request.action === "forward5") this.seek(5); // manifest command
-      if(request.action === "replay5") this.seek(-5); // manifest command
-      if(request.action === "volume") {
+    if (typeof request !== "undefined") {
+      if (request.action === "playPause") this.playPause();
+      if (request.action === "playNext") this.playNext();
+      if (request.action === "playPrev") this.playPrev();
+      if (request.action === "stop") this.stop();
+      if (request.action === "mute") this.mute();
+      if (request.action === "like") this.like();
+      if (request.action === "dislike") this.dislike();
+      if (request.action === "position") this.setPosition(request.args[0]);
+      if (request.action === "seek") this.seek(request.args[0]);
+      if (request.action === "forward5") this.seek(5); // manifest command
+      if (request.action === "replay5") this.seek(-5); // manifest command
+      if (request.action === "volume") {
         // mpris
         this.volume = Math.min(1.0, Math.max(0.0, request.args[0]));
         this.setVolume(this.volume);
       }
-      if(request.action === "addVolume") {
+      if (request.action === "addVolume") {
         // from popup
         this.volume = Math.min(1.0, Math.max(0.0, this.volume + request.args[0]));
         this.setVolume(this.volume);
       }
-      if(request.action === "volumeup") {
+      if (request.action === "volumeup") {
         // manifest command
         this.volume = Math.min(1.0, Math.max(0.0, this.volume + 0.05));
         this.setVolume(this.volume);
       }
-      if(request.action === "volumedown") {
+      if (request.action === "volumedown") {
         // manifest command
         this.volume = Math.min(1.0, Math.max(0.0, this.volume - 0.05));
         this.setVolume(this.volume);
       }
-      if(request.action === "playerStateNotify"){
+      if (request.action === "playerStateNotify"){
         chrome.runtime.sendMessage({
           action: "send_change_notification",
           stateData: this.getStateData()
         });
       }
-      if(request.action === "getPlayerState") {
+      if (request.action === "getPlayerState") {
         var newState = this.getStateData();
         this.oldState = newState;
         response(newState);
@@ -431,7 +451,7 @@
     sk_log("Attached listener for ", this);
   };
 
-  var hmsToSecondsOnly = function(str) {
+  BaseController.prototype.hmsToSecondsOnly = function(str) {
     var p = str.split(":");
     var s = 0;
     var m = 1;
