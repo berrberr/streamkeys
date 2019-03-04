@@ -6,9 +6,9 @@
   new BaseController({
     siteName: "SomaFM",
     buttonSwitch: true,
-    play: "#playBtn",
-    pause: "#stopBtn",
+    play: ".btn[ng-click^=\"play\"]",
+    pause: ".btn[ng-click^=\"stop\"]",
 
-    playState: "#stopBtn"
+    playState: ".btn[ng-click^=\"stop\"]"
   });
 })();
