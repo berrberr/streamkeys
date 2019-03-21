@@ -129,6 +129,7 @@
       "patari": { name: "Patari", url: "http://patari.pk", alias: ["patari"] },
       "player": { name: "Player.fm", url: "http://player.fm", controller: "PlayerFmController.js", blacklist: ["player.spotify", "reddit.music.player.il", "reddit.musicplayer.io", "player.siriusxm.com"] },
       "pleer": { name: "Pleer", url: "http://pleer.com" },
+      "phishjustjams": { name: "Phish Just Jams", url: "http://phishjustjams.com" },
       "plex": { name: "Plex", url: "http://www.plex.tv" },
       "pluralsight": { name: "Pluralsight", url: "https://app.pluralsight.com" },
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
