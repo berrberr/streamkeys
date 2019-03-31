@@ -69,6 +69,7 @@
       "be-at": { name: "BE-AT.TV", url: "https://be-at.tv", controller: "BeAtTvController.js"},
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
       "brain": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
+      "castbox": { name: "Castbox", url: "https://castbox.fm", controller: "CastboxController.js" },
       "cloud.caster": { name: "Cloud Caster", url: "http://cloud-caster.com", controller: "CloudCasterController.js", alias: ["cloud-caster"] },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
       "deezer": { name: "Deezer", url: "http://www.deezer.com" },
