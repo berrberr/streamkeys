@@ -5,10 +5,10 @@
 
   new BaseController({
     siteName: "Player.fm",
-    play: ".control.play",
-    pause: ".control.pause",
-    playNext: ".control.forward",
-    playPrev: ".control.backward",
+    play: ".fa-play",
+    pause: ".fa-pause",
+    playNext: ".fa-fast-forward",
+    playPrev: ".fa-fast-backward",
 
     song: ".current-episode-link"
   });
