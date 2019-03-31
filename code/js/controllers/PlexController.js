@@ -5,11 +5,11 @@
 
   var controller = new MouseEventController({
     siteName: "Plex.tv",
-    play: "i[class^=plex-icon-player-play-]",
-    pause: "i[class^=plex-icon-player-pause-]",
-    playNext: "i[class^=plex-icon-player-next-]",
-    playPrev: "i[class^=plex-icon-player-prev-]",
-    mute: "i[class^=plex-icon-player-volume-]",
+    play: "div[class^=ControlsContainer] button[aria-label=Play]",
+    pause: "div[class^=ControlsContainer] button[aria-label=Pause]",
+    playNext: "div[class^=ControlsContainer] button[aria-label=Next]",
+    playPrev: "div[class^=ControlsContainer] button[aria-label=Previous]",
+    mute: "div[class^=ControlsContainer] button[aria-label$='ute Volume']",
 
     song: "title",
     buttonSwitch: true
