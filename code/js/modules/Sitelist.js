@@ -145,7 +145,7 @@
       "shortorange": { name: "ShortOrange", url: "http://www.shortorange.com" },
       "siriusxm": { name: "SiriusXM", url: "https://player.siriusxm.com" },
       "slacker": { name: "Slacker", url: "http://www.slacker.com" },
-      "somafm": { name: "SomaFM", url: "http://somafm.com" },
+      "somafm": { name: "SomaFM", url: "http://somafm.com", controller: "SomaFMController.js" },
       "songstr": { name: "Songstr", url: "http://www.songstr.com" },
       "songza": { name: "Songza", url: "http://www.songza.com" },
       "music.sonyentertainmentnetwork": { name: "Sony Music Unlimited", url: "https://music.sonyentertainmentnetwork.com", controller: "SonyMusicUnlimitedController.js" },
