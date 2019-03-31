@@ -97,6 +97,7 @@
       "hypster": { name: "Hypster", url: "http://www.hypster.com" },
       "ibroadcast": { name: "iBroadcast", url: "https://media.ibroadcast.com/" },
       "iheart": { name: "iHeartRadio", url: "http://www.iheart.com" },
+      "imusic": { name: "iMusic", url: "https://imusic.am" },
       "indieshuffle": { name: "indieshuffle", url: "http://www.indieshuffle.com"},
       "ivoox": { name: "ivoox", url: "http://www.ivoox.com" },
       "jamendo": { name: "Jamendo", url: "https://www.jamendo.com" },
