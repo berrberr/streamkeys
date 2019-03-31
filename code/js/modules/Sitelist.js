@@ -140,7 +140,7 @@
       "rainwave": { name: "Rainwave.cc", url: "http://www.rainwave.cc" },
       "reddit.music.player.il": { name: "Reddit Music Player", url: "http://reddit.music.player.il.ly", controller: "RedditMusicPlayerController.js", alias: ["reddit.musicplayer"] },
       "reverbnation": { name: "Reverb Nation", url: "http://www.reverbnation.com" },
-      "saavn": { name: "Saavn", url: "http://www.saavn.com" },
+      "jiosaavn": { name: "JioSaavn", url: "https://www.jiosaavn.com", controller: "JioSaavnController.js" },
       "seesu": { name: "Seesu.me", url: "http://www.seesu.me" },
       "shortorange": { name: "ShortOrange", url: "http://www.shortorange.com" },
       "siriusxm": { name: "SiriusXM", url: "https://player.siriusxm.com" },
