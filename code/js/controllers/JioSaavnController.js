@@ -4,7 +4,7 @@
   var BaseController = require("BaseController");
 
   new BaseController({
-    siteName: "Saavn",
+    siteName: "JioSaavn",
     play: "#play",
     pause: "#pause",
     playNext: "#fwd",
