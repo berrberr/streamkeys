@@ -162,6 +162,7 @@
       "streamelements": { name: "StreamElements", url: "https://streamelements.com/dashboard/songrequest/general" },
       "streamsquid": { name: "StreamSquid", url: "http://streamsquid.com/" },
       "subsonic": { name: "Subsonic", url: "http://www.subsonic.org" },
+      "synology": { name: "Synology Audio Station", url: "https://www.synology.me", controller: "SynologyAudioStationController.js" },
       "tidal": { name: "Tidal", url: "https://www.tidal.com", alias: ["tidalhifi"] },
       "tunein": { name: "TuneIn", url: "http://www.tunein.com" },
       "twitch": { name: "Twitch.tv", url: "http://www.twitch.tv" },
