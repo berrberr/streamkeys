@@ -30,7 +30,7 @@
     "js/controllers/*"
   ],
   "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
-  "optional_permissions": [ "notifications", "nativeMessaging"],
+  "optional_permissions": ["notifications", "nativeMessaging", "http://*/*", "https://*/*"],
   "commands": {
     "playPause": {
       "suggested_key": {
