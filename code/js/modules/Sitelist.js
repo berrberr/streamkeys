@@ -129,6 +129,7 @@
       "palcomp3": { name: "Palco MP3", url: "http://palcomp3.com" },
       "pandora": { name: "Pandora", url: "http://www.pandora.com" },
       "patari": { name: "Patari", url: "http://patari.pk", alias: ["patari"] },
+      "phishjustjams": { name: "Phish Just Jams", url: "http://phishjustjams.com" },
       "player": { name: "Player.fm", url: "http://player.fm", controller: "PlayerFmController.js", blacklist: ["player.spotify", "reddit.music.player.il", "reddit.musicplayer.io", "player.siriusxm.com"] },
       "pleer": { name: "Pleer", url: "http://pleer.com" },
       "plex": { name: "Plex", url: "http://www.plex.tv" },
