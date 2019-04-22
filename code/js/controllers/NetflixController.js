@@ -21,7 +21,6 @@
     play: ".button-nfplayerPlay",
     pause: ".button-nfplayerPause",
     playNext: ".button-nfplayerNextEpisode",
-    mute: [".button-volumeMuted", ".button-volumeLow", ".button-volumeMedium", ".button-volumeMax"],
     video: "video",
 
     playState: ".button-nfplayerPause",
@@ -53,9 +52,6 @@
     script.textContent = code;
     (document.head||document.documentElement).appendChild(script);
     script.remove();
-  };
-
-  controller.getCurrentTime = function() {
   };
 
   controller.setVolume = function(volume) {
