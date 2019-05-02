@@ -112,6 +112,7 @@
       "listenonrepeat": { name: "ListenOnRepeat", url: "http://www.listenonrepeat.com" },
       "logitechmediaserver": { name: "LogitechMediaServer", url: "http://mysqueezebox.com", controller: "LogitechMediaServerController.js", alias: ["mysqueezebox"] },
       "mixcloud": { name: "Mixcloud", url: "http://www.mixcloud.com" },
+      "moodil": {name: "Moodil", url: "https://www.moodil.com/"},
       "music.163": { name: "music.163", url: "http://music.163.com", controller: "163Controller.js"},
       "music.microsoft": { name: "Microsoft Groove", url: "http://music.microsoft.com", controller: "MicrosoftController.js" },
       "music.zacharyseguin": { name: "Zachary Seguin Music", "url": "https://music.zacharyseguin.ca", controller: "MusicKitJsController.js" },
