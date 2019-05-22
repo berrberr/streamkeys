@@ -1,0 +1,14 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "eol-last": ["error", "always"],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "no-console": ["error", { "allow": ["log", "warn", "error"] }],
+    "no-trailing-spaces": ["error"]
+  }
+}
