@@ -127,7 +127,7 @@
       "noonpacific": { name: "Noon Pacific", url: "http://www.noonpacific.com" },
       "www.npr": { name: "NPR Player", url: "http://www.npr.org", controller: "NprNewsController.js" },
       "overcast": { name: "Overcast.fm", url: "http://overcast.fm" },
-      "palcomp3": { name: "Palco MP3", url: "http://palcomp3.com" },
+      "palcomp3": { name: "Palco MP3", url: "http://palcomp3.com.br" },
       "pandora": { name: "Pandora", url: "http://www.pandora.com" },
       "patari": { name: "Patari", url: "http://patari.pk", alias: ["patari"] },
       "phishjustjams": { name: "Phish Just Jams", url: "http://phishjustjams.com" },
