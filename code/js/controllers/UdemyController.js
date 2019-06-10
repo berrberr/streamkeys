@@ -5,11 +5,12 @@
 
   new BaseController({
     siteName: "Udemy",
-    playPause: ".vjs-play-control",
-    play: ".vjs-play-control",
-    pause: ".vjs-play-control",
-    playNext: ".btn-control[class*=continue-button]",
-    mute: ".vjs-audio-button",
+    playPause: "[data-purpose=play-button]",
+    play: "[data-purpose=play-button]",
+    pause: "[data-purpose=pause-button]",
+    playNext: "[data-purpose=go-to-next]",
+    playPrev: "[data-purpose=go-to-previous]",
+    mute: ".vjs-volume-menu-button",
     playState: ".vjs-playing",
     buttonSwitch: true
   });
