@@ -149,8 +149,17 @@
       } else {
         this.click({action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe});
       }
-    } else {
+    } else if (this.selectors.playPause !== null) {
       this.click({action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe});
+    } else if (this.canGetMedia) {
+      var media = this.getMedia();
+      if (media) {
+        if (this.isPlaying()) {
+          media.pause();
+        } else {
+          media.play();
+        }
+      }
     }
   };
 
@@ -194,23 +203,31 @@
    * @return {Boolean} true if site is currently playing
    */
   BaseController.prototype.isPlaying = function() {
-    var playEl = this.doc().querySelector(this.selectors.play),
-        isPlaying = false;
-
-    if (this.buttonSwitch) {
-      // If playEl does not exist then it is currently playing
-      isPlaying = (playEl === null);
+    if (this.selectors.play !== null) {
+      var playEl = this.doc().querySelector(this.selectors.play),
+          isPlaying = false;
+      if (this.buttonSwitch) {
+        // If playEl does not exist then it is currently playing
+        isPlaying = (playEl === null);
+      }
+      else if (this.selectors.playState) {
+        // Check if the play state element exists and is visible
+        var playStateEl = this.doc().querySelector(this.selectors.playState);
+        isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
+      }
+      else if (playEl) {
+        isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
+      }
+      return isPlaying;
+    } else {
+      if (this.canGetMedia) {
+        var media = this.getMedia();
+        if (media) {
+          return !media.paused;
+        }
+      }
     }
-    else if (this.selectors.playState) {
-      // Check if the play state element exists and is visible
-      var playStateEl = this.doc().querySelector(this.selectors.playState);
-      isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
-    }
-    else if (playEl) {
-      isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
-    }
-
-    return isPlaying;
+    return false;
   };
 
   BaseController.prototype.setPosition = function(time) {
