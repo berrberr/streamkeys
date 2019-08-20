@@ -1,9 +1,9 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController"),
-      MouseEventDispatcher = require("../modules/MouseEventDispatcher.js"),
-      sk_log = require("../modules/SKLog.js");
+    MouseEventDispatcher = require("../modules/MouseEventDispatcher.js"),
+    sk_log = require("../modules/SKLog.js");
 
   /**
    * @class MouseEventController
@@ -81,7 +81,11 @@
           sk_log(opts.action);
         }
       } catch (e) {
-        sk_log("Element not found for " + eventType + ".", opts.selectorButton, true);
+        sk_log(
+          "Element not found for " + eventType + ".",
+          opts.selectorButton,
+          true
+        );
       }
 
       this.updatePlayerState();

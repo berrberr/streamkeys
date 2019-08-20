@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   /**
@@ -13,7 +13,6 @@
    * @property {HandlerStorageSelector} selector-2 - Tracked selector 2.
    * @property {HandlerStorageSelector} selector-N - Tracked selector N.
    */
-
 
   /**
    * Construct a new SimpleMutationObserver
@@ -77,7 +76,11 @@
     });
 
     // observe DOM mutations
-    self.observer.observe(self.node, {childList: true, subtree: true, attributes: true});
+    self.observer.observe(self.node, {
+      childList: true,
+      subtree: true,
+      attributes: true
+    });
   };
 
   /**
@@ -90,11 +93,17 @@
    */
   SimpleMutationObserver.prototype.trigger = function(selector, eventType) {
     var self = this;
-    if (!eventType || !self.handlers[selector] || !self.handlers[selector][eventType]) {
+    if (
+      !eventType ||
+      !self.handlers[selector] ||
+      !self.handlers[selector][eventType]
+    ) {
       return false;
     }
     // if handler return false or throw exeption remove this handler
-    var filteredHandlers = self.handlers[selector][eventType].filter(function(handler) {
+    var filteredHandlers = self.handlers[selector][eventType].filter(function(
+      handler
+    ) {
       var result = false;
       try {
         result = handler();
@@ -115,7 +124,10 @@
    * @param {Object} selector - Selector of event handlers.
    * @param {String} eventType - Event type that can be "inserted" or "removed".
    */
-  SimpleMutationObserver.prototype.deferredTrigger = function(selector, eventType) {
+  SimpleMutationObserver.prototype.deferredTrigger = function(
+    selector,
+    eventType
+  ) {
     var self = this;
     setTimeout(function() {
       self.trigger(selector, eventType);

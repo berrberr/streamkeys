@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var sk_log = require("../modules/SKLog.js");
@@ -8,33 +8,33 @@
 
     this.selectors = {
       //** Properties **//
-      playPause: (options.playPause || null),
-      play: (options.play || null),
-      pause: (options.pause || null),
-      playNext: (options.playNext || null),
-      playPrev: (options.playPrev || null),
-      mute: (options.mute || null),
-      like: (options.like || null),
-      dislike: (options.dislike || null),
-      iframe: (options.iframe || null),
+      playPause: options.playPause || null,
+      play: options.play || null,
+      pause: options.pause || null,
+      playNext: options.playNext || null,
+      playPrev: options.playPrev || null,
+      mute: options.mute || null,
+      like: options.like || null,
+      dislike: options.dislike || null,
+      iframe: options.iframe || null,
 
       //** States **//
-      playState: (options.playState || null),
+      playState: options.playState || null,
 
       //** Song Info **//
-      song: (options.song || null),
-      artist: (options.artist || null),
-      album: (options.album || null),
-      art: (options.art || null),
-      currentTime: (options.currentTime || null),
-      totalTime: (options.totalTime || null)
+      song: options.song || null,
+      artist: options.artist || null,
+      album: options.album || null,
+      art: options.art || null,
+      currentTime: options.currentTime || null,
+      totalTime: options.totalTime || null
     };
 
     // Any property that's a function, turn it into a getter
     Object.defineProperties(
       this.selectors,
-      Object.keys(this.selectors)
-        .reduce(function(properties, key) {
+      Object.keys(this.selectors).reduce(
+        function(properties, key) {
           var fn = this.selectors[key];
           if (typeof fn === "function") {
             properties[key] = {
@@ -42,7 +42,10 @@
             };
           }
           return properties;
-        }.bind(this), {}));
+        }.bind(this),
+        {}
+      )
+    );
 
     // Previous player state, used to check vs current player state to see if anything changed
     this.oldState = {};
@@ -67,8 +70,13 @@
   }
 
   BaseController.prototype.doc = function() {
-    var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1);
-    return (useFrameSelector) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
+    var useFrameSelector =
+      this.selectors.iframe &&
+      document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") >
+        -1;
+    return useFrameSelector
+      ? document.querySelector(this.selectors.iframe).contentWindow.document
+      : document;
   };
 
   /**
@@ -79,8 +87,12 @@
   BaseController.prototype.injectScript = function(file) {
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
-    if(file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
-    if(file.script) {script.innerHTML = file.script;}
+    if (file.url) {
+      script.setAttribute("src", chrome.extension.getURL(file.url));
+    }
+    if (file.script) {
+      script.innerHTML = file.script;
+    }
     (document.head || document.documentElement).appendChild(script);
   };
 
@@ -92,15 +104,17 @@
    */
   BaseController.prototype.click = function(opts) {
     opts = opts || {};
-    if(opts.selectorButton === null) {
+    if (opts.selectorButton === null) {
       sk_log("disabled", opts.action);
       return;
     }
 
     try {
-      this.doc().querySelector(opts.selectorButton).click();
+      this.doc()
+        .querySelector(opts.selectorButton)
+        .click();
       sk_log(opts.action);
-    } catch(e) {
+    } catch (e) {
       sk_log("Element not found for click.", opts.selectorButton, true);
     }
 
@@ -109,39 +123,71 @@
   };
 
   BaseController.prototype.playPause = function() {
-    if(this.selectors.play !== null && this.selectors.pause !== null) {
-      if(this.isPlaying()) {
-        this.click({action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe});
+    if (this.selectors.play !== null && this.selectors.pause !== null) {
+      if (this.isPlaying()) {
+        this.click({
+          action: "playPause",
+          selectorButton: this.selectors.pause,
+          selectorFrame: this.selectors.iframe
+        });
       } else {
-        this.click({action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe});
+        this.click({
+          action: "playPause",
+          selectorButton: this.selectors.play,
+          selectorFrame: this.selectors.iframe
+        });
       }
     } else {
-      this.click({action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe});
+      this.click({
+        action: "playPause",
+        selectorButton: this.selectors.playPause,
+        selectorFrame: this.selectors.iframe
+      });
     }
   };
 
   BaseController.prototype.playNext = function() {
-    this.click({action: "playNext", selectorButton: this.selectors.playNext, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "playNext",
+      selectorButton: this.selectors.playNext,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.playPrev = function() {
-    this.click({action: "playPrev", selectorButton: this.selectors.playPrev, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "playPrev",
+      selectorButton: this.selectors.playPrev,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.stop = function() {
-    if(this.isPlaying()) this.playPause();
+    if (this.isPlaying()) this.playPause();
   };
 
   BaseController.prototype.mute = function() {
-    this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "mute",
+      selectorButton: this.selectors.mute,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.like = function() {
-    this.click({action: "like", selectorButton: this.selectors.like, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "like",
+      selectorButton: this.selectors.like,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   BaseController.prototype.dislike = function() {
-    this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
+    this.click({
+      action: "dislike",
+      selectorButton: this.selectors.dislike,
+      selectorFrame: this.selectors.iframe
+    });
   };
 
   /**
@@ -150,19 +196,24 @@
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        isPlaying = false;
+      isPlaying = false;
 
-    if(this.buttonSwitch) {
+    if (this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
-      isPlaying = (playEl === null);
-    }
-    else if(this.selectors.playState) {
+      isPlaying = playEl === null;
+    } else if (this.selectors.playState) {
       // Check if the play state element exists and is visible
       var playStateEl = this.doc().querySelector(this.selectors.playState);
-      isPlaying = !!(playStateEl && (window.getComputedStyle(playStateEl, null).getPropertyValue("display") !== "none"));
-    }
-    else if(playEl) {
-      isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
+      isPlaying = !!(
+        playStateEl &&
+        window
+          .getComputedStyle(playStateEl, null)
+          .getPropertyValue("display") !== "none"
+      );
+    } else if (playEl) {
+      isPlaying =
+        window.getComputedStyle(playEl, null).getPropertyValue("display") ===
+        "none";
     }
 
     return isPlaying;
@@ -172,12 +223,12 @@
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
   BaseController.prototype.updatePlayerState = function() {
-    if(this.checkPlayer) this.checkPlayer();
+    if (this.checkPlayer) this.checkPlayer();
 
     var newState = this.getStateData();
-    if(JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
+    if (JSON.stringify(newState) !== JSON.stringify(this.oldState)) {
       sk_log("Player state change");
-      if(this.getSongChanged(newState)) {
+      if (this.getSongChanged(newState)) {
         chrome.runtime.sendMessage({
           action: "send_change_notification",
           stateData: newState
@@ -205,15 +256,35 @@
       totalTime: this.getSongData(this.selectors.totalTime),
       isPlaying: this.isPlaying(),
       siteName: this.siteName,
-      canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
-      canPlayPrev: this.overridePlayPrev || !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
-      canPlayPause: this.overridePlayPause || !!(
-        (this.selectors.playPause && this.doc().querySelector(this.selectors.playPause)) ||
-        (this.selectors.play && this.doc().querySelector(this.selectors.play)) ||
-        (this.selectors.pause && this.doc().querySelector(this.selectors.pause))
+      canDislike: !!(
+        this.selectors.dislike &&
+        this.doc().querySelector(this.selectors.dislike)
       ),
-      canPlayNext: this.overridePlayNext || !!(this.selectors.playNext && this.doc().querySelector(this.selectors.playNext)),
-      canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
+      canPlayPrev:
+        this.overridePlayPrev ||
+        !!(
+          this.selectors.playPrev &&
+          this.doc().querySelector(this.selectors.playPrev)
+        ),
+      canPlayPause:
+        this.overridePlayPause ||
+        !!(
+          (this.selectors.playPause &&
+            this.doc().querySelector(this.selectors.playPause)) ||
+          (this.selectors.play &&
+            this.doc().querySelector(this.selectors.play)) ||
+          (this.selectors.pause &&
+            this.doc().querySelector(this.selectors.pause))
+        ),
+      canPlayNext:
+        this.overridePlayNext ||
+        !!(
+          this.selectors.playNext &&
+          this.doc().querySelector(this.selectors.playNext)
+        ),
+      canLike: !!(
+        this.selectors.like && this.doc().querySelector(this.selectors.like)
+      ),
       hidePlayer: this.hidePlayer
     };
   };
@@ -224,9 +295,7 @@
    * @return {Boolean} true if song just changed, false otherwise
    */
   BaseController.prototype.getSongChanged = function(newState) {
-      return this.oldState &&
-            newState &&
-            this.oldState.song !== newState.song;
+    return this.oldState && newState && this.oldState.song !== newState.song;
   };
 
   /**
@@ -235,10 +304,10 @@
    * @return {*} song data if element is found, null otherwise
    */
   BaseController.prototype.getSongData = function(selector) {
-    if(!selector) return null;
+    if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.textContent) {
+    if (dataEl && dataEl.textContent) {
       return dataEl.textContent;
     }
 
@@ -246,10 +315,10 @@
   };
 
   BaseController.prototype.getArtData = function(selector) {
-    if(!selector) return null;
+    if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.attributes && dataEl.attributes.src) {
+    if (dataEl && dataEl.attributes && dataEl.attributes.src) {
       return dataEl.attributes.src.value;
     }
 
@@ -260,21 +329,21 @@
    * Callback for request from background page
    */
   BaseController.prototype.doRequest = function(request, sender, response) {
-    if(typeof request !== "undefined") {
-      if(request.action === "playPause") this.playPause();
-      if(request.action === "playNext") this.playNext();
-      if(request.action === "playPrev") this.playPrev();
-      if(request.action === "stop") this.stop();
-      if(request.action === "mute") this.mute();
-      if(request.action === "like") this.like();
-      if(request.action === "dislike") this.dislike();
-      if(request.action === "playerStateNotify"){
+    if (typeof request !== "undefined") {
+      if (request.action === "playPause") this.playPause();
+      if (request.action === "playNext") this.playNext();
+      if (request.action === "playPrev") this.playPrev();
+      if (request.action === "stop") this.stop();
+      if (request.action === "mute") this.mute();
+      if (request.action === "like") this.like();
+      if (request.action === "dislike") this.dislike();
+      if (request.action === "playerStateNotify") {
         chrome.runtime.sendMessage({
           action: "send_change_notification",
           stateData: this.getStateData()
         });
       }
-      if(request.action === "getPlayerState") {
+      if (request.action === "getPlayerState") {
         var newState = this.getStateData();
         this.oldState = newState;
         response(newState);

@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   /**
@@ -48,7 +48,7 @@
     "mousemove",
     "mouseout",
     "mouseover",
-    "mouseup",
+    "mouseup"
   ];
 
   /**
