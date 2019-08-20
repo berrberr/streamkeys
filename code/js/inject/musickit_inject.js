@@ -15,7 +15,7 @@
   }
 
   function sendState() {
-    var event = new CustomEvent("streamkeys-state", {detail: getState()});
+    var event = new CustomEvent("streamkeys-state", { detail: getState() });
     document.dispatchEvent(event);
   }
 
@@ -34,22 +34,22 @@
   document.addEventListener("streamkeys-cmd", function(e) {
     var musicKit = window.MusicKit.getInstance();
     switch (e.detail) {
-      case "playPause":
-        if (musicKit.player.isPlaying) {
-          musicKit.pause();
-        } else {
-          musicKit.play();
-        }
-        break;
-      case "next":
-        musicKit.skipToNextItem();
-        break;
-      case "prev":
-        musicKit.skipToPreviousItem();
-        break;
-      case "stop":
-        musicKit.stop();
-        break;
+    case "playPause":
+      if (musicKit.player.isPlaying) {
+        musicKit.pause();
+      } else {
+        musicKit.play();
+      }
+      break;
+    case "next":
+      musicKit.skipToNextItem();
+      break;
+    case "prev":
+      musicKit.skipToPreviousItem();
+      break;
+    case "stop":
+      musicKit.stop();
+      break;
     }
   });
 })();
