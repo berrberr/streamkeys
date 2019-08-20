@@ -27,8 +27,8 @@ var OptionsViewModel = function OptionsViewModel() {
     });
   };
 
-  chrome.runtime.getPlatformInfo(function(platformInfo){
-    self.supportsMPRIS = (platformInfo.os === chrome.runtime.PlatformOs.LINUX);
+  chrome.runtime.getPlatformInfo(function(platformInfo) {
+    self.supportsMPRIS = platformInfo.os === chrome.runtime.PlatformOs.LINUX;
   });
 
   // Load localstorage settings into observables
@@ -41,20 +41,25 @@ var OptionsViewModel = function OptionsViewModel() {
     self.useMPRIS = ko.observable(obj["hotkey-use_mpris"]);
     self.useMPRIS.subscribe(function(value) {
       if (value) {
-        chrome.permissions.contains({
-          permissions: ["nativeMessaging"],
-        }, function (alreadyHaveNativeMessagingPermissions) {
-          if (alreadyHaveNativeMessagingPermissions) {
-            chrome.storage.sync.set({ "hotkey-use_mpris": value });
+        chrome.permissions.contains(
+          {
+            permissions: ["nativeMessaging"]
+          },
+          function(alreadyHaveNativeMessagingPermissions) {
+            if (alreadyHaveNativeMessagingPermissions) {
+              chrome.storage.sync.set({ "hotkey-use_mpris": value });
+            } else {
+              chrome.permissions.request(
+                {
+                  permissions: ["nativeMessaging"]
+                },
+                function(granted) {
+                  chrome.storage.sync.set({ "hotkey-use_mpris": granted });
+                }
+              );
+            }
           }
-          else {
-            chrome.permissions.request({
-            permissions: ["nativeMessaging"],
-            }, function (granted) {
-                chrome.storage.sync.set({ "hotkey-use_mpris": granted });
-            });
-          }
-        });
+        );
       } else {
         chrome.storage.sync.set({ "hotkey-use_mpris": value });
       }
@@ -75,7 +80,7 @@ var OptionsViewModel = function OptionsViewModel() {
   });
 
   self.sitelistChanged = function(site) {
-    if(self.sitelistInitialized()) {
+    if (self.sitelistInitialized()) {
       chrome.runtime.sendMessage({
         action: "update_site_settings",
         siteKey: site.id,
@@ -146,24 +151,29 @@ var MusicSite = (function() {
         self.showNotifications(!self.showNotifications.peek());
       };
 
-      chrome.permissions.contains({
-        permissions: ["notifications"],
-        origins: ["http://*/*", "https://*/*"]
-      }, function (alreadyHaveNotificationsPermissions) {
-        if (alreadyHaveNotificationsPermissions) {
-          internalToggleNotifications();
-        }
-        else {
-          chrome.permissions.request({
+      chrome.permissions.contains(
+        {
           permissions: ["notifications"],
           origins: ["http://*/*", "https://*/*"]
-          }, function (granted) {
-            if (granted) {
-              internalToggleNotifications();
-            }
-          });
+        },
+        function(alreadyHaveNotificationsPermissions) {
+          if (alreadyHaveNotificationsPermissions) {
+            internalToggleNotifications();
+          } else {
+            chrome.permissions.request(
+              {
+                permissions: ["notifications"],
+                origins: ["http://*/*", "https://*/*"]
+              },
+              function(granted) {
+                if (granted) {
+                  internalToggleNotifications();
+                }
+              }
+            );
+          }
         }
-      });
+      );
     };
 
     /**
@@ -191,7 +201,13 @@ document.addEventListener("DOMContentLoaded", function() {
   ko.applyBindings(new OptionsViewModel());
 
   ko.bindingHandlers.priorityDropdown = {
-    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init: function(
+      element,
+      valueAccessor,
+      allBindings,
+      viewModel,
+      bindingContext
+    ) {
       var value = valueAccessor();
 
       element.id = bindingContext.$data.sanitizedId;
@@ -225,8 +241,16 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   ko.bindingHandlers.aliasModal = {
-    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-      var dialog = document.querySelector("#modal-" + bindingContext.$data.sanitizedId);
+    init: function(
+      element,
+      valueAccessor,
+      allBindings,
+      viewModel,
+      bindingContext
+    ) {
+      var dialog = document.querySelector(
+        "#modal-" + bindingContext.$data.sanitizedId
+      );
       var closeButton = dialog.querySelector(".close-button");
       var showButton = element;
 

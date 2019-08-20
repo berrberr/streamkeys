@@ -1,8 +1,8 @@
-;(function() {
+(function() {
   "use strict";
 
   var Sitelist = require("./modules/Sitelist.js"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   /**
    * Needed for phantomjs to work
@@ -32,16 +32,20 @@
   var sendAction = function(command) {
     var active_tabs = window.skSites.getActiveMusicTabs();
     active_tabs.then(function(tabs) {
-      if (command === "mute" ||
-          command === "stop" ||
-          command === "playerStateNotify" ||
-          command === "getPlayerState") {
+      if (
+        command === "mute" ||
+        command === "stop" ||
+        command === "playerStateNotify" ||
+        command === "getPlayerState"
+      ) {
         sendActionAllPlayers(command, tabs);
         return;
       }
       chrome.storage.sync.get(function(obj) {
-        if (obj.hasOwnProperty("hotkey-single_player_mode") &&
-            obj["hotkey-single_player_mode"]) {
+        if (
+          obj.hasOwnProperty("hotkey-single_player_mode") &&
+          obj["hotkey-single_player_mode"]
+        ) {
           sendActionSinglePlayer(command, tabs);
         } else {
           sendActionAllPlayers(command, tabs);
@@ -94,8 +98,9 @@
    */
   var getPlayingTabs = function(tabs) {
     return _.filter(tabs, function(tab) {
-      return tabStates.hasOwnProperty(tab.id) &&
-        tabStates[tab.id].state.isPlaying;
+      return (
+        tabStates.hasOwnProperty(tab.id) && tabStates[tab.id].state.isPlaying
+      );
     });
   };
 
@@ -104,7 +109,7 @@
    */
   var sendActionAllPlayers = function(command, tabs) {
     tabs.forEach(function(tab) {
-      chrome.tabs.sendMessage(tab.id, { "action": command });
+      chrome.tabs.sendMessage(tab.id, { action: command });
       console.log("Sent: " + command + " To: " + tab.url);
     });
   };
@@ -114,9 +119,16 @@
    * @param {Object} request - Chrome request object from runtime.onMessage
    */
   var processCommand = function(request) {
-    if(request.tab_target && parseInt(request.tab_target)) {
-      chrome.tabs.sendMessage(parseInt(request.tab_target), { "action": request.command });
-      console.log("Single tab request. Sent: " + request.command + " To: " + request.tab_target);
+    if (request.tab_target && parseInt(request.tab_target)) {
+      chrome.tabs.sendMessage(parseInt(request.tab_target), {
+        action: request.command
+      });
+      console.log(
+        "Single tab request. Sent: " +
+          request.command +
+          " To: " +
+          request.tab_target
+      );
     } else {
       sendAction(request.command);
     }
@@ -133,40 +145,46 @@
    * Messages sent from Options page
    */
   chrome.runtime.onMessage.addListener(function(request, sender, response) {
-    if(request.action === "update_keys") {
+    if (request.action === "update_keys") {
       window.skSites.loadSettings();
     }
-    if(request.action === "update_site_settings") {
-      console.log("updating site settings: ", request.siteKey, request.siteState);
-      window.skSites.setSiteState(request.siteKey, request.siteState).then(function() {
-        response(true);
-      });
+    if (request.action === "update_site_settings") {
+      console.log(
+        "updating site settings: ",
+        request.siteKey,
+        request.siteState
+      );
+      window.skSites
+        .setSiteState(request.siteKey, request.siteState)
+        .then(function() {
+          response(true);
+        });
     }
-    if(request.action === "get_sites") {
+    if (request.action === "get_sites") {
       response(window.skSites.sites);
     }
-    if(request.action === "get_site_controller") {
+    if (request.action === "get_site_controller") {
       response(window.skSites.getController(sender.tab.url));
     }
-    if(request.action === "inject_controller") {
+    if (request.action === "inject_controller") {
       console.log("Inject: " + request.file + " into: " + sender.tab.id);
-      chrome.tabs.executeScript(sender.tab.id, {file: request.file});
+      chrome.tabs.executeScript(sender.tab.id, { file: request.file });
       if (mprisPort) mprisPort.postMessage({ command: "add_player" });
     }
-    if(request.action === "check_music_site") {
+    if (request.action === "check_music_site") {
       /**
        * A tab index of -1 means that the tab is "embedded" in a page
        * We should only inject into actual tabs
        */
-      if(sender.tab.index === -1) return response("no_inject");
+      if (sender.tab.index === -1) return response("no_inject");
       response(window.skSites.checkMusicSite(sender.tab.url));
     }
-    if(request.action === "get_commands") response(window.coms);
-    if(request.action === "command") processCommand(request);
-    if(request.action === "update_player_state") {
+    if (request.action === "get_commands") response(window.coms);
+    if (request.action === "command") processCommand(request);
+    if (request.action === "update_player_state") {
       tabStates[sender.tab.id] = {
-        "timestamp": Date.now(),
-        "state": request.stateData
+        timestamp: Date.now(),
+        state: request.stateData
       };
       chrome.runtime.sendMessage({
         action: "update_popup_state",
@@ -175,7 +193,7 @@
       });
       if (mprisPort) handleStateData(updateMPRISState);
     }
-    if(request.action === "get_music_tabs") {
+    if (request.action === "get_music_tabs") {
       var musicTabs = window.skSites.getMusicTabs();
       musicTabs.then(function(tabs) {
         response(tabs);
@@ -183,9 +201,11 @@
 
       return true;
     }
-    if(request.action === "send_change_notification") {
-      if (window.skSites.checkShowNotifications(sender.tab.url) &&
-          window.skSites.checkTabEnabled(sender.tab.id)) {
+    if (request.action === "send_change_notification") {
+      if (
+        window.skSites.checkShowNotifications(sender.tab.url) &&
+        window.skSites.checkTabEnabled(sender.tab.id)
+      ) {
         sendChangeNotification(request, sender);
       }
     }
@@ -197,26 +217,35 @@
     }
 
     var notificationItems = [
-        { title: request.stateData.song.trim(), message: "" },
-      ];
+      { title: request.stateData.song.trim(), message: "" }
+    ];
 
     if (request.stateData.artist || request.stateData.album) {
-      notificationItems.push({ title: (request.stateData.artist || "").trim(), message: (request.stateData.album || "").trim() });
+      notificationItems.push({
+        title: (request.stateData.artist || "").trim(),
+        message: (request.stateData.album || "").trim()
+      });
     }
 
     if (request.stateData.currentTime || request.stateData.totalTime) {
-      notificationItems.push({ title: (request.stateData.currentTime || "").trim(), message: (request.stateData.totalTime || "").trim() });
+      notificationItems.push({
+        title: (request.stateData.currentTime || "").trim(),
+        message: (request.stateData.totalTime || "").trim()
+      });
     }
 
-    chrome.notifications.create(sender.id + request.stateData.siteName, {
+    chrome.notifications.create(
+      sender.id + request.stateData.siteName,
+      {
         type: "list",
         title: request.stateData.siteName,
         message: (request.stateData.song || "").trim(),
-        iconUrl: request.stateData.art || chrome.extension.getURL("icon128.png"),
+        iconUrl:
+          request.stateData.art || chrome.extension.getURL("icon128.png"),
         items: notificationItems
-      }, function(notificationId) {
-        if(notificationTimeouts[notificationId])
-        {
+      },
+      function(notificationId) {
+        if (notificationTimeouts[notificationId]) {
           clearTimeout(notificationTimeouts[notificationId]);
           delete notificationTimeouts[notificationId];
         }
@@ -224,7 +253,8 @@
         notificationTimeouts[notificationId] = setTimeout(function() {
           chrome.notifications.clear(notificationId);
         }, 5000);
-      });
+      }
+    );
   };
 
   /**
@@ -233,7 +263,7 @@
    */
   var storageInitializedCheck = new Promise(function(resolve) {
     chrome.storage.sync.get(function(syncStorageObj) {
-      if(syncStorageObj["hotkey-initialized"]) {
+      if (syncStorageObj["hotkey-initialized"]) {
         resolve();
       } else {
         var newStorageObj = {
@@ -257,8 +287,11 @@
     // Open info page on install/update
     chrome.runtime.onInstalled.addListener(function(details) {
       chrome.storage.sync.get(function(obj) {
-        if(obj["hotkey-open_on_update"] || typeof obj["hotkey-open_on_update"] === "undefined") {
-          if(details.reason == "install") {
+        if (
+          obj["hotkey-open_on_update"] ||
+          typeof obj["hotkey-open_on_update"] === "undefined"
+        ) {
+          if (details.reason == "install") {
             chrome.tabs.create({
               url: "http://www.streamkeys.com/guide.html?installed=true"
             });
@@ -277,7 +310,6 @@
     window.skSites.loadSettings();
   });
 
-
   /**
    * MPRIS support
    */
@@ -290,32 +322,32 @@
     var m = 1;
 
     while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
+      s += m * parseInt(p.pop(), 10);
+      m *= 60;
     }
 
     return s;
   };
 
   var handleNativeMsg = function(msg) {
-    switch(msg.command) {
-      case "play":
-      case "pause":
-      case "playpause":
-        sendAction("playPause");
-        break;
-      case "stop":
-        sendAction("stop");
-        break;
-      case "next":
-        sendAction("playNext");
-        break;
-      case "previous":
-        sendAction("playPrev");
-        break;
-      default:
-        console.log("Cannot handle native message command: " + msg.command);
-      }
+    switch (msg.command) {
+    case "play":
+    case "pause":
+    case "playpause":
+      sendAction("playPause");
+      break;
+    case "stop":
+      sendAction("stop");
+      break;
+    case "next":
+      sendAction("playNext");
+      break;
+    case "previous":
+      sendAction("playPrev");
+      break;
+    default:
+      console.log("Cannot handle native message command: " + msg.command);
+    }
   };
 
   /**
@@ -339,7 +371,7 @@
       } else {
         var bestTab = null;
         var playingTabs = getPlayingTabs(tabs);
-        if (_.isEmpty(playingTabs)){
+        if (_.isEmpty(playingTabs)) {
           bestTab = getBestSinglePlayerTab(tabs);
         } else {
           bestTab = getBestSinglePlayerTab(playingTabs);
@@ -356,33 +388,38 @@
    */
   var updateMPRISState = function(stateData, tab) {
     if (stateData === null) {
-        mprisPort.postMessage({ command: "remove_player" });
-      } else {
-        var metadata = {
-          "mpris:trackid": stateData.song ? tab.id : null,
-          "xesam:title": stateData.song,
-          "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
-          "xesam:album": stateData.album,
-          "mpris:artUrl": stateData.art,
-          "mpris:length": hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000
-        };
-        var args = [{ "CanGoNext": stateData.canPlayNext,
-                  "CanGoPrevious": stateData.canPlayPrev,
-                  "PlaybackStatus": (stateData.isPlaying ? "Playing" : "Paused"),
-                  "CanPlay": stateData.canPlayPause,
-                  "CanPause": stateData.canPlayPause,
-                  "Metadata": metadata,
-                  "Position": hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000}];
+      mprisPort.postMessage({ command: "remove_player" });
+    } else {
+      var metadata = {
+        "mpris:trackid": stateData.song ? tab.id : null,
+        "xesam:title": stateData.song,
+        "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
+        "xesam:album": stateData.album,
+        "mpris:artUrl": stateData.art,
+        "mpris:length":
+          hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000
+      };
+      var args = [
+        {
+          CanGoNext: stateData.canPlayNext,
+          CanGoPrevious: stateData.canPlayPrev,
+          PlaybackStatus: stateData.isPlaying ? "Playing" : "Paused",
+          CanPlay: stateData.canPlayPause,
+          CanPause: stateData.canPlayPause,
+          Metadata: metadata,
+          Position:
+            hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000
+        }
+      ];
 
-        mprisPort.postMessage({ command: "update_state", args: args });
-      }
-    };
+      mprisPort.postMessage({ command: "update_state", args: args });
+    }
+  };
 
   /**
    * Connect to the native messaging host for MPRIS support
    */
   chrome.storage.sync.get(function(obj) {
-
     if (obj.hasOwnProperty("hotkey-use_mpris") && obj["hotkey-use_mpris"]) {
       if (!connections) {
         connections += 1;
@@ -391,10 +428,9 @@
         mprisPort.onMessage.addListener(handleNativeMsg);
 
         chrome.runtime.onSuspend.addListener(function() {
-          if (!--connections)
-            mprisPort.postMessage({ command: "quit" });
-            mprisPort.onMessage.removeListener(handleNativeMsg);
-            mprisPort.disconnect();
+          if (!--connections) mprisPort.postMessage({ command: "quit" });
+          mprisPort.onMessage.removeListener(handleNativeMsg);
+          mprisPort.disconnect();
         });
 
         /**
@@ -417,9 +453,7 @@
             handleStateData(updateMPRISState);
           }
         });
-
       }
     }
   });
-
 })();
