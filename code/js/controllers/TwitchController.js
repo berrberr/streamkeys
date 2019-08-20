@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -10,7 +10,6 @@
   });
 
   controller.isPlaying = function() {
-    return !!(this.doc().querySelector("span[data-tip='Pause']"));
+    return !!this.doc().querySelector("span[data-tip='Pause']");
   };
-
 })();

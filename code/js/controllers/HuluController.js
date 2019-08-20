@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var MouseEventController = require("MouseEventController");
@@ -15,7 +15,7 @@
     buttonSwitch: false
   });
 
-  controller.isPlaying = function () {
-    return !!(this.doc().querySelector("div.controls__playback-button--playing"));
+  controller.isPlaying = function() {
+    return !!this.doc().querySelector("div.controls__playback-button--playing");
   };
 })();

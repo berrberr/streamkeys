@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -13,7 +13,8 @@
 
     playState: ".playControl.playing",
     song: ".playbackSoundBadge__titleContextContainer > a",
-    artist: ".playbackSoundBadge__titleContextContainer > .playbackSoundBadge__title > a > span:nth-of-type(2)",
+    artist:
+      ".playbackSoundBadge__titleContextContainer > .playbackSoundBadge__title > a > span:nth-of-type(2)",
 
     hidePlayer: true
   });

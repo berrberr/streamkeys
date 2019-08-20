@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -11,6 +11,6 @@
     playPrev: "#playPause button:nth-child(1)",
     buttonSwitch: true,
     playState: "#nowPlaying .playerPlaying",
-    song: "#nowPlaying .tile-wrap-full",
+    song: "#nowPlaying .tile-wrap-full"
   });
 })();

@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var MouseEventController = require("MouseEventController");
@@ -12,7 +12,6 @@
     artist: ".song.now_playing .artist",
     album: ".song.now_playing .album"
   });
-
 
   controller.playPause = function() {
     this.mouseclick({ selectorButton: this.selectors.playPause });

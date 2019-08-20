@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -27,10 +27,14 @@
   };
 
   controller.getSongData = function(dataAttribute) {
-    if(!dataAttribute) return null;
+    if (!dataAttribute) return null;
 
     var selectedItem = this.getSelectedQueueItem();
-    if (selectedItem && selectedItem.attributes && selectedItem.attributes[dataAttribute]) {
+    if (
+      selectedItem &&
+      selectedItem.attributes &&
+      selectedItem.attributes[dataAttribute]
+    ) {
       return selectedItem.attributes[dataAttribute].value;
     }
 
@@ -45,10 +49,16 @@
       var imageUrlAttribute = selectedItem.attributes["data-image-url"];
       if (imageUrlAttribute && imageUrlAttribute.value) {
         // imageUrlAttribute is sometimes a relative URL which we need to convert to an absolute URL to properly get art data
-        return new URL(imageUrlAttribute.value, this.doc().location.protocol + "//" + this.doc().location.host).href;
-      }
-      else if (youtubeIdAttribute && youtubeIdAttribute.value) {
-        return "https://img.youtube.com/vi/" + youtubeIdAttribute.value + "/default.jpg";
+        return new URL(
+          imageUrlAttribute.value,
+          this.doc().location.protocol + "//" + this.doc().location.host
+        ).href;
+      } else if (youtubeIdAttribute && youtubeIdAttribute.value) {
+        return (
+          "https://img.youtube.com/vi/" +
+          youtubeIdAttribute.value +
+          "/default.jpg"
+        );
       }
     }
 

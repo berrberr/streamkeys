@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
   var BaseController = require("BaseController");
 
@@ -13,19 +13,29 @@
   });
 
   controller.playPause = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "playPause" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "playPause" })
+    );
   };
   controller.playNext = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "next" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "next" })
+    );
   };
   controller.playPrev = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "prev" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "prev" })
+    );
   };
   controller.mute = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "mute" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "mute" })
+    );
   };
   controller.stop = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "stop" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "stop" })
+    );
   };
 
   controller.injectScript({ url: "/js/inject/hoopla_inject.js" });

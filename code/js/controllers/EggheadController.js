@@ -1,7 +1,8 @@
-;(function () {
+(function() {
   "use strict";
 
-  var playButtonSelector = ".wistia_romulus_control[id^='wistia_'][id*='PlayButton']";
+  var playButtonSelector =
+    ".wistia_romulus_control[id^='wistia_'][id*='PlayButton']";
 
   var BaseController = require("BaseController");
 
@@ -18,7 +19,7 @@
     artist: ".lesson-video-container p.line-lesson-author a:last-of-type"
   });
 
-  controller.isPlaying = function () {
-    return !(this.doc().querySelector(playButtonSelector + ".paused"));
+  controller.isPlaying = function() {
+    return !this.doc().querySelector(playButtonSelector + ".paused");
   };
 })();

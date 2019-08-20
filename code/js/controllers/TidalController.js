@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -12,6 +12,6 @@
 
     song: "[data-test=track-title]",
     artist: "[data-test=artist-title]",
-    buttonSwitch : true
+    buttonSwitch: true
   });
 })();

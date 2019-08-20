@@ -1,12 +1,12 @@
-;(function() {
+(function() {
   "use strict";
 
   var sk_log = require("../modules/SKLog.js"),
-      MouseEventController = require("MouseEventController"),
-      SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
-      selectors,
-      controller,
-      vkObserver;
+    MouseEventController = require("MouseEventController"),
+    SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
+    selectors,
+    controller,
+    vkObserver;
 
   // if new ui detected
   if (document.getElementById("top_notify_btn")) {
@@ -22,11 +22,15 @@
     controller = new MouseEventController({
       siteName: "VK Music",
 
-      playPause: "#top_audio_player.top_audio_player_enabled .top_audio_player_play",
-      playNext: "#top_audio_player.top_audio_player_enabled .top_audio_player_next",
-      playPrev: "#top_audio_player.top_audio_player_enabled .top_audio_player_prev",
+      playPause:
+        "#top_audio_player.top_audio_player_enabled .top_audio_player_play",
+      playNext:
+        "#top_audio_player.top_audio_player_enabled .top_audio_player_next",
+      playPrev:
+        "#top_audio_player.top_audio_player_enabled .top_audio_player_prev",
 
-      playState: "#top_audio_player.top_audio_player_enabled.top_audio_player_playing",
+      playState:
+        "#top_audio_player.top_audio_player_enabled.top_audio_player_playing",
       song: "#top_audio_player.top_audio_player_enabled .top_audio_player_title"
     });
 
@@ -85,7 +89,11 @@
 
     // click on initSelector, wait when waitSelector will be inserted,
     // click on waitSelector if needed and close player panel
-    controller.initWaitAndClose = function(waitSelector, initSelector, clickOnWaitSelector) {
+    controller.initWaitAndClose = function(
+      waitSelector,
+      initSelector,
+      clickOnWaitSelector
+    ) {
       var self = this;
 
       // default init player panel from header button
@@ -119,7 +127,11 @@
         return MouseEventController.prototype.playNext.call(self);
       }
       // open player panel, click next button, close player panel
-      self.initWaitAndClose(selectors.playerPanelNext, selectors.playerPanelInfo, true);
+      self.initWaitAndClose(
+        selectors.playerPanelNext,
+        selectors.playerPanelInfo,
+        true
+      );
     };
 
     controller.playPrev = function() {
@@ -129,7 +141,11 @@
         return MouseEventController.prototype.playPrev.call(self);
       }
       // open player panel, click prev button, close player panel
-      self.initWaitAndClose(selectors.playerPanelPrev, selectors.playerPanelInfo, true);
+      self.initWaitAndClose(
+        selectors.playerPanelPrev,
+        selectors.playerPanelInfo,
+        true
+      );
     };
 
     controller.getStateData = function() {

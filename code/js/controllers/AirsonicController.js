@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -9,9 +9,9 @@
     pause: "button[aria-label=Pause]",
     playNext: "img[onclick^=onNext]",
     playPrev: "img[onclick^=onPrev]",
-    mute: "button[aria-label$=\"ute\"]",
+    mute: 'button[aria-label$="ute"]',
     buttonSwitch: true,
 
-    song: "img[src$=\"current.png\"]:not([style*=\"none\"]) + span a",
+    song: 'img[src$="current.png"]:not([style*="none"]) + span a'
   });
 })();

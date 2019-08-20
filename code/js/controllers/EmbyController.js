@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -8,8 +8,8 @@
     play: ".btnPause",
     pause: ".btnPause",
     playNext: ".btnNextTrack",
-    playPrev: ".btnPreviousTrack",
-/*
+    playPrev: ".btnPreviousTrack"
+    /*
     playState: ".unpauseButton.hide"
 */
   });

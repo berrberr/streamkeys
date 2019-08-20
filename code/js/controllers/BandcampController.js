@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -20,10 +20,9 @@
     totalTime: ".time_total"
   });
 
-
   controller.getArtData = function(selector) {
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.attributes && dataEl.attributes.href) {
+    if (dataEl && dataEl.attributes && dataEl.attributes.href) {
       return dataEl.attributes.href.value;
     }
 

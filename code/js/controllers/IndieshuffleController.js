@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -10,6 +10,7 @@
     playPrev: "#playPrevious",
 
     song: "#player-current > div > a.ajaxlink.pink > div > div > span.title",
-    artist: "#player-current > div > a.ajaxlink.pink > div > div > span.artist.bold"
+    artist:
+      "#player-current > div > a.ajaxlink.pink > div > div > span.artist.bold"
   });
 })();

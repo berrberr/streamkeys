@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -16,7 +16,7 @@
     song: "song",
     artist: "artist",
     album: "album",
-    art: ".ytmusic-player-bar > .image",
+    art: ".ytmusic-player-bar > .image"
   });
 
   controller.getSongData = function(selector) {
@@ -26,7 +26,9 @@
         return titleEl.textContent;
       }
     } else {
-      var subTitleEl = this.doc().querySelector(".content-info-wrapper .subtitle > .byline");
+      var subTitleEl = this.doc().querySelector(
+        ".content-info-wrapper .subtitle > .byline"
+      );
       if (subTitleEl && subTitleEl.innerText) {
         var data = subTitleEl.innerText.split(" • ");
         if (!data) return null;

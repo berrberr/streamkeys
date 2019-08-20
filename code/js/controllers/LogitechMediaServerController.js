@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -8,6 +8,6 @@
     play: "#ctrlTogglePlay button[title='Play']",
     pause: "#ctrlTogglePlay button[title='Pause']",
     playNext: ".btn-next button[title='Next']",
-    playPrev: ".btn-previous button[title='Previous']",
+    playPrev: ".btn-previous button[title='Previous']"
   });
 })();

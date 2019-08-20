@@ -1,8 +1,8 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   var multiSelectors = {
     play: [".omniplayer button[title=Play]", ".video-btn.play-icon"],
@@ -22,7 +22,10 @@
   controller.checkPlayer = function() {
     var that = this;
 
-    if(this.doc().querySelector(multiSelectors.play[0]) || this.doc().querySelector(multiSelectors.pause[0])) {
+    if (
+      this.doc().querySelector(multiSelectors.play[0]) ||
+      this.doc().querySelector(multiSelectors.pause[0])
+    ) {
       _.each(multiSelectors, function(value, key) {
         that.selectors[key] = value[0];
       });

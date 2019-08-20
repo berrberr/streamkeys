@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -17,11 +17,15 @@
   });
 
   controller.playNext = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "next" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "next" })
+    );
   };
 
   controller.playPrev = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "prev" }));
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "prev" })
+    );
   };
 
   /* Inject script to interact with parent DOM */

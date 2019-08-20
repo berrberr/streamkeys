@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -12,6 +12,6 @@
 
     playState: ".global.play.playing",
     song: "._trackProfileLink",
-    artist: "._artistProfileLink",
+    artist: "._artistProfileLink"
   });
 })();

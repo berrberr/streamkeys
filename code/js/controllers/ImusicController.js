@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -17,5 +17,4 @@
 
     currentTime: "#playerProgressTime"
   });
-
 })();

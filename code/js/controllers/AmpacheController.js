@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -13,6 +13,6 @@
 
     playState: "a.jp-pause",
     song: "#webplayer > div.playing_info > div.playing_title > a",
-    artist: "#webplayer > div.playing_info > div.playing_artist > a",
+    artist: "#webplayer > div.playing_info > div.playing_artist > a"
   });
 })();

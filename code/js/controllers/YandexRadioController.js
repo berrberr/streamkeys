@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var MouseEventController = require("MouseEventController");
@@ -19,6 +19,10 @@
 
   // override mute
   yandexRadioController.mute = function() {
-    this.mousedown({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+    this.mousedown({
+      action: "mute",
+      selectorButton: this.selectors.mute,
+      selectorFrame: this.selectors.iframe
+    });
   };
 })();

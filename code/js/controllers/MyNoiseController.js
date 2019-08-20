@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -8,6 +8,6 @@
     playPause: "#mute",
 
     song: ".noiseTitle .bigTitle",
-    playState: "#mute:not(.active)",
+    playState: "#mute:not(.active)"
   });
 })();

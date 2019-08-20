@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -10,5 +10,4 @@
     playNext: ".youtube-player-toolbar li:nth-child(2)",
     playPrev: ".youtube-player-toolbar li"
   });
-
 })();

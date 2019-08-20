@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -16,8 +16,11 @@
   });
 
   controller.getStateData = function() {
-    var artistSpan = document.querySelector(".miniplayer-info-artist-name a") &&
-                      document.querySelector(".miniplayer-info-artist-name a").textContent.substring(3);
+    var artistSpan =
+      document.querySelector(".miniplayer-info-artist-name a") &&
+      document
+        .querySelector(".miniplayer-info-artist-name a")
+        .textContent.substring(3);
 
     return {
       song: this.getSongData(this.selectors.song),

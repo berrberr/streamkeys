@@ -1,16 +1,18 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController"),
-      sk_log = require("../modules/SKLog.js");
+    sk_log = require("../modules/SKLog.js");
 
   function getPlayer() {
-    return document.getElementsByTagName("audio")[0]
-      || document.getElementsByTagName("video")[0];
+    return (
+      document.getElementsByTagName("audio")[0] ||
+      document.getElementsByTagName("video")[0]
+    );
   }
 
   // Don't create a controller if we can't find a player
-  if(!getPlayer()) return;
+  if (!getPlayer()) return;
 
   var controller = new BaseController({
     siteName: "Embedded Element",
@@ -31,18 +33,18 @@
   };
 
   controller.playPause = function() {
-    if(this.isPlaying()) {
+    if (this.isPlaying()) {
       try {
         getPlayer().pause();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("playPause", e, true);
       }
     } else {
       try {
         getPlayer().play();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("playPause", e, true);
       }
     }

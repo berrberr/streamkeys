@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   "use strict";
 
   var BaseController = require("BaseController");
@@ -19,22 +19,21 @@
 
   controller.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        isPlaying = false;
+      isPlaying = false;
 
-    if(this.buttonSwitch) {
+    if (this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
-      isPlaying = (playEl === null);
-    }
-    else if(this.selectors.playState) {
+      isPlaying = playEl === null;
+    } else if (this.selectors.playState) {
       // Check if the play state element exists and is visible
       var playStateEl = this.doc().querySelector(this.selectors.playState);
       // Override the second check here since it fails even though it shouldn't
-      isPlaying = !!(playStateEl);
-    }
-    else if(playEl) {
-      isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
+      isPlaying = !!playStateEl;
+    } else if (playEl) {
+      isPlaying =
+        window.getComputedStyle(playEl, null).getPropertyValue("display") ===
+        "none";
     }
     return isPlaying;
   };
-
 })();
