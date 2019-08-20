@@ -1,7 +1,7 @@
 "use strict";
 
 var ko = require("ko"),
-    _ = require("lodash");
+  _ = require("lodash");
 require("../lib/material.min.js");
 
 var PopupViewModel = function PopupViewModel() {
@@ -19,23 +19,22 @@ var PopupViewModel = function PopupViewModel() {
   self.sortedMusicTabs = ko.pureComputed(function() {
     var filteredGrouped = _.groupBy(
       _.filter(self.musicTabs(), function(tab) {
-        return (tab.canPlayPause() || !tab.hidePlayer);
+        return tab.canPlayPause() || !tab.hidePlayer;
       }),
-      function(tab) { return tab.priority(); }
+      function(tab) {
+        return tab.priority();
+      }
     );
 
-    var sortedKeys = _.sortBy(
-      _.keys(filteredGrouped),
-      function(priority) { return priority * -1; }
-    );
+    var sortedKeys = _.sortBy(_.keys(filteredGrouped), function(priority) {
+      return priority * -1;
+    });
 
     var filteredGroupedSorted = [];
 
     _.each(sortedKeys, function(key) {
       filteredGroupedSorted.push(
-        _.sortByAll(
-          filteredGrouped[key], ["siteName", "tabId"]
-        )
+        _.sortByAll(filteredGrouped[key], ["siteName", "tabId"])
       );
     });
 
@@ -54,16 +53,20 @@ var PopupViewModel = function PopupViewModel() {
   };
 
   // Send a request to get the player state of every active music site tab
-  chrome.runtime.sendMessage({ action: "get_music_tabs" }, self.getTabStates.bind(this));
+  chrome.runtime.sendMessage(
+    { action: "get_music_tabs" },
+    self.getTabStates.bind(this)
+  );
 
   // Setup listener for updating the popup state
   chrome.runtime.onMessage.addListener(function(request) {
-    if(request.action === "update_popup_state" && request.stateData) self.updateState(request.stateData, request.fromTab);
+    if (request.action === "update_popup_state" && request.stateData)
+      self.updateState(request.stateData, request.fromTab);
   });
 };
 
 PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
-  if(typeof stateData == "undefined") return false;
+  if (typeof stateData == "undefined") return false;
 
   var self = this;
 
@@ -72,22 +75,28 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
     { tabId: tab.id }
   );
 
-  if(musicTab) {
+  if (musicTab) {
     // Update observables
     _.forEach(musicTab.observableProperties, function(property) {
-      if(typeof stateData[property] !== "undefined") musicTab[property](stateData[property]);
+      if (typeof stateData[property] !== "undefined")
+        musicTab[property](stateData[property]);
     });
   } else {
     // Create new tab
-    musicTab = new MusicTab(_.assign(stateData, {
-      tabId: tab.id,
-      faviconUrl: tab.favIconUrl,
-      priority: tab.streamkeysPriority,
-      siteKey: tab.streamkeysSiteKey,
-      streamkeysEnabled: typeof tab.streamkeysEnabled !== "undefined" ? tab.streamkeysEnabled : true,
-    }));
+    musicTab = new MusicTab(
+      _.assign(stateData, {
+        tabId: tab.id,
+        faviconUrl: tab.favIconUrl,
+        priority: tab.streamkeysPriority,
+        siteKey: tab.streamkeysSiteKey,
+        streamkeysEnabled:
+          typeof tab.streamkeysEnabled !== "undefined"
+            ? tab.streamkeysEnabled
+            : true
+      })
+    );
 
-    if(disabled) {
+    if (disabled) {
       this.disabledMusicTabs.push(musicTab);
     } else {
       this.musicTabs.push(musicTab);
@@ -95,11 +104,19 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
 
     // Subscribe to each sites priority to maintain state if multiple tabs are open
     musicTab.priority.subscribe(function(newPriority) {
-      _.each(self.musicTabs(), function(tab) {
-        if(tab.siteKey === this.siteKey && tab.tabId !== this.tabId && tab.priority() !== newPriority) {
-          tab.priority(newPriority);
-        }
-      }, this);
+      _.each(
+        self.musicTabs(),
+        function(tab) {
+          if (
+            tab.siteKey === this.siteKey &&
+            tab.tabId !== this.tabId &&
+            tab.priority() !== newPriority
+          ) {
+            tab.priority(newPriority);
+          }
+        },
+        this
+      );
     }, musicTab);
   }
 };
@@ -113,17 +130,25 @@ PopupViewModel.prototype.getTabStates = function(tabs) {
   that.totalMusicTabs(tabs.enabled.length + tabs.disabled.length);
 
   _.forEach(tabs.enabled, function(tab) {
-    chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
-      that.updateState(playerState, this.tab);
-      that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
-    }).bind({ tab: tab }));
+    chrome.tabs.sendMessage(
+      tab.id,
+      { action: "getPlayerState" },
+      function(playerState) {
+        that.updateState(playerState, this.tab);
+        that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
+      }.bind({ tab: tab })
+    );
   });
 
   _.forEach(tabs.disabled, function(tab) {
-    chrome.tabs.sendMessage(tab.id, { action: "getPlayerState" }, (function(playerState) {
-      that.updateState(playerState, this.tab, true);
-      that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
-    }).bind({ tab: tab }));
+    chrome.tabs.sendMessage(
+      tab.id,
+      { action: "getPlayerState" },
+      function(playerState) {
+        that.updateState(playerState, this.tab, true);
+        that.musicTabsLoaded(that.musicTabsLoaded.peek() + 1);
+      }.bind({ tab: tab })
+    );
   });
 };
 
@@ -147,15 +172,23 @@ var MusicTab = (function() {
     _.assign(this, attributes);
 
     /** Override observables **/
-    _.forEach(this.observableProperties, function(property) {
-      this[property] = ko.observable(typeof attributes[property] !== "undefined" ? attributes[property] : null);
-    }, this);
+    _.forEach(
+      this.observableProperties,
+      function(property) {
+        this[property] = ko.observable(
+          typeof attributes[property] !== "undefined"
+            ? attributes[property]
+            : null
+        );
+      },
+      this
+    );
 
     /** Popup specific observables **/
     this.songArtistText = ko.pureComputed(function() {
-      if(!this.song()) return "";
+      if (!this.song()) return "";
 
-      return (this.artist()) ? this.artist() + " - " + this.song() : this.song();
+      return this.artist() ? this.artist() + " - " + this.song() : this.song();
     }, this);
 
     this.settingsOpen = ko.observable(false);
@@ -184,7 +217,12 @@ var MusicTab = (function() {
 
     this.toggleStreamkeysEnabled = function() {
       this.streamkeysEnabled(!this.streamkeysEnabled.peek());
-      chrome.extension.getBackgroundPage().window.skSites.markTabEnabledState(this.tabId, this.streamkeysEnabled.peek());
+      chrome.extension
+        .getBackgroundPage()
+        .window.skSites.markTabEnabledState(
+          this.tabId,
+          this.streamkeysEnabled.peek()
+        );
     };
   }
 
@@ -198,12 +236,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
   ko.bindingHandlers.scrollingSong = {
     update: function(element, valueAccessor) {
-      element.querySelector(".song-text").textContent = ko.unwrap(valueAccessor());
+      element.querySelector(".song-text").textContent = ko.unwrap(
+        valueAccessor()
+      );
 
-      if(element.querySelector(".song-text").scrollWidth > document.querySelector("#player").clientWidth) {
+      if (
+        element.querySelector(".song-text").scrollWidth >
+        document.querySelector("#player").clientWidth
+      ) {
         var content = element.querySelector(".song-text").innerHTML;
 
-        element.querySelector(".song-text").innerHTML = "<marquee>" + content + "</marquee>";
+        element.querySelector(".song-text").innerHTML =
+          "<marquee>" + content + "</marquee>";
       }
     }
   };
@@ -212,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function() {
     update: function(element, valueAccessor) {
       var value = ko.unwrap(valueAccessor());
 
-      if(value) {
+      if (value) {
         element.style.display = "block";
       } else {
         element.style.display = "none";
