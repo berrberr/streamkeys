@@ -1,3 +1,6 @@
+const puppeteer = require('puppeteer');
+process.env.CHROME_BIN = puppeteer.executablePath();
+
 module.exports = function(config) {
   config.set({
     basePath: "",
@@ -32,7 +35,7 @@ module.exports = function(config) {
 
     singleRun: true,
 
-    browsers: ["PhantomJS2"],
+    browsers: ["ChromeHeadless"],
 
     browserify: {
       debug: true,
