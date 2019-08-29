@@ -1,12 +1,6 @@
 ;(function() {
   "use strict";
 
-  /**
-   * Needed for phantomjs to work
-   * @see [https://github.com/ariya/phantomjs/issues/12401]
-   */
-  require("es6-promise").polyfill();
-
   var _ = require("lodash"),
       URL = require("urlutils");
 
@@ -197,7 +191,7 @@
       // Migrate old storage versions to new format
       var version = (typeof obj["hotkey-storage-version"] === "undefined") ? 0 : obj["hotkey-storage-version"];
 
-      _.each(_.keys(that.sites), function(siteKey) {
+      _.forEach(_.keys(that.sites), function(siteKey) {
         var siteDefaults = { enabled: true, priority: 1, alias: [], showNotifications: false };
         var siteObj =
           (version === 0)
@@ -224,7 +218,7 @@
 
         // Delete properties that have default values to reduce storage space
         // For `chrome.storage.sync` API each item must be under 8kb
-        _.each(_.keys(siteDefaults), function(property) {
+        _.forEach(_.keys(siteDefaults), function(property) {
           if(_.isEqual(siteObj[property], siteDefaults[property])) {
             delete siteObj[property];
           }
@@ -283,9 +277,9 @@
           : site.showNotifications
         : attributes.showNotifications;
 
-    this.sites[siteKey] = _.extend(
+    this.sites[siteKey] = _.assignIn(
       site,
-      _.pick(attributes, this.validSiteAttributes),
+      _.pickBy(attributes, this.validSiteAttributes),
       {
         enabled: attributes.enabled,
         priority: attributes.priority,
@@ -305,7 +299,7 @@
     var promise = new Promise(function(resolve, reject) {
       chrome.storage.sync.get(function(obj) {
         if(obj["hotkey-sites"]) {
-          _.extend(obj["hotkey-sites"][siteKey], value);
+          _.assignIn(obj["hotkey-sites"][siteKey], value);
           chrome.storage.sync.set({ "hotkey-sites": obj["hotkey-sites"] }, function() {
             resolve(true);
           });
@@ -344,7 +338,7 @@
    */
   Sitelist.prototype.getEnabled = function() {
     return _.keys(
-      _.pick(this.sites, function(site) {
+      _.pickBy(this.sites, function(site) {
         return site.enabled;
       })
     );
@@ -355,7 +349,7 @@
    */
   Sitelist.prototype.getShowNotifications = function() {
     return _.keys(
-      _.pick(this.sites, function(site) {
+      _.pickBy(this.sites, function(site) {
         return site.showNotifications;
       })
     );
@@ -367,9 +361,9 @@
    * @return {String} sitelist key if found, null otherwise
    */
   Sitelist.prototype.getSitelistName = function(url) {
-    var filtered_sites = _.filter(_.keys(this.sites), function (name) {
+    var filtered_sites = _.filter(_.keys(this.sites), (function (name) {
       return this.sites[name].urlRegex.test(url);
-    }, this);
+    }).bind(this));
 
     if (!filtered_sites.length) return null;
 
