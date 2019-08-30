@@ -69,8 +69,10 @@
   BaseController.prototype.doc = function() {
     var returnDoc = document;
     if (this.selectors.iframe) {
-      if (document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1) {
-        returnDoc = document.querySelector(this.selectors.iframe).contentWindow.document;
+      if (document.querySelector(this.selectors.iframe)) {
+        if (document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1) {
+          returnDoc = document.querySelector(this.selectors.iframe).contentWindow.document;
+        }
       }
     }
     return returnDoc;
