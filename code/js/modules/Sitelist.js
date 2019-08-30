@@ -253,7 +253,7 @@
     var site = this.sites[siteKey];
 
     if(attributes.removedAlias && _.isArray(attributes.removedAlias)) {
-      site.alias = _.xor(site.alias, attributes.removedAlias);
+      site.alias = _.difference(site.alias, attributes.removedAlias);
     }
 
     // Combine user defined site aliases with extension defined aliases
