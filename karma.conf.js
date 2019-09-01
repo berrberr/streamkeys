@@ -5,6 +5,11 @@ module.exports = function(config) {
   config.set({
     basePath: "",
 
+    plugins: [
+      "@metahub/karma-jasmine-jquery",
+      "karma-*"
+    ],
+
     frameworks: [
       "browserify",
       "jasmine-jquery",
@@ -40,6 +45,12 @@ module.exports = function(config) {
     browserify: {
       debug: true,
       transform: []
+    },
+
+    client: {
+      jasmine: {
+        random: false
+      }
     }
   });
 };

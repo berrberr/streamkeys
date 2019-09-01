@@ -31,9 +31,9 @@ var PopupViewModel = function PopupViewModel() {
 
     var filteredGroupedSorted = [];
 
-    _.each(sortedKeys, function(key) {
+    _.forEach(sortedKeys, function(key) {
       filteredGroupedSorted.push(
-        _.sortByAll(
+        _.sortBy(
           filteredGrouped[key], ["siteName", "tabId"]
         )
       );
@@ -67,9 +67,9 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
 
   var self = this;
 
-  var musicTab = _.findWhere(
+  var musicTab = _.find(
     _.union(this.musicTabs.peek(), this.disabledMusicTabs.peek()),
-    { tabId: tab.id }
+    function(itTab) { return itTab.tabId == tab.id; }
   );
 
   if(musicTab) {
@@ -95,7 +95,7 @@ PopupViewModel.prototype.updateState = function(stateData, tab, disabled) {
 
     // Subscribe to each sites priority to maintain state if multiple tabs are open
     musicTab.priority.subscribe(function(newPriority) {
-      _.each(self.musicTabs(), function(tab) {
+      _.forEach(self.musicTabs(), function(tab) {
         if(tab.siteKey === this.siteKey && tab.tabId !== this.tabId && tab.priority() !== newPriority) {
           tab.priority(newPriority);
         }
@@ -147,9 +147,9 @@ var MusicTab = (function() {
     _.assign(this, attributes);
 
     /** Override observables **/
-    _.forEach(this.observableProperties, function(property) {
+    _.forEach(this.observableProperties, (function(property) {
       this[property] = ko.observable(typeof attributes[property] !== "undefined" ? attributes[property] : null);
-    }, this);
+    }).bind(this));
 
     /** Popup specific observables **/
     this.songArtistText = ko.pureComputed(function() {

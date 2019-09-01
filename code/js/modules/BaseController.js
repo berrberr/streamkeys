@@ -67,8 +67,15 @@
   }
 
   BaseController.prototype.doc = function() {
-    var useFrameSelector = (this.selectors.iframe && document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1);
-    return (useFrameSelector) ? document.querySelector(this.selectors.iframe).contentWindow.document : document;
+    var returnDoc = document;
+    if (this.selectors.iframe) {
+      if (document.querySelector(this.selectors.iframe)) {
+        if (document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1) {
+          returnDoc = document.querySelector(this.selectors.iframe).contentWindow.document;
+        }
+      }
+    }
+    return returnDoc;
   };
 
   /**
