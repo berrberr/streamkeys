@@ -45,6 +45,12 @@ module.exports = function(config) {
     browserify: {
       debug: true,
       transform: []
+    },
+
+    client: {
+      jasmine: {
+        random: false
+      }
     }
   });
 };
