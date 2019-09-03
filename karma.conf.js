@@ -12,12 +12,12 @@ module.exports = function(config) {
     frameworks: [
       "browserify",
       "jasmine-jquery",
-      "jasmine"
+      "jasmine",
+      "sinon-chrome"
     ],
 
     files: [
       "node_modules/sinon/pkg/sinon.js",
-      "node_modules/sinon-chrome/chrome.js",
       "test/**/*.test.js",
       "test/fixtures/*.html"
     ],
