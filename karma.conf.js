@@ -1,5 +1,4 @@
-const puppeteer = require('puppeteer');
-process.env.CHROME_BIN = puppeteer.executablePath();
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config) {
   config.set({
@@ -13,12 +12,12 @@ module.exports = function(config) {
     frameworks: [
       "browserify",
       "jasmine-jquery",
-      "jasmine"
+      "jasmine",
+      "sinon-chrome"
     ],
 
     files: [
       "node_modules/sinon/pkg/sinon.js",
-      "node_modules/sinon-chrome/chrome.js",
       "test/**/*.test.js",
       "test/fixtures/*.html"
     ],
