@@ -178,7 +178,8 @@
       "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
-      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
+      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" },
+      "crave": { name: "Crave", url: "https://www.crave.ca", controller: "CraveController.js" },
     };
 
     this.disabledTabs = [];
