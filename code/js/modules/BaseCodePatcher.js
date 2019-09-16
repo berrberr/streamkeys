@@ -1,5 +1,12 @@
 ;(function() {
   "use strict";
+  // modifies all javascript file that matches urlpattern
+  // in each ja file searchvalue is replaced by newvalue
+  // this doesn't:
+  // - modify the url/domain of the original js code
+  // - add any evil code that tracks user actions or send private data to a malicious server,
+  //   to verify this, find references of this functions, e.g. `git grep -i patch(`
+  //   in the project root directory
   function patch(urlpattern, searchvalue, newvalue) {
     var code = `
     var callback = function(mutationsList) {
