@@ -10,6 +10,8 @@
     playNext: ".control.fast-forward",
     playPrev: ".control.fast-backward",
 
-    song: ".current-episode-link"
+    song: ".current-episode-link",
+    artist: ".current-series-link",
+    art: ".thumb > img"
   });
 })();
