@@ -11,7 +11,7 @@ module.exports = {
   }),
 
   set: sinon.spy(function(obj, callback) {
-    _.extend(storageObject, obj);
+    _.assignIn(storageObject, obj);
 
     if(_.isFunction(callback)) callback(true);
   }),

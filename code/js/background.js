@@ -5,12 +5,6 @@
       _ = require("lodash");
 
   /**
-   * Needed for phantomjs to work
-   * @see [https://github.com/ariya/phantomjs/issues/12401]
-   */
-  require("es6-promise").polyfill();
-
-  /**
    * Tracks TimeoutIds by notification ID, to cancel previous uncomplete Timeouts
    * when a new notification is created prior to the last notification clearing
    */
@@ -78,7 +72,7 @@
     tabs = _.filter(tabs, function(tab) {
       return maxTimestamp - getTabUpdateTime(tab) < 200;
     });
-    var sorted = _.sortByAll(tabs, "active", getTabUpdateTime);
+    var sorted = _.sortBy(tabs, ["active", getTabUpdateTime]);
     return _.last(sorted);
   };
 
@@ -241,7 +235,7 @@
         };
 
         chrome.storage.local.get(function(localStorageObj) {
-          _.each(localStorageObj, function(value, key) {
+          _.forEach(localStorageObj, function(value, key) {
             newStorageObj[key] = value;
           });
 

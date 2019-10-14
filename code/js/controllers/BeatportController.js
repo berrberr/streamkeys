@@ -23,11 +23,11 @@
     var that = this;
 
     if(this.doc().querySelector(multiSelectors.play[0]) || this.doc().querySelector(multiSelectors.pause[0])) {
-      _.each(multiSelectors, function(value, key) {
+      _.forEach(multiSelectors, function(value, key) {
         that.selectors[key] = value[0];
       });
     } else {
-      _.each(multiSelectors, function(value, key) {
+      _.forEach(multiSelectors, function(value, key) {
         that.selectors[key] = value[1];
       });
     }

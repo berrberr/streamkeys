@@ -77,6 +77,10 @@ module.exports = function(grunt) {
     },
 
     sass: {
+      options: {
+        implementation: require('node-sass'),
+        sourceMap: true
+      },
       prod: {
         files: {
           "build/unpacked-prod/css/popup.css": "code/css/popup.scss",
