@@ -84,6 +84,7 @@
       "friskyradio": { name: "Frisky Radio", url: "https://www.friskyradio.com" },
       "gaana": { name: "Gaana", url: "http://www.gaana.com" },
       "giantbomb": { name: "Giantbomb", url: "http://giantbomb.com" },
+      "phenopod": { name: "Phenopod", url: "https://phenopod.com" },
       "play.google": { name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js" },
       "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
       "hearthis": { name: "HearThis.at", url: "http://www.hearthis.at" },
