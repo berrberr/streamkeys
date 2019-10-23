@@ -150,8 +150,8 @@
     if(this.selectors.confirmLike !== null) {
       var controller = this;
       var observer = new MutationObserver(function() {
-        controller.click({action: "confirmLike", selectorButton: controller.selectors.confirmLike, selectorFrame: controller.selectors.iframe});
         this.disconnect();
+        controller.click({action: "confirmLike", selectorButton: controller.selectors.confirmLike, selectorFrame: controller.selectors.iframe});
       });
       observer.observe(document.documentElement, {childList: true, subtree: true});
     }
@@ -162,8 +162,8 @@
     if(this.selectors.confirmDislike !== null) {
       var controller = this;
       var observer = new MutationObserver(function() {
-        controller.click({action: "confirmDislike", selectorButton: controller.selectors.confirmDislike, selectorFrame: controller.selectors.iframe});
         this.disconnect();
+        controller.click({action: "confirmDislike", selectorButton: controller.selectors.confirmDislike, selectorFrame: controller.selectors.iframe});
       });
       observer.observe(document.documentElement, {childList: true, subtree: true});
     }
