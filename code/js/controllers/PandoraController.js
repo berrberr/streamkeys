@@ -12,10 +12,13 @@
     like: [".thumbDownButton > a", ".Tuner__Control__ThumbUp__Button"],
     dislike: [".thumbDownButton > a", ".Tuner__Control__ThumbDown__Button"],
 
-    song: [".playerBarSong", ".nowPlayingTopInfo__current__trackName div:nth-child(2) div div"],
-    artist: [".playerBarArtist", ".nowPlayingTopInfo__current__artistName"],
+    song: [".playerBarSong", ".Tuner__Audio__TrackDetail__title"],
+    artist: [".playerBarArtist", ".Tuner__Audio__TrackDetail__artist"],
     album: [".playerBarAlbum", ".nowPlayingTopInfo__current__albumName"],
-    art: [".playerBarArt", ".Tuner__Audio__TrackDetail__img > .ImageLoader > .ImageLoader__cover"]
+    art: [".playerBarArt", ".Tuner__Audio__TrackDetail__img > .ImageLoader > .ImageLoader__cover"],
+
+    currentTime: [null, ".VolumeDurationControl__Duration [data-qa='elapsed_time']"],
+    totalTime: [null, ".VolumeDurationControl__Duration [data-qa='remaining_time']"]
   };
 
   var controller = new BaseController({
