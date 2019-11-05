@@ -174,7 +174,8 @@
       "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
-      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
+      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" },
+      "telegram": { name: "Telegram Web", url: "https://evgeny-nadymov.github.io/telegram-react/", controller: "TelegramController.js", alias: ["evgeny-nadymov.github.io/telegram-react"] }
     };
 
     this.disabledTabs = [];
