@@ -204,14 +204,14 @@
    */
   BaseController.prototype.getStateData = function() {
     return {
-      song: this.getSongData(this.selectors.song),
-      artist: this.getSongData(this.selectors.artist),
-      album: this.getSongData(this.selectors.album),
+      song: (this.getSongData(this.selectors.song) === null ? null : this.getSongData(this.selectors.song).replace(/\s+/g, " ")),
+      artist: (this.getSongData(this.selectors.artist) === null ? null : this.getSongData(this.selectors.artist).replace(/\s+/g, " ")),
+      album: (this.getSongData(this.selectors.album) === null ? null : this.getSongData(this.selectors.album).replace(/\s+/g, " ")),
       art: this.getArtData(this.selectors.art),
       currentTime: this.getSongData(this.selectors.currentTime),
       totalTime: this.getSongData(this.selectors.totalTime),
       isPlaying: this.isPlaying(),
-      siteName: this.siteName,
+      siteName: (this.siteName == null ? null : this.siteName.replace(/\s+/g, " ")),
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
       canPlayPrev: this.overridePlayPrev || !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
       canPlayPause: this.overridePlayPause || !!(
