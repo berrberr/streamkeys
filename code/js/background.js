@@ -358,7 +358,7 @@
           "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
           "xesam:album": stateData.album,
           "mpris:artUrl": stateData.art,
-          "mpris:length": hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000
+          "mpris:length": hmsToSecondsOnly((stateData.totalTime || "0").trim()) * 1000000
         };
         var args = [{ "CanGoNext": stateData.canPlayNext,
                   "CanGoPrevious": stateData.canPlayPrev,
@@ -366,7 +366,7 @@
                   "CanPlay": stateData.canPlayPause,
                   "CanPause": stateData.canPlayPause,
                   "Metadata": metadata,
-                  "Position": hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000}];
+                  "Position": hmsToSecondsOnly((stateData.currentTime || "0").trim()) * 1000000}];
 
         mprisPort.postMessage({ command: "update_state", args: args });
       }
