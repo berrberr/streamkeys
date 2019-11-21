@@ -252,7 +252,7 @@
   BaseController.prototype.getCurrentTime = function() {
     // default implementation uses selectors if present
     if (this.selectors.currentTime) {
-      var timestr = (this.getSongData(this.selectors.currentTime) || "").trim();
+      var timestr = (this.getSongData(this.selectors.currentTime) || "0").trim();
       return this.hmsToSecondsOnly(timestr) * 1000 * 1000;
     } else if (this.canGetMedia) {
       var media = this.getMedia();
@@ -266,7 +266,7 @@
   BaseController.prototype.getTotalTime = function() {
     // default implementation uses selectors if present
     if (this.selectors.totalTime) {
-      var timestr = (this.getSongData(this.selectors.totalTime) || "").trim();
+      var timestr = (this.getSongData(this.selectors.totalTime) || "0").trim();
       return this.hmsToSecondsOnly(timestr) * 1000 * 1000;
     } else if (this.canGetMedia) {
       var media = this.getMedia();
