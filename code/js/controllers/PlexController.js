@@ -9,7 +9,7 @@
     pause: "div[class^=ControlsContainer] button[data-qa-id=pauseButton]",
     playNext: "div[class^=ControlsContainer] button[data-qa-id=nextButton]",
     playPrev: "div[class^=ControlsContainer] button[data-qa-id=previousButton]",
-    mute: "div[class^=ControlsContainer] button[data-qa-id='volumeButton']",
+    mute: "div[class^=ControlsContainer] button[data-qa-id=volumeButton]",
 
     song: "title",
     buttonSwitch: true
