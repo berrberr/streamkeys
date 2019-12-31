@@ -73,6 +73,7 @@
       "castbox": { name: "Castbox", url: "https://castbox.fm", controller: "CastboxController.js" },
       "cloud.caster": { name: "Cloud Caster", url: "http://cloud-caster.com", controller: "CloudCasterController.js", alias: ["cloud-caster"] },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
+      "crave": { name: "Crave", url: "https://www.crave.ca", controller: "CraveController.js" },
       "deezer": { name: "Deezer", url: "http://www.deezer.com" },
       "demodrop": { name: "DemoDrop", url: "http://www.demodrop.com" },
       "di": { name: "Di.fm", url: "http://www.di.fm" },
@@ -178,8 +179,7 @@
       "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
-      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" },
-      "crave": { name: "Crave", url: "https://www.crave.ca", controller: "CraveController.js" },
+      "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
     };
 
     this.disabledTabs = [];
