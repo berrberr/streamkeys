@@ -5,7 +5,7 @@
 
   var controller = new BaseController({
     siteName: "Twitch.tv",
-    playPause: ".player-controls__left-control-group > .tw-inline-flex > .tw-align-items-center",
+    playPause: ".qa-pause-play-button",
     song: ".title .real"
   });
 
