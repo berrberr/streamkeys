@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   var pkg = grunt.file.readJSON("package.json"),
       mnf = grunt.file.readJSON("code/manifest.json"),
-      fileMaps = { browserify: {}, uglify: {} },
+      fileMaps = { browserify: {} },
       jsFiles = grunt.file.expand(["code/js/**/*.js", "!code/js/lib/*"]),
       htmlFiles = grunt.file.expand(["code/html/*.html", "code/css/*"]),
       file,
@@ -11,7 +11,6 @@ module.exports = function(grunt) {
   for (var i = 0; i < files.length; i++) {
     var file = files[i];
     fileMaps.browserify["build/unpacked-dev/js/" + file] = "code/js/" + file;
-    fileMaps.uglify["build/unpacked-prod/js/" + file] = "build/unpacked-dev/js/" + file;
   }
 
   grunt.initConfig({
@@ -32,7 +31,7 @@ module.exports = function(grunt) {
       prod: { files: [ {
         expand: true,
         cwd: "build/unpacked-dev/",
-        src: ["**", "!js/*.js"],
+        src: ["**"],
         dest: "build/unpacked-prod/"
       } ] },
       artifact: { files: [ {
@@ -65,10 +64,6 @@ module.exports = function(grunt) {
           ignores: ["js-comments"]
         }
       }
-    },
-
-    uglify: {
-      min: { files: fileMaps.uglify }
     },
 
     watch: {
@@ -106,7 +101,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-watch");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-sass");
   grunt.loadNpmTasks("grunt-exec");
   grunt.loadNpmTasks("grunt-mkdir");
@@ -134,5 +128,5 @@ module.exports = function(grunt) {
   grunt.registerTask("dev-pre", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:dev", "copy:main", "manifest"]);
   grunt.registerTask("dev", ["dev-pre", "browserify"]);
 
-  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod", "uglify"]);
+  grunt.registerTask("rel", ["jshint", "lintspaces", "clean", "mkdir:unpacked", "sass:prod", "copy:main", "manifest", "browserify", "copy:prod"]);
 };

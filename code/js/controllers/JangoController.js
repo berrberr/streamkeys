@@ -5,13 +5,13 @@
 
   new BaseController({
     siteName: "Jango",
-    playPause: "#btn-playpause",
-    playNext: "#btn-ff",
-    like: "#btn-fav",
-    dislike: "#player_ban",
+    playPause: "#player_play",
+    playNext: "#player_skip",
+    like: "#player_thumbs_up",
+    dislike: "#player_thumbs_down",
 
-    playState: "#btn-playpause.pause",
-    song: "#current-song",
-    artist: "#player_current_artist > a"
+    playState: "#player_play.player_pause",
+    song: "#song_info > span",
+    artist: "#album_info > span > a"
   });
 })();

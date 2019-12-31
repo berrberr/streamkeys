@@ -19,7 +19,7 @@
  * Prime Video does not use button clicks, rather, it uses pointer events to handle both mouse and
  * touch events simultaneously.
  */
-  controller.playPause =function() {
+  controller.playPause = function() {
     try {
       const element = this.doc().querySelector(this.selectors.playPause);
 
