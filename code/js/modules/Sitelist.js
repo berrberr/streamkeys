@@ -55,6 +55,7 @@
       "airsonic": { name: "AirSonic", url: "https://airsonic.github.io/"},
       "ambientsleepingpill": { name: "Ambient Sleeping Pill", url: "http://www.ambientsleepingpill.com" },
       "anghami": { name: "Anghami", url: "https://www.anghami.com" },
+      "apple": { name: "Apple Music", url: "https://beta.music.apple.com", controller: "AppleMusicController.js" },
       "arena": { name: "Are.na", url: "https://www.are.na/", alias: ["are"] },
       "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
       "audible": { name: "Audible", url: "http://www.audible.com" },
