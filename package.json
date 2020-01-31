@@ -60,7 +60,7 @@
     "karma": "^4.3.0",
     "karma-browserify": "^7.0.0",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-jasmine": "^2.0.1",
+    "karma-jasmine": "^3.1.0",
     "knockout": "^3.5.0",
     "lodash": "^4.17.15",
     "puppeteer": "^1.19.0",
