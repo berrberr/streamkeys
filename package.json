@@ -63,7 +63,7 @@
     "karma-jasmine": "^3.1.0",
     "knockout": "^3.5.1",
     "lodash": "^4.17.15",
-    "puppeteer": "^1.19.0",
+    "puppeteer": "^2.1.0",
     "sinon": "^8.1.1",
     "sinon-chrome": "^3.0.1",
     "urlutils": "0.0.3"
