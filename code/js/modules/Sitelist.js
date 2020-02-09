@@ -67,6 +67,7 @@
       "brain": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
       "castbox": { name: "Castbox", url: "https://castbox.fm", controller: "CastboxController.js" },
       "cloud.caster": { name: "Cloud Caster", url: "http://cloud-caster.com", controller: "CloudCasterController.js", alias: ["cloud-caster"] },
+      "coderadio": { name: "Code Radio", url: "https://coderadio.freecodecamp.org/", controller: "CodeRadioController.js" },
       "coursera": { name: "Coursera", url: "http://www.coursera.org" },
       "crave": { name: "Crave", url: "https://www.crave.ca", controller: "CraveController.js" },
       "deezer": { name: "Deezer", url: "http://www.deezer.com" },
