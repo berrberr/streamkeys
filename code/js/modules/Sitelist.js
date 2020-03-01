@@ -164,6 +164,7 @@
       "streamsquid": { name: "StreamSquid", url: "http://streamsquid.com/" },
       "subsonic": { name: "Subsonic", url: "http://www.subsonic.org" },
       "synology": { name: "Synology Audio Station", url: "https://www.synology.me", controller: "SynologyAudioStationController.js" },
+      "telegram": { name: "Telegram Web", url: "https://evgeny-nadymov.github.io/", controller: "TelegramReactController.js", alias: ["evgeny-nadymov", "telegram-react"] },
       "tidal": { name: "Tidal", url: "https://www.tidal.com", alias: ["tidalhifi"] },
       "tunein": { name: "TuneIn", url: "http://www.tunein.com" },
       "twitch": { name: "Twitch.tv", url: "http://www.twitch.tv" },
