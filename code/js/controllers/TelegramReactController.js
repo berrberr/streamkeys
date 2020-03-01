@@ -11,7 +11,6 @@
     mute: ".header-player .header-player-content + div > button",
 
     currentTime: ".ytp-time-current",
-    buttonSwitch: true,
     song: ".header-player-title"
   });
 
