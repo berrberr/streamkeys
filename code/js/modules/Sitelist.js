@@ -148,7 +148,7 @@
       "seesu": { name: "Seesu.me", url: "http://www.seesu.me" },
       "shortorange": { name: "ShortOrange", url: "http://www.shortorange.com" },
       "siriusxm": { name: "SiriusXM", url: "https://player.siriusxm.com" },
-      "slacker": { name: "Slacker", url: "http://www.slacker.com" },
+      "livexlive": { name: "LiveXLive", url: "http://livexlive.com" },
       "somafm": { name: "SomaFM", url: "http://somafm.com", controller: "SomaFMController.js" },
       "songstr": { name: "Songstr", url: "http://www.songstr.com" },
       "songza": { name: "Songza", url: "http://www.songza.com" },
