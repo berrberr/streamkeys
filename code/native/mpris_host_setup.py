@@ -40,7 +40,8 @@ def initialize_parser():
 
 
 def get_xdg_config_paths():
-    return [os.path.join(XDG_CONFIG_HOME, "chromium"),
+    return [os.path.join(XDG_CONFIG_HOME, "BraveSoftware/Brave-Browser"),
+            os.path.join(XDG_CONFIG_HOME, "chromium"),
             os.path.join(XDG_CONFIG_HOME, "google-chrome")]
 
 
