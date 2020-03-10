@@ -42,7 +42,7 @@
     "watchify": "^3.11.1"
   },
   "dependencies": {
-    "@metahub/karma-jasmine-jquery": "^4.0.0",
+    "@metahub/karma-jasmine-jquery": "^4.0.1",
     "browserify": "^16.5.0",
     "browserify-shim": "~3.8.14",
     "grunt": "^1.0.4",
