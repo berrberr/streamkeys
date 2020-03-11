@@ -89,6 +89,7 @@
       "giantbomb": { name: "Giantbomb", url: "http://giantbomb.com" },
       "phenopod": { name: "Phenopod", url: "https://phenopod.com" },
       "play.google": { name: "Google Play Music", url: "http://play.google.com", controller: "GoogleMusicController.js" },
+      "podcasts.google": { name: "Google Podcasts", url: "http://podcasts.google.com", controller: "GooglePodcastsController.js" },
       "playmoss": { name: "Playmoss", url: "http://www.playmoss.com" },
       "hearthis": { name: "HearThis.at", url: "http://www.hearthis.at" },
       "hoopla": { name: "Hoopla", url: "https://www.hoopladigital.com", alias:["hoopladigital"] },
