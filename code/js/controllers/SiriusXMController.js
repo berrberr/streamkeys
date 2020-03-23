@@ -1,18 +1,18 @@
-;(function() {
-    "use strict";
+(function () {
+  "use strict";
 
-    var BaseController = require("BaseController");
+  var BaseController = require("BaseController");
 
-    new BaseController({
-      siteName: "SiriusXM",
-      playPause: ".play",
-      playNext: ".next",
-      playPrev: ".prev",
-      mute: ".minimized-volume-control",
+  new BaseController({
+    siteName: "SiriusXM",
+    playPause: ".play-pause-btn",
+    playNext: ".skip-forward-btn",
+    playPrev: ".skip-back-btn",
+    mute: ".mute-btn",
 
-      playState: ".play[aria-label='Pause audio']",
-      song: ".np-track-artist",
-      album: ".np-track-show-name", //"Show" name
-      art: "#fallbackImg"
-    });
-  })();
+    playState: ".play-pause-btn__img[alt='Pause']",
+    song: ".track-name",
+    album: ".artist-name", //"Show" name
+    art: ".channel-image"
+  });
+})();
