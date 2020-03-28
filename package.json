@@ -45,7 +45,7 @@
     "@metahub/karma-jasmine-jquery": "^4.0.1",
     "browserify": "^16.5.0",
     "browserify-shim": "~3.8.14",
-    "grunt": "^1.0.4",
+    "grunt": "^1.1.0",
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
