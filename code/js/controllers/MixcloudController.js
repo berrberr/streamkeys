@@ -5,7 +5,7 @@
 
   var controller = new BaseController({
     siteName: "Mixcloud",
-    playPause: ".player-control",
+    playPause: "#react-root > div > section > div:nth-child(5) > div > div > div:first-child > div:first-child > div:first-child",
     like: ".player-icons.favorite:not(.favorite-state)",
     dislike: ".player-icons.favorite.favorite-state",
     overridePlayNext: true,
