@@ -4,11 +4,11 @@
   var BaseController = require("BaseController");
 
   new BaseController({
-    siteName: "Pocketcasts",
+    siteName: "Pocket Casts",
     playPause: ".play_pause_button",
     playNext: ".skip-forward-button",
     playPrev: ".skip-back-button",
-    mute: ".audio_volume_slider",
+    mute: ".player-controls-mute-button",
 
     playState: ".play_pause_button.pause_button",
     song: ".player_episode",
