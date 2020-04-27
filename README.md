@@ -131,7 +131,7 @@ To install the host script, run the following commands:
 ```bash
 $ extension_id="ekpipjofdicppbepocohdlgenahaneen"
 $ installer=$(find $HOME/.config -name "mpris_host_setup.py" | grep ${extension_id})
-$ python3 ${installer} install ${extension_id}
+$ python3 "${installer}" install ${extension_id}
 ```
 
 A restart of the browser is necessary to load the changes.
@@ -143,7 +143,7 @@ To uninstall the host script, run the following commands:
 ```bash
 $ extension_id="ekpipjofdicppbepocohdlgenahaneen"
 $ installer=$(find $HOME/.config -name "mpris_host_setup.py" | grep ${extension_id})
-$ python3 ${installer} uninstall
+$ python3 "${installer}" uninstall
 ```
 
 ## License (MIT)
