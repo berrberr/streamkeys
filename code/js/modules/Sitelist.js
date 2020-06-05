@@ -175,6 +175,7 @@
       "vibe": { name: "Vibe", url: "https://vibe.naver.com"},
       "vimeo": { name: "Vimeo", url: "https://vimeo.com" },
       "vk": { name: "Vkontakte", url: "http://www.vk.com" },
+      "wynk": { name: "Wynk", url: "https://www.wynk.in/" },
       "music.yandex": { name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js" },
       "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
       "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
