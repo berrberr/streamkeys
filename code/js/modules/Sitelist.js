@@ -137,6 +137,7 @@
       "pocketcasts": { name: "Pocketcasts", url: "https://play.pocketcasts.com" },
       "podster": { name: "Podster", url: "http://www.podster.fm" },
       "pogoplug": { name: "Pogoplug", url: "http://my.pogoplug.com/view" },
+      "poolside": { name: "Poolside FM", url: "https://poolside.fm/", controller: "PoolsideFM.js", alias: ["poolsidefm"] },
       "primephonic": {name: "Primephonic", url: "https://www.primephonic.com/"},
       "primevideo": {name: "Prime Video", url: "https://www.primevideo.com"},
       "qobuz": { name: "Qobuz", url: "https://play.qobuz.com" },
