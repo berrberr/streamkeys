@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   const BaseController = require("BaseController");
 
   const telegramController = new BaseController({

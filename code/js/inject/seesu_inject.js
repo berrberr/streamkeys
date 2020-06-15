@@ -1,6 +1,5 @@
+"use strict";
 (function() {
-  "use strict";
-
   var sk_log = require("../modules/SKLog.js");
   document.addEventListener("streamkeys-cmd", function(e) {
     //Get seesu current song object (thanks Gleb!)

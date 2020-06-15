@@ -1,4 +1,5 @@
-process.env.CHROME_BIN = require('puppeteer').executablePath();
+"use strict";
+process.env.CHROME_BIN = require("puppeteer").executablePath();
 
 module.exports = function(config) {
   config.set({

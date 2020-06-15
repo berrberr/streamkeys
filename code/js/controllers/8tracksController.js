@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
   var playNextOptions = ["#player_skip_button", "#next_mix_button"];
 

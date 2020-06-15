@@ -1,12 +1,11 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var sk_log = require("../modules/SKLog.js"),
-      MouseEventController = require("MouseEventController"),
-      SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
-      selectors,
-      controller,
-      vkObserver;
+    MouseEventController = require("MouseEventController"),
+    SimpleMutationObserver = require("../modules/SimpleMutationObserver.js"),
+    selectors,
+    controller,
+    vkObserver;
 
   // if new ui detected
   if (document.getElementById("top_notify_btn")) {
