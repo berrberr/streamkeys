@@ -1,0 +1,20 @@
+* text=auto
+
+*.js text eol=lf
+
+*.css text
+*.css text
+*.htm text
+*.html text
+*.json text
+*.map text
+*.py text
+*.scss text
+
+*.eot binary
+*.ico binary
+*.jpeg binary
+*.jpg binary
+*.png binary
+*.ttf binary
+*.woff binary
