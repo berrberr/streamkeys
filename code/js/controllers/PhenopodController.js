@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     playState: "header ~ div button:nth-child(2):not([class~='3'])",
     song: "header ~ div .-mb-1>div:first-child",
     artist: "header ~ div .-mb-1>div:last-child",
-    art: "img"
+    art: "img",
   });
 })();

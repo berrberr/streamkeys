@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,8 +12,9 @@
 
     playState: ".playControl.playing",
     song: ".playbackSoundBadge__titleContextContainer > a",
-    artist: ".playbackSoundBadge__titleContextContainer > .playbackSoundBadge__title > a > span:nth-of-type(2)",
+    artist:
+      ".playbackSoundBadge__titleContextContainer > .playbackSoundBadge__title > a > span:nth-of-type(2)",
 
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

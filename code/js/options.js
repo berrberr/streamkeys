@@ -13,60 +13,65 @@ var OptionsViewModel = function OptionsViewModel() {
   self.sitelist = ko.observableArray([]);
   self.commandList = ko.observableArray([]);
 
-  self.loadingComplete = ko.pureComputed(function() {
+  self.loadingComplete = ko.pureComputed(function () {
     return self.sitelistInitialized() && self.settingsInitialized();
   });
 
-  chrome.commands.getAll(function(commands) {
+  chrome.commands.getAll(function (commands) {
     self.commandList(commands);
   });
 
-  self.openExtensionKeysPage = function() {
+  self.openExtensionKeysPage = function () {
     chrome.tabs.create({
-      url: "chrome://extensions/configureCommands"
+      url: "chrome://extensions/configureCommands",
     });
   };
 
-  chrome.runtime.getPlatformInfo(function(platformInfo){
-    self.supportsMPRIS = (platformInfo.os === chrome.runtime.PlatformOs.LINUX);
+  chrome.runtime.getPlatformInfo(function (platformInfo) {
+    self.supportsMPRIS = platformInfo.os === chrome.runtime.PlatformOs.LINUX;
   });
 
   // Load localstorage settings into observables
-  chrome.storage.sync.get(function(obj) {
+  chrome.storage.sync.get(function (obj) {
     self.openOnUpdate = ko.observable(obj["hotkey-open_on_update"]);
-    self.openOnUpdate.subscribe(function(value) {
+    self.openOnUpdate.subscribe(function (value) {
       chrome.storage.sync.set({ "hotkey-open_on_update": value });
     });
 
     self.useMPRIS = ko.observable(obj["hotkey-use_mpris"]);
-    self.useMPRIS.subscribe(function(value) {
+    self.useMPRIS.subscribe(function (value) {
       if (value) {
-        chrome.permissions.contains({
-          permissions: ["nativeMessaging"],
-        }, function (alreadyHaveNativeMessagingPermissions) {
-          if (alreadyHaveNativeMessagingPermissions) {
-            chrome.storage.sync.set({ "hotkey-use_mpris": value });
+        chrome.permissions.contains(
+          {
+            permissions: ["nativeMessaging"],
+          },
+          function (alreadyHaveNativeMessagingPermissions) {
+            if (alreadyHaveNativeMessagingPermissions) {
+              chrome.storage.sync.set({ "hotkey-use_mpris": value });
+            } else {
+              chrome.permissions.request(
+                {
+                  permissions: ["nativeMessaging"],
+                },
+                function (granted) {
+                  chrome.storage.sync.set({ "hotkey-use_mpris": granted });
+                }
+              );
+            }
           }
-          else {
-            chrome.permissions.request({
-              permissions: ["nativeMessaging"],
-            }, function (granted) {
-              chrome.storage.sync.set({ "hotkey-use_mpris": granted });
-            });
-          }
-        });
+        );
       } else {
         chrome.storage.sync.set({ "hotkey-use_mpris": value });
       }
     });
 
     self.youtubeRestart = ko.observable(obj["hotkey-youtube_restart"]);
-    self.youtubeRestart.subscribe(function(value) {
+    self.youtubeRestart.subscribe(function (value) {
       chrome.storage.sync.set({ "hotkey-youtube_restart": value });
     });
 
     self.singlePlayerMode = ko.observable(obj["hotkey-single_player_mode"]);
-    self.singlePlayerMode.subscribe(function(value) {
+    self.singlePlayerMode.subscribe(function (value) {
       chrome.storage.sync.set({ "hotkey-single_player_mode": value });
       if (!value) self.useMPRIS(false);
     });
@@ -74,8 +79,8 @@ var OptionsViewModel = function OptionsViewModel() {
     self.settingsInitialized(true);
   });
 
-  self.sitelistChanged = function(site) {
-    if(self.sitelistInitialized()) {
+  self.sitelistChanged = function (site) {
+    if (self.sitelistInitialized()) {
       chrome.runtime.sendMessage({
         action: "update_site_settings",
         siteKey: site.id,
@@ -84,14 +89,14 @@ var OptionsViewModel = function OptionsViewModel() {
           priority: site.priority.peek(),
           alias: site.alias.peek(),
           showNotifications: site.showNotifications.peek(),
-          removedAlias: site.removedAlias
-        }
+          removedAlias: site.removedAlias,
+        },
       });
     }
   };
 
-  chrome.runtime.sendMessage({ action: "get_sites" }, function(response) {
-    Object.keys(response).forEach(function(key) {
+  chrome.runtime.sendMessage({ action: "get_sites" }, function (response) {
+    Object.keys(response).forEach(function (key) {
       const siteData = response[key];
 
       var site = new MusicSite({
@@ -100,19 +105,19 @@ var OptionsViewModel = function OptionsViewModel() {
         enabled: siteData.enabled,
         priority: siteData.priority,
         alias: siteData.alias,
-        showNotifications: siteData.showNotifications
+        showNotifications: siteData.showNotifications,
       });
 
-      site.enabled.subscribe(function() {
+      site.enabled.subscribe(function () {
         self.sitelistChanged(site);
       });
-      site.priority.subscribe(function() {
+      site.priority.subscribe(function () {
         self.sitelistChanged(site);
       });
-      site.alias.subscribe(function() {
+      site.alias.subscribe(function () {
         self.sitelistChanged(site);
       });
-      site.showNotifications.subscribe(function() {
+      site.showNotifications.subscribe(function () {
         self.sitelistChanged(site);
       });
 
@@ -123,7 +128,7 @@ var OptionsViewModel = function OptionsViewModel() {
   });
 };
 
-var MusicSite = (function() {
+var MusicSite = (function () {
   function MusicSite(attributes) {
     var self = this;
 
@@ -137,46 +142,51 @@ var MusicSite = (function() {
     self.removedAlias = [];
     self.aliasText = ko.observable("");
 
-    self.toggleSite = function() {
+    self.toggleSite = function () {
       self.enabled(!self.enabled.peek());
     };
 
-    self.toggleNotifications = function() {
-      var internalToggleNotifications = function() {
+    self.toggleNotifications = function () {
+      var internalToggleNotifications = function () {
         self.showNotifications(!self.showNotifications.peek());
       };
 
-      chrome.permissions.contains({
-        permissions: ["notifications"],
-        origins: ["http://*/*", "https://*/*"]
-      }, function (alreadyHaveNotificationsPermissions) {
-        if (alreadyHaveNotificationsPermissions) {
-          internalToggleNotifications();
+      chrome.permissions.contains(
+        {
+          permissions: ["notifications"],
+          origins: ["http://*/*", "https://*/*"],
+        },
+        function (alreadyHaveNotificationsPermissions) {
+          if (alreadyHaveNotificationsPermissions) {
+            internalToggleNotifications();
+          } else {
+            chrome.permissions.request(
+              {
+                permissions: ["notifications"],
+                origins: ["http://*/*", "https://*/*"],
+              },
+              function (granted) {
+                if (granted) {
+                  internalToggleNotifications();
+                }
+              }
+            );
+          }
         }
-        else {
-          chrome.permissions.request({
-            permissions: ["notifications"],
-            origins: ["http://*/*", "https://*/*"]
-          }, function (granted) {
-            if (granted) {
-              internalToggleNotifications();
-            }
-          });
-        }
-      });
+      );
     };
 
     /**
      * Note: It's possible some validation should be added to check if alias is proper domain.
      *    However, since it is user input and can be deleted it's probably not worth it.
      */
-    self.addAlias = function() {
+    self.addAlias = function () {
       self.removedAlias = [];
       self.alias.push(self.aliasText.peek());
       self.aliasText("");
     };
 
-    self.removeAlias = function(index) {
+    self.removeAlias = function (index) {
       var aliasToRemove = self.alias.peek()[index()];
 
       self.removedAlias = [aliasToRemove];
@@ -187,11 +197,17 @@ var MusicSite = (function() {
   return MusicSite;
 })();
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   ko.applyBindings(new OptionsViewModel());
 
   ko.bindingHandlers.priorityDropdown = {
-    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init: function (
+      element,
+      valueAccessor,
+      allBindings,
+      viewModel,
+      bindingContext
+    ) {
       var value = valueAccessor();
 
       element.id = bindingContext.$data.sanitizedId;
@@ -201,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
       $ul.className += "mdl-menu mdl-js-menu mdl-js-ripple-effect";
       $ul.setAttribute("for", bindingContext.$data.sanitizedId);
 
-      var updatePriority = function() {
+      var updatePriority = function () {
         value(parseInt(this.getAttribute("data-value")));
       };
 
@@ -221,25 +237,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
       window.componentHandler.upgradeElement($ul);
       window.componentHandler.upgradeElement(element);
-    }
+    },
   };
 
   ko.bindingHandlers.aliasModal = {
-    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-      var dialog = document.querySelector("#modal-" + bindingContext.$data.sanitizedId);
+    init: function (
+      element,
+      valueAccessor,
+      allBindings,
+      viewModel,
+      bindingContext
+    ) {
+      var dialog = document.querySelector(
+        "#modal-" + bindingContext.$data.sanitizedId
+      );
       var closeButton = dialog.querySelector(".close-button");
       var showButton = element;
 
-      var closeClickHandler = function() {
+      var closeClickHandler = function () {
         dialog.close();
       };
 
-      var showClickHandler = function() {
+      var showClickHandler = function () {
         dialog.showModal();
       };
 
       showButton.addEventListener("click", showClickHandler);
       closeButton.addEventListener("click", closeClickHandler);
-    }
+    },
   };
 });

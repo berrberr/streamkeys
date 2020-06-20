@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Streamkeys Extension Options</title>
@@ -29,165 +28,336 @@
         <li><a href="http://www.streamkeys.com/donate.html" target="_blank"><span class="menu-title">Donate</span><span class="menu-arrow"></span></a></li>
       </ul>
     </div>
-    <div class="content">
-      <div class="loader-container" data-bind="visible: !$data.loadingComplete()">
-        <div class="loader"></div>
+    <div class="main-container">
+      <div class="menu">
+        <ul>
+          <li>
+            <a
+              href="#"
+              data-bind="click: function() { $data.selectedTab('sites') }, css: { selected: $data.selectedTab() == 'sites' }"
+              ><span class="menu-title">Enabled Sites</span
+              ><span class="menu-arrow"></span
+            ></a>
+          </li>
+          <li>
+            <a
+              href="#"
+              data-bind="click: function() { $data.selectedTab('general') }, css: { selected: $data.selectedTab() == 'general' }"
+              ><span class="menu-title">General</span
+              ><span class="menu-arrow"></span
+            ></a>
+          </li>
+          <li>
+            <a href="http://www.streamkeys.com/guide.html" target="_blank"
+              ><span class="menu-title">Help</span
+              ><span class="menu-arrow"></span
+            ></a>
+          </li>
+          <li>
+            <a href="http://www.streamkeys.com/faq.html" target="_blank"
+              ><span class="menu-title">FAQ</span
+              ><span class="menu-arrow"></span
+            ></a>
+          </li>
+          <li>
+            <a href="http://www.streamkeys.com/donate.html" target="_blank"
+              ><span class="menu-title">Donate</span
+              ><span class="menu-arrow"></span
+            ></a>
+          </li>
+        </ul>
       </div>
-      <div id="enabled-sites" class="sitelist options-tab" data-bind="visible: $data.selectedTab() == 'sites'">
-        <div class="sitelist-info">
-          <div class="info-block">
-            <h4>Enabled</h4>
-            <p>
-              When a site is <strong>enabled</strong> Streamkeys will automatically work when a new tab of that site is created. When a site is <strong>disabled</strong> Streamkeys will not automatically work when new tabs are created. You can still control
-              <strong>disabled</strong> sites using the disabled sites section of the popup.
-            </p>
-          </div>
-          <div class="info-block">
-            <h4>Priority</h4>
-            <p>
-              Site <strong>priority</strong> controls which sites are sent commands when a hotkey is pressed. All sites start at <strong>priority 1 by default</strong>. If a tab A is of a site with priority 1, and tab B is of a site with priority 5 and
-              the play hotkey is pressed, only tab B will receive the play command. You can still control sites of any priority manually using the popup.
-            </p>
-          </div>
-          <div class="info-block">
-            <h4>Aliases</h4>
-            <p>
-              You can define a list of <strong>custom aliases</strong> for a site. An alias lets you define a domain <strong>hostname</strong> to match for a site. For example, say you are running a Plex.tv server at <strong>http://192.168.4.4.</strong>              You could add the alias <strong>192.168.4.4</strong> to Plex.tv and Streamkeys will work on any tab with a URL of 192.168.4.4.
-            </p>
-          </div>
-          <div class="info-block">
-            <h4>Notifications</h4>
-            <p>
-              When notifications are set to <strong>show</strong> you will receive a Chrome notification whenever the playing song on the tab of that site changes.
-              When notifications are set to <strong>hide</strong> you will not see Chrome notifications when the song on that site changes.
-            </p>
-          </div>
+      <div class="content">
+        <div
+          class="loader-container"
+          data-bind="visible: !$data.loadingComplete()"
+        >
+          <div class="loader"></div>
         </div>
-        <!-- ko foreach: $data.sitelist() -->
-        <div class="site-container" data-bind="css: { disabled: !$data.enabled() }">
-          <dialog class="mdl-dialog alias-dialog" data-bind="attr: { id: 'modal-' + $data.sanitizedId }">
-            <div class="mdl-dialog__content">
-              <h3>Manage Aliases</h3>
-              <h5>For <span data-bind="text: $data.name"></span></h5>
-              <div class="alias-input-container">
-                <p>Add/remove custom domain aliases to a site. A site alias is a way to force a specific URL to load a Streamkeys controller. An alias should include the site's <strong>hostname only</strong>, ie. do not include "www", ".com", etc.</p>
-              </div>
-              <div class="alias-input-container">
-                <div class="mdl-textfield mdl-js-textfield">
-                  <input class="mdl-textfield__input" type="text" data-bind="textInput: $data.aliasText">
+        <div
+          id="enabled-sites"
+          class="sitelist options-tab"
+          data-bind="visible: $data.selectedTab() == 'sites'"
+        >
+          <div class="sitelist-info">
+            <div class="info-block">
+              <h4>Enabled</h4>
+              <p>
+                When a site is <strong>enabled</strong> Streamkeys will
+                automatically work when a new tab of that site is created. When
+                a site is <strong>disabled</strong> Streamkeys will not
+                automatically work when new tabs are created. You can still
+                control <strong>disabled</strong> sites using the disabled sites
+                section of the popup.
+              </p>
+            </div>
+            <div class="info-block">
+              <h4>Priority</h4>
+              <p>
+                Site <strong>priority</strong> controls which sites are sent
+                commands when a hotkey is pressed. All sites start at
+                <strong>priority 1 by default</strong>. If a tab A is of a site
+                with priority 1, and tab B is of a site with priority 5 and the
+                play hotkey is pressed, only tab B will receive the play
+                command. You can still control sites of any priority manually
+                using the popup.
+              </p>
+            </div>
+            <div class="info-block">
+              <h4>Aliases</h4>
+              <p>
+                You can define a list of <strong>custom aliases</strong> for a
+                site. An alias lets you define a domain
+                <strong>hostname</strong> to match for a site. For example, say
+                you are running a Plex.tv server at
+                <strong>http://192.168.4.4.</strong> You could add the alias
+                <strong>192.168.4.4</strong> to Plex.tv and Streamkeys will work
+                on any tab with a URL of 192.168.4.4.
+              </p>
+            </div>
+            <div class="info-block">
+              <h4>Notifications</h4>
+              <p>
+                When notifications are set to <strong>show</strong> you will
+                receive a Chrome notification whenever the playing song on the
+                tab of that site changes. When notifications are set to
+                <strong>hide</strong> you will not see Chrome notifications when
+                the song on that site changes.
+              </p>
+            </div>
+          </div>
+          <!-- ko foreach: $data.sitelist() -->
+          <div
+            class="site-container"
+            data-bind="css: { disabled: !$data.enabled() }"
+          >
+            <dialog
+              class="mdl-dialog alias-dialog"
+              data-bind="attr: { id: 'modal-' + $data.sanitizedId }"
+            >
+              <div class="mdl-dialog__content">
+                <h3>Manage Aliases</h3>
+                <h5>For <span data-bind="text: $data.name"></span></h5>
+                <div class="alias-input-container">
+                  <p>
+                    Add/remove custom domain aliases to a site. A site alias is
+                    a way to force a specific URL to load a Streamkeys
+                    controller. An alias should include the site's
+                    <strong>hostname only</strong>, ie. do not include "www",
+                    ".com", etc.
+                  </p>
                 </div>
-                <button class="mdl-button mdl-js-button mdl-button--raised" data-bind="click: $data.addAlias">ADD ALIAS</button>
+                <div class="alias-input-container">
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input
+                      class="mdl-textfield__input"
+                      type="text"
+                      data-bind="textInput: $data.aliasText"
+                    />
+                  </div>
+                  <button
+                    class="mdl-button mdl-js-button mdl-button--raised"
+                    data-bind="click: $data.addAlias"
+                  >
+                    ADD ALIAS
+                  </button>
+                </div>
+                <!-- ko foreach: $data.alias -->
+                <div class="alias-container">
+                  <span class="label" data-bind="text: $data"></span>
+                  <button
+                    class="mdl-button mdl-js-button mdl-button--raised"
+                    data-bind="click: function() { $parent.removeAlias($index); }"
+                  >
+                    REMOVE
+                  </button>
+                </div>
+                <!-- /ko -->
               </div>
-              <!-- ko foreach: $data.alias -->
-              <div class="alias-container">
-                <span class="label" data-bind="text: $data"></span>
-                <button class="mdl-button mdl-js-button mdl-button--raised" data-bind="click: function() { $parent.removeAlias($index); }">REMOVE</button>
+              <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+                <button type="button" class="mdl-button close-button">
+                  Close
+                </button>
               </div>
-              <!-- /ko -->
-            </div>
-            <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
-              <button type="button" class="mdl-button close-button">Close</button>
-            </div>
-          </dialog>
+            </dialog>
 
-          <h5 data-bind="text: $data.name"></h5>
+            <h5 data-bind="text: $data.name"></h5>
 
-          <div class="site-controls">
-            <div class="controls-group">
-              <label class="input-header">Enabled</label>
-              <button class="mdl-button mdl-js-button mdl-button--raised site-settings-button" data-bind="click: function() { $data.toggleSite() }">
-                <span data-bind="text: $data.enabled() ? 'Disable' : 'Enable'"></span>
-                <i class="material-icons md-dark" data-bind="text: $data.enabled() ? 'close' : 'check'"></i>
-              </button>
-            </div>
+            <div class="site-controls">
+              <div class="controls-group">
+                <label class="input-header">Enabled</label>
+                <button
+                  class="mdl-button mdl-js-button mdl-button--raised site-settings-button"
+                  data-bind="click: function() { $data.toggleSite() }"
+                >
+                  <span
+                    data-bind="text: $data.enabled() ? 'Disable' : 'Enable'"
+                  ></span>
+                  <i
+                    class="material-icons md-dark"
+                    data-bind="text: $data.enabled() ? 'close' : 'check'"
+                  ></i>
+                </button>
+              </div>
 
-            <div class="controls-group">
-              <label class="input-header">Priority</label>
-              <div class="site-priority-input">
-                <button data-bind="priorityDropdown: $data.priority" class="mdl-button mdl-js-button mdl-button--raised site-settings-button">
-                  <span data-bind="text: $data.priority" class="label"></span>
-                  <i class="material-icons" data-bind="text: 'arrow_drop_down'">arrow_drop_down</i>
+              <div class="controls-group">
+                <label class="input-header">Priority</label>
+                <div class="site-priority-input">
+                  <button
+                    data-bind="priorityDropdown: $data.priority"
+                    class="mdl-button mdl-js-button mdl-button--raised site-settings-button"
+                  >
+                    <span data-bind="text: $data.priority" class="label"></span>
+                    <i
+                      class="material-icons"
+                      data-bind="text: 'arrow_drop_down'"
+                      >arrow_drop_down</i
+                    >
+                  </button>
+                </div>
+              </div>
+
+              <div class="controls-group">
+                <label class="input-header">Aliases</label>
+                <button
+                  class="mdl-button mdl-js-button mdl-button--raised site-settings-button site-alias-button"
+                  data-bind="aliasModal: $data.alias"
+                >
+                  <span
+                    data-bind="text: $data.alias().length > 0 ? $data.alias().length : 'None'"
+                  ></span>
+                  <i class="material-icons md-dark">add_circle</i>
+                </button>
+              </div>
+
+              <div class="controls-group">
+                <label class="input-header">Notifications</label>
+                <button
+                  class="mdl-button mdl-js-button mdl-button--raised site-settings-button"
+                  data-bind="click: function() { $data.toggleNotifications() }"
+                >
+                  <span
+                    data-bind="text: $data.showNotifications() ? 'Hide' : 'Show'"
+                  ></span>
+                  <i
+                    class="material-icons md-dark"
+                    data-bind="text: $data.showNotifications() ? 'close' : 'check'"
+                  ></i>
                 </button>
               </div>
             </div>
-
-            <div class="controls-group">
-              <label class="input-header">Aliases</label>
-              <button class="mdl-button mdl-js-button mdl-button--raised site-settings-button site-alias-button" data-bind="aliasModal: $data.alias">
-                <span data-bind="text: $data.alias().length > 0 ? $data.alias().length : 'None'"></span>
-                <i class="material-icons md-dark">add_circle</i>
-              </button>
-            </div>
-
-            <div class="controls-group">
-              <label class="input-header">Notifications</label>
-              <button class="mdl-button mdl-js-button mdl-button--raised site-settings-button" data-bind="click: function() { $data.toggleNotifications() }">
-                <span data-bind="text: $data.showNotifications() ? 'Hide' : 'Show'"></span>
-                <i class="material-icons md-dark" data-bind="text: $data.showNotifications() ? 'close' : 'check'"></i>
-              </button>
-            </div>
           </div>
+          <!-- /ko -->
         </div>
-        <!-- /ko -->
-      </div>
-      <div id="general" data-bind="visible: $data.selectedTab() == 'general'" class="options-tab general">
-        <!-- ko if: $data.settingsInitialized() -->
-        <h3>General Settings</h3>
-        <p class="setting">
-          <input type="checkbox" id="single-player-mode" data-bind="checked: $data.singlePlayerMode">
-          <label for="single-player-mode">Send commands to most recent player tab only.</label>
-        </p>
-        <p class="setting" data-bind="visible: $data.supportsMPRIS">
-          <input type="checkbox" id="use-mpris" data-bind="checked: $data.useMPRIS, enable: $data.singlePlayerMode">
-          <label for="use-mpris">Register StreamKeys as an MPRIS player in DBus (send commands to most recent player tab only is required).
-            You should also <a href="https://github.com/berrberr/streamkeys#linux-mpris-support">install the host script</a>.
-          </label>
-        </p>
-        <p class="setting">
-          <input type="checkbox" id="open-on-update" data-bind="checked: $data.openOnUpdate">
-          <label for="open-on-update">Open information tab on update.</label>
-        </p>
-        <p class="setting">
-          <input type="checkbox" id="restart-yt" data-bind="checked: $data.youtubeRestart">
-          <label for="restart-yt">Play/pause restarts YouTube videos when finished.</label>
-        </p>
-        <p>
-          To change the hotkey bindings go to the chrome extensions page (enter chrome://extensions in the URL bar) and click the "Keyboard shortcuts" link at the bottom of the page. <a href="http://www.streamkeys.com/guide.html" target="_blank">Read the guide</a>          for more detailed information
-        </p>
-        <h3>Hotkey Bindings</h3>
-        <table class="mdl-data-table mdl-js-data-table" id="hotkeys-table">
-          <thead>
-            <tr>
-              <th class="mdl-data-table__cell--non-numeric">Action</th>
-              <th class="mdl-data-table__cell--non-numeric">Key Binding</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- ko foreach: $data.commandList -->
-            <!-- ko if: $data.description !== '' -->
-            <tr>
-              <td data-bind="text: $data.description"></td>
-              <td data-bind="text: $data.shortcut || 'Not Set'"></td>
-            </tr>
-            <!-- /ko -->
-            <!-- /ko -->
-          </tbody>
-        </table>
-        <button class="mdl-button mdl-js-button mdl-button--raised" data-bind="click: $data.openExtensionKeysPage">Configure Hotkeys</button>
-        <!-- /ko -->
+        <div
+          id="general"
+          data-bind="visible: $data.selectedTab() == 'general'"
+          class="options-tab general"
+        >
+          <!-- ko if: $data.settingsInitialized() -->
+          <h3>General Settings</h3>
+          <p class="setting">
+            <input
+              type="checkbox"
+              id="single-player-mode"
+              data-bind="checked: $data.singlePlayerMode"
+            />
+            <label for="single-player-mode"
+              >Send commands to most recent player tab only.</label
+            >
+          </p>
+          <p class="setting" data-bind="visible: $data.supportsMPRIS">
+            <input
+              type="checkbox"
+              id="use-mpris"
+              data-bind="checked: $data.useMPRIS, enable: $data.singlePlayerMode"
+            />
+            <label for="use-mpris"
+              >Register StreamKeys as an MPRIS player in DBus (send commands to
+              most recent player tab only is required). You should also
+              <a
+                href="https://github.com/berrberr/streamkeys#linux-mpris-support"
+                >install the host script</a
+              >.
+            </label>
+          </p>
+          <p class="setting">
+            <input
+              type="checkbox"
+              id="open-on-update"
+              data-bind="checked: $data.openOnUpdate"
+            />
+            <label for="open-on-update">Open information tab on update.</label>
+          </p>
+          <p class="setting">
+            <input
+              type="checkbox"
+              id="restart-yt"
+              data-bind="checked: $data.youtubeRestart"
+            />
+            <label for="restart-yt"
+              >Play/pause restarts YouTube videos when finished.</label
+            >
+          </p>
+          <p>
+            To change the hotkey bindings go to the chrome extensions page
+            (enter chrome://extensions in the URL bar) and click the "Keyboard
+            shortcuts" link at the bottom of the page.
+            <a href="http://www.streamkeys.com/guide.html" target="_blank"
+              >Read the guide</a
+            >
+            for more detailed information
+          </p>
+          <h3>Hotkey Bindings</h3>
+          <table class="mdl-data-table mdl-js-data-table" id="hotkeys-table">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Action</th>
+                <th class="mdl-data-table__cell--non-numeric">Key Binding</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ko foreach: $data.commandList -->
+              <!-- ko if: $data.description !== '' -->
+              <tr>
+                <td data-bind="text: $data.description"></td>
+                <td data-bind="text: $data.shortcut || 'Not Set'"></td>
+              </tr>
+              <!-- /ko -->
+              <!-- /ko -->
+            </tbody>
+          </table>
+          <button
+            class="mdl-button mdl-js-button mdl-button--raised"
+            data-bind="click: $data.openExtensionKeysPage"
+          >
+            Configure Hotkeys
+          </button>
+          <!-- /ko -->
+        </div>
       </div>
     </div>
-  </div>
-  <div class="footer">
-    <div class="footer-content">
-      <span><a href="http://www.streamkeys.com" target="_blank">Homepage</a></span>
-      <span><a href="http://www.github.com/berrberr/streamkeys" target="_blank">GitHub</a></span>
-      <span><a href="http://www.twitter.com/streamkeys" target="_blank">Twitter</a></span>
-      <span><a href="mailto:alex@aegabriel.com">alex@aegabriel.com</a></span>
+    <div class="footer">
+      <div class="footer-content">
+        <span
+          ><a href="http://www.streamkeys.com" target="_blank"
+            >Homepage</a
+          ></span
+        >
+        <span
+          ><a href="http://www.github.com/berrberr/streamkeys" target="_blank"
+            >GitHub</a
+          ></span
+        >
+        <span
+          ><a href="http://www.twitter.com/streamkeys" target="_blank"
+            >Twitter</a
+          ></span
+        >
+        <span><a href="mailto:alex@aegabriel.com">alex@aegabriel.com</a></span>
+      </div>
     </div>
-  </div>
 
-  <script src="../js/options.js"></script>
-</body>
-
+    <script src="../js/options.js"></script>
+  </body>
 </html>

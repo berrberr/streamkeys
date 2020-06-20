@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var playerMain = ".player-main";
@@ -21,15 +21,15 @@
     siteName: "SoundRedux",
     like: ".song-card.active .song-card-heart",
 
-    song: ([ playerMain, playerInfo, titleInfo ].join(" > ")),
-    artist: ([ playerMain, playerInfo, artistInfo ].join(" > ")),
-    playPrev: ([ playerMain, playerButtons, prevButton ].join(" > ")),
-    playPause: ([ playerMain, playerButtons, playButton ].join(" > ")),
-    playNext: ([ playerMain, playerButtons, nextButton ].join(" > ")),
-    playState: ([ playerMain, playerButtons, playButton, playState ].join(" > ")),
+    song: [playerMain, playerInfo, titleInfo].join(" > "),
+    artist: [playerMain, playerInfo, artistInfo].join(" > "),
+    playPrev: [playerMain, playerButtons, prevButton].join(" > "),
+    playPause: [playerMain, playerButtons, playButton].join(" > "),
+    playNext: [playerMain, playerButtons, nextButton].join(" > "),
+    playState: [playerMain, playerButtons, playButton, playState].join(" > "),
 
-    mute: ([ playerMain, playerControls, muteControl ].join(" > ")),
+    mute: [playerMain, playerControls, muteControl].join(" > "),
 
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     mute: "#mute",
 
     song: "#player-track-name",
-    album: "#player-album-name"
+    album: "#player-album-name",
   });
 })();

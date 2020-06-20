@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     playPrev: ".player .playerMove[title='Previous Song']",
 
     song: ".player .songName",
-    artist: ".player .artistName"
+    artist: ".player .artistName",
   });
 })();

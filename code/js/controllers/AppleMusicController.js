@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
 
     playState: "body > div.web-navigation > div > div.web-chrome.is-playing",
     song: "#playback-sub-copy > div > div > span:nth-child(1) > span",
-    buttonSwitch: true
+    buttonSwitch: true,
   });
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     artist: ".info-album-artist > span",
     art: ".player-info-thumb",
     currentTime: ".info-position",
-    totalTime: ".info-duration"
+    totalTime: ".info-duration",
   });
 })();

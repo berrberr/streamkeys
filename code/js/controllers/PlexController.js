@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var MouseEventController = require("MouseEventController");
 
   var controller = new MouseEventController({
@@ -11,10 +11,10 @@
     mute: "div[class^=ControlsContainer] button[data-qa-id=volumeButton]",
 
     song: "title",
-    buttonSwitch: true
+    buttonSwitch: true,
   });
 
-  controller.click = function(opts) {
+  controller.click = function (opts) {
     this.mousedown({ selectorButton: opts.selectorButton });
     this.mouseup({ selectorButton: opts.selectorButton });
   };

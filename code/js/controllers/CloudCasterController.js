@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
 
     playState: ".jp-flat-audio.jp-state-playing",
     song: ".span8.fg-color-darken.text-center p",
-    artist: ".page-header-content h1"
+    artist: ".page-header-content h1",
   });
 })();

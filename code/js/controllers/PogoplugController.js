@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     playNext: ".next",
     playPrev: ".prev",
     buttonSwitch: true,
-    song: "#audioplayer_nowinfo"
+    song: "#audioplayer_nowinfo",
   });
 })();

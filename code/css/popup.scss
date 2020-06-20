@@ -16,7 +16,7 @@ html {
 body {
   width: $popup-width;
   padding: 0;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
 }
 
 a,
@@ -48,7 +48,7 @@ a:visited {
   .site-title,
   .site-favicon,
   .song-data {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 }
@@ -68,7 +68,6 @@ a:visited {
   }
 }
 
-
 .site-data {
   overflow: hidden;
   height: 22px;
@@ -84,7 +83,7 @@ a:visited {
     float: right;
     font-size: 12px;
     margin: 3px 6px 0 0;
-    opacity: .5;
+    opacity: 0.5;
     width: 12px;
 
     &:hover {
@@ -112,7 +111,7 @@ a:visited {
   float: right;
   font-size: 12px;
   font-weight: 600;
-  opacity: .4;
+  opacity: 0.4;
   padding-right: 6px;
 }
 
@@ -212,7 +211,7 @@ a:visited {
     margin-right: 2px;
 
     &.mdl-button--disabled {
-      opacity: .7;
+      opacity: 0.7;
     }
 
     &.player-controls-button-like,

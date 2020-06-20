@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "homepage_url": "http://www.streamkeys.com",
-  "icons": {"48": "icon48.png", "128": "icon128.png"},
+  "icons": { "48": "icon48.png", "128": "icon128.png" },
   "options_page": "html/options.html",
   "background": {
     "scripts": ["js/background.js"]
@@ -30,7 +30,7 @@
     "js/controllers/*"
   ],
   "permissions": ["tabs", "storage", "http://*/*", "https://*/*"],
-  "optional_permissions": [ "notifications", "nativeMessaging"],
+  "optional_permissions": ["notifications", "nativeMessaging"],
   "commands": {
     "playPause": {
       "suggested_key": {

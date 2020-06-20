@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var sk_log = require("../modules/SKLog.js");
   if (typeof window.jwplayer === "function") {
     // Make the play state available in the DOM
@@ -7,7 +7,7 @@
 
     var onPlayPauseRegistered = false;
 
-    document.addEventListener("streamkeys-cmd", function(e) {
+    document.addEventListener("streamkeys-cmd", function (e) {
       var jw = window.jwplayer();
       if (!jw) {
         return;
@@ -15,10 +15,10 @@
 
       // Register onPlay and onPause callbacks to toggle state
       if (!onPlayPauseRegistered) {
-        jw.onPlay(function() {
+        jw.onPlay(function () {
           $("#sk-state").removeClass("sk-pause").addClass("sk-play");
         });
-        jw.onPause(function() {
+        jw.onPause(function () {
           $("#sk-state").removeClass("sk-play").addClass("sk-pause");
         });
       }
@@ -26,21 +26,21 @@
 
       try {
         switch (e.detail) {
-        case "playPause":
-          jw.pause();
-          break;
-        case "next":
-          jw.playlistNext();
-          break;
-        case "prev":
-          jw.playlistPrev();
-          break;
-        case "mute":
-          jw.setMute();
-          break;
-        case "stop":
-          jw.stop();
-          break;
+          case "playPause":
+            jw.pause();
+            break;
+          case "next":
+            jw.playlistNext();
+            break;
+          case "prev":
+            jw.playlistPrev();
+            break;
+          case "mute":
+            jw.setMute();
+            break;
+          case "stop":
+            jw.stop();
+            break;
         }
       } catch (exception) {
         sk_log(e.detail, exception, true);

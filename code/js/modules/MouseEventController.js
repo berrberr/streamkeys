@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController"),
     MouseEventDispatcher = require("../modules/MouseEventDispatcher.js"),
     sk_log = require("../modules/SKLog.js");
@@ -61,13 +61,15 @@
    * @param {String} opts.selectorButton - css selector for element
    */
 
-  MouseEventDispatcher.eachTypes(function(eventType) {
+  MouseEventDispatcher.eachTypes(function (eventType) {
     // no override
-    if (Object.prototype.hasOwnProperty.call(BaseController.prototype,eventType)) {
+    if (
+      Object.prototype.hasOwnProperty.call(BaseController.prototype, eventType)
+    ) {
       return;
     }
     // based on click method
-    MouseEventController.prototype[eventType] = function(opts, mouseOpts) {
+    MouseEventController.prototype[eventType] = function (opts, mouseOpts) {
       opts = opts || {};
       if (opts.selectorButton === null) {
         sk_log("disabled", opts.action);
@@ -80,7 +82,11 @@
           sk_log(opts.action);
         }
       } catch (e) {
-        sk_log("Element not found for " + eventType + ".", opts.selectorButton, true);
+        sk_log(
+          "Element not found for " + eventType + ".",
+          opts.selectorButton,
+          true
+        );
       }
 
       this.updatePlayerState();

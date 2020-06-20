@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     dislike: ".control.dislike",
 
     playState: "#player.playing",
-    song: "#track-name"
+    song: "#track-name",
   });
 })();

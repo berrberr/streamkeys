@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var MouseEventController = require("MouseEventController");
 
   var controller = new MouseEventController({
@@ -16,10 +16,10 @@
     currentTime: ".controls__time-elapsed",
     totalTime: ".controls__time-duration",
 
-    buttonSwitch: false
+    buttonSwitch: false,
   });
 
   controller.isPlaying = function () {
-    return !!(this.doc().querySelector("div.controls__playback-button--playing"));
+    return !!this.doc().querySelector("div.controls__playback-button--playing");
   };
 })();

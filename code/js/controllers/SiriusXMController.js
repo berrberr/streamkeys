@@ -12,6 +12,6 @@
     playState: ".play-pause-btn__img[alt='Pause']",
     song: ".track-name",
     album: ".artist-name", //"Show" name
-    art: ".channel-image"
+    art: ".channel-image",
   });
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     like: ".thumb",
 
     song: ".song_info.active [data-role=title]",
-    artist: ".song_info.active [data-role=artist]"
+    artist: ".song_info.active [data-role=artist]",
   });
 })();

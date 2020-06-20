@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     playNext: "#PlayerNext",
     playPrev: "#PlayerPrev",
     song: "span.SongArtistUI",
-    artist: "span.SongTitleUI"
+    artist: "span.SongTitleUI",
   });
 })();

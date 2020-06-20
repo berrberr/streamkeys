@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -13,6 +13,6 @@
     playState: ".pause.control",
     song: ".progress .title",
     artist: ".progress .artist",
-    album: ".progress .album"
+    album: ".progress .album",
   });
 })();

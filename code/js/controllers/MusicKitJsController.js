@@ -1,9 +1,9 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
-    siteName: "Apple MusicKit JS"
+    siteName: "Apple MusicKit JS",
   });
 
   var state = {
@@ -18,10 +18,10 @@
     canPlayPause: true,
     canPlayNext: true,
     canLike: false,
-    hidePlayer: false
+    hidePlayer: false,
   };
 
-  document.addEventListener("streamkeys-state", function(e) {
+  document.addEventListener("streamkeys-state", function (e) {
     var data = e.detail;
     state.song = data.title;
     state.artist = data.artistName;
@@ -30,20 +30,28 @@
     state.isPlaying = data.isPlaying;
   });
 
-  controller.playPause = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "playPause" }));
+  controller.playPause = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "playPause" })
+    );
   };
-  controller.playNext = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "next" }));
+  controller.playNext = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "next" })
+    );
   };
-  controller.playPrev = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "prev" }));
+  controller.playPrev = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "prev" })
+    );
   };
-  controller.stop = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "stop" }));
+  controller.stop = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "stop" })
+    );
   };
 
-  controller.getStateData = function() {
+  controller.getStateData = function () {
     return Object.assign({}, state);
   };
 

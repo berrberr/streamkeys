@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
     playPrev: "[data-text='Back 10 seconds (←)'] button",
     mute: "[data-text='Mute (m)'] button",
     playState: "[data-text='Pause (k)'] button",
-    song: "div.course-title"
+    song: "div.course-title",
   });
 })();

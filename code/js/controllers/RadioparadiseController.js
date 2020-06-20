@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
   var sk_log = require("../modules/SKLog.js");
 
@@ -9,15 +9,15 @@
     playNext: "#psd_button",
     song: "#nowplaying_title",
 
-    overridePlayPause: true
+    overridePlayPause: true,
   });
 
   /** Overrides **/
-  controller.playPause = function() {
+  controller.playPause = function () {
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
     try {
       var playButton = doc.querySelector("#play_button");
-      if(playButton.classList.contains("button_active")) {
+      if (playButton.classList.contains("button_active")) {
         try {
           doc.querySelector("input[title='Stop Audio']").click();
           sk_log("playPause");
@@ -37,16 +37,17 @@
     }
   };
 
-  controller.isPlaying = function() {
+  controller.isPlaying = function () {
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
     var playButton = doc.querySelector("#play_button");
 
-    return (playButton && playButton.classList.contains("button_active"));
+    return playButton && playButton.classList.contains("button_active");
   };
 
-  controller.getSongData = function() {
+  controller.getSongData = function () {
     var doc = document.querySelectorAll("iframe")[0].contentDocument;
-    if(doc.querySelector("#nowplaying_title")) return doc.querySelector("#nowplaying_title").textContent;
+    if (doc.querySelector("#nowplaying_title"))
+      return doc.querySelector("#nowplaying_title").textContent;
 
     return null;
   };

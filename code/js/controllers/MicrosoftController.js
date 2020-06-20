@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     buttonSwitch: true,
 
     song: ".playerNowPlayingMetadata .primaryMetadata > a",
-    artist: ".playerNowPlayingMetadata .secondaryMetadata > a"
+    artist: ".playerNowPlayingMetadata .secondaryMetadata > a",
   });
 })();

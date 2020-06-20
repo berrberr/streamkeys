@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
 
     playState: ".jp-state-playing",
     song: ".current-airplay .titletag",
-    artist: ".current-airplay .artist"
+    artist: ".current-airplay .artist",
   });
 })();

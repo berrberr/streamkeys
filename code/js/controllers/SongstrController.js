@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   // No playstate available
@@ -10,6 +10,6 @@
     playPrev: "#previous",
 
     song: ".song",
-    artist: ".artist"
+    artist: ".artist",
   });
 })();

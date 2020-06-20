@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -14,7 +14,6 @@
     hidePlayer: false,
     art: "#albumCover .art",
 
-    currentTime: "#playerProgressTime"
+    currentTime: "#playerProgressTime",
   });
-
 })();

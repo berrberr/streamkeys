@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     playState: ".player_controller .play.is_paused",
     song: ".info_song p:first-child span",
     artist: ".info_artist .name",
-    art: ".player_cover img"
+    art: ".player_cover img",
   });
 })();

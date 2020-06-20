@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -16,6 +16,6 @@
     currentTime: "#audio_player-time",
     totalTime: "#audio_player-duration",
 
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

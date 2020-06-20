@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     dislike: ".player-controls .icon_like_on",
 
     song: ".player-controls .track__title",
-    artist: ".player-controls .track__artists"
+    artist: ".player-controls .track__artists",
   });
 })();

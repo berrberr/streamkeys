@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -16,13 +16,12 @@
     hidePlayer: true,
 
     currentTime: ".time_elapsed",
-    totalTime: ".time_total"
+    totalTime: ".time_total",
   });
 
-
-  controller.getArtData = function(selector) {
+  controller.getArtData = function (selector) {
     var dataEl = this.doc().querySelector(selector);
-    if(dataEl && dataEl.attributes && dataEl.attributes.href) {
+    if (dataEl && dataEl.attributes && dataEl.attributes.href) {
       return dataEl.attributes.href.value;
     }
 

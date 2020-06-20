@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController"),
     sk_log = require("../modules/SKLog.js");
 
@@ -14,19 +14,19 @@
     playState: ".jwplayer.jw-state-playing",
   });
 
-  controller.playPause = function() {
-    if(this.isPlaying()) {
+  controller.playPause = function () {
+    if (this.isPlaying()) {
       try {
         getPlayer().pause();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("playPause", e, true);
       }
     } else {
       try {
         getPlayer().play();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("playPause", e, true);
       }
     }

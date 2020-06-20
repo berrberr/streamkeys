@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     playState: ".player-controls > .play-button > .fa-pause",
     song: ".episode-title",
     artist: ".podcast-title",
-    art: ".now-playing-art"
+    art: ".now-playing-art",
   });
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -14,13 +14,13 @@
 
     playState: ".player-control.pause-state",
     song: ".player-cloudcast-title",
-    artist: ".player-cloudcast-author-link"
+    artist: ".player-cloudcast-author-link",
   });
 
-  controller.playNext = function() {
+  controller.playNext = function () {
     this.doc().querySelector("audio").currentTime += 30;
   };
-  controller.playPrev = function() {
+  controller.playPrev = function () {
     this.doc().querySelector("audio").currentTime -= 30;
   };
 })();

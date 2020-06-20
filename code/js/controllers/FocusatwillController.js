@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
     buttonSwitch: true,
 
     song: ".c1Dhs",
-    artist: ".c1Dhs"
+    artist: ".c1Dhs",
   });
 })();

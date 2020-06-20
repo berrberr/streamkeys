@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -7,6 +7,6 @@
     play: "div#play.FL.pe-true",
     pause: "div#play.FL.pe-true",
     playNext: "div#next.FL",
-    playPrev: "div#prev.FL"
+    playPrev: "div#prev.FL",
   });
 })();

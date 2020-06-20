@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -11,14 +11,18 @@
     album: "#nowPlaying > div[data-meta='album']",
     art: "#metaDisplay > img[data-meta='picture']",
     currentTime: "currentTime",
-    totalTime: "totalTime"
+    totalTime: "totalTime",
   });
 
-  controller.getSongData = function(selector) {
+  controller.getSongData = function (selector) {
     if (selector === "currentTime") {
-      return secondsToHMS(this.doc().querySelector("#nowPlaying > progress").getAttribute("value"));
+      return secondsToHMS(
+        this.doc().querySelector("#nowPlaying > progress").getAttribute("value")
+      );
     } else if (selector === "totalTime") {
-      return secondsToHMS(this.doc().querySelector("#nowPlaying > progress").getAttribute("max"));
+      return secondsToHMS(
+        this.doc().querySelector("#nowPlaying > progress").getAttribute("max")
+      );
     }
     return BaseController.prototype.getSongData.call(this, selector);
   };
@@ -29,6 +33,11 @@
     totalSeconds %= 3600;
     var minutes = Math.floor(totalSeconds / 60);
     var seconds = totalSeconds % 60;
-    return (hours ? hours + ":" : "") + ((hours ? "0" : "") + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+    return (
+      (hours ? hours + ":" : "") +
+      ((hours ? "0" : "") + minutes).slice(-2) +
+      ":" +
+      ("0" + seconds).slice(-2)
+    );
   }
 })();

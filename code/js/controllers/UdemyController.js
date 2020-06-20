@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     playPrev: "[data-purpose=go-to-previous]",
     mute: ".vjs-volume-menu-button",
     playState: ".vjs-playing",
-    buttonSwitch: true
+    buttonSwitch: true,
   });
 })();

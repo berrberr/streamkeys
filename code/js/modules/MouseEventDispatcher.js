@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   /**
    * @typedef {Object} MouseEventOptions
    * @property {Boolean} canBubble - Whether or not the event can bubble.
@@ -60,7 +60,7 @@
    * @param {MouseEventOptions} [options] - Mouse event options. More info: {@link https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/initMouseEvent}
    * @static
    */
-  MouseEventDispatcher.dispatch = function(target, eventType, options) {
+  MouseEventDispatcher.dispatch = function (target, eventType, options) {
     if (typeof target === "string") {
       target = document.querySelector(target);
     }
@@ -106,7 +106,7 @@
    * @param {Function} handler
    * @static
    */
-  MouseEventDispatcher.eachTypes = function(handler) {
+  MouseEventDispatcher.eachTypes = function (handler) {
     for (var i = 0; i < this.eventTypes.length; i++) {
       handler(this.eventTypes[i]);
     }
@@ -186,8 +186,8 @@
    * @static
    */
 
-  MouseEventDispatcher.eachTypes(function(eventType) {
-    MouseEventDispatcher[eventType] = function(target, options) {
+  MouseEventDispatcher.eachTypes(function (eventType) {
+    MouseEventDispatcher[eventType] = function (target, options) {
       MouseEventDispatcher.dispatch(target, eventType, options);
     };
   });

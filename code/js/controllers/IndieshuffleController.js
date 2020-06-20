@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,7 @@
     playPrev: "#playPrevious",
 
     song: "#player-current > div > a.ajaxlink.pink > div > div > span.title",
-    artist: "#player-current > div > a.ajaxlink.pink > div > div > span.artist.bold"
+    artist:
+      "#player-current > div > a.ajaxlink.pink > div > div > span.artist.bold",
   });
 })();

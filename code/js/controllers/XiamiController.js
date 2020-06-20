@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     dislike: "#J_trackFav.icon-faved",
 
     song: "#J_trackName",
-    artist: "#J_trackInfo :last-child"
+    artist: "#J_trackInfo :last-child",
   });
 })();

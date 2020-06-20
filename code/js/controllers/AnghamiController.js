@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -14,6 +14,6 @@
     artist: "#player .track-artist",
     playState: ".playing",
     buttonSwitch: true,
-    song: "#player .track-title a"
+    song: "#player .track-title a",
   });
 })();

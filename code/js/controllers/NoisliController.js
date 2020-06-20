@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
 
     playState: "#sound-button-out:not([style*='none;'])",
 
-    song: ".presets-ul .clicked"
+    song: ".presets-ul .clicked",
   });
 })();

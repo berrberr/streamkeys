@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController"),
     _ = require("lodash");
 
@@ -11,22 +11,25 @@
 
     playState: ["#player .ng-hide .icon-play", ".fa-pause"],
     song: ["h1.break-word", ".audio-player-song p"],
-    artist: [null, ".audio-player-artist p"]
+    artist: [null, ".audio-player-artist p"],
   };
 
   var controller = new BaseController({
-    siteName: "Noon Pacific"
+    siteName: "Noon Pacific",
   });
 
-  controller.checkPlayer = function() {
+  controller.checkPlayer = function () {
     var that = this;
 
-    if(this.doc().querySelector(multiSelectors.play[0]) || this.doc().querySelector(multiSelectors.pause[0])) {
-      _.forEach(multiSelectors, function(value, key) {
+    if (
+      this.doc().querySelector(multiSelectors.play[0]) ||
+      this.doc().querySelector(multiSelectors.pause[0])
+    ) {
+      _.forEach(multiSelectors, function (value, key) {
         that.selectors[key] = value[0];
       });
     } else {
-      _.forEach(multiSelectors, function(value, key) {
+      _.forEach(multiSelectors, function (value, key) {
         that.selectors[key] = value[1];
       });
     }

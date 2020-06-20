@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
 
     playState: ".control-play.state-playing",
     song: ".track-infos .track-title",
-    artist: ".track-infos .track-artist"
+    artist: ".track-infos .track-artist",
   });
 })();

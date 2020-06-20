@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -12,15 +12,19 @@
     artist: ".p_artista",
 
     overridePlayNext: true,
-    overridePlayPrev: true
+    overridePlayPrev: true,
   });
 
-  controller.playNext = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "next" }));
+  controller.playNext = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "next" })
+    );
   };
 
-  controller.playPrev = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "prev" }));
+  controller.playPrev = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "prev" })
+    );
   };
 
   /* Inject script to interact with parent DOM */

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -13,6 +13,6 @@
     song: ".track > .title > a",
     artist: ".track > .artist > a",
 
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

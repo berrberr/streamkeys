@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
     like: "#player-controls .fa-heart",
 
     playState: "#player-controls .fa-play.fa-pause",
-    song: ".current-track-title .track"
+    song: ".current-track-title .track",
   });
 })();

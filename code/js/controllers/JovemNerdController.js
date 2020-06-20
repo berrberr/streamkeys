@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
     playPrev: ".player__primary-controllers__15s-back",
     song: ".entry-title",
     buttonSwitch: true,
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

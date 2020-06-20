@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     buttonSwitch: true,
     playPrev: ".track-previous",
     mute: ".f-player-mute",
-    song: ".f-player-song-title a"
+    song: ".f-player-song-title a",
   });
 })();

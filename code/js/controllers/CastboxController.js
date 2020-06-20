@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -14,6 +14,6 @@
     currentTime: ".currentTime",
     totalTime: ".duration",
 
-    artist: ".footerFeed .rightText .author.ellipsis"
+    artist: ".footerFeed .rightText .author.ellipsis",
   });
 })();

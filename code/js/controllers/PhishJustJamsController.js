@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
 
     playState: ".np_playing",
     song: ".npTitle",
-    artist: ".npVenue"
+    artist: ".npVenue",
   });
 })();

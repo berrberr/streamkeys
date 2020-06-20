@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     dislike: ".icon-vote-down",
 
     playState: ".icon-pause",
-    song: ".track-name"
+    song: ".track-name",
   });
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     playPrev: ".js-pagination--left",
     like: ".like-button",
     playState: ".play.state-playing",
-    song: "h1 > span:first-child"
+    song: "h1 > span:first-child",
   });
 })();

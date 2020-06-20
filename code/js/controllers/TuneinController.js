@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -7,6 +7,6 @@
     playPause: ".playbutton-cont",
 
     playState: "#tuner.playing",
-    song: ".line1._navigateNowPlaying"
+    song: ".line1._navigateNowPlaying",
   });
 })();

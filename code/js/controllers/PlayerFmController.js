@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
 
     song: ".current-episode-link",
     artist: ".current-series-link",
-    art: ".thumb > img"
+    art: ".thumb > img",
   });
 })();

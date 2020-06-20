@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     like: "li.love > a",
     dislike: "li.banning > a",
 
-    playState: ".playpause.play"
+    playState: ".playpause.play",
   });
 })();

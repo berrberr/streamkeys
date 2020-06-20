@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var MouseEventController = require("MouseEventController");
 
   var controller = new MouseEventController({
@@ -9,11 +9,10 @@
     playState: ".playing",
     song: ".song.now_playing .title",
     artist: ".song.now_playing .artist",
-    album: ".song.now_playing .album"
+    album: ".song.now_playing .album",
   });
 
-
-  controller.playPause = function() {
+  controller.playPause = function () {
     this.mouseclick({ selectorButton: this.selectors.playPause });
   };
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -16,6 +16,6 @@
     album: ".player-album",
     art: "#playerBarArt",
     currentTime: "#time_container_current",
-    totalTime: "#time_container_duration"
+    totalTime: "#time_container_duration",
   });
 })();

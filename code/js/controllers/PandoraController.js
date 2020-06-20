@@ -14,20 +14,32 @@
     song: [".playerBarSong", ".Tuner__Audio__TrackDetail__title"],
     artist: [".playerBarArtist", ".Tuner__Audio__TrackDetail__artist"],
     album: [".playerBarAlbum", ".nowPlayingTopInfo__current__albumName"],
-    art: [".playerBarArt", ".Tuner__Audio__TrackDetail__img > .ImageLoader > .ImageLoader__cover"],
+    art: [
+      ".playerBarArt",
+      ".Tuner__Audio__TrackDetail__img > .ImageLoader > .ImageLoader__cover",
+    ],
 
-    currentTime: [null, ".VolumeDurationControl__Duration [data-qa='elapsed_time']"],
-    totalTime: [null, ".VolumeDurationControl__Duration [data-qa='remaining_time']"]
+    currentTime: [
+      null,
+      ".VolumeDurationControl__Duration [data-qa='elapsed_time']",
+    ],
+    totalTime: [
+      null,
+      ".VolumeDurationControl__Duration [data-qa='remaining_time']",
+    ],
   };
 
   var controller = new BaseController({
-    siteName: "Pandora"
+    siteName: "Pandora",
   });
 
   controller.checkPlayer = function () {
     var that = this;
 
-    if (this.doc().querySelector(multiSelectors.play[0]) || this.doc().querySelector(multiSelectors.pause[0])) {
+    if (
+      this.doc().querySelector(multiSelectors.play[0]) ||
+      this.doc().querySelector(multiSelectors.pause[0])
+    ) {
       _.forEach(multiSelectors, function (value, key) {
         that.selectors[key] = value[0];
       });

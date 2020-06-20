@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -12,6 +12,6 @@
     playState: "#npr-player .icn-pause",
     song: "#npr-player .track-meta.track-meta-one",
 
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

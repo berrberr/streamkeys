@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -8,6 +8,6 @@
     pause: ".jp-pause2 a",
 
     playState: ".jp-pause2",
-    song: ".cont-text h1"
+    song: ".cont-text h1",
   });
 })();

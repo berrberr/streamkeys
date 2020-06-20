@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController"),
     sk_log = require("../modules/SKLog.js");
 
@@ -8,14 +8,14 @@
     playPause: "audio",
     playNext: ".slideBumper-right",
     playPrev: ".slideBumper-left",
-    song: ".entryTitle"
+    song: ".entryTitle",
   });
 
-  controller.getPlayer = function() {
+  controller.getPlayer = function () {
     return document.querySelector("audio");
   };
 
-  controller.isPlaying = function() {
+  controller.isPlaying = function () {
     try {
       return !this.getPlayer().paused;
     } catch (e) {
@@ -23,22 +23,21 @@
     }
   };
 
-  controller.playPause = function() {
-    if(this.isPlaying()) {
+  controller.playPause = function () {
+    if (this.isPlaying()) {
       try {
         this.getPlayer().pause();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("Feedly player error", e, true);
       }
     } else {
       try {
         this.getPlayer().play();
         sk_log("playPause");
-      } catch(e) {
+      } catch (e) {
         sk_log("Feedly player error", e, true);
       }
     }
   };
-
 })();

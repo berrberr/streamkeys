@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -18,11 +18,11 @@
 
     // Messy nth-child selectors, but there is no other class/id/attribute information to distinguish the two times
     currentTime: ".now-playing-bar .playback-bar__progress-time:nth-child(1)",
-    totalTime: ".now-playing-bar .playback-bar__progress-time:nth-child(3)"
+    totalTime: ".now-playing-bar .playback-bar__progress-time:nth-child(3)",
   });
 
   // Spotify art uses an inline CSS background-image style, this override parses the image from there
-  controller.getArtData = function(selector) {
+  controller.getArtData = function (selector) {
     if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);

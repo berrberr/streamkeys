@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -20,25 +20,28 @@
     totalTime: "totalTime",
   });
 
-  controller.getSongData = function(selector) {
+  controller.getSongData = function (selector) {
     var data = null;
     if (selector === "song") {
       var titleEl = this.doc().querySelector(".content-info-wrapper > .title");
       if (titleEl && titleEl.textContent) {
         return titleEl.textContent;
       }
-
-    } else if ((selector === "currentTime") || (selector === "totalTime")) {
-      var timeInfo = this.doc().querySelector(".ytmusic-player-bar > .time-info");
+    } else if (selector === "currentTime" || selector === "totalTime") {
+      var timeInfo = this.doc().querySelector(
+        ".ytmusic-player-bar > .time-info"
+      );
       if (timeInfo && timeInfo.textContent) {
         data = timeInfo.textContent.split("/");
         if (!data) return null;
-        if (selector === "currentTime" && data.length >= 1) return data[0].trim();
+        if (selector === "currentTime" && data.length >= 1)
+          return data[0].trim();
         if (selector === "totalTime" && data.length >= 2) return data[1].trim();
       }
-
-    } else if ((selector === "artist") || (selector === "album")) {
-      var subTitleEl = this.doc().querySelector(".content-info-wrapper .subtitle > .byline");
+    } else if (selector === "artist" || selector === "album") {
+      var subTitleEl = this.doc().querySelector(
+        ".content-info-wrapper .subtitle > .byline"
+      );
       if (subTitleEl && subTitleEl.innerText) {
         data = subTitleEl.innerText.split("•");
         if (!data) return null;

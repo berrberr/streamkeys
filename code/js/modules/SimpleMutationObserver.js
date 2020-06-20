@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   /**
    * @typedef {Object} HandlerStorageSelector
    * @property {Function[]} inserted - Contains handlers for inserted event.
@@ -13,7 +13,6 @@
    * @property {HandlerStorageSelector} selector-N - Tracked selector N.
    */
 
-
   /**
    * Construct a new SimpleMutationObserver
    *
@@ -24,7 +23,7 @@
    * @constructor
    * @param {Node} node - Node for which observing DOM mutation.
    */
-  var SimpleMutationObserver = function(node) {
+  var SimpleMutationObserver = function (node) {
     var self = this;
 
     /**
@@ -59,7 +58,7 @@
      * @name SimpleMutationObserver#observer
      * @type MutationObserver
      */
-    self.observer = new MutationObserver(function() {
+    self.observer = new MutationObserver(function () {
       // for each registered selectors checking state and dispatch events if needed
       for (var selector in self.selectors) {
         var oldState = self.isEnabled(selector);
@@ -76,7 +75,11 @@
     });
 
     // observe DOM mutations
-    self.observer.observe(self.node, {childList: true, subtree: true, attributes: true});
+    self.observer.observe(self.node, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
   };
 
   /**
@@ -87,13 +90,19 @@
    * @param {Object} selector - Selector of event handlers.
    * @param {String} eventType - Event type that can be "inserted" or "removed".
    */
-  SimpleMutationObserver.prototype.trigger = function(selector, eventType) {
+  SimpleMutationObserver.prototype.trigger = function (selector, eventType) {
     var self = this;
-    if (!eventType || !self.handlers[selector] || !self.handlers[selector][eventType]) {
+    if (
+      !eventType ||
+      !self.handlers[selector] ||
+      !self.handlers[selector][eventType]
+    ) {
       return false;
     }
     // if handler return false or throw exeption remove this handler
-    var filteredHandlers = self.handlers[selector][eventType].filter(function(handler) {
+    var filteredHandlers = self.handlers[selector][eventType].filter(function (
+      handler
+    ) {
       var result = false;
       try {
         result = handler();
@@ -114,9 +123,12 @@
    * @param {Object} selector - Selector of event handlers.
    * @param {String} eventType - Event type that can be "inserted" or "removed".
    */
-  SimpleMutationObserver.prototype.deferredTrigger = function(selector, eventType) {
+  SimpleMutationObserver.prototype.deferredTrigger = function (
+    selector,
+    eventType
+  ) {
     var self = this;
-    setTimeout(function() {
+    setTimeout(function () {
       self.trigger(selector, eventType);
     }, 0);
   };
@@ -130,7 +142,7 @@
    * @param {String} type - Event type.
    * @param {Function} handler - Event handler.
    */
-  SimpleMutationObserver.prototype.on = function(selector, type, handler) {
+  SimpleMutationObserver.prototype.on = function (selector, type, handler) {
     if (!selector || !type || !handler) {
       return;
     }
@@ -148,11 +160,11 @@
    * @param {String} type - Event type.
    * @param {Function} handler - Event handler.
    */
-  SimpleMutationObserver.prototype.once = function(selector, type, handler) {
+  SimpleMutationObserver.prototype.once = function (selector, type, handler) {
     if (!selector || !type || !handler) {
       return;
     }
-    this.on(selector, type, function() {
+    this.on(selector, type, function () {
       handler();
       return false;
     });
@@ -166,7 +178,7 @@
    * @param {String} selector - Selector for checking.
    * @return {Boolean} Boolean indicating whether the DOM node contains selector.
    */
-  SimpleMutationObserver.prototype.checkEnabled = function(selector) {
+  SimpleMutationObserver.prototype.checkEnabled = function (selector) {
     return Boolean(this.node.querySelector(selector));
   };
 
@@ -177,8 +189,8 @@
    * @method addSelector
    * @param {String} selector - Selector for adding.
    */
-  SimpleMutationObserver.prototype.addSelector = function(selector) {
-    if (!Object.prototype.hasOwnProperty.call(this.selectors,selector)) {
+  SimpleMutationObserver.prototype.addSelector = function (selector) {
+    if (!Object.prototype.hasOwnProperty.call(this.selectors, selector)) {
       // write current state of selector
       this.selectors[selector] = this.checkEnabled(selector);
     }
@@ -191,8 +203,8 @@
    * @method removeSelector
    * @param {String} selector - Selector for removing.
    */
-  SimpleMutationObserver.prototype.removeSelector = function(selector) {
-    if (Object.prototype.hasOwnProperty.call(this.selectors,selector)) {
+  SimpleMutationObserver.prototype.removeSelector = function (selector) {
+    if (Object.prototype.hasOwnProperty.call(this.selectors, selector)) {
       delete this.selectors[selector];
       delete this.handlers[selector];
     }
@@ -207,7 +219,7 @@
    * @param {String} selector - Selector for checking.
    * @return {Boolean} Boolean indicating whether the selector is enabled.
    */
-  SimpleMutationObserver.prototype.isEnabled = function(selector) {
+  SimpleMutationObserver.prototype.isEnabled = function (selector) {
     this.addSelector(selector);
     return this.selectors[selector];
   };

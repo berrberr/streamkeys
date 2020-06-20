@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var MouseEventController = require("MouseEventController");
   var yandexRadioController = new MouseEventController({
     siteName: "Yandex Radio",
@@ -13,11 +13,15 @@
     dislike: ".player-controls .like_action_dislike",
 
     song: ".player-controls__title",
-    artist: ".player-controls__artists"
+    artist: ".player-controls__artists",
   });
 
   // override mute
-  yandexRadioController.mute = function() {
-    this.mousedown({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+  yandexRadioController.mute = function () {
+    this.mousedown({
+      action: "mute",
+      selectorButton: this.selectors.mute,
+      selectorFrame: this.selectors.iframe,
+    });
   };
 })();

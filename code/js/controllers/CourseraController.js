@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +10,6 @@
     playPrev: "[data-track-component='item_side_nav_prev_lession']",
     buttonSwitch: true,
 
-    song: ".c-video-title"
+    song: ".c-video-title",
   });
 })();

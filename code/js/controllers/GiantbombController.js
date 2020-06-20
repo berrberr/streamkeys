@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   if (document.getElementById("js-pod-player")) {
@@ -9,7 +9,7 @@
       play: ".av-play",
       pause: ".av-pause",
 
-      playState: ".podcast-active"
+      playState: ".podcast-active",
     });
   } else {
     //video player
@@ -19,8 +19,7 @@
       play: ".av-play",
       pause: ".av-play",
 
-      playState: ".video-playing"
+      playState: ".video-playing",
     });
   }
-
 })();

@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,6 +11,6 @@
     like: ".control-heart",
     buttonSwitch: true,
 
-    song: ".player-controls .video-title"
+    song: ".player-controls .video-title",
   });
 })();

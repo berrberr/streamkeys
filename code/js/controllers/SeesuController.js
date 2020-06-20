@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -11,18 +11,24 @@
     playState: ".playing-file",
     overridePlayPrev: true,
     overridePlayPause: true,
-    overridePlayNext: true
+    overridePlayNext: true,
   });
 
   /* Overrides */
-  controller.playPause = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "playPause" }));
+  controller.playPause = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "playPause" })
+    );
   };
-  controller.playNext = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "next" }));
+  controller.playNext = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "next" })
+    );
   };
-  controller.playPrev = function() {
-    document.dispatchEvent(new CustomEvent("streamkeys-cmd", { "detail": "prev" }));
+  controller.playPrev = function () {
+    document.dispatchEvent(
+      new CustomEvent("streamkeys-cmd", { detail: "prev" })
+    );
   };
 
   /* Inject script to interact with parent DOM */

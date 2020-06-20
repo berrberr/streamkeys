@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -11,9 +11,8 @@
     playPrev: ".pct-player-prev",
     buttonSwitch: true,
 
-
     playState: ".pct-player-pause",
     song: ".current-track",
-    artist: ".link-artist"
+    artist: ".link-artist",
   });
 })();

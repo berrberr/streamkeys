@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     playPrev: ".fa-fast-backward",
     mute: ".fa-volume-up",
 
-    playState: ".playtoggle.pause"
+    playState: ".playtoggle.pause",
   });
 })();

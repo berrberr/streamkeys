@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -14,6 +14,6 @@
     song: ".playbackControlsView .trackTitle",
     artist: ".playbackControlsView .trackArtist",
     art: ".albumArtWrapper img",
-    hidePlayer: true
+    hidePlayer: true,
   });
 })();

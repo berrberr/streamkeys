@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -9,6 +9,6 @@
     playNext: "div[aria-label='Fast forward 30 seconds']",
     playPrev: "div[aria-label='Rewind 10 seconds']",
 
-    playState: "div[aria-label=Pause]"
+    playState: "div[aria-label=Pause]",
   });
 })();
