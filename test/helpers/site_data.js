@@ -1,7 +1,7 @@
 "use strict";
 var aliases = [
   ["somealiasone", "somealiasmultiple", "anotheralas"],
-  ["multiple.domain.alias.com"]
+  ["multiple.domain.alias.com"],
 ];
 
 var siteData = {
@@ -9,21 +9,21 @@ var siteData = {
     "atestsitefortestingsitematches",
     "acustomcontrollersite",
     "ablacklistsite",
-    "analiasedsite"
+    "analiasedsite",
   ],
 
   siteUrls: [
     "http://atestsitefortestingsitematches.com",
     "http://www.acustomcontrollersite.fm",
     "http://play.ablacklistsite.ca",
-    "http://music.analiasedsite.xyz"
+    "http://music.analiasedsite.xyz",
   ],
 
   controllerNames: [
     "AtestsitefortestingsitematchesController.js",
     "OVERRIDE.js",
     "ANOTHEROVERRIDE.js",
-    "AnaliasedsiteController.js"
+    "AnaliasedsiteController.js",
   ],
 
   aliases: aliases,
@@ -32,30 +32,33 @@ var siteData = {
     "http://" + aliases[0][0] + ".com",
     "http://www." + aliases[0][1] + ".fm",
     "http://withsubdomain." + aliases[0][2] + ".music",
-    "http://" + aliases[1][0] + ".com"
+    "http://" + aliases[1][0] + ".com",
   ],
 
   blacklists: [
-    ["atestsitefortestingsitematches.BLACKLISTDOMAIN", "SUBDOMAINBLACKLIST.atestsitefortestingsitematches"],
-    ["MULTIPLE.acustomcontrollersite.DOMAINS"]
+    [
+      "atestsitefortestingsitematches.BLACKLISTDOMAIN",
+      "SUBDOMAINBLACKLIST.atestsitefortestingsitematches",
+    ],
+    ["MULTIPLE.acustomcontrollersite.DOMAINS"],
   ],
 
   blacklistUrls: [
     "http://www.atestsitefortestingsitematches.BLACKLISTDOMAIN.com",
     "http://SUBDOMAINBLACKLIST.atestsitefortestingsitematches.fm",
-    "http://www.MULTIPLE.acustomcontrollersite.DOMAINS"
+    "http://www.MULTIPLE.acustomcontrollersite.DOMAINS",
   ],
 
-  mockedSites: { }
-}
+  mockedSites: {},
+};
 
-siteData.siteNames.forEach(function(siteName, i) {
+siteData.siteNames.forEach(function (siteName, i) {
   siteData.mockedSites[siteName] = {
     name: siteName,
     url: siteData.siteUrls[i],
     controller: siteData.controllerNames[i],
     alias: siteData.aliases[i] || "",
-    blacklist: siteData.blacklists[i] || ""
+    blacklist: siteData.blacklists[i] || "",
   };
 });
 

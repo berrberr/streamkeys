@@ -3,22 +3,23 @@
  */
 
 "use strict";
-var _ = require("lodash"), sinon = require("sinon");
+var _ = require("lodash"),
+  sinon = require("sinon");
 
 var storageObject = {};
 
 module.exports = {
-  get: sinon.spy(function(callback) {
+  get: sinon.spy(function (callback) {
     callback(storageObject);
   }),
 
-  set: sinon.spy(function(obj, callback) {
+  set: sinon.spy(function (obj, callback) {
     _.assignIn(storageObject, obj);
 
-    if(_.isFunction(callback)) callback(true);
+    if (_.isFunction(callback)) callback(true);
   }),
 
-  clear: function() {
+  clear: function () {
     storageObject = {};
-  }
+  },
 };

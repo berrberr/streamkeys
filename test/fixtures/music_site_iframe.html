@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <script type="text/javascript">
   $("<iframe id='player-frame' />")
-    .appendTo('#player')
-    .contents().find('body').append(" \
+    .appendTo("#player")
+    .contents()
+    .find("body")
+    .append(
+      " \
       <div id='play'>Play</div> \
       <div id='pause'>Pause</div> \
       <div id='play-next'>Next</div> \
       <div id='song-title'>IFRAME SONG</div> \
-    ");
+    "
+    );
 
-  $("#player-frame").ready(function() {
-    $("#player-frame").contents().find("#play").click(function() {
-      $(this).addClass("playing");
-    });
-    $("#player-frame").contents().find("#pause").click(function() {
-      $(this).prev().removeClass("playing");
-    });
+  $("#player-frame").ready(function () {
+    $("#player-frame")
+      .contents()
+      .find("#play")
+      .click(function () {
+        $(this).addClass("playing");
+      });
+    $("#player-frame")
+      .contents()
+      .find("#pause")
+      .click(function () {
+        $(this).prev().removeClass("playing");
+      });
   });
 </script>
 
