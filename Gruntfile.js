@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   var pkg = grunt.file.readJSON("package.json"),
     mnf = grunt.file.readJSON("code/manifest.json"),
     fileMaps = { browserify: {} },
-    jsFiles = grunt.file.expand(["code/js/**/*.js", "!code/js/lib/*"]),
+    jsFiles = grunt.file.expand(["code/js/**/*.js"]),
     htmlFiles = grunt.file.expand(["code/html/*.html", "code/css/*"]),
     file,
     files = grunt.file.expand({cwd:"code/js/"}, ["**/*.js"]);

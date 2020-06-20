@@ -16,7 +16,6 @@
     "module": true,
     "$data": true
   },
-  "ignorePatterns": ["code/js/lib/*"],
   "rules": {
     "eol-last": ["error", "always"],
     "indent": ["error", 2],

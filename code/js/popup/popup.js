@@ -2,7 +2,7 @@
 
 var ko = require("ko"),
   _ = require("lodash");
-require("../lib/material.min.js");
+require("material-design-lite");
 
 var PopupViewModel = function PopupViewModel() {
   var self = this;
