@@ -1,5 +1,6 @@
+"use strict";
 var BaseController = require("../code/js/modules/BaseController.js"),
-    $ = require("jquery");
+  sinon = require("sinon");
 
 jasmine.getFixtures().fixturesPath = "base/test/fixtures";
 

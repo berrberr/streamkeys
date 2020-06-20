@@ -1,9 +1,8 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController"),
-      MouseEventDispatcher = require("../modules/MouseEventDispatcher.js"),
-      sk_log = require("../modules/SKLog.js");
+    MouseEventDispatcher = require("../modules/MouseEventDispatcher.js"),
+    sk_log = require("../modules/SKLog.js");
 
   /**
    * @class MouseEventController
@@ -64,7 +63,7 @@
 
   MouseEventDispatcher.eachTypes(function(eventType) {
     // no override
-    if (BaseController.prototype.hasOwnProperty(eventType)) {
+    if (Object.prototype.hasOwnProperty.call(BaseController.prototype,eventType)) {
       return;
     }
     // based on click method

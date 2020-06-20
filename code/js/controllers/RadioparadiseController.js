@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
   var sk_log = require("../modules/SKLog.js");
 

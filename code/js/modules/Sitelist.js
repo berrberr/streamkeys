@@ -1,8 +1,7 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var _ = require("lodash"),
-      URL = require("urlutils");
+    URL = require("urlutils");
 
   // The _internal_ version of the objects in localstorage
   var STORAGE_VERSION = 1;
@@ -20,7 +19,7 @@
 
     // [A-Za-z0-9-] should capture all valid characters in a (sub)domain
     // The {0, 3} matching group is there to match up to 3 subdomains
-    var re = new RegExp("^(http|https):\/\/(?:[A-Za-z0-9-]*\\.){0,3}(?:" + inner + ")(\\.|:|$)+");
+    var re = new RegExp("^(http|https)://(?:[A-Za-z0-9-]*\\.){0,3}(?:" + inner + ")(\\.|:|$)+");
 
     if(opts.blacklist) {
       var blacklistRe = new RegExp("(" + opts.blacklist.join("|") + ")");
@@ -197,7 +196,7 @@
 
     chrome.storage.sync.get(function(obj) {
       var objSet = _.has(obj, "hotkey-sites"),
-          storageObj = {};
+        storageObj = {};
 
       // Migrate old storage versions to new format
       var version = (typeof obj["hotkey-storage-version"] === "undefined") ? 0 : obj["hotkey-storage-version"];
@@ -207,19 +206,19 @@
         var siteObj =
           (version === 0)
             ? {
-                enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
-                priority: 1,
-                alias: [],
-                showNotifications: false
-              }
+              enabled: objSet ? obj["hotkey-sites"][siteKey] || false : true,
+              priority: 1,
+              alias: [],
+              showNotifications: false
+            }
             : (objSet && obj["hotkey-sites"][siteKey])
               // Validate enabled/priority values in case of migration problems
               ? {
-                  enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
-                  priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1,
-                  alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : [],
-                  showNotifications: _.isBoolean(obj["hotkey-sites"][siteKey].showNotifications) ? obj["hotkey-sites"][siteKey].showNotifications : false
-                }
+                enabled: _.isBoolean(obj["hotkey-sites"][siteKey].enabled) ? obj["hotkey-sites"][siteKey].enabled : true,
+                priority: _.isNumber(obj["hotkey-sites"][siteKey].priority) ? obj["hotkey-sites"][siteKey].priority : 1,
+                alias: _.isArray(obj["hotkey-sites"][siteKey].alias) ? obj["hotkey-sites"][siteKey].alias : [],
+                showNotifications: _.isBoolean(obj["hotkey-sites"][siteKey].showNotifications) ? obj["hotkey-sites"][siteKey].showNotifications : false
+              }
               : siteDefaults;
 
         that.addSite(
@@ -245,13 +244,13 @@
       chrome.storage.sync.set({ "hotkey-storage-version": STORAGE_VERSION });
 
       // Initialize popup open on update setting
-      if(!obj.hasOwnProperty("hotkey-open_on_update")) {
+      if(!Object.prototype.hasOwnProperty.call(obj,"hotkey-open_on_update")) {
         chrome.storage.sync.set({ "hotkey-open_on_update": true });
       }
-      if(!obj.hasOwnProperty("hotkey-use_mpris")) {
+      if(!Object.prototype.hasOwnProperty.call(obj,"hotkey-use_mpris")) {
         chrome.storage.sync.set({ "hotkey-use_mpris": false });
       }
-      if(!obj.hasOwnProperty("hotkey-youtube_restart")) {
+      if(!Object.prototype.hasOwnProperty.call(obj,"hotkey-youtube_restart")) {
         chrome.storage.sync.set({ "hotkey-youtube_restart": false });
       }
     });
@@ -387,7 +386,7 @@
    */
   Sitelist.prototype.getMusicTabsByUrl = function(url) {
     var sitelist_name = this.getSitelistName(url),
-        that = this;
+      that = this;
 
     var promise = new Promise(function(resolve, reject) {
       if(sitelist_name === null) reject([]);

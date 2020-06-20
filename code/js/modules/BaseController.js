@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var sk_log = require("../modules/SKLog.js");
 
   function BaseController(options) {
@@ -157,7 +156,7 @@
    */
   BaseController.prototype.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        isPlaying = false;
+      isPlaying = false;
 
     if(this.buttonSwitch) {
       // If playEl does not exist then it is currently playing
@@ -231,7 +230,7 @@
    * @return {Boolean} true if song just changed, false otherwise
    */
   BaseController.prototype.getSongChanged = function(newState) {
-      return this.oldState &&
+    return this.oldState &&
             newState &&
             this.oldState.song !== newState.song;
   };

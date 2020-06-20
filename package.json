@@ -1,5 +1,5 @@
 {
-  "name": "Streamkeys",
+  "name": "streamkeys",
   "version": "1.8.1",
   "description": "Global hotkeys for online music players including support for media keys.",
   "repository": {
@@ -33,7 +33,11 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "es6-promise": "^4.2.8",
+    "eslint": "^7.2.0",
+    "eslint-plugin-jasmine": "^4.1.1",
+    "eslint-plugin-jasmine-jquery": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
+    "grunt-eslint": "^23.0.0",
     "grunt-exec": "^3.0.0",
     "karma-sinon-chrome": "^0.2.0",
     "karma-spec-reporter": "0.0.32",
@@ -49,14 +53,11 @@
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^2.1.0",
     "grunt-karma": "^4.0.0",
-    "grunt-lintspaces": "^0.9.0",
     "grunt-mkdir": "^1.0.0",
     "grunt-sass": "^3.1.0",
     "jasmine-core": "^3.5.0",
     "jasmine-jquery": "^2.1.1",
-    "jshint-stylish": "^2.2.1",
     "karma": "^5.1.0",
     "karma-browserify": "^7.0.0",
     "karma-chrome-launcher": "^3.1.0",

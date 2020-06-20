@@ -1,6 +1,5 @@
+"use strict";
 (function() {
-  "use strict";
-
   if (window.MusicKit) {
     addEventListeners();
   } else {
@@ -34,22 +33,22 @@
   document.addEventListener("streamkeys-cmd", function(e) {
     var musicKit = window.MusicKit.getInstance();
     switch (e.detail) {
-      case "playPause":
-        if (musicKit.player.isPlaying) {
-          musicKit.pause();
-        } else {
-          musicKit.play();
-        }
-        break;
-      case "next":
-        musicKit.skipToNextItem();
-        break;
-      case "prev":
-        musicKit.skipToPreviousItem();
-        break;
-      case "stop":
-        musicKit.stop();
-        break;
+    case "playPause":
+      if (musicKit.player.isPlaying) {
+        musicKit.pause();
+      } else {
+        musicKit.play();
+      }
+      break;
+    case "next":
+      musicKit.skipToNextItem();
+      break;
+    case "prev":
+      musicKit.skipToPreviousItem();
+      break;
+    case "stop":
+      musicKit.stop();
+      break;
     }
   });
 })();

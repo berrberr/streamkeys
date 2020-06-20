@@ -1,11 +1,11 @@
+"use strict";
 var Sitelist = require("../code/js/modules/Sitelist.js"),
-    SiteData = require("./helpers/site_data.js"),
-    _ = require("lodash");
+  SiteData = require("./helpers/site_data.js");
 
 chrome.storage.sync = require("./helpers/chrome_storage_area.js");
 
 var sitelist, siteNames, controllerNames, siteUrls,
-    aliasUrls, blacklistUrls, tabs, mockedSites;
+  aliasUrls, blacklistUrls, tabs, mockedSites;
 
 siteNames = SiteData.siteNames;
 controllerNames = SiteData.controllerNames;

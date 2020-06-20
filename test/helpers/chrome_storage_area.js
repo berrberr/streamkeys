@@ -2,7 +2,9 @@
  * Simulates _basic_ chrome.sync.storageArea get/set functionality
  */
 
-var _ = require("lodash");
+"use strict";
+var _ = require("lodash"), sinon = require("sinon");
+
 var storageObject = {};
 
 module.exports = {

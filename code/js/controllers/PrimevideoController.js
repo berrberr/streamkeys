@@ -1,10 +1,7 @@
-;(function() {
-  "use strict";
-
-  /*global PointerEvent */
-
+"use strict";
+(function() {
   var BaseController = require("BaseController"),
-  sk_log = require("../modules/SKLog.js");
+    sk_log = require("../modules/SKLog.js");
 
   var controller = new BaseController({
     siteName: "Amazon Prime Video",
@@ -15,7 +12,7 @@
     song: ".topPanel .contentTitlePanel .title"
   });
 
-/**
+  /**
  * Prime Video does not use button clicks, rather, it uses pointer events to handle both mouse and
  * touch events simultaneously.
  */

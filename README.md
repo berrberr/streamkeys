@@ -60,9 +60,8 @@ Figure out the css selectors for a site's media player buttons and create a new 
 ```javascript
 Filename: FooplayerController.js
 
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   new BaseController({
