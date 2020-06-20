@@ -1,0 +1,8 @@
+{
+  "overrides": [
+    {
+      "files": [".prettierrc,", ".stylintrc"],
+      "options": { "parser": "json" }
+    }
+  ]
+}

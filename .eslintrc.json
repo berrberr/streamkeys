@@ -6,7 +6,10 @@
     "jquery": true,
     "node": true
   },
-  "extends": ["plugin:jasmine-jquery/recommended", "eslint:recommended"],
+  "extends": [
+    "plugin:jasmine-jquery/recommended",
+    "plugin:prettier/recommended"
+  ],
   "globals": {
     "$": true,
     "console": true,
@@ -18,13 +21,11 @@
   },
   "rules": {
     "eol-last": ["error", "always"],
-    "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "no-console": ["error", { "allow": ["log", "warn", "error"] }],
     "no-trailing-spaces": ["error"],
     "no-undef": "error",
     "no-unused-vars": "error",
-    "quotes": ["error", "double"],
     "strict": ["error", "global"]
   }
 }

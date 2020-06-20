@@ -22,26 +22,37 @@
     ]
   },
   "scripts": {
-    "test": "karma start --single-run",
+    "develop": "npm-run-all grunt:dev grunt:watch",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "grunt:dev": "grunt dev",
     "grunt:rel": "grunt rel",
     "grunt:watch": "grunt watch",
-    "grunt:lint": "grunt lint",
-    "develop": "npm-run-all grunt:dev grunt:watch"
+    "lint": "eslint --ext .js code",
+    "lint:fix": "eslint --fix --ext .js code",
+    "test": "karma start --single-run"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "es6-promise": "^4.2.8",
     "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jasmine": "^4.1.1",
     "eslint-plugin-jasmine-jquery": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-eslint": "^23.0.0",
     "grunt-exec": "^3.0.0",
+    "husky": "^4.2.5",
     "karma-sinon-chrome": "^0.2.0",
     "karma-spec-reporter": "0.0.32",
+    "lint-staged": "^10.2.11",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
+    "prettier": "2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-prettier": "^1.1.2",
     "watchify": "^3.11.1"
   },
   "dependencies": {
@@ -68,5 +79,15 @@
     "sinon": "^9.0.2",
     "sinon-chrome": "^3.0.1",
     "urlutils": "0.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{.prettierrc,.stylintrc}": "prettier --write",
+    "*.{css,scss}": "stylelint --fix",
+    "*.js": "eslint --cache --fix"
   }
 }
