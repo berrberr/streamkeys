@@ -13,6 +13,6 @@
 
     playState: "#player_pp.pause",
     song: "#player_info > div",
-    artist: "#player_info > a"
+    artist: "#player_info > div + a"
   });
 })();
