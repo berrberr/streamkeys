@@ -1,8 +1,7 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var Sitelist = require("./modules/Sitelist.js"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   /**
    * Tracks TimeoutIds by notification ID, to cancel previous uncomplete Timeouts
@@ -34,7 +33,7 @@
         return;
       }
       chrome.storage.sync.get(function(obj) {
-        if (obj.hasOwnProperty("hotkey-single_player_mode") &&
+        if (Object.prototype.hasOwnProperty.call(obj,"hotkey-single_player_mode") &&
             obj["hotkey-single_player_mode"]) {
           sendActionSinglePlayer(command, tabs);
         } else {
@@ -77,7 +76,7 @@
   };
 
   var getTabUpdateTime = function(tab) {
-    if (tabStates.hasOwnProperty(tab.id)) {
+    if (Object.prototype.hasOwnProperty.call(tabStates,tab.id)) {
       return tabStates[tab.id].timestamp;
     }
     return 0;
@@ -88,7 +87,7 @@
    */
   var getPlayingTabs = function(tabs) {
     return _.filter(tabs, function(tab) {
-      return tabStates.hasOwnProperty(tab.id) &&
+      return Object.prototype.hasOwnProperty.call(tabStates,tab.id) &&
         tabStates[tab.id].state.isPlaying;
     });
   };
@@ -191,8 +190,8 @@
     }
 
     var notificationItems = [
-        { title: request.stateData.song.trim(), message: "" },
-      ];
+      { title: request.stateData.song.trim(), message: "" },
+    ];
 
     if (request.stateData.artist || request.stateData.album) {
       notificationItems.push({ title: (request.stateData.artist || "").trim(), message: (request.stateData.album || "").trim() });
@@ -203,22 +202,22 @@
     }
 
     chrome.notifications.create(sender.id + request.stateData.siteName, {
-        type: "list",
-        title: request.stateData.siteName,
-        message: (request.stateData.song || "").trim(),
-        iconUrl: request.stateData.art || chrome.extension.getURL("icon128.png"),
-        items: notificationItems
-      }, function(notificationId) {
-        if(notificationTimeouts[notificationId])
-        {
-          clearTimeout(notificationTimeouts[notificationId]);
-          delete notificationTimeouts[notificationId];
-        }
+      type: "list",
+      title: request.stateData.siteName,
+      message: (request.stateData.song || "").trim(),
+      iconUrl: request.stateData.art || chrome.extension.getURL("icon128.png"),
+      items: notificationItems
+    }, function(notificationId) {
+      if(notificationTimeouts[notificationId])
+      {
+        clearTimeout(notificationTimeouts[notificationId]);
+        delete notificationTimeouts[notificationId];
+      }
 
-        notificationTimeouts[notificationId] = setTimeout(function() {
-          chrome.notifications.clear(notificationId);
-        }, 5000);
-      });
+      notificationTimeouts[notificationId] = setTimeout(function() {
+        chrome.notifications.clear(notificationId);
+      }, 5000);
+    });
   };
 
   /**
@@ -284,8 +283,8 @@
     var m = 1;
 
     while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
+      s += m * parseInt(p.pop(), 10);
+      m *= 60;
     }
 
     return s;
@@ -293,23 +292,23 @@
 
   var handleNativeMsg = function(msg) {
     switch(msg.command) {
-      case "play":
-      case "pause":
-      case "playpause":
-        sendAction("playPause");
-        break;
-      case "stop":
-        sendAction("stop");
-        break;
-      case "next":
-        sendAction("playNext");
-        break;
-      case "previous":
-        sendAction("playPrev");
-        break;
-      default:
-        console.log("Cannot handle native message command: " + msg.command);
-      }
+    case "play":
+    case "pause":
+    case "playpause":
+      sendAction("playPause");
+      break;
+    case "stop":
+      sendAction("stop");
+      break;
+    case "next":
+      sendAction("playNext");
+      break;
+    case "previous":
+      sendAction("playPrev");
+      break;
+    default:
+      console.log("Cannot handle native message command: " + msg.command);
+    }
   };
 
   /**
@@ -350,34 +349,34 @@
    */
   var updateMPRISState = function(stateData, tab) {
     if (stateData === null) {
-        mprisPort.postMessage({ command: "remove_player" });
-      } else {
-        var metadata = {
-          "mpris:trackid": stateData.song ? tab.id : null,
-          "xesam:title": stateData.song,
-          "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
-          "xesam:album": stateData.album,
-          "mpris:artUrl": stateData.art,
-          "mpris:length": hmsToSecondsOnly((stateData.totalTime || "").trim()) * 1000000
-        };
-        var args = [{ "CanGoNext": stateData.canPlayNext,
-                  "CanGoPrevious": stateData.canPlayPrev,
-                  "PlaybackStatus": (stateData.isPlaying ? "Playing" : "Paused"),
-                  "CanPlay": stateData.canPlayPause,
-                  "CanPause": stateData.canPlayPause,
-                  "Metadata": metadata,
-                  "Position": hmsToSecondsOnly((stateData.currentTime || "").trim()) * 1000000}];
+      mprisPort.postMessage({ command: "remove_player" });
+    } else {
+      var metadata = {
+        "mpris:trackid": stateData.song ? tab.id : null,
+        "xesam:title": stateData.song,
+        "xesam:artist": stateData.artist ? [stateData.artist.trim()] : null,
+        "xesam:album": stateData.album,
+        "mpris:artUrl": stateData.art,
+        "mpris:length": hmsToSecondsOnly((stateData.totalTime || "0").trim()) * 1000000
+      };
+      var args = [{ "CanGoNext": stateData.canPlayNext,
+        "CanGoPrevious": stateData.canPlayPrev,
+        "PlaybackStatus": (stateData.isPlaying ? "Playing" : "Paused"),
+        "CanPlay": stateData.canPlayPause,
+        "CanPause": stateData.canPlayPause,
+        "Metadata": metadata,
+        "Position": hmsToSecondsOnly((stateData.currentTime || "0").trim()) * 1000000}];
 
-        mprisPort.postMessage({ command: "update_state", args: args });
-      }
-    };
+      mprisPort.postMessage({ command: "update_state", args: args });
+    }
+  };
 
   /**
    * Connect to the native messaging host for MPRIS support
    */
   chrome.storage.sync.get(function(obj) {
 
-    if (obj.hasOwnProperty("hotkey-use_mpris") && obj["hotkey-use_mpris"]) {
+    if (Object.prototype.hasOwnProperty.call(obj,"hotkey-use_mpris") && obj["hotkey-use_mpris"]) {
       if (!connections) {
         connections += 1;
         console.log("Starting native messaging host");
@@ -387,8 +386,8 @@
         chrome.runtime.onSuspend.addListener(function() {
           if (!--connections)
             mprisPort.postMessage({ command: "quit" });
-            mprisPort.onMessage.removeListener(handleNativeMsg);
-            mprisPort.disconnect();
+          mprisPort.onMessage.removeListener(handleNativeMsg);
+          mprisPort.disconnect();
         });
 
         /**
@@ -396,7 +395,7 @@
          * update the state of the MPRIS player.
          */
         chrome.tabs.onRemoved.addListener(function(tabId) {
-          if (tabStates.hasOwnProperty(tabId)) {
+          if (Object.prototype.hasOwnProperty.call(tabStates,tabId)) {
             delete tabStates[tabId];
             handleStateData(updateMPRISState);
           }
@@ -407,7 +406,7 @@
          * Thus we need to update the state of the MPRIS player.
          */
         chrome.tabs.onActivated.addListener(function(activeInfo) {
-          if (tabStates.hasOwnProperty(activeInfo.tabId)) {
+          if (Object.prototype.hasOwnProperty.call(tabStates,activeInfo.tabId)) {
             handleStateData(updateMPRISState);
           }
         });

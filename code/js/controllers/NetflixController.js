@@ -1,8 +1,7 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   var multiSelectors = {
     play: [".player-play-pause.play", ".button-nfplayerPlay"],

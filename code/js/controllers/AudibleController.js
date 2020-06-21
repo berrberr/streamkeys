@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
@@ -19,7 +18,7 @@
 
   controller.isPlaying = function() {
     var playEl = this.doc().querySelector(this.selectors.play),
-        isPlaying = false;
+      isPlaying = false;
 
     if(this.buttonSwitch) {
       // If playEl does not exist then it is currently playing

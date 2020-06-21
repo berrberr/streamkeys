@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   /**
    * Log messages to console with prepended message.
    * @param msg {String} message to log

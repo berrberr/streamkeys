@@ -1,7 +1,7 @@
 "use strict";
 
 var ko = require("ko"),
-    _ = require("lodash");
+  _ = require("lodash");
 require("../lib/material.min.js");
 
 var PopupViewModel = function PopupViewModel() {

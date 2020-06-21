@@ -1,3 +1,4 @@
+"use strict";
 var aliases = [
   ["somealiasone", "somealiasmultiple", "anotheralas"],
   ["multiple.domain.alias.com"]

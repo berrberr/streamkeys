@@ -1,10 +1,9 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   new BaseController({
-    siteName: "Slacker",
+    siteName: "LiveXLive",
     play: "a.play",
     pause: "a.pause",
     playNext: "li.skip-forward > a",

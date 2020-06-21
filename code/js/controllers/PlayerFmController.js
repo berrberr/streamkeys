@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,6 +9,8 @@
     playNext: ".control.fast-forward",
     playPrev: ".control.fast-backward",
 
-    song: ".current-episode-link"
+    song: ".current-episode-link",
+    artist: ".current-series-link",
+    art: ".thumb > img"
   });
 })();

@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   new BaseController({
@@ -10,7 +9,12 @@
     mute: "#audio_player-volume",
 
     playState: "#audio_content .playing",
-    song: "#now_playing_title",
+    song: ".current-playlist-playing strong",
+    artist: ".current-playlist-playing dfn",
+    art: ".current-playlist-playing img",
+
+    currentTime: "#audio_player-time",
+    totalTime: "#audio_player-duration",
 
     hidePlayer: true
   });

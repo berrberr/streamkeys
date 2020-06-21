@@ -1,11 +1,10 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   new BaseController({
     siteName: "BrainFM",
-    playPause: ".modules-music-player-css-PlayControl__wrapper___2ROhW",
+    playPause: "[class*=PlayControl__wrapper___]",
     buttonSwitch: true
   });
 })();

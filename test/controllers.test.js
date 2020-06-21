@@ -1,10 +1,11 @@
+"use strict";
 var Sitelist = require("../code/js/modules/Sitelist.js"),
-    _ = require("lodash");
+  _ = require("lodash");
 
 chrome.storage.sync = require("./helpers/chrome_storage_area.js");
 
 describe("sitelist", function() {
-  var sitelist, sitesMapping, siteUrls;
+  var sitelist, sitesMapping, sitesWithUrl;
 
   beforeAll(function() {
     sitelist = new Sitelist();

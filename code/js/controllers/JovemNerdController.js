@@ -1,6 +1,5 @@
+"use strict";
 (function() {
-  "use strict";
-
   var BaseController = require("BaseController");
 
   new BaseController({

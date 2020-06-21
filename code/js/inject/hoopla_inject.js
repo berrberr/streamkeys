@@ -1,6 +1,5 @@
+"use strict";
 (function() {
-  "use strict";
-
   var sk_log = require("../modules/SKLog.js");
   if (typeof window.jwplayer === "function") {
     // Make the play state available in the DOM
@@ -27,21 +26,21 @@
 
       try {
         switch (e.detail) {
-          case "playPause":
-            jw.pause();
-            break;
-          case "next":
-            jw.playlistNext();
-            break;
-          case "prev":
-            jw.playlistPrev();
-            break;
-          case "mute":
-            jw.setMute();
-            break;
-          case "stop":
-            jw.stop();
-            break;
+        case "playPause":
+          jw.pause();
+          break;
+        case "next":
+          jw.playlistNext();
+          break;
+        case "prev":
+          jw.playlistPrev();
+          break;
+        case "mute":
+          jw.setMute();
+          break;
+        case "stop":
+          jw.stop();
+          break;
         }
       } catch (exception) {
         sk_log(e.detail, exception, true);
