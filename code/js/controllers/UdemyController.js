@@ -10,8 +10,9 @@
     pause: "[data-purpose=pause-button]",
     playNext: "[data-purpose=go-to-next]",
     playPrev: "[data-purpose=go-to-previous]",
-    mute: ".vjs-volume-menu-button",
+    mute: "[data-purpose=volume-control-button]",
     playState: ".vjs-playing",
-    buttonSwitch: true
+    buttonSwitch: true,
+    media: ".vjs-tech"
   });
 })();
