@@ -1,7 +1,7 @@
 "use strict";
 
 var ko = require("ko");
-require("./lib/material.min.js");
+require("material-design-lite");
 
 var OptionsViewModel = function OptionsViewModel() {
   var self = this;
