@@ -1,4 +1,4 @@
-# Streamkeys v1.8.1 [![Build Status](https://travis-ci.org/berrberr/streamkeys.svg?branch=master)](https://travis-ci.org/berrberr/streamkeys)
+# Streamkeys v1.8.2 [![Build Status](https://travis-ci.org/berrberr/streamkeys.svg?branch=master)](https://travis-ci.org/berrberr/streamkeys)
 
 Chrome extension to send "global" (ie. across the browser) hotkeys to various online media players.
 
