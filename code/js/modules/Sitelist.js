@@ -167,6 +167,7 @@
       "udemy": { name: "Udemy", url: "https://www.udemy.com/" },
       "vimeo": { name: "Vimeo", url: "https://vimeo.com" },
       "vk": { name: "Vkontakte", url: "http://www.vk.com" },
+      "web.whatsapp": { name: "Web WhatsApp", url: "https://web.whatsapp.com", controller: "WebWhatsAppController.js" },
       "music.yandex": { name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js" },
       "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
       "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
