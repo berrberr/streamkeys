@@ -1,11 +1,12 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
     siteName: "Mixcloud",
-    playPause: ".player-control",
+    play: ".player-open [aria-label='Play']",
+    pause: ".player-open [aria-label='Pause']",
+    buttonSwitch: true,
     like: ".player-icons.favorite:not(.favorite-state)",
     dislike: ".player-icons.favorite.favorite-state",
     overridePlayNext: true,

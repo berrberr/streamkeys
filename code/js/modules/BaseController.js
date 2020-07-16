@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var sk_log = require("../modules/SKLog.js");
 
   function BaseController(options) {
@@ -88,15 +87,15 @@
   }
 
   BaseController.prototype.doc = function() {
-    if (!this.selectors.iframe) {
-      return document;
+    var returnDoc = document;
+    if (this.selectors.iframe) {
+      if (document.querySelector(this.selectors.iframe)) {
+        if (document.querySelector(this.selectors.iframe).tagName.indexOf("FRAME") > -1) {
+          returnDoc = document.querySelector(this.selectors.iframe).contentWindow.document;
+        }
+      }
     }
-    var frame = document.querySelector(this.selectors.iframe);
-    if (!frame) {
-      return document;
-    }
-    var useFrameSelector = frame.tagName.indexOf("FRAME") > -1;
-    return (useFrameSelector) ? frame.contentWindow.document : document;
+    return returnDoc;
   };
 
   BaseController.prototype.getMedia = function() {
@@ -205,7 +204,7 @@
   BaseController.prototype.isPlaying = function() {
     if (this.selectors.play !== null) {
       var playEl = this.doc().querySelector(this.selectors.play),
-          isPlaying = false;
+        isPlaying = false;
       if (this.buttonSwitch) {
         // If playEl does not exist then it is currently playing
         isPlaying = (playEl === null);
@@ -341,14 +340,14 @@
    */
   BaseController.prototype.getStateData = function() {
     var state = {
-      song: this.getSongData(this.selectors.song),
-      artist: this.getSongData(this.selectors.artist),
-      album: this.getSongData(this.selectors.album),
+      song: (this.getSongData(this.selectors.song) === null ? null : this.getSongData(this.selectors.song).replace(/\s+/g, " ")),
+      artist: (this.getSongData(this.selectors.artist) === null ? null : this.getSongData(this.selectors.artist).replace(/\s+/g, " ")),
+      album: (this.getSongData(this.selectors.album) === null ? null : this.getSongData(this.selectors.album).replace(/\s+/g, " ")),
       art: this.getArtData(this.selectors.art),
       currentTime: this.getCurrentTime(),
       totalTime: this.getTotalTime(),
       isPlaying: this.isPlaying(),
-      siteName: this.siteName,
+      siteName: (this.siteName == null ? null : this.siteName.replace(/\s+/g, " ")),
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
       canPlayPrev: this.overridePlayPrev || !!(this.selectors.playPrev && this.doc().querySelector(this.selectors.playPrev)),
       canPlayPause: this.overridePlayPause || !!(
@@ -373,7 +372,7 @@
    * @return {Boolean} true if song just changed, false otherwise
    */
   BaseController.prototype.getSongChanged = function(newState) {
-      return this.oldState &&
+    return this.oldState &&
             newState &&
             this.oldState.song !== newState.song;
   };
@@ -474,8 +473,8 @@
     var m = 1;
 
     while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
+      s += m * parseInt(p.pop(), 10);
+      m *= 60;
     }
 
     return s;

@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   /**
    * @typedef {Object} HandlerStorageSelector
    * @property {Function[]} inserted - Contains handlers for inserted event.
@@ -179,7 +178,7 @@
    * @param {String} selector - Selector for adding.
    */
   SimpleMutationObserver.prototype.addSelector = function(selector) {
-    if (!this.selectors.hasOwnProperty(selector)) {
+    if (!Object.prototype.hasOwnProperty.call(this.selectors,selector)) {
       // write current state of selector
       this.selectors[selector] = this.checkEnabled(selector);
     }
@@ -193,7 +192,7 @@
    * @param {String} selector - Selector for removing.
    */
   SimpleMutationObserver.prototype.removeSelector = function(selector) {
-    if (this.selectors.hasOwnProperty(selector)) {
+    if (Object.prototype.hasOwnProperty.call(this.selectors,selector)) {
       delete this.selectors[selector];
       delete this.handlers[selector];
     }

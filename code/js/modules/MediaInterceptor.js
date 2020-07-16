@@ -1,5 +1,5 @@
+"use strict";
 (function() {
-  "use strict";
   var code = `
   if (window.skOldCreateElement == undefined) {
     console.log("adding media interceptor");

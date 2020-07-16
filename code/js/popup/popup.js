@@ -1,7 +1,8 @@
 "use strict";
 
 var ko = require("ko"),
-    _ = require("lodash");
+  _ = require("lodash");
+require("material-design-lite");
 
 var PopupViewModel = function PopupViewModel() {
   var self = this;

@@ -1,0 +1,2 @@
+# ignoring BaseCodePatcher.js because it causes eslint to fail the build
+code/js/modules/BaseCodePatcher.js

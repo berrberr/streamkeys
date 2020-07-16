@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   /**
    * @typedef {Object} MouseEventOptions
    * @property {Boolean} canBubble - Whether or not the event can bubble.

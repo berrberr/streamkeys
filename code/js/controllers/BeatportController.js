@@ -1,8 +1,7 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   var multiSelectors = {
     play: [".omniplayer button[title=Play]", ".video-btn.play-icon"],

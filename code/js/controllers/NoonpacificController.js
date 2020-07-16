@@ -1,8 +1,7 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var BaseController = require("BaseController"),
-      _ = require("lodash");
+    _ = require("lodash");
 
   var multiSelectors = {
     play: ["#player a:nth-child(2)", ".fa-play"],

@@ -1,5 +1,5 @@
-;(function() {
-  "use strict";
+"use strict";
+(function() {
   // modifies all javascript file that matches urlpattern
   // in each ja file searchvalue is replaced by newvalue
   // this doesn't:

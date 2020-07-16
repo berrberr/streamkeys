@@ -1,7 +1,7 @@
 "use strict";
 
 var ko = require("ko");
-require("./lib/material.min.js");
+require("material-design-lite");
 
 var OptionsViewModel = function OptionsViewModel() {
   var self = this;
@@ -49,9 +49,9 @@ var OptionsViewModel = function OptionsViewModel() {
           }
           else {
             chrome.permissions.request({
-            permissions: ["nativeMessaging"],
+              permissions: ["nativeMessaging"],
             }, function (granted) {
-                chrome.storage.sync.set({ "hotkey-use_mpris": granted });
+              chrome.storage.sync.set({ "hotkey-use_mpris": granted });
             });
           }
         });
@@ -128,7 +128,7 @@ var MusicSite = (function() {
     var self = this;
 
     self.id = attributes.id;
-    self.sanitizedId = attributes.id.replace(/[\.,"']/g, "");
+    self.sanitizedId = attributes.id.replace(/[.,"']/g, "");
     self.name = attributes.name;
     self.enabled = ko.observable(attributes.enabled);
     self.priority = ko.observable(attributes.priority);
@@ -155,8 +155,8 @@ var MusicSite = (function() {
         }
         else {
           chrome.permissions.request({
-          permissions: ["notifications"],
-          origins: ["http://*/*", "https://*/*"]
+            permissions: ["notifications"],
+            origins: ["http://*/*", "https://*/*"]
           }, function (granted) {
             if (granted) {
               internalToggleNotifications();

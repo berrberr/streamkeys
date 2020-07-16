@@ -1,6 +1,5 @@
-;(function() {
-  "use strict";
-
+"use strict";
+(function() {
   var MouseEventController = require("MouseEventController");
   var yandexRadioController = new MouseEventController({
     siteName: "Yandex Radio",

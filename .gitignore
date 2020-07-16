@@ -1,4 +1,4 @@
-.DS_Store
+ .DS_Store
 node_modules/
 build/
 secrets.json
@@ -10,5 +10,3 @@ streamkeys.zip
 *.sublime-project
 npm-debug.log
 test-selectors/
-code/css/material.min.css
-code/js/lib/material.min.js

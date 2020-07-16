@@ -1,5 +1,4 @@
-const _ = require("lodash");
-
+"use strict";
 var aliases = [
   ["somealiasone", "somealiasmultiple", "anotheralas"],
   ["multiple.domain.alias.com"]
@@ -49,12 +48,6 @@ var siteData = {
 
   mockedSites: { }
 }
-
-// since url are caseinsensitive
-siteData.blacklists = _.map(siteData.blacklists, function(arr) {
-  return _.map(arr, _.toLower);
-});
-siteData.blacklistUrls = _.map(siteData.blacklistUrls, _.toLower);
 
 siteData.siteNames.forEach(function(siteName, i) {
   siteData.mockedSites[siteName] = {

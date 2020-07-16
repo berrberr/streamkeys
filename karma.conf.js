@@ -1,16 +1,24 @@
+"use strict";
+process.env.CHROME_BIN = require("puppeteer").executablePath();
+
 module.exports = function(config) {
   config.set({
     basePath: "",
 
+    plugins: [
+      "@metahub/karma-jasmine-jquery",
+      "karma-*"
+    ],
+
     frameworks: [
       "browserify",
       "jasmine-jquery",
-      "jasmine"
+      "jasmine",
+      "sinon-chrome"
     ],
 
     files: [
       "node_modules/sinon/pkg/sinon.js",
-      "node_modules/sinon-chrome/dist/sinon-chrome.latest.js",
       "test/**/*.test.js",
       "test/fixtures/*.html"
     ],
@@ -38,7 +46,6 @@ module.exports = function(config) {
       debug: true,
       transform: []
     },
-    
     client: {
       jasmine: {
         random: false
