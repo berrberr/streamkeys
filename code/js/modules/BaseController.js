@@ -1,5 +1,5 @@
 "use strict";
-(function() {
+(function () {
   var sk_log = require("../modules/SKLog.js");
 
   function BaseController(options) {
@@ -27,14 +27,14 @@
       album: (options.album || null),
       art: (options.art || null),
       currentTime: (options.currentTime || null),
-      totalTime: (options.totalTime || null),
+      totalTime: (options.totalTime || null)
     };
 
     // Any property that's a function, turn it into a getter
     Object.defineProperties(
       this.selectors,
       Object.keys(this.selectors)
-        .reduce(function(properties, key) {
+        .reduce(function (properties, key) {
           var fn = this.selectors[key];
           if (typeof fn === "function") {
             properties[key] = {
@@ -81,12 +81,12 @@
     this.overridePlayPause = options.overridePlayPause || false;
     this.overridePlayNext = options.overridePlayNext || false;
 
-    chrome.runtime.sendMessage({ created: true }, function() {
+    chrome.runtime.sendMessage({ created: true }, function () {
       sk_log("SK content script loaded");
     });
   }
 
-  BaseController.prototype.doc = function() {
+  BaseController.prototype.doc = function () {
     var returnDoc = document;
     if (this.selectors.iframe) {
       if (document.querySelector(this.selectors.iframe)) {
@@ -98,7 +98,7 @@
     return returnDoc;
   };
 
-  BaseController.prototype.getMedia = function() {
+  BaseController.prototype.getMedia = function () {
     if (this.canGetMedia) {
       return this.doc().querySelector(this.selectors.media);
     }
@@ -109,11 +109,11 @@
    * @param {String} file.url - /relative/path/to/script
    * @param {String} file.script - plaintext script as a string
    */
-  BaseController.prototype.injectScript = function(file) {
+  BaseController.prototype.injectScript = function (file) {
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
-    if (file.url) {script.setAttribute("src", chrome.extension.getURL(file.url));}
-    if (file.script) {script.innerHTML = file.script;}
+    if (file.url) { script.setAttribute("src", chrome.extension.getURL(file.url)); }
+    if (file.script) { script.innerHTML = file.script; }
     (document.head || document.documentElement).appendChild(script);
   };
 
@@ -123,7 +123,7 @@
    * @param {String} opts.action - name of action to log to console for debugging purposes
    * @param {String} [opts.selectorFrame] - css selector for iframe to send clicks to
    */
-  BaseController.prototype.click = function(opts) {
+  BaseController.prototype.click = function (opts) {
     opts = opts || {};
     if (opts.selectorButton === null) {
       sk_log("disabled", opts.action);
@@ -133,7 +133,7 @@
     try {
       this.doc().querySelector(opts.selectorButton).click();
       sk_log(opts.action);
-    } catch(e) {
+    } catch (e) {
       sk_log("Element not found for click.", opts.selectorButton, true);
     }
 
@@ -141,15 +141,15 @@
     this.updatePlayerState();
   };
 
-  BaseController.prototype.playPause = function() {
+  BaseController.prototype.playPause = function () {
     if (this.selectors.play !== null && this.selectors.pause !== null) {
       if (this.isPlaying()) {
-        this.click({action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe});
+        this.click({ action: "playPause", selectorButton: this.selectors.pause, selectorFrame: this.selectors.iframe });
       } else {
-        this.click({action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe});
+        this.click({ action: "playPause", selectorButton: this.selectors.play, selectorFrame: this.selectors.iframe });
       }
     } else if (this.selectors.playPause !== null) {
-      this.click({action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe});
+      this.click({ action: "playPause", selectorButton: this.selectors.playPause, selectorFrame: this.selectors.iframe });
     } else if (this.canGetMedia) {
       var media = this.getMedia();
       if (media) {
@@ -162,22 +162,22 @@
     }
   };
 
-  BaseController.prototype.playNext = function() {
-    this.click({action: "playNext", selectorButton: this.selectors.playNext, selectorFrame: this.selectors.iframe});
+  BaseController.prototype.playNext = function () {
+    this.click({ action: "playNext", selectorButton: this.selectors.playNext, selectorFrame: this.selectors.iframe });
   };
 
-  BaseController.prototype.playPrev = function() {
-    this.click({action: "playPrev", selectorButton: this.selectors.playPrev, selectorFrame: this.selectors.iframe});
+  BaseController.prototype.playPrev = function () {
+    this.click({ action: "playPrev", selectorButton: this.selectors.playPrev, selectorFrame: this.selectors.iframe });
   };
 
-  BaseController.prototype.stop = function() {
+  BaseController.prototype.stop = function () {
     if (this.isPlaying()) this.playPause();
   };
 
-  BaseController.prototype.mute = function() {
+  BaseController.prototype.mute = function () {
     // TODO: volume of media tab and website state is different
     if (this.selectors.mute) {
-      this.click({action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe});
+      this.click({ action: "mute", selectorButton: this.selectors.mute, selectorFrame: this.selectors.iframe });
     } else if (this.canGetMedia) {
       var media = this.getMedia();
       if (media) {
@@ -189,20 +189,27 @@
     }
   };
 
-  BaseController.prototype.like = function() {
-    this.click({action: "like", selectorButton: this.selectors.like, selectorFrame: this.selectors.iframe});
+  BaseController.prototype.like = function () {
+    this.click({ action: "like", selectorButton: this.selectors.like, selectorFrame: this.selectors.iframe });
   };
 
-  BaseController.prototype.dislike = function() {
-    this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
+  BaseController.prototype.dislike = function () {
+    this.click({ action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe });
   };
 
   /**
    * Attempts to check if the site is playing anything
    * @return {Boolean} true if site is currently playing
    */
-  BaseController.prototype.isPlaying = function() {
-    if (this.selectors.play !== null) {
+  BaseController.prototype.isPlaying = function () {
+
+    if (this.selectors.play === null && this.canGetMedia) {
+      var media = this.getMedia();
+      if (media) {
+        return !media.paused;
+      }
+      return false;
+    } else {
       var playEl = this.doc().querySelector(this.selectors.play),
         isPlaying = false;
       if (this.buttonSwitch) {
@@ -218,18 +225,11 @@
         isPlaying = (window.getComputedStyle(playEl, null).getPropertyValue("display") === "none");
       }
       return isPlaying;
-    } else {
-      if (this.canGetMedia) {
-        var media = this.getMedia();
-        if (media) {
-          return !media.paused;
-        }
-      }
     }
-    return false;
+
   };
 
-  BaseController.prototype.setPosition = function(time) {
+  BaseController.prototype.setPosition = function (time) {
     if (this.canGetMedia) {
       var media = this.getMedia();
       if (media != undefined) {
@@ -238,7 +238,7 @@
     }
   };
 
-  BaseController.prototype.seek = function(time) {
+  BaseController.prototype.seek = function (time) {
     // default implementation uses selectors if present
     if (this.canGetMedia) {
       var media = this.getMedia();
@@ -248,7 +248,7 @@
     }
   };
 
-  BaseController.prototype.getCurrentTime = function() {
+  BaseController.prototype.getCurrentTime = function () {
     // default implementation uses selectors if present
     if (this.selectors.currentTime) {
       var timestr = (this.getSongData(this.selectors.currentTime) || "0").trim();
@@ -262,7 +262,7 @@
     return null;
   };
 
-  BaseController.prototype.getTotalTime = function() {
+  BaseController.prototype.getTotalTime = function () {
     // default implementation uses selectors if present
     if (this.selectors.totalTime) {
       var timestr = (this.getSongData(this.selectors.totalTime) || "0").trim();
@@ -276,7 +276,7 @@
     return null;
   };
 
-  BaseController.prototype.isMuted = function() {
+  BaseController.prototype.isMuted = function () {
     if (this.canGetMedia) {
       var media = this.getMedia();
       if (media != undefined) {
@@ -286,7 +286,7 @@
     return null;
   };
 
-  BaseController.prototype.getVolume = function() {
+  BaseController.prototype.getVolume = function () {
     // default implementation uses selectors if present
     if (this.canGetMedia) {
       var media = this.getMedia();
@@ -301,7 +301,7 @@
     return null;
   };
 
-  BaseController.prototype.setVolume = function(volume) {
+  BaseController.prototype.setVolume = function (volume) {
     // default implementation uses selectors if present
     if (this.canGetMedia) {
       var media = this.getMedia();
@@ -314,7 +314,7 @@
   /**
    * Gets the current state of the music player and passes data to background page (and eventually popup)
    */
-  BaseController.prototype.updatePlayerState = function() {
+  BaseController.prototype.updatePlayerState = function () {
     if (this.checkPlayer) this.checkPlayer();
 
     var newState = this.getStateData();
@@ -338,14 +338,14 @@
    * Gets an object containing the current player state data
    * @return {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
    */
-  BaseController.prototype.getStateData = function() {
+  BaseController.prototype.getStateData = function () {
     var state = {
       song: (this.getSongData(this.selectors.song) === null ? null : this.getSongData(this.selectors.song).replace(/\s+/g, " ")),
       artist: (this.getSongData(this.selectors.artist) === null ? null : this.getSongData(this.selectors.artist).replace(/\s+/g, " ")),
       album: (this.getSongData(this.selectors.album) === null ? null : this.getSongData(this.selectors.album).replace(/\s+/g, " ")),
       art: this.getArtData(this.selectors.art),
-      currentTime: this.getCurrentTime(),
-      totalTime: this.getTotalTime(),
+      currentTime: this.getSongData(this.selectors.currentTime),
+      totalTime: this.getSongData(this.selectors.totalTime),
       isPlaying: this.isPlaying(),
       siteName: (this.siteName == null ? null : this.siteName.replace(/\s+/g, " ")),
       canDislike: !!(this.selectors.dislike && this.doc().querySelector(this.selectors.dislike)),
@@ -371,10 +371,10 @@
    * @param {{song: {String}}} newState - new state object
    * @return {Boolean} true if song just changed, false otherwise
    */
-  BaseController.prototype.getSongChanged = function(newState) {
+  BaseController.prototype.getSongChanged = function (newState) {
     return this.oldState &&
-            newState &&
-            this.oldState.song !== newState.song;
+      newState &&
+      this.oldState.song !== newState.song;
   };
 
   /**
@@ -382,7 +382,7 @@
    * @param {String} selector - selector for song data
    * @return {*} song data if element is found, null otherwise
    */
-  BaseController.prototype.getSongData = function(selector) {
+  BaseController.prototype.getSongData = function (selector) {
     if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
@@ -393,7 +393,7 @@
     return null;
   };
 
-  BaseController.prototype.getArtData = function(selector) {
+  BaseController.prototype.getArtData = function (selector) {
     if (!selector) return null;
 
     var dataEl = this.doc().querySelector(selector);
@@ -407,7 +407,7 @@
   /**
    * Callback for request from background page
    */
-  BaseController.prototype.doRequest = function(request, sender, response) {
+  BaseController.prototype.doRequest = function (request, sender, response) {
     if (typeof request !== "undefined") {
       if (request.action === "playPause") this.playPause();
       if (request.action === "playNext") this.playNext();
@@ -440,7 +440,7 @@
         this.volume = Math.min(1.0, Math.max(0.0, this.volume - 0.05));
         this.setVolume(this.volume);
       }
-      if (request.action === "playerStateNotify"){
+      if (request.action === "playerStateNotify") {
         chrome.runtime.sendMessage({
           action: "send_change_notification",
           stateData: this.getStateData()
@@ -457,7 +457,7 @@
   /**
    * Setup listeners for extension messages. Initialize the playerState interval
    */
-  BaseController.prototype.attachListeners = function() {
+  BaseController.prototype.attachListeners = function () {
     // Listener for requests from background page
     chrome.runtime.onMessage.addListener(this.doRequest.bind(this));
 
@@ -467,7 +467,7 @@
     sk_log("Attached listener for ", this);
   };
 
-  BaseController.prototype.hmsToSecondsOnly = function(str) {
+  BaseController.prototype.hmsToSecondsOnly = function (str) {
     var p = str.split(":");
     var s = 0;
     var m = 1;

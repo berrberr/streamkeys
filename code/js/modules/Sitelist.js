@@ -1,7 +1,7 @@
 "use strict";
 (function() {
-  var _ = require("lodash");
-  // URL = require("urlutils");
+  var _ = require("lodash"),
+    URL = require("urlutils");
 
   // The _internal_ version of the objects in localstorage
   var STORAGE_VERSION = 1;
@@ -28,9 +28,8 @@
       // Here we override it with a custom function to account for blacklisted hostnames
       return {
         test: function(_url) {
-          var parser = document.createElement("a");
-          parser.href = _url;
-          return (re.test(_url) && !blacklistRe.test(parser.hostname));
+          var parsedUrl = new URL(_url);
+          return (re.test(_url) && !blacklistRe.test(parsedUrl.host));
         }
       };
     }
@@ -520,8 +519,8 @@
         disabled: []
       };
 
-      chrome.tabs.query({}, function(tabs) {
-        tabs.forEach(function(tab) {
+      chrome.tabs.query({}, function (tabs) {
+        tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url)) {
             tab.streamkeysSiteKey = that.getSitelistName(tab.url);
             tab.streamkeysPriority = that.getPriority(tab.streamkeysSiteKey);
@@ -552,8 +551,8 @@
     var promise = new Promise(function(resolve) {
       var musicTabs = [];
 
-      chrome.tabs.query({}, function(tabs) {
-        tabs.forEach(function(tab) {
+      chrome.tabs.query({}, function (tabs) {
+        tabs.forEach(function (tab) {
           if(that.checkEnabled(tab.url) && that.checkTabEnabled(tab.id)) {
             musicTabs.push({
               tab: tab,
