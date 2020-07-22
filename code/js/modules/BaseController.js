@@ -360,9 +360,9 @@
       canLike: !!(this.selectors.like && this.doc().querySelector(this.selectors.like)),
       canSeek: this.canSeek,
       canSetVolume: this.canSetVolume,
-      hidePlayer: this.hidePlayer
+      hidePlayer: this.hidePlayer,
+      volume: this.getVolume()
     };
-    state.volume = this.getVolume();
     return state;
   };
 
