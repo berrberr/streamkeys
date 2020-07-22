@@ -417,7 +417,7 @@
         chrome.tabs.onRemoved.addListener(function(tabId) {
           if (Object.prototype.hasOwnProperty.call(tabStates,tabId)) {
             delete tabStates[tabId];
-            if (mprisPort)handleStateData(updateMPRISState);
+            if (mprisPort) handleStateData(updateMPRISState);
           }
         });
 
