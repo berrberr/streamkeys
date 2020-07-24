@@ -339,7 +339,7 @@
    * @return {{song: {String}, artist: {String}, isPlaying: {Boolean}, siteName: {String}}}
    */
   BaseController.prototype.getStateData = function () {
-    var state = {
+    return {
       song: (this.getSongData(this.selectors.song) === null ? null : this.getSongData(this.selectors.song).replace(/\s+/g, " ")),
       artist: (this.getSongData(this.selectors.artist) === null ? null : this.getSongData(this.selectors.artist).replace(/\s+/g, " ")),
       album: (this.getSongData(this.selectors.album) === null ? null : this.getSongData(this.selectors.album).replace(/\s+/g, " ")),
@@ -363,7 +363,6 @@
       hidePlayer: this.hidePlayer,
       volume: this.getVolume()
     };
-    return state;
   };
 
   /**
