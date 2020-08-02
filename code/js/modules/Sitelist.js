@@ -120,6 +120,7 @@
       "music.naver": { name: "Naver Music", url: "https://playerui.music.naver.com", controller: "NaverMusicController.js"},
       "napster": { name: "Napster", url: "https://app.napster.com", controller: "NapsterController.js" },
       "netflix": { name: "Netflix", url: "http://www.netflix.com" },
+      "neverthink": { name: "Neverthink", url: "https://neverthink.tv", controller: "NeverthinkController.js" },
       "noise": { name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js" },
       "noisli": { name: "Noisli", url: "http://noisli.com", controller: "NoisliController.js" },
       "noonpacific": { name: "Noon Pacific", url: "http://www.noonpacific.com" },
