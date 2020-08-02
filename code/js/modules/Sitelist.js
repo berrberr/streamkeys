@@ -141,6 +141,7 @@
       "primevideo": {name: "Prime Video", url: "https://www.primevideo.com"},
       "qobuz": { name: "Qobuz", url: "https://play.qobuz.com" },
       "music.qq": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js", alias: ["y.qq.com/portal/player.html"] },
+      "radio": { name: "RadioGarden", url: "http://radio.garden", controller: "RadioGardenController.js" },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
       "radioswissjazz": { name: "RadioSwissJazz", url: "http://www.radioswissjazz.ch" },
       "rainwave": { name: "Rainwave.cc", url: "http://www.rainwave.cc" },
