@@ -38,7 +38,16 @@
 
   controller.like = function(){
     this.showControls();
-    document.querySelector(".SaveVideoButton").click()
+    var save_button = document.querySelector(".SaveVideoButton");
+
+    save_button.click();
+
+    // Dislike the video
+    if(save_button.classList.contains("SaveVideoButton--saved")){
+      setTimeout(function(){
+        document.querySelector(".Popup-options>div").click()
+      }, 100);
+    }
   }
 
   controller.mute = function(){
