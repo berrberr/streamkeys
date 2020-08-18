@@ -183,6 +183,7 @@
       "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
+      "zenva": { name: "Zenva", url: "https://academy.zenva.com/" },
       "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
     };
 
