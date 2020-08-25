@@ -13,7 +13,7 @@
     pause: "[data-test=pause]",
     playNext: "[data-test=next]",
     playPrev: "[data-test=previous]",
-    dislike: "#override",
+    dislike: "[data-test=block]",
 
     song: "[data-test=track-title]",
     artist: "[data-test=artist-title]",
