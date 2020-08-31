@@ -3,7 +3,7 @@
   var BaseController = require("BaseController");
 
   var blockSelectors = {
-    block: "[data-test=block]",
+    block: "[data-test=play-controls] > [data-test=block]",
     blockTrack: "[data-test=block-track]"
   };
 
