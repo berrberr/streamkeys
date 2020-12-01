@@ -4,10 +4,10 @@
 
   var controller = new BaseController({
     siteName: "Spotify",
-    play: ".now-playing-bar button[title=Play]",
-    pause: ".now-playing-bar button[title=Pause]",
-    playNext: ".now-playing-bar button[title=Previous]",
-    playPrev: ".now-playing-bar button[title=Next]",
+    play: ".player-controls__buttons button:nth-child(3)",
+    pause: ".player-controls__buttons button:nth-child(3)",
+    playNext: ".player-controls__buttons div button",
+    playPrev: ".player-controls__buttons button:nth-child(2)",
     like: ".now-playing-bar div[class*=heart] button",
     dislike: ".now-playing-bar button[class*=block]",
     buttonSwitch: true,
