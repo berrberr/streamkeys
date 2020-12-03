@@ -4,12 +4,12 @@
 
   new BaseController({
     siteName: "Pocket Casts",
-    playPause: "button.skip_back_button + button",
+    playPause: ".play_pause_button",
     playNext: ".skip-forward-button",
     playPrev: ".skip-back-button",
     mute: ".player-controls-mute-button",
 
-    playState: "button.skip_back_button + button[aria-pressed=true]",
+    playState: ".play_pause_button[aria-pressed=true]",
     song: ".player_episode",
     artist: ".player_podcast_title"
   });
