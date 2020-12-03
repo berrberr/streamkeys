@@ -14,7 +14,9 @@
       playPrev: (options.playPrev || null),
       mute: (options.mute || null),
       like: (options.like || null),
+      confirmLike: (options.confirmLike || null),
       dislike: (options.dislike || null),
+      confirmDislike: (options.confirmDislike || null),
       iframe: (options.iframe || null),
 
       //** States **//
@@ -144,10 +146,26 @@
 
   BaseController.prototype.like = function() {
     this.click({action: "like", selectorButton: this.selectors.like, selectorFrame: this.selectors.iframe});
+    if(this.selectors.confirmLike !== null) {
+      var controller = this;
+      var observer = new MutationObserver(function() {
+        this.disconnect();
+        controller.click({action: "confirmLike", selectorButton: controller.selectors.confirmLike, selectorFrame: controller.selectors.iframe});
+      });
+      observer.observe(document.documentElement, {childList: true, subtree: true});
+    }
   };
 
   BaseController.prototype.dislike = function() {
     this.click({action: "dislike", selectorButton: this.selectors.dislike, selectorFrame: this.selectors.iframe});
+    if(this.selectors.confirmDislike !== null) {
+      var controller = this;
+      var observer = new MutationObserver(function() {
+        this.disconnect();
+        controller.click({action: "confirmDislike", selectorButton: controller.selectors.confirmDislike, selectorFrame: controller.selectors.iframe});
+      });
+      observer.observe(document.documentElement, {childList: true, subtree: true});
+    }
   };
 
   /**
