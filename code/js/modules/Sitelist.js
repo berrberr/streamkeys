@@ -140,6 +140,7 @@
       "poolside": { name: "Poolside FM", url: "https://poolside.fm/", controller: "PoolsideFM.js", alias: ["poolsidefm"] },
       "primephonic": {name: "Primephonic", url: "https://www.primephonic.com/"},
       "primevideo": {name: "Prime Video", url: "https://www.primevideo.com"},
+      "promodj": {name: "Promo DJ", url: "https://www.promodj.com"},
       "qobuz": { name: "Qobuz", url: "https://play.qobuz.com" },
       "music.qq": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js", alias: ["y.qq.com/portal/player.html"] },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
