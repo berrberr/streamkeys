@@ -179,7 +179,7 @@
       "wynk": { name: "Wynk", url: "https://www.wynk.in/" },
       "music.yandex": { name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js" },
       "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
-      "radio": { name: "RadioGarden", url: "http://radio.garden", alias: "radiogarden", controller: "RadioGardenController.js" },
+      "radio": { name: "RadioGarden", url: "http://radio.garden", alias: ["radiogarden"], controller: "RadioGardenController.js" },
       "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
       "xiami": { name: "Xiami", url: "http://www.xiami.com" },
       "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },

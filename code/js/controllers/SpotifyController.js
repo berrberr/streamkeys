@@ -2,7 +2,7 @@
 (function() {
   var BaseController = require("BaseController");
 
-  var controller = new BaseController({
+  new BaseController({
     siteName: "Spotify",
     play: ".player-controls__buttons button:nth-child(3)",
     pause: ".player-controls__buttons button:nth-child(3)",
