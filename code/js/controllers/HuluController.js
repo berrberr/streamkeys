@@ -20,7 +20,7 @@
   });
 
   controller.isPlaying = function () {
-    return !!(this.doc().querySelector("div.controls__playback-button--playing"));
+    return !(this.doc().querySelector("div.PlayButton"));
   };
 })();
 
