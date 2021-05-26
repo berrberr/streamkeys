@@ -30,7 +30,7 @@
     "develop": "npm-run-all grunt:dev grunt:watch"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "es6-promise": "^4.2.8",
     "eslint": "^7.18.0",
     "eslint-plugin-jasmine": "^4.1.1",
