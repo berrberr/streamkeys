@@ -58,6 +58,7 @@
       "arena": { name: "Are.na", url: "https://www.are.na/", alias: ["are"] },
       "asoftmurmur": { name: "A Soft Murmur", url: "http://www.asoftmurmur.com" },
       "audible": { name: "Audible", url: "http://www.audible.com" },
+      "audioserve": { name: "Audioserve", url: "https://audioserve.zderadicka.eu" },
       "audiotool": { name: "Audiotool", url: "https://www.audiotool.com/" },
       "bandcamp": { name: "Bandcamp", url: "http://www.bandcamp.com" },
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
