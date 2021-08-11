@@ -9,7 +9,7 @@
     playPause: "div.player-controls > ul > li:nth-child(3) > button",
     playNext: "div.player-controls > ul > li:nth-child(5) > div > button",
     playState: "svg.svg-icon-pause",
-    dislike: "svg.svg-icon-angry-face",
+    dislike: "div.track-actions > ul > li:nth-child(3) > div > button",
 
     mute: "div.player-options > ul > li:nth-child(1) > ul > li:nth-child(3) > div > button",
 
@@ -18,9 +18,9 @@
   });
 
   controller.dislike = function() {
-    if(!document.querySelector(".svg-icon-note-block")) {
-      document.querySelector(".svg-icon-angry-face").closest("button").click();
+    if(!document.querySelector("button.dislike-extended")) {
+      document.querySelector("div.track-actions > ul > li:last-child > div > button").click();
     }
-    document.querySelector(".svg-icon-note-block").closest("div").click();
+    document.querySelector("button.dislike-extended").click();
   };
 })();
