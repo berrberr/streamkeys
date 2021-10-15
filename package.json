@@ -36,7 +36,7 @@
     "eslint-plugin-jasmine": "^4.1.1",
     "eslint-plugin-jasmine-jquery": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-eslint": "^23.0.0",
+    "grunt-eslint": "^24.0.0",
     "grunt-exec": "^3.0.0",
     "karma-sinon-chrome": "^0.2.0",
     "karma-spec-reporter": "0.0.32",
