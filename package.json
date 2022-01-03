@@ -55,7 +55,7 @@
     "grunt-karma": "^4.0.0",
     "grunt-mkdir": "^1.1.0",
     "grunt-sass": "^3.1.0",
-    "jasmine-core": "^3.10.0",
+    "jasmine-core": "^4.0.0",
     "jasmine-jquery": "^2.1.1",
     "karma": "^5.2.3",
     "karma-browserify": "^8.1.0",
