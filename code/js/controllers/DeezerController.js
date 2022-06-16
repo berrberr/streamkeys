@@ -1,26 +1,45 @@
 "use strict";
-(function() {
+(function () {
   var BaseController = require("BaseController");
 
   var controller = new BaseController({
     siteName: "Deezer",
 
-    playPrev: "div.player-controls > ul > li:nth-child(1) > div > button",
-    playPause: "div.player-controls > ul > li:nth-child(3) > button",
-    playNext: "div.player-controls > ul > li:nth-child(5) > div > button",
-    playState: "svg.svg-icon-pause",
-    dislike: "div.track-actions > ul > li:nth-child(3) > div > button",
-
-    mute: "div.player-options > ul > li:nth-child(1) > ul > li:nth-child(3) > div > button",
+    playPrev: "",
+    playPause: "",
+    playNext: "",
+    playState: "",
+    dislike: "",
+    mute: "",
 
     song: "a.track-link:nth-of-type(1)",
     artist: "a.track-link:nth-of-type(2)"
   });
 
-  controller.dislike = function() {
-    if(!document.querySelector("button.dislike-extended")) {
-      document.querySelector("div.track-actions > ul > li:last-child > div > button").click();
+  controller.playPrev = function () {
+    document.querySelector("[data-testid='StepBackwardIcon']").closest("button").click();
+  };
+
+  controller.playPause = function () {
+    document.querySelector("div.player-controls [data-testid='PauseIcon'], div.player-controls [data-testid='PlayIcon']").closest("button").click();
+  };
+
+  controller.playNext = function () {
+    document.querySelector("[data-testid='StepForwardIcon']").closest("button").click();
+  };
+
+  controller.like = function () {
+    document.querySelector("div.player-track [data-testid='HeartIcon'], div.player-track [data-testid='HeartFillIcon']").closest("button").click();
+  };
+
+  controller.dislike = function () {
+    if (!document.querySelector("[data-testid='NoteBanIcon']")) {
+      document.querySelector("[data-testid='AngryIcon']").closest("button").click();
     }
-    document.querySelector("button.dislike-extended").click();
+    document.querySelector("[data-testid='NoteBanIcon']").closest("button").click();
+  };
+
+  controller.mute = function () {
+    document.querySelector("[data-testid='VolumeIcon'], [data-testid='VolumeMuteIcon']").closest("button").click();
   };
 })();
