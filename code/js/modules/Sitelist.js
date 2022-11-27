@@ -19,7 +19,7 @@
 
     // [A-Za-z0-9-] should capture all valid characters in a (sub)domain
     // The {0, 3} matching group is there to match up to 3 subdomains
-    var re = new RegExp("^(http|https)://(?:[A-Za-z0-9-]*\\.){0,3}(?:" + inner + ")(\\.|:|$)+");
+    var re = new RegExp("^(http|https)://(?:[A-Za-z0-9-]*\\.){0,3}(?:" + inner + ")(\\.|:|$)+", "i");
 
     if(opts.blacklist) {
       var blacklistRe = new RegExp("(" + opts.blacklist.join("|") + ")");
@@ -151,7 +151,7 @@
       "jiosaavn": { name: "JioSaavn", url: "https://www.jiosaavn.com", controller: "JioSaavnController.js" },
       "seesu": { name: "Seesu.me", url: "http://www.seesu.me" },
       "shortorange": { name: "ShortOrange", url: "http://www.shortorange.com" },
-      "siriusxm": { name: "SiriusXM", url: "https://player.siriusxm.com" },
+      "siriusxm": { name: "SiriusXM", url: "https://player.siriusxm.com", controller: "SiriusXMController.js" },
       "livexlive": { name: "LiveXLive", url: "http://livexlive.com" },
       "somafm": { name: "SomaFM", url: "http://somafm.com", controller: "SomaFMController.js" },
       "songstr": { name: "Songstr", url: "http://www.songstr.com" },
