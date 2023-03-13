@@ -120,6 +120,7 @@
       "music.naver": { name: "Naver Music", url: "https://playerui.music.naver.com", controller: "NaverMusicController.js"},
       "napster": { name: "Napster", url: "https://app.napster.com", controller: "NapsterController.js" },
       "netflix": { name: "Netflix", url: "http://www.netflix.com" },
+      "neverthink": { name: "Neverthink", url: "https://neverthink.tv", controller: "NeverthinkController.js" },
       "noise": { name: "NoiseSupply", url: "http://noise.supply", controller: "NoiseSupplyController.js" },
       "noisli": { name: "Noisli", url: "http://noisli.com", controller: "NoisliController.js" },
       "noonpacific": { name: "Noon Pacific", url: "http://www.noonpacific.com" },
@@ -139,6 +140,7 @@
       "poolside": { name: "Poolside FM", url: "https://poolside.fm/", controller: "PoolsideFM.js", alias: ["poolsidefm"] },
       "primephonic": {name: "Primephonic", url: "https://www.primephonic.com/"},
       "primevideo": {name: "Prime Video", url: "https://www.primevideo.com"},
+      "promodj": {name: "Promo DJ", url: "https://www.promodj.com"},
       "qobuz": { name: "Qobuz", url: "https://play.qobuz.com" },
       "music.qq": { name: "QQ Music", url: "https://y.qq.com/portal/player.html", controller: "QQController.js", alias: ["y.qq.com/portal/player.html"] },
       "radioparadise": { name: "RadioParadise", url: "http://www.radioparadise.com" },
@@ -177,11 +179,13 @@
       "wynk": { name: "Wynk", url: "https://www.wynk.in/" },
       "music.yandex": { name: "Yandex", url: "http://music.yandex.ru", controller: "YandexController.js" },
       "radio.yandex": { name: "Yandex Radio", url: "http://radio.yandex.ru", controller: "YandexRadioController.js" },
+      "radio": { name: "RadioGarden", url: "http://radio.garden", alias: ["radiogarden"], controller: "RadioGardenController.js" },
       "youarelistening": { name: "YouAreListening.to", url: "http://www.youarelistening.to", controller: "YouarelisteningtoController.js" },
       "xiami": { name: "Xiami", url: "http://www.xiami.com" },
       "music.youtube": { name: "YouTube Music", url: "https://music.youtube.com", controller: "YoutubeMusicController.js" },
       "youtube": { name: "YouTube", url: "http://www.youtube.com" },
       "youzeek": { name: "YOUZEEK", url: "http://www.youzeek.com" },
+      "zenva": { name: "Zenva", url: "https://academy.zenva.com/" },
       "zonga": { name: "Zonga", url: "http://asculta.zonga.ro", controller: "ZongaController.js" }
     };
 

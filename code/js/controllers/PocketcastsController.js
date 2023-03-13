@@ -9,7 +9,7 @@
     playPrev: ".skip-back-button",
     mute: ".player-controls-mute-button",
 
-    playState: ".play_pause_button.pause_button",
+    playState: ".play_pause_button[aria-pressed=true]",
     song: ".player_episode",
     artist: ".player_podcast_title"
   });
