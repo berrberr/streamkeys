@@ -4,15 +4,13 @@
 
   new BaseController({
     siteName: "Jango",
-    playPause: "#player_pp",
-    playNext: "#player_skip",
-    like: "#player_thumbs_up",
-    confirmLike: "#thumbs_updown_form_submit > input",
-    dislike: "#player_thumbs_down",
-    confirmDislike: "#thumbs_updown_form_submit > input",
+    playPause: "#player-play-button",
+    playNext: "div[aria-label='Click to Skip to Next Song']",
+    like: "#body > div:nth-child(14) > div.MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded > ul > li:nth-child(1)",
+    dislike: "#body > div:nth-child(14) > div.MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded > ul > li:nth-child(2)",
 
-    playState: "#player_pp.pause",
-    song: "#player_info > div",
-    artist: "#player_info > div + a"
+    playState: "#player-play-button[aria-label='Click to Pause']",
+    song: "#player-song-title > a",
+    artist: "#player-artist > a"
   });
 })();
