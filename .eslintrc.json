@@ -26,5 +26,8 @@
     "no-unused-vars": "error",
     "quotes": ["error", "double"],
     "strict": ["error", "global"]
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
   }
 }
