@@ -47,7 +47,6 @@
 
     this.sites = sites || {
       "7digital": { name: "7digital", url: "http://www.7digital.com" },
-      "bilibili": { name: "bilibili", url: "https://www.bilibili.com" },
       "8tracks": { name: "8tracks", url: "http://www.8tracks.com" },
       "amazon": { name: "Amazon Cloud Player", url: "https://www.amazon.com/gp/dmusic/cloudplayer/player" },
       "ampache": { name: "Ampache", url: "http://ampache.org" },
@@ -64,6 +63,7 @@
       "bbc": { name: "BBC Radio", url: "http://www.bbc.co.uk/radio", controller: "BBCRadioController.js" },
       "be-at": { name: "BE-AT.TV", url: "https://be-at.tv", controller: "BeAtTvController.js"},
       "beatport": { name: "Beatport", url: "https://www.beatport.com" },
+      "bilibili": { name: "bilibili", url: "https://www.bilibili.com" },
       "brain": { name: "BrainFM", url: "http://brain.fm", controller: "BrainFMController.js" },
       "castbox": { name: "Castbox", url: "https://castbox.fm", controller: "CastboxController.js" },
       "cloud.caster": { name: "Cloud Caster", url: "http://cloud-caster.com", controller: "CloudCasterController.js", alias: ["cloud-caster"] },
